@@ -94,6 +94,16 @@ El agente:
 
 Si arrancas de cero, **no escribas código todavía**. Sigue este "script" de conversación con el agente:
 
+### Paso 0: El "Super Prompt" (Opcional pero Recomendado) 🚀
+Si ya tienes la idea clara, no pierdas tiempo chateando.
+
+1. Copia la plantilla de **`templates/project_brief.md`**.
+2. Llénala con tus datos.
+3. Pégala en el chat:
+   > "Hola **/orch**. Aquí está el brief de mi proyecto. Inicia el trabajo."
+
+El Orchestrator leerá todo y asignará tareas al PM y Arquitecto automáticamente.
+
 ### Paso 1: Definir el "QUÉ" (con el Product Manager)
 Activa al PM y cuéntale tu idea abstracta.
 > "Hola **/pm**. Quiero crear una aplicación para gestionar gastos personales que sea muy simple. Ayúdame a definir los requerimientos y un MVP."
