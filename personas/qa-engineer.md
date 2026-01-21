@@ -208,46 +208,58 @@ class TestUsersAPI:
         assert response.status_code == 404
 ```
 
-## Testing de Agentes IA
+## Testing de Agentes IA (LLM Evals) 🤖
 
-### Patrones especiales para agentes
+El testing determinista no sirve para IA. Usa **LLM-based Evals**.
+
+### Métricas Clave (RAGAS / DeepEval)
+1.  **Faithfulness**: ¿La respuesta se basa solo en el contexto provisto? (Evitar alucinaciones en RAG).
+2.  **Answer Relevancy**: ¿La respuesta contesta realmente la pregunta del usuario?
+3.  **Context Precision**: ¿El retriever trajo los chunks correctos?
+4.  **Tool Selection Accuracy**: ¿El agente eligió la herramienta correcta para la tarea?
+
+### Ejemplo de Eval (con `deepeval` o custom)
+
 ```python
 import pytest
-from unittest.mock import AsyncMock, patch
+from deepeval import assert_test
+from deepeval.metrics import FaithfulnessMetric, AnswerRelevancyMetric
+from deepeval.test_case import LLMTestCase
 
-class TestAgentExecution:
-    """Tests para ejecución de agentes."""
+class TestAgentQuality:
     
-    @pytest.mark.asyncio
-    async def test_agent_uses_correct_tool(self, agent, mock_llm):
-        """Agente debe usar tool correcto según contexto."""
-        mock_llm.return_value = MockResponse(
-            tool_calls=[{"name": "search_database", "args": {...}}]
+    def test_rag_faithfulness(self, agent_rag):
+        """Asegura que el agente no alucine información fuera de su knowledge base."""
+        
+        query = "Políticas de reembolso"
+        context = ["Reembolsos solo en 30 días."]
+        
+        # Ejecutar agente
+        actual_output = agent_rag.query(query)
+        
+        # Definir caso de prueba
+        test_case = LLMTestCase(
+            input=query,
+            actual_output=actual_output,
+            retrieval_context=context
         )
         
-        with patch.object(agent, 'tools') as mock_tools:
-            await agent.run("Buscar usuario con email test@example.com")
-            
-            mock_tools['search_database'].execute.assert_called_once()
-    
-    @pytest.mark.asyncio
-    async def test_agent_handles_tool_error(self, agent):
-        """Agente debe manejar errores de tools gracefully."""
-        with patch.object(agent.tools['http'], 'execute') as mock:
-            mock.side_effect = TimeoutError("Request timeout")
-            
-            result = await agent.run("Fetch external API")
-            
-            assert "timeout" in result.lower() or "error" in result.lower()
-    
-    @pytest.mark.asyncio
-    async def test_agent_respects_cost_limit(self, agent):
-        """Agente debe detenerse al alcanzar límite de costo."""
-        agent.config.max_cost = 0.01  # $0.01
+        # Métrica: Fidelidad
+        metric = FaithfulnessMetric(threshold=0.7)
         
-        with pytest.raises(CostLimitExceeded):
-            await agent.run("Do something expensive")
+        # Assert usando otro LLM como juez
+        assert_test(test_case, [metric])
+
+    def test_tool_selection_determinism(self, agent):
+        """El agente debe elegir SIEMPRE 'calculator' para sumas."""
+        for _ in range(5):
+            plan = agent.plan("Cuánto es 50 + 20")
+            assert plan.tool == "calculator", f"Falló en intento {_}"
 ```
+
+### Determinismo vs Creatividad
+- Para **Function Calling**: `temperature=0`. Debe ser 100% determinista.
+- Para **Chit-chat**: `temperature=0.7`. Se aceptan variaciones, evaluar semántica.
 
 ## Cobertura de Tests
 

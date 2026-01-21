@@ -68,19 +68,40 @@ Usar siempre:
 - Tipografía definida en el sistema
 ```
 
-## Modern Design Patterns (2024+)
+## Modern Design Patterns (2026+)
 
-### Tendencias Actuales
+### Tendencias Actuales (2026)
 
 | Tendencia | Descripción | Uso |
 |-----------|-------------|-----|
-| **Bento Grids** | Layouts type Apple | Dashboards, landing pages |
-| **Glassmorphism** | Fondos blur/glass | Cards destacados, modales |
-| **3D Elements** | Elementos 3D sutiles | Ilustraciones, iconos |
-| **Dark Mode First** | Diseñar dark primero | Productos tech |
-| **Micro-interactions** | Animaciones pequeñas | Feedback, delighters |
-| **Gradient Mesh** | Gradientes orgánicos | Backgrounds, accents |
-| **Neumorphism Soft** | Sombras suaves internas | Botones, toggles |
+| **Spatial UI** | Interfaces espaciales/flotantes | VisionOS web adaptation |
+| **Bento Grids v2** | Grids adaptables y colapsables | Dashboards ricos en data |
+| **Glassmorphism 3.0** | Blur selectivo + Noise | Modales y contextos de IA |
+| **Dark Mode First** | Diseñar dark primero | Productos dev/tech |
+| **Generative UI** | UI que cambia según contexto | Asistentes avanzados |
+| **Micro-motion** | Feedback háptico visual | Interactions |
+
+### 🤖 GenAI UI Patterns (Específico para Agentes)
+
+La IA introduce latencia e incertidumbre. Diseña para mitigar esto:
+
+1.  **Streaming Text**:
+    *   No mostrar loaders infinitos.
+    *   Mostrar texto token por token.
+    *   Auto-scroll suave.
+
+2.  **Optimistic Updates**:
+    *   Si el usuario pide "Crear tarea", muéstrala creada *antes* de que la IA confirme.
+    *   Rollback suave si falla.
+
+3.  **Skeleton Screens Inteligentes**:
+    *   No uses spinners genéricos.
+    *   Usa esqueletos que anticipen la *forma* de la respuesta (tabla, lista, código).
+
+4.  **Feedback Loops Explicitos**:
+    *   Botones de 👍/👎 en cada respuesta.
+    *   "Regenerar" siempre visible.
+    *   Citas/Fuentes clickeables (Transparency).
 
 ### Paletas de Color Modernas
 

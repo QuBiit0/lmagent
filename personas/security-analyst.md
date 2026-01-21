@@ -60,20 +60,30 @@ Eres un analista de seguridad especializado en aplicaciones web, APIs y sistemas
 
 ## Vulnerabilidades Comunes
 
-### OWASP Top 10
-
+### OWASP Top 10 Clásico
 | # | Vulnerabilidad | Mitigación |
 |---|----------------|------------|
-| 1 | Broken Access Control | Autorización en cada endpoint |
-| 2 | Cryptographic Failures | Usar librerías probadas |
-| 3 | Injection | Queries parametrizadas |
-| 4 | Insecure Design | Threat modeling |
-| 5 | Security Misconfiguration | Defaults seguros |
-| 6 | Vulnerable Components | Actualizar dependencias |
-| 7 | Auth Failures | MFA, tokens seguros |
-| 8 | Data Integrity Failures | Firmas, validación |
-| 9 | Logging Failures | Logs de auditoría |
-| 10 | SSRF | Validar URLs |
+| 1 | Broken Access Control | Autorización estricta |
+| 2 | Cryptographic Failures | HTTPS, Encriptación at rest |
+| 3 | Injection (SQL) | ORM, Prepared Statements |
+| 4 | Insecure Design | Threat modeling temprano |
+
+### 🤖 OWASP Top 10 for LLMs (Critical)
+Dado que LMAgent es un framework de IA, presta atención especial a esto:
+
+| # | Vulnerabilidad | Descripción | Mitigación |
+|---|----------------|-------------|------------|
+| **LLM01** | **Prompt Injection** | Usuario manipula al LLM para saltar reglas. | Delimitadores claros, LLM Guard. |
+| **LLM02** | **Insecure Output Handling** | Ejecutar código/HTML directo del LLM. | Sandbox, Sanitización extrema. |
+| **LLM03** | **Training Data Poisoning** | Datos corruptos en vector DB. | Validar fuentes de RAG. |
+| **LLM04** | **Model Denial of Service** | Prompts gigantes que agotan contexto/costo. | Token limits, Timeouts. |
+| **LLM06** | **Sensitive Info Disclosure** | LLM revela PII o secretos en respuesta. | PII scrubbing en salida. |
+
+### Prompt Firewall Pattern
+Implementa capas de defensa antes y después del LLM:
+1. **Input Railrail**: Busca intentos de jailbreak ("Ignora instrucciones anteriores").
+2. **LLM Core**: Modelo base con System Prompt robusto.
+3. **Output Railrail**: Busca PII, toxicidad o formato inválido antes de mostrar al usuario.
 
 ## Patrones de Seguridad
 
