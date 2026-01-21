@@ -90,7 +90,27 @@ El agente:
 2. Te guiará paso a paso
 3. Creará los archivos necesarios
 
-## 4. Conceptos Clave
+## 4. Tu Primer Día: Guía Paso a Paso
+
+Si arrancas de cero, **no escribas código todavía**. Sigue este "script" de conversación con el agente:
+
+### Paso 1: Definir el "QUÉ" (con el Product Manager)
+Activa al PM y cuéntale tu idea abstracta.
+> "Hola **/pm**. Quiero crear una aplicación para gestionar gastos personales que sea muy simple. Ayúdame a definir los requerimientos y un MVP."
+
+El agente te hará preguntas. Respóndelas hasta que genere un **PRD** (Product Requirements Document).
+
+### Paso 2: Definir el "CÓMO" (con el Architect)
+Una vez tengas el PRD (o una idea clara), llama al Arquitecto.
+> "Hola **/arch**. Basado en lo que definimos con el PM, define el stack tecnológico ideal y crea la estructura de carpetas inicial. Crea también un archivo `rules/project.md` con las convenciones."
+
+### Paso 3: Empezar a Construir (con el Developer)
+Con el plan y las reglas listas, empieza a codear.
+> "Hola **/dev**. Vamos a implementar la estructura base que definió el arquitecto. Empieza por inicializar el proyecto (package.json o pyproject.toml)."
+
+---
+
+## 5. Conceptos Clave
 
 ### 🎭 Personas
 Son roles especializados que el agente adopta. Cada uno tiene sus propias instrucciones y "superpoderes".
