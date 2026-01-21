@@ -11,15 +11,23 @@ Bienvenido a **LMAgent**, tu framework para desarrollo asistido por IA. Esta gu�
 - API Keys para tus LLMs (OpenAI, Anthropic, Google)
 
 ### Instalación del CLI
-Puedes instalarlo directamente desde GitHub:
+Para tener el comando `lmagent` disponible en tu terminal:
 
+1. Clona el repositorio oficial:
 ```bash
-pip install git+https://github.com/QuBiit0/lmagent.git
+git clone https://github.com/QuBiit0/lmagent.git
+cd lmagent
 ```
 
-O si tienes el código localmente:
+2. Instala el paquete en modo editable:
 ```bash
 pip install -e .
+```
+
+3. Verifica que funcione:
+```bash
+lmagent --version
+# Debería mostrar: LMAgent v2.0.0
 ```
 
 ### Opción A: Proyecto Nuevo (Desde Cero)

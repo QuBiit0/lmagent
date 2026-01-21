@@ -25,20 +25,28 @@
 
 ## 🚀 Quick Start
 
+### Opción A: Instalación Global (Recomendado)
+Instala LMAgent para usarlo en cualquier proyecto de tu sistema.
+
 ```bash
-# Instalar el CLI (una sola vez)
+# 1. Clonar el repositorio
+git clone https://github.com/QuBiit0/lmagent.git
+cd lmagent
+
+# 2. Instalar el CLI
 pip install -e .
 
-# Inicializar en cualquier proyecto
-cd mi-proyecto
+# 3. Verificar instalación
+lmagent --version
+```
+
+### Opción B: Usar en un Proyecto Nuevo
+Una vez instalado el CLI:
+
+```bash
+mkdir mi-nuevo-proyecto
+cd mi-nuevo-proyecto
 lmagent init
-
-# Verificar configuración
-lmagent doctor
-
-# Actualizar cuando hay nueva versión
-pip install --upgrade lmagent
-lmagent update
 ```
 
 💡 **Tip:** ¿Empiezas un proyecto nuevo? Usa nuestra **[Plantilla de Inicio Rápido](templates/project_brief.md)**.
