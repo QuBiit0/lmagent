@@ -125,7 +125,8 @@ lmagent/
 | `/arch` | Architect | Diseño de sistemas resilientes |
 | `/dev` | Backend Engineer | Implementación robusta |
 | `/auto` | Automation Engineer | n8n, webhooks |
-| `/ai` | AI Agent Engineer | Agentes, prompts |
+| `/ai` | AI Agent Engineer | Agentes, RAG, Python |
+| `/prompt` | Prompt Engineer | Prompts, CoT, DSPy |
 | `/qa` | QA Engineer | Testing manual y auto |
 | `/sec` | Security Analyst | Seguridad y compliance |
 | `/sm` | Scrum Master | Agile Coaching |
