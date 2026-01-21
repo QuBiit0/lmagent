@@ -11,18 +11,46 @@ Bienvenido a **LMAgent**, tu framework para desarrollo asistido por IA. Esta gu�
 - API Keys para tus LLMs (OpenAI, Anthropic, Google)
 
 ### Instalación del CLI
+Puedes instalarlo directamente desde GitHub:
+
 ```bash
-# Clona tu repositorio o ve a tu carpeta de proyecto
+pip install git+https://github.com/QuBiit0/lmagent.git
+```
+
+O si tienes el código localmente:
+```bash
 pip install -e .
 ```
 
-### Inicialización en un Proyecto Nuevo
+### Opción A: Proyecto Nuevo (Desde Cero)
 ```bash
+# 1. Crea el directorio
 mkdir mi-nuevo-proyecto
 cd mi-nuevo-proyecto
+
+# 2. Inicializa el framework
 lmagent init
 ```
-Esto creará la carpeta `.agent/` con toda la estructura necesaria.
+Esto creará la estructura base y estarás listo para empezar.
+
+### Opción B: Proyecto Existente (Legacy/Brownfield)
+LMAgent es **no-intrusivo**. No tocará tu código fuente, solo agregará una capa de inteligencia.
+
+```bash
+# 1. Ve a la raíz de tu proyecto
+cd mi-proyecto-existente
+
+# 2. Inicializa el framework
+lmagent init
+```
+
+**¿Qué pasará?**
+- Se creará la carpeta `.agent/` (el cerebro del agente).
+- Se añadirán archivos de configuración para tu IDE (`CLAUDE.md`, `.cursorrules`).
+- **Tu código fuente (`src/`, `app/`, etc.) permanecerá intacto.**
+
+**Recomendación**: Después de inicializar, pídele al agente:
+> "Analiza la estructura de este proyecto y crea un `rules/project.md` con las convenciones que veas."
 
 ## 2. Configuración Básica
 
