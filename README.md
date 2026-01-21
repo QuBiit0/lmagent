@@ -24,7 +24,11 @@ lmagent doctor
 # Actualizar cuando hay nueva versión
 pip install --upgrade lmagent
 lmagent update
+pip install --upgrade lmagent
+lmagent update
 ```
+
+💡 **Tip:** ¿Empiezas un proyecto nuevo? Usa nuestra **[Plantilla de Inicio Rápido](templates/project_brief.md)**.
 
 Esto crea una estructura limpia con todo el framework en `.agent/`.
 
