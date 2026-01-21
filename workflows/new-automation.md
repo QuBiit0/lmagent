@@ -2,9 +2,13 @@
 description: Workflow para crear una nueva automatización que involucra backend + n8n + opcionalmente agentes IA
 level: 2-3
 personas: [automation-engineer, backend-engineer, ai-agent-engineer]
+version: 2.1
+type: workflow
 ---
 
 # New Automation Workflow
+
+> **Tiempo estimado**: 2-6 horas | **Level**: 2-3
 
 Este workflow guía la creación de una nueva automatización end-to-end.
 
@@ -348,3 +352,23 @@ async def test_{automation_name}_invalid_payload(client: AsyncClient):
 - [ ] Credenciales configuradas
 - [ ] Monitoreo/alertas configuradas
 - [ ] Review de código completado
+
+---
+
+## 🛠️ Herramientas Sugeridas
+
+| Fase | Herramienta |
+|------|-------------|
+| Diseño | `write_to_file` (schemas, docs) |
+| Backend | `run_command` (pytest), `grep_search` |
+| n8n | `browser_subagent` (probar workflows) |
+| Validación | `run_command` (curl, pytest) |
+
+## ⚠️ Errores Comunes
+
+| Error | Solución |
+|-------|----------|
+| Webhook sin idempotencia | Diseñar para re-ejecución segura |
+| Sin manejo de errores en n8n | Agregar Error Workflow o nodo IF |
+| Credenciales hardcodeadas | Usar credentials store de n8n |
+| Respuesta > 60s sin async | Usar background task + polling/callback |

@@ -1,5 +1,22 @@
 # Reglas para Agentes de IA - LMAgent
 
+> **Tipo**: `rule` | **Versión**: 2.1 | **Actualización**: 2026-01
+
+## 📌 Quick Reference
+
+| Principio | Regla |
+|-----------|-------|
+| **Tool-first** | El LLM decide, las tools ejecutan. NUNCA ejecutar código directo del LLM. |
+| **Stateless** | Agentes sin estado en memoria. Usar Redis para persistencia. |
+| **Observable** | Logging de TODAS las interacciones LLM + Cost Tracking obligatorio. |
+| **MCP Standard** | Usar Model Context Protocol (MCP) para definir herramientas. |
+| **Guardrails** | Timeout, rate limit y validación de outputs OBLIGATORIOS. |
+
+### 👥 Roles que usan esta regla
+`ai-agent-engineer`, `prompt-engineer`, `backend-engineer`, `architect`
+
+---
+
 Este documento define las reglas y mejores prácticas para el desarrollo de agentes de IA.
 
 ## Principios Fundamentales
@@ -561,3 +578,30 @@ async def run_agent(request: AgentRequest) -> AgentResponse:
         trajectory_id=agent.trajectory_logger.run_id
     )
 ```
+
+---
+
+## ✅ Checklist de Validación (Antes de Deploy)
+
+### Diseño del Agente
+- [ ] Arquitectura elegida y documentada (ReAct, Tool-only, etc.)
+- [ ] Tools definidas con schemas MCP/Pydantic estrictos
+- [ ] System Prompt aprobado por /prompt engineer
+
+### Seguridad (Guardrails)
+- [ ] Timeout configurado en TODAS las tools
+- [ ] Rate limit por usuario/sesión
+- [ ] Cost limit configurado (default: $2.00)
+- [ ] Outputs del LLM validados antes de ejecutar
+- [ ] Sin API keys en logs
+
+### Observabilidad
+- [ ] Logging estructurado con structlog
+- [ ] Trajectory logging habilitado
+- [ ] Cost tracking implementado
+- [ ] Métricas de latencia expuestas
+
+### Integración
+- [ ] Endpoint HTTP para n8n creado
+- [ ] Documentación de API generada
+- [ ] Tests de evals pasando (Faithfulness > 0.7)

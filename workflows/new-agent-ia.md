@@ -2,9 +2,13 @@
 description: Workflow para crear o mejorar un agente de IA
 level: 2-3
 personas: [ai-agent-engineer, backend-engineer]
+version: 2.1
+type: workflow
 ---
 
 # New AI Agent Workflow
+
+> **Tiempo estimado**: 4-8 horas | **Level**: 2-3
 
 Este workflow guía la creación o mejora de un agente de IA.
 
@@ -471,3 +475,23 @@ curl -X POST {backend_url}/agents/{agent-name}/run \
 - [ ] Guardrails configurados
 - [ ] Permisos de tools revisados
 - [ ] Logging de auditoría habilitado
+
+---
+
+## 🛠️ Herramientas Sugeridas
+
+| Fase | Herramienta |
+|------|-------------|
+| Diseño | `write_to_file` (prompts, configs) |
+| Implementación | `run_command` (tests), `view_file` |
+| Testing | `run_command` (evals), `browser_subagent` |
+| Docs | `mcp_context7_query-docs` (LangChain, etc.) |
+
+## ⚠️ Errores Comunes
+
+| Error | Solución |
+|-------|----------|
+| Tools sin schema estricto | SIEMPRE definir con Pydantic/Field |
+| Sin limite de costo | Configurar `max_cost` desde el inicio |
+| Prompt vago | Ser específico en rol, tools y constraints |
+| Sin evals | Implementar tests de Faithfulness y Tool Accuracy |

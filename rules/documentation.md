@@ -1,10 +1,26 @@
 # Documentación Continua
 
+> **Tipo**: `rule` | **Versión**: 2.1 | **Actualización**: 2026-01
+
+## 📌 Quick Reference
+
+| ¿Qué documentar? | ¿Dónde? |
+|------------------|--------|
+| Decisiones de stack | `rules/stack.md` |
+| Patrones de código | `rules/code-style.md` |
+| Flujos de trabajo | `rules/workflow.md` |
+| Comandos del proyecto | `config/commands.yaml` |
+| Cambios de versión | `CHANGELOG.md` |
+
+### Regla de Oro
+> "⚡ Si pensaste más de 5 minutos en algo, probablemente vale la pena documentarlo."
+
+### 👥 Roles que usan esta regla
+`technical-writer`, `backend-engineer`, `frontend-engineer`, `architect`
+
+---
+
 > ⚠️ **REGLA CRÍTICA**: Esta regla debe aplicarse SIEMPRE, en cada sesión de trabajo.
-
-## Principio Fundamental
-
-El marco de trabajo solo es útil si se mantiene actualizado. Un framework desactualizado causa confusión, errores y pérdida de tiempo.
 
 ## Cuándo Documentar
 

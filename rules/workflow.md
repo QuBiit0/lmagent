@@ -1,5 +1,28 @@
 # Flujo de Trabajo - LMAgent
 
+> **Tipo**: `rule` | **Versión**: 2.1 | **Actualización**: 2026-01
+
+## 📌 Quick Reference
+
+| Paso | Acción |
+|------|--------|
+| 1. **Entender** | Leer AGENTS.md + reglas aplicables |
+| 2. **Clasificar** | Determinar Level (0-4) + persona(s) |
+| 3. **Planear** | (Level 2+) Crear `implementation_plan.md` + pedir aprobación |
+| 4. **Implementar** | Modelos → Repos → Services → Routers → Tests |
+| 5. **Validar** | `pytest` + `ruff check` + `ruff format` |
+| 6. **Documentar** | Actualizar docs si hay cambios de uso |
+
+### Escalado Automático
+- Auth/Security → Mínimo Level 2
+- Migración DB → Mínimo Level 3
+- Breaking change → Mínimo Level 3
+
+### 👥 Roles que usan esta regla
+`orchestrator`, `backend-engineer`, `frontend-engineer`, `qa-engineer`
+
+---
+
 Este documento define el flujo de trabajo estándar que los agentes deben seguir dentro de LMAgent.
 
 ## Flujo General

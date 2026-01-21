@@ -1,5 +1,23 @@
 # Guía de Estilo de Código - LMAgent
 
+> **Tipo**: `rule` | **Versión**: 2.1 | **Actualización**: 2026-01
+
+## 📌 Quick Reference
+
+| Regla | Python | TypeScript |
+|-------|--------|------------|
+| **Naming** | `snake_case` funciones/vars, `PascalCase` clases | `camelCase` funciones/vars, `PascalCase` clases |
+| **Indentación** | 4 espacios | 2 espacios |
+| **Línea máx** | 88 chars | 100 chars |
+| **Types** | OBLIGATORIO (type hints) | OBLIGATORIO (strict TS) |
+| **Lint** | `ruff check .` + `ruff format .` | `eslint .` + `prettier` |
+| **Imports** | Stdlib → Third-party → Local | Built-in → External → Internal |
+
+### 👥 Roles que usan esta regla
+`backend-engineer`, `frontend-engineer`, `mobile-engineer`, `qa-engineer`
+
+---
+
 Este documento define las convenciones de estilo para Python y TypeScript.
 
 ## Python
@@ -532,3 +550,21 @@ counter += 1  # Increment counter
 - 2 espacios para indentación (TypeScript)
 - Una línea en blanco entre funciones/métodos
 - Dos líneas en blanco entre clases
+
+---
+
+## ✅ Checklist de Validación (Antes de PR)
+
+### Python
+- [ ] `ruff check .` pasa sin errores
+- [ ] `ruff format --check .` pasa
+- [ ] Type hints en todas las funciones públicas
+- [ ] Docstrings en funciones públicas
+- [ ] Imports ordenados (stdlib → 3rd party → local)
+
+### TypeScript
+- [ ] `eslint .` pasa sin errores
+- [ ] `prettier --check .` pasa
+- [ ] `tsc --noEmit` sin errores de tipos
+- [ ] Sin uso de `any`
+- [ ] Imports ordenados

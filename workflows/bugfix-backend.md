@@ -2,9 +2,13 @@
 description: Workflow para analizar y arreglar bugs en servicios backend Python/Node
 level: 1-2
 personas: [backend-engineer, qa-engineer]
+version: 2.1
+type: workflow
 ---
 
 # Bugfix Backend Workflow
+
+> **Tiempo estimado**: 30 min - 2 horas | **Level**: 1-2
 
 Este workflow guía el proceso de análisis y corrección de bugs en backends.
 
@@ -355,3 +359,22 @@ Fixes #{issue_number}
 - [ ] Sin regresiones
 - [ ] Commit con mensaje descriptivo
 - [ ] PR creado para review
+
+---
+
+## 🛠️ Herramientas Sugeridas
+
+| Fase | Herramienta |
+|------|-------------|
+| Reproducción | `run_command` (scripts), `grep_search` |
+| Análisis | `view_file`, `grep_search`, logs |
+| Fix | `replace_file_content`, `write_to_file` |
+| Validación | `run_command` (pytest) |
+
+## ⚠️ Errores Comunes
+
+| Error | Solución |
+|-------|----------|
+| Arreglar sin reproducir primero | SIEMPRE reproducir antes de tocar código |
+| No escribir test de regresión | El test debe fallar ANTES del fix |
+| Fix muy amplio | Cambiar solo lo necesario, mínima intervención |

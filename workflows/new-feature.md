@@ -2,9 +2,13 @@
 description: Workflow para implementar una nueva feature completa
 level: 2-3
 personas: [backend-engineer, frontend-engineer, qa-engineer]
+version: 2.1
+type: workflow
 ---
 
 # New Feature Implementation Workflow
+
+> **Tiempo estimado**: 2-8 horas | **Level**: 2-3
 
 Este workflow guía la implementación de una feature completa de principio a fin.
 
@@ -264,3 +268,23 @@ git push origin feature/{nombre}
 - [ ] Tested en staging
 - [ ] Ready for production
 ```
+
+---
+
+## 🛠️ Herramientas Sugeridas
+
+| Fase | Herramienta |
+|------|-------------|
+| Planificación | `write_to_file` (crear plan), `view_file` (revisar existente) |
+| Backend | `run_command` (alembic, pytest), `grep_search` |
+| Frontend | `run_command` (npm test), `browser_subagent` |
+| Validación | `run_command` (pytest, ruff, eslint) |
+
+## ⚠️ Errores Comunes
+
+| Error | Solución |
+|-------|----------|
+| Empezar sin PRD aprobado | Validar requerimientos primero |
+| Backend y Frontend en paralelo sin contrato | Definir API contract primero |
+| Olvidar estados (loading/error/empty) | Usar checklist de estados |
+| Tests solo happy path | Agregar tests de errores y edge cases |

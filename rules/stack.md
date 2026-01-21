@@ -1,5 +1,24 @@
 # Stack Tecnológico - LMAgent
 
+> **Tipo**: `rule` | **Versión**: 2.1 | **Actualización**: 2026-01
+
+## 📌 Quick Reference
+
+| Capa | Tecnología Principal |
+|------|----------------------|
+| **Backend** | Python 3.11+ (FastAPI) o TypeScript (NestJS) |
+| **Database** | PostgreSQL 15+ (principal) + Redis 7+ (cache/colas) |
+| **ORM** | SQLModel (Python) o Prisma (TypeScript) |
+| **Validation** | Pydantic v2 |
+| **LLM** | GPT-4o (complejo) / Gemini Flash (rápido) / Claude Haiku (volumen) |
+| **Automation** | n8n |
+| **Deploy** | Docker + Dokploy |
+
+### 👥 Roles que usan esta regla
+`backend-engineer`, `frontend-engineer`, `devops-engineer`, `architect`
+
+---
+
 Este documento define el stack tecnológico base y las buenas prácticas para proyectos que usan LMAgent.
 
 ## Stack Principal
@@ -339,3 +358,24 @@ volumes:
 - [Pydantic Documentation](https://docs.pydantic.dev/)
 - [n8n Documentation](https://docs.n8n.io/)
 - [Docker Best Practices](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
+
+---
+
+## ✅ Checklist de Validación (Nuevo Proyecto)
+
+### Setup Inicial
+- [ ] Estructura de directorios según patrón definido
+- [ ] `.env.example` con todas las variables documentadas
+- [ ] `docker-compose.yml` con PostgreSQL + Redis
+- [ ] Config via pydantic-settings (no hardcode)
+
+### Código
+- [ ] Type hints en todas las funciones
+- [ ] Capas separadas: Routers → Services → Repositories
+- [ ] Sin credenciales en código
+- [ ] Logging con structlog (no print)
+
+### Calidad
+- [ ] Tests con pytest, coverage > 80%
+- [ ] Linting con ruff pasando
+- [ ] CI/CD con GitHub Actions configurado

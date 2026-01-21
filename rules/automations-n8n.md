@@ -1,5 +1,22 @@
 # Reglas para Integraciones con n8n - LMAgent
 
+> **Tipo**: `rule` | **Versión**: 2.1 | **Actualización**: 2026-01
+
+## 📌 Quick Reference
+
+| Principio | Regla |
+|-----------|-------|
+| **n8n-First** | Diseñar APIs pensando en cómo n8n las consumirá. |
+| **Respuesta < 60s** | Procesos largos en background + polling o callback. |
+| **Payloads Estables** | Nunca cambiar estructura sin versionar la API. |
+| **Errores Útiles** | `{ success, error, error_code }` para que n8n procese. |
+| **Idempotencia** | Re-ejecutar el mismo webhook debe dar el mismo resultado. |
+
+### 👥 Roles que usan esta regla
+`automation-engineer`, `backend-engineer`, `architect`
+
+---
+
 Este documento define las mejores prácticas para diseñar APIs y webhooks pensando en n8n.
 
 ## Principios de Diseño
@@ -607,3 +624,23 @@ async def rate_limited_endpoint(request: Request, payload: WebhookPayload):
 - [ ] Documentar en `automations/docs/`
 - [ ] Crear workflow de ejemplo
 - [ ] Agregar a colección de Postman/Insomnia
+
+---
+
+## ✅ Checklist de Validación (n8n Integration)
+
+### Webhook/Endpoint
+- [ ] Schema de request/response definido con Pydantic
+- [ ] Ejemplos de payload documentados
+- [ ] Errores retornan `{ success: false, error, error_code }`
+- [ ] Respuesta en < 60 segundos (o usar async + callback)
+
+### Seguridad
+- [ ] API Key o auth header configurado
+- [ ] Rate limiting implementado
+- [ ] Validación de inputs
+
+### Testing
+- [ ] Probado con n8n local (HTTP Request node)
+- [ ] Workflow de ejemplo creado
+- [ ] Happy path + error cases testeados

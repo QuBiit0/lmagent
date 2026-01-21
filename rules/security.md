@@ -1,5 +1,23 @@
 # LMAgent Security Rules
 
+> **Tipo**: `rule` | **Versión**: 2.1 | **Actualización**: 2026-01
+
+## 📌 Quick Reference
+
+| Principio | Regla |
+|-----------|-------|
+| **Secrets** | NUNCA en código. Siempre `os.getenv()` o Vault. |
+| **Passwords** | bcrypt/argon2. NUNCA MD5/SHA1. |
+| **JWT** | RS256 preferido. Access token = 15 min máx. |
+| **SQL** | Queries parametrizadas SIEMPRE. Nunca f-strings. |
+| **Inputs** | Validar con Pydantic. Never trust user input. |
+| **Headers** | HTTPS + HSTS + CSP obligatorios en prod. |
+
+### 👥 Roles que usan esta regla
+`security-analyst`, `backend-engineer`, `devops-engineer`, `architect`
+
+---
+
 Este documento define las reglas y mejores prácticas de seguridad del framework.
 
 ## 🔐 Principios Generales
@@ -275,3 +293,24 @@ logger.info(f"Card number: {card_number}")  # PII
 | Snyk | Multi-language security |
 | Trivy | Container scanning |
 | OWASP ZAP | Dynamic testing |
+
+---
+
+## ✅ Checklist de Validación (Security Review)
+
+### Código
+- [ ] Sin credenciales/secrets hardcodeados
+- [ ] Inputs validados con Pydantic/Zod
+- [ ] Queries SQL parametrizadas (no f-strings)
+- [ ] Outputs sanitizados (no XSS)
+
+### Auth
+- [ ] JWT con expiración corta (<= 15 min)
+- [ ] Passwords con bcrypt/argon2
+- [ ] RBAC implementado correctamente
+
+### Infra
+- [ ] HTTPS obligatorio
+- [ ] Headers de seguridad configurados
+- [ ] Rate limiting en endpoints públicos
+- [ ] Logs sin PII ni passwords

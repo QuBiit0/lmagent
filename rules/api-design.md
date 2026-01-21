@@ -1,5 +1,35 @@
 # LMAgent API Design Rules
 
+> **Tipo**: `rule` | **Versión**: 2.1 | **Actualización**: 2026-01
+
+## 📌 Quick Reference
+
+| Regla | Patrón |
+|-------|--------|
+| **URLs** | Sustantivos en plural: `/users`, `/orders` |
+| **Métodos** | GET (leer), POST (crear), PUT (reemplazar), DELETE (eliminar) |
+| **Versionado** | `/api/v1/...` en URL |
+| **Paginación** | `?page=1&limit=20` |
+| **Respuesta** | `{ "data": ..., "meta": ... }` |
+| **Error** | `{ "error": { "code": "...", "message": "..." } }` |
+
+### Status Codes
+| Código | Uso |
+|--------|-----|
+| 200 | OK (GET, PUT, PATCH) |
+| 201 | Created (POST) |
+| 204 | No Content (DELETE) |
+| 400 | Bad Request |
+| 401 | Unauthorized |
+| 403 | Forbidden |
+| 404 | Not Found |
+| 422 | Validation Error |
+
+### 👥 Roles que usan esta regla
+`backend-engineer`, `architect`, `automation-engineer`
+
+---
+
 Este documento define las reglas para diseño de APIs REST.
 
 ## 🎯 Principios

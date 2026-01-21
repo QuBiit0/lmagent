@@ -1,5 +1,29 @@
 # LMAgent Testing Rules
 
+> **Tipo**: `rule` | **Versión**: 2.1 | **Actualización**: 2026-01
+
+## 📌 Quick Reference
+
+| Métrica | Mínimo |
+|---------|--------|
+| **Cobertura Total** | >= 80% |
+| **Lógica de Negocio** | >= 90% |
+| **APIs** | >= 85% |
+| **Unit tests** | Cada función pública |
+| **Integration tests** | Cada endpoint |
+| **E2E tests** | Flujos críticos |
+
+| Herramienta | Python | TypeScript |
+|-------------|--------|------------|
+| **Runner** | pytest | jest |
+| **Coverage** | pytest-cov | jest --coverage |
+| **Mocking** | respx, unittest.mock | msw, jest.mock |
+
+### 👥 Roles que usan esta regla
+`qa-engineer`, `backend-engineer`, `frontend-engineer`
+
+---
+
 Este documento define las reglas y estándares de testing del framework.
 
 ## 📊 Objetivos de Cobertura
