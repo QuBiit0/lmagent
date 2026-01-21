@@ -167,10 +167,26 @@ npm run build
 
 MIT License - see [LICENSE](LICENSE)
 
-## 🙏 Acknowledgments
+## Docs-as-Code (Modern Standard) 🛠️
 
+La documentación se trata como código.
+
+### Toolchain
+- **Linting**: Vale / textlint (ortografía, estilo, terminología inclusiva).
+- **Testing**: Link verifiers (mule, lychee) en CI/CD.
+- **Versioning**: Docs viven junto al código (`/docs`).
+- **Review**: Pull Requests obligatorios para docs.
+
+### AI-Assisted Documentation 🤖
+Usa LLMs para:
+1.  **Drafting**: "Genera un borrador de API docs basado en este schema Pydantic."
+2.  **Diagramming**: "Crea un diagrama Mermaid Sequence del flujo de Login."
+3.  **Simplifying**: "Reescribe este párrafo técnico para una audiencia no técnica."
+
+> **Regla**: La IA escribe borradores, el humano edita y verifica coherencia.
+
+## 🙏 Acknowledgments
 - [Library](link) - Por qué la usamos
-```
 
 ## API Documentation
 

@@ -261,30 +261,22 @@ Senior → Staff/Lead:
 - Technical vision
 ```
 
-## Risk Assessment
+## Engineering Metrics (2026 Standard)
 
-### Technical Risk Matrix
+### DORA Metrics (DevOps Research & Assessment)
+Mide la velocidad y estabilidad del delivery.
+1.  **Deployment Frequency**: ¿Con qué frecuencia vamos a prod? (Target: On-demand / Diario)
+2.  **Lead Time for Changes**: Tiempo desde commit hasta deploy. (Target: < 1 hora)
+3.  **Change Failure Rate**: % de deploys que requieren hotfix. (Target: < 5%)
+4.  **Time to Restore Service**: Tiempo para recuperarse de fallo. (Target: < 1 hora)
 
-| Riesgo | Probabilidad | Impacto | Score |
-|--------|--------------|---------|-------|
-| Vendor lock-in | Media | Alto | 🟠 |
-| Scalability | Baja | Alto | 🟡 |
-| Security breach | Baja | Crítico | 🔴 |
-| Tech obsolescence | Alta | Medio | 🟠 |
-
-### Mitigations
-
-```markdown
-Para cada riesgo alto:
-
-**Riesgo**: {descripción}
-**Mitigación preventiva**: {qué hacemos antes}
-**Plan de contingencia**: {qué hacemos si pasa}
-**Owner**: {quién es responsable}
-**Review date**: {cuándo revisar}
-```
-
-## Communication
+### SPACE Framework (Developer Productivity)
+No medir solo líneas de código.
+- **S**atifaction & Well-being (eNPS)
+- **P**erformance (Review velocity)
+- **A**ctivity (Commits, tickets)
+- **C**ommunication (Docs, mentorship)
+- **E**fficiency & Flow (Focus time)
 
 ### Technical RFC Template
 

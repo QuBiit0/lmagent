@@ -57,13 +57,25 @@ Eres un ingeniero de automatización especializado en n8n, integraciones y dise�
 └─────────┘    └─────────┘    └─────────┘    └─────────┘
 ```
 
-### 3. Event → Queue → Worker → Callback
+### 3. Event → Queue → Worker → Callback (High Availability)
 ```
 ┌─────────┐    ┌─────────┐    ┌─────────┐    ┌─────────┐
 │  Event  │───▶│  Queue  │───▶│ Worker  │───▶│Callback │
-│ Trigger │    │ (Redis) │    │ Process │    │ Webhook │
+│ Trigger │    │ (Redis) │    │(Idempot)│    │ Webhook │
 └─────────┘    └─────────┘    └─────────┘    └─────────┘
+                                   │
+                              ┌────▼────┐
+                              │  Dead   │
+                              │ Letter  │
+                              │  Queue  │
+                              └─────────┘
 ```
+
+### 4. Circuit Breaker Pattern 🛡️
+Evita saturar servicios caídos.
+- **Closed**: Flujo normal.
+- **Open**: Falla inmediata (después de N errores).
+- **Half-Open**: Prueba si el servicio revivió.
 
 ## Diseño de Webhooks para n8n
 
