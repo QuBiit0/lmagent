@@ -1,111 +1,95 @@
-# Project Brief Template 🚀
+# Project Brief Template 🚀 (2026 Edition)
 
-> **Instrucciones**: Copia este contenido en un nuevo archivo o pégalo directo en el chat.
-> Reemplaza los textos entre corchetes `[...]` con tu información.
-> Los ejemplos están en *cursiva* para guiarte. ¡Sé tan detallado como puedas!
+> **Instrucciones**: Copia este contenido, reemplaza los textos entre corchetes `[...]` y pégalo en el chat.
+> Los ejemplos están actualizados con el stack moderno de 2026.
 
 ---
 
 ## 1. Visión del Producto 🔭
 
 **Nombre del Proyecto**: [Nombre Clave o Final]
-> *Ejemplo: "FitTrack Pro" o "Proyecto Alfa"*
+> *Ejemplo: "AgentFlow 2026" o "NeuroTask"*
 
 **Elevator Pitch** (En una frase, ¿qué es y para quién?):
 [Describe tu producto en < 280 caracteres]
-> *Ejemplo: Una plataforma SaaS que permite a pequeños gimnasios gestionar sus socios, pagos y rutinas de entrenamiento desde una sola app móvil, eliminando el uso de Excel y papel.*
+> *Ejemplo: Un asistente personal de IA que organiza automáticamente la agenda de médicos independientes conectándose a WhatsApp y Google Calendar, reduciendo el ausentismo de pacientes en un 40%.*
 
 **Objetivo Principal de Negocio**:
-[Selecciona uno o describe]
-- [ ] **Validar MVP (Quick & Dirty)**: *Prioridad velocidad, código descartable si es necesario.*
-- [ ] **Producto Escalable (Long Term)**: *Prioridad calidad, arquitectura robusta, tests.*
-- [ ] **Prototipo para Inversores**: *Prioridad visual, datos fake ("Click-dummy").*
-- [ ] **Herramienta Interna**: *Prioridad funcionalidad sobre estética.*
+[Selecciona uno]
+- [ ] **Validar MVP (Speed)**: *Quick & dirty, foco en time-to-market.*
+- [ ] **Producto Escalable (Quality)**: *Arquitectura limpia, TDD, escalabilidad.*
+- [ ] **Prototipo (Demo)**: *Visualmente impactante, funcionalidad mockeada.*
+- [ ] **Internal Tool**: *Foco en utilidad bruta y eficiencia.*
 
 ## 2. Usuarios y Problema 👥
 
 **Perfiles de Usuario (Personas)**:
-1. **[Rol Principal]**: [Descripción breve]
-   > *Ej: "Dueño de Gimnasio": Persona con poco tiempo, no muy técnica, usa el celular para todo.*
-2. **[Rol Secundario]**: [Descripción breve]
-   > *Ej: "Socio del Gimnasio": Quiere ver su rutina y pagar su cuota rápido.*
+1. **[Rol Principal]**: [Descripción]
+   > *Ej: "Médico Cardiólogo": 50+ años, poco tecnológico, usa voz para notas.*
+2. **[Rol Secundario]**: [Descripción]
+   > *Ej: "Paciente": Quiere confirmar turno por WhatsApp sin instalar apps.*
 
-**Problemas a Resolver (Pain Points)**:
+**Problemas a Resolver**:
 - [Problema 1]
-  > *Ej: "Los dueños pierden dinero porque olvidan cobrar cuotas vencidas."*
-- [Problema 2]
-  > *Ej: "Los socios se aburren y abandonan porque no les cambian la rutina a tiempo."*
+  > *Ej: "El médico pierde 2 horas diarias confirmando turnos manualmente."*
 
 ## 3. Funcionalidades Clave (Scope) ✨
 
-*(Usa metodología MoSCoW para priorizar)*
-
-### 🟢 Must Have (MVP Crítico - Sin esto NO se lanza)
+### 🟢 Must Have (MVP)
 - [Feature 1]
-  > *Ej: Login social (Google) y Registro de usuarios.*
+  > *Ej: Chatbot en WhatsApp que entienda lenguaje natural (NLP).*
 - [Feature 2]
-  > *Ej: Dashboard administrativo para ver estado de pagos del mes.*
+  > *Ej: Sincronización bi-direccional con Google Calendar.*
+
+### 🟡 Should Have (v1.1)
 - [Feature 3]
-  > *Ej: Módulo de creación de rutinas con ejercicios precargados.*
+  > *Ej: Recordatorios automáticos 24hs antes.*
 
-### 🟡 Should Have (Importante pero puede esperar a v1.1)
+### 🔴 Out of Scope (Ahora NO)
 - [Feature 4]
-  > *Ej: Notificaciones push automáticas cuando vence la cuota.*
-- [Feature 5]
-  > *Ej: Integración con MercadoPago/Stripe.*
+  > *Ej: Pagos online (se hará en Q3).*
 
-### ⚪ Could Have (Deseable / Nice to have)
-- [Feature 6]
-  > *Ej: Gamification y ranking entre socios.*
+## 4. Stack Tecnológico Preferido (2026) 🛠️
 
-### 🔴 Out of Scope (Explícitamente NO haremos esto ahora)
-- [Anti-feature 1]
-  > *Ej: No haremos app nativa iOS/Android por ahora, solo Web App Responsive (PWA).*
-
-## 4. Preferencias Tecnológicas 🛠️
-
-*(Marca con X tus preferencias. Deja en blanco si prefieres que el Arquitecto decida)*
+*(Marca con X. Deja en blanco para que el Arquitecto decida)*
 
 **Frontend**:
-- [ ] **React / Next.js** *(Estándar moderno, SEO friendly)*
-- [ ] **Vue / Nuxt** *(Curva de aprendizaje suave)*
-- [ ] **Mobile Nativo** *(React Native / Flutter)*
-- [ ] **Otro**: [...]
+- [ ] **Next.js 15+ / React 19** *(Server Components, Streaming)*
+- [ ] **Vue 3 / Nuxt 4** *(Composition API)*
+- [ ] **SvelteKit 2** *(Performance pura)*
+- [ ] **Mobile** (React Native / Expo Router)
 
 **Backend**:
-- [ ] **Python (FastAPI)** *(Rápido, excelente para IA/Data)*
-- [ ] **Node.js (NestJS)** *(Estructurado, TypeScript, escalable)*
-- [ ] **Node.js (Express)** *(Simple, minimalista)*
-- [ ] **Otro**: [...]
+- [ ] **Python 3.12+ (FastAPI)** *(Async por defecto, ideal AI/Agents)*
+- [ ] **Node.js 22+ (NestJS/Hono)** *(TypeScript estricto)*
+- [ ] **Go (Gin/Echo)** *(High throughput)*
+
+**AI & Agents**:
+- [ ] **LMAgent Framework** *(Orchestrator, Personas)*
+- [ ] **LangChain / LangGraph**
+- [ ] **OpenAI / Anthropic / Gemini Models**
 
 **Base de Datos**:
-- [ ] **SQL (PostgreSQL)** *(Relacional, datos estructurados, integridad)*
-- [ ] **NoSQL (MongoDB)** *(Flexible, prototipado rápido)*
-- [ ] **Arquitecto Decide** *(Según el caso de uso)*
+- [ ] **PostgreSQL 16+** *(Relacional + JSONB + pgvector)*
+- [ ] **Supabase / Firebase** *(BaaS rápido)*
+- [ ] **Redis** *(Cache & Queues)*
 
 **Infraestructura**:
-- [ ] **Docker / Contenedores** *(Estándar)*
-- [ ] **Serverless (Vercel/Supabase)** *(Rápido deploy, bajo costo inicial)*
-- [ ] **Cloud Específico**: [AWS / GCP / Azure]
+- [ ] **Docker Compose** *(Dev standard)*
+- [ ] **Vercel / Railway / Dokploy**
+- [ ] **AWS / GCP** *(Serverless)*
 
 ## 5. Diseño y UX 🎨
 
 **Estilo Visual**:
-- [ ] **Minimalista & Limpio** *(Mucho blanco, tipografía sans-serif)*
-- [ ] **Corporativo & Serio** *(Azules, grises, confiable)*
-- [ ] **Colorido & Juguetón** *(Para apps de consumo o jóvenes)*
-- [ ] **Dark Mode** *(Obligatorio / Opcional)*
+- [ ] **Neo-Brutalism** *(Tendencia 2025/26)*
+- [ ] **Glassmorphism / Apple Style**
+- [ ] **Minimal SaaS** *(Inter/Geist font, Tailwind)*
+- [ ] **Dark Mode First**
 
-**Referencias (Inspiración)**:
-- [Link 1] - *Qué te gusta: "Me gusta cómo muestran los gráficos aquí"*
-- [Link 2] - *Qué te gusta: "El flujo de onboarding es perfecto"*
+## 6. Integraciones y Claves ⚠️
 
-## 6. Reglas Especiales y Contexto ⚠️
-
-**Compliance & Seguridad**:
-- [Restricción 1]
-  > *Ej: "Los datos deben estar alojados en Europa (GDPR)."*
-
-**Integraciones Obligatorias**:
-- [Integración 1]
-  > *Ej: "Debe usar la API legacy de facturación de la empresa (adjunto docs)."*
+**APIs Externas**:
+- [ ] **WhatsApp Business API**
+- [ ] **Stripe / MercadoPago**
+- [ ] **Auth0 / Clerk**
