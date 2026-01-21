@@ -158,5 +158,5 @@ MIT License - ver [LICENSE](LICENSE) para detalles.
 
 ---
 
-**LMAgent v1.0**
+**LMAgent v2.0**
 Desarrollado con ❤️ por **Leandro Martín Alvarez (QuBiit)** - 2026.

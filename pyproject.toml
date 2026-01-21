@@ -1,6 +1,6 @@
 [project]
 name = "lmagent"
-version = "1.0.0"
+version = "2.0.0"
 description = "Framework for automation and AI agent development"
 readme = "README.md"
 license = { text = "MIT" }
