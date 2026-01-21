@@ -4,6 +4,7 @@
   <br/>
   <h1>LMAgent</h1>
   <p><strong>Universal AI Agent Framework for 2026</strong></p>
+  <p><em>Version 2.1 - Enhanced with V2 Personas, Rules & Workflows</em></p>
 </div>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -102,7 +103,7 @@ lmagent/
 ├── .github/copilot-instructions.md  # GitHub Copilot
 │
 ├── config/                     # Configuración global
-├── personas/                   # 17 roles especializados Senior
+├── personas/                   # 18 roles especializados Senior (v2.1)
 ├── rules/                      # Reglas del proyecto
 ├── workflows/                  # Workflows reutilizables
 ├── checklists/                 # Checklists por nivel
@@ -164,5 +165,5 @@ MIT License - ver [LICENSE](LICENSE) para detalles.
 
 ---
 
-**LMAgent v2.0**
-Desarrollado con ❤️ por **Leandro Martín Alvarez (QuBiit)** - 2026.
+**LMAgent v2.1**
+Developed with ❤️ by **Leandro Martín Alvarez (QuBiit)** - 2026.

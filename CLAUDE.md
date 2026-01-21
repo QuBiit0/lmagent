@@ -1,10 +1,10 @@
-# LMAgent Framework - Claude Code Instructions
+# LMAgent Framework v2.1 - Claude Code Instructions
 
 Este es el archivo principal de instrucciones para Claude Code.
 
 ## Framework
 
-Estás trabajando con **LMAgent**, un framework para desarrollo de automatizaciones y agentes de IA.
+Estás trabajando con **LMAgent v2.1**, un framework para desarrollo de automatizaciones y agentes de IA.
 
 ## ⚠️ REGLA CRÍTICA: Documentación Continua
 

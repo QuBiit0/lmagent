@@ -1,4 +1,4 @@
-# LMAgent Framework - Antigravity Configuration
+# LMAgent Framework v2.1 - Antigravity Configuration
 
 > Framework universal para desarrollo de automatizaciones y agentes de IA.
 
@@ -36,7 +36,7 @@ El framework usa niveles adaptativos (0-4) para ajustar la profundidad de planif
 | 3 | Complex | 2-8h | Sí + Artefactos |
 | 4 | Enterprise | 8h+ | Gobernanza |
 
-## 👥 Personas Disponibles (17)
+## 👥 Personas Disponibles (18)
 
 | Comando | Persona | Especialidad |
 |---------|---------|--------------|
@@ -75,7 +75,7 @@ El framework usa niveles adaptativos (0-4) para ajustar la profundidad de planif
 └── workflows/    # Workflows como slash commands
 
 config/           # Configuración global
-personas/         # 17 roles especializados
+personas/         # 18 roles especializados (v2.1)
 rules/            # Reglas del proyecto
 workflows/        # 15 workflows reutilizables
 checklists/       # Checklists por nivel
