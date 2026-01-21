@@ -1,6 +1,6 @@
 # LMAgent Framework
 <div align="center">
-  <img src="https://i.ibb.co/LMAgent/logo.png" alt="LMAgent Logo" width="200"/>
+  <img src="docs/assets/logo.png" alt="LMAgent Logo" width="200"/>
   <br/>
   <h1>LMAgent</h1>
   <p><strong>Universal AI Agent Framework for 2026</strong></p>
