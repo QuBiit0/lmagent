@@ -336,35 +336,36 @@ Trajectory: {trajectory_id}"
 ```
 
 ### 6.2 Crear Pull Request
+> 💡 **Tip**: Usa `/prompt` para generar la descripción del PR basada en el Trajectory Log.
 
 ```markdown
 ## Fix: {Issue Title}
-
+ 
 Fixes #{number}
-
+ 
 ### Problem
 {Descripción del problema}
-
+ 
 ### Root Cause
 {Análisis de causa raíz}
-
+ 
 ### Solution
 {Descripción de la solución}
-
+ 
 ### Testing
 - [x] Created reproduction script
 - [x] Fixed issue verified
 - [x] All existing tests pass
 - [x] Added new tests for fix
-
+ 
 ### Trajectory
 <details>
 <summary>Agent execution log</summary>
-
+ 
 {Trajectory completo en formato collapsible}
-
+ 
 </details>
-
+ 
 ---
 🤖 *This PR was created by LMAgent*
 Cost: ${cost}

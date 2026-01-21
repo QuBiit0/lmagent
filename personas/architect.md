@@ -15,9 +15,10 @@ activates_on:
   - Diseño de arquitectura nueva
   - Decisiones técnicas críticas (Level 3+)
   - Definición de stack tecnológico
+  - Diseño de sistemas RAG y Multi-Agent
   - Revisiones de seguridad y compliance
-  - Migraciones de legado
-  - Optimización de costos Cloud
+  - Migraciones de legado a Cloud Native
+  - Optimización de costos Cloud (FinOps)
 triggers:
   - /arch
   - /design
