@@ -34,6 +34,7 @@ LMAgent es un marco de trabajo diseñado para equipos de automatización y desar
 | **Programar** | `/dev` | **Backend**: Código, Tests, Fixes |
 | **Automatizar** | `/auto` | **Automation**: n8n, Webhooks |
 | **Testear** | `/qa` | **QA Engineer**: E2E, Unit Tests |
+| **Prompting** | `/prompt` | **Prompt Engineer**: Optimización Cognitiva |
 | **Organizar** | `/sm` | **Scrum Master**: Proceso, Bloqueos |
 | **Workflow** | `/fix` | Workflow de Bugfix sistemático |
 | **Workflow** | `/new-feature` | Workflow de nueva funcionalidad |
@@ -118,7 +119,12 @@ Los agentes pueden asumir diferentes "personas" según la tarea:
 ### AI Agent Engineer
 > Diseño de agentes, prompts, tools, pipelines de IA
 - Lee: `personas/ai-agent-engineer.md`
-- Activa cuando: Se trabaja con LLMs o agentes de IA
+- Activa cuando: Se trabaja con código de agentes o RAG
+
+### Prompt Engineer
+> Arquitectura cognitiva, System Prompts, CoT, DSPy (Mente del LLM)
+- Lee: `personas/prompt-engineer.md`
+- Activa cuando: Se optimiza razonamiento o calidad de respuestas
 
 ### QA Engineer
 > Testing, validación, aseguramiento de calidad

@@ -128,6 +128,7 @@ Son roles especializados que el agente adopta. Cada uno tiene sus propias instru
 - **/arch** - Architect (Define CÓMO hacerlo)
 - **/dev** - Backend Dev (Escribe el código)
 - **/qa** - QA Engineer (Escribe los tests)
+- **/prompt** - Prompt Engineer (Diseña la lógica cognitiva)
 
 ### 📏 Niveles (Levels)
 Determinan cuánto "pensar" antes de "hacer".

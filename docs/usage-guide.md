@@ -29,7 +29,8 @@ Es común cambiar de persona durante una tarea compleja:
 2. **Diseño**: `/arch` revisa las stories y define la estructura de DB y API.
 3. **Desarrollo**: `/dev` toma el diseño e implementa el código.
 4. **Revisión**: `/qa` escribe los tests para validar el código.
-5. **Cierre**: `/tech-writer` actualiza la documentación.
+5. **Prompting**: `/prompt` ajusta el system prompt del agente creado.
+6. **Cierre**: `/tech-writer` actualiza la documentación.
 
 ---
 
