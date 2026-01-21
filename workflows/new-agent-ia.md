@@ -192,8 +192,10 @@ tools:
 ---
 
 ## Paso 4: Crear el Prompt
+> 💡 **Tip**: Pídele al `/prompt` engineer que redacte esto por ti.
 
 ### 4.1 Escribir System Prompt
+El path estándar es `agents/python/prompts/personas/{agent_name}.md`.
 
 ```markdown
 # agents/python/prompts/personas/{agent_name}.md

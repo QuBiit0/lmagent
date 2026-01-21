@@ -53,14 +53,14 @@ logger = structlog.get_logger()
 # COST TRACKING
 # ============================================
 
-# Cost per 1K tokens (update with current prices)
+# Cost per 1K tokens (Updated for 2026 pricing trends)
 LLM_COSTS = {
-    "gpt-4o": {"input": 0.0025, "output": 0.01},
-    "gpt-4o-mini": {"input": 0.00015, "output": 0.0006},
-    "claude-sonnet-4": {"input": 0.003, "output": 0.015},
-    "claude-3-5-haiku": {"input": 0.0008, "output": 0.004},
-    "gemini-2.0-flash": {"input": 0.0, "output": 0.0},  # Free tier
-    "gemini-2.5-pro": {"input": 0.00125, "output": 0.005},
+    "gpt-4o": {"input": 0.0025, "output": 0.01},           # Standard High-Intelligent
+    "gpt-4o-mini": {"input": 0.00015, "output": 0.0006},   # Commodity Intelligence
+    "claude-3-5-sonnet": {"input": 0.003, "output": 0.015},# Coding Leader
+    "claude-3-haiku": {"input": 0.00025, "output": 0.001}, # Fast Text
+    "gemini-2.0-flash": {"input": 0.0001, "output": 0.0004},# High throughput
+    "deepseek-coder-v3": {"input": 0.0001, "output": 0.0002}, # Best Value
 }
 
 
@@ -436,15 +436,28 @@ class LMAgentRuntime:
         - Anthropic: anthropic.messages.create()
         - LiteLLM: litellm.acompletion()
         """
-        # Placeholder implementation
-        logger.info("llm_call", model=self.config.model);
+        # ------------------------------------------------------------------
+        # IMPLEMENTATION NOTE:
+        # In a real 2026 environment, use LiteLLM or LangChain here.
+        # Example:
+        # response = await litellm.acompletion(
+        #     model=self.config.model,
+        #     messages=self.messages,
+        #     tools=self.get_tools_for_llm()
+        # )
+        # ------------------------------------------------------------------
+        
+        logger.info("llm_call", model=self.config.model)
+        
+        # Determine strictness based on model capabilities
+        # (Senior Agents use stronger models for critical tasks)
         
         # Simulate cost tracking
         self.cost_tracker.track(self.config.model, 500, 200)
         
-        # Return mock response for template
+        # Return mock response for template (replace with real API call)
         return {
-            "content": "This is a placeholder LLM response. Implement _call_llm() with your LLM provider.",
+            "content": "This is a placeholder LLM response. Please configure a real provider in `agents/runtime.py` using LiteLLM.",
             "tool_calls": []
         }
     
