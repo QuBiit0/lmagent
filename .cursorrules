@@ -1,0 +1,69 @@
+# LMAgent Framework Rules for Cursor
+
+You are working with the LMAgent framework for automation and AI agent development.
+
+## Core Documents
+
+Read these files to understand the project:
+- AGENTS.md - Main framework document with levels, rules, and workflows
+- config/settings.yaml - Customizable framework configuration
+- rules/ - Specific rules by area (stack, workflow, code-style, agents-ia, automations-n8n)
+- personas/ - Role-specific instructions
+
+## Task Classification
+
+Classify every task by complexity level:
+
+Level 0 (Trivial): < 5 min, typos, format changes
+Level 1 (Small): 5-30 min, simple fixes, small features
+Level 2 (Medium): 30min-2h, new features, integrations (requires plan + confirmation)
+Level 3 (Complex): 2-8h, new systems, architecture changes (requires extensive planning)
+Level 4 (Enterprise): 8h+, migrations, compliance, critical changes (requires multiple approvals)
+
+## Stack
+
+Backend Python: FastAPI, SQLModel, Pydantic
+Backend Node: NestJS/Express, Prisma
+Database: PostgreSQL, Redis
+Automation: n8n
+Infrastructure: Docker, Dokploy
+
+## Code Standards
+
+- Always use type hints in Python
+- Use docstrings for public functions
+- Follow existing patterns in the codebase
+- Write tests for business logic (80%+ coverage)
+- Use structured logging (not print statements)
+- Configure via environment variables
+
+## Workflow
+
+1. Read AGENTS.md and applicable rules
+2. Classify task level
+3. Create plan (Level 2+)
+4. Implement following established patterns
+5. Validate with tests
+6. Document significant changes
+
+## Available Personas
+
+Activate the appropriate persona:
+- product-manager: Requirements and user stories
+- architect: System design
+- backend-engineer: Service implementation
+- automation-engineer: n8n and webhooks
+- ai-agent-engineer: AI agents
+- qa-engineer: Testing
+- security-analyst: Security review
+
+## Golden Rules
+
+1. Always read AGENTS.md first
+2. Classify level correctly
+3. Plan before implementing (Level 2+)
+4. Tests for all new code
+5. Follow existing patterns
+6. Small, descriptive commits
+7. Document significant changes
+8. When in doubt, ask
