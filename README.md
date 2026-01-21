@@ -1,12 +1,27 @@
 # LMAgent Framework
+<div align="center">
+  <img src="https://i.ibb.co/LMAgent/logo.png" alt="LMAgent Logo" width="200"/>
+  <br/>
+  <h1>LMAgent</h1>
+  <p><strong>Universal AI Agent Framework for 2026</strong></p>
+</div>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
-[![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://python.org)
+[![Python 3.12+](https://img.shields.io/badge/Python-3.12%2B-blue.svg)](https://python.org)
+[![Token Optimized](https://img.shields.io/badge/Token%20Optimized-MoE-purple.svg)](#-token-efficiency-strategy)
 
 **LMAgent** es un marco de trabajo universal para equipos de automatización y desarrollo de agentes de IA. Combina lo mejor de [BMAD-METHOD](https://github.com/bmadcode/BMAD-METHOD) y [SWE-agent](https://github.com/princeton-nlp/SWE-agent) en un framework unificado compatible con cualquier IDE agéntico.
 
 > ⚠️ **Regla crítica**: Mantén la documentación actualizada. Ver `rules/documentation.md`.
+
+## ⚡ Token Efficiency Strategy
+
+¿Preocupado por el consumo de tokens? **LMAgent está diseñado para ser eficiente.**
+
+1.  **Lazy Loading**: El Orchestrator NO carga todos los roles. Solo carga el archivo necesario (ej. `/pm` carga solo `product-manager.md`).
+2.  **Modular Context**: Cada persona es un archivo autocontenido. No hay "contaminación de contexto".
+3.  **Senior Concise Instructions**: Al usar roles Senior, las instrucciones son densas pero directas, evitando round-trips innecesarios de corrección.
 
 ## 🚀 Quick Start
 
