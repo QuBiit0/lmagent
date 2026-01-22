@@ -1,5 +1,10 @@
 # LMAgent Framework v2.1 - Claude Code Instructions
 
+> [!IMPORTANT]
+> **ANTES DE HACER CUALQUIER COSA**: Este proyecto usa el framework **LMAgent v2.1**.
+> **DEBES** leer `AGENTS.md` completo antes de implementar cualquier cambio.
+> El framework define niveles de complejidad (0-4), personas especializadas y workflows.
+
 Este es el archivo principal de instrucciones para Claude Code.
 
 ## Framework

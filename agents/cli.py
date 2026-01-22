@@ -17,7 +17,7 @@ import sys
 from pathlib import Path
 from typing import Optional
 
-__version__ = "2.0.0"
+__version__ = "2.1.0"
 
 import yaml
 import structlog
@@ -129,7 +129,8 @@ def init_project(project_path: Path, force: bool = False) -> bool:
     """
     Initialize a project with LMAgent framework.
     
-    Copies framework files to .agent/ directory and creates IDE config files.
+    Copies framework files to project root and .agent/ directory.
+    AGENTS.md is the main entry point (industry standard).
     """
     package_root = get_package_root()
     agent_dir = project_path / ".agent"
@@ -160,11 +161,22 @@ def init_project(project_path: Path, force: bool = False) -> bool:
         else:
             print(f"   ⚠️  {dir_name}/ not found in package")
     
-    # Copy AGENTS.md to .agent/README.md
+    # Copy AGENTS.md to project root (industry standard - main entry point)
     agents_md = package_root / "AGENTS.md"
+    if agents_md.exists():
+        shutil.copy(agents_md, project_path / "AGENTS.md")
+        print("   ✅ Created AGENTS.md (main entry point)")
+    
+    # Copy AGENTS.md to .agent/README.md as well (for compatibility)
     if agents_md.exists():
         shutil.copy(agents_md, agent_dir / "README.md")
         print("   ✅ Created .agent/README.md")
+    
+    # Copy .lmagent marker file
+    lmagent_marker = package_root / ".lmagent"
+    if lmagent_marker.exists():
+        shutil.copy(lmagent_marker, project_path / ".lmagent")
+        print("   ✅ Created .lmagent (framework marker)")
     
     # Create IDE config files in project root
     # CLAUDE.md
@@ -199,6 +211,10 @@ def init_project(project_path: Path, force: bool = False) -> bool:
     
     print("\n✨ LMAgent initialized successfully!")
     print("\n📁 Structure created:")
+    print("   AGENTS.md          ← Main entry point for AI agents")
+    print("   .lmagent           ← Framework marker file")
+    print("   CLAUDE.md          ← Claude Code config")
+    print("   .cursorrules       ← Cursor config")
     print("   .agent/")
     print("   ├── README.md")
     print("   ├── personas/")
@@ -206,8 +222,6 @@ def init_project(project_path: Path, force: bool = False) -> bool:
     print("   ├── checklists/")
     print("   ├── config/")
     print("   └── rules/project.md  ← Add your project rules here")
-    print("   CLAUDE.md")
-    print("   .cursorrules")
     
     return True
 

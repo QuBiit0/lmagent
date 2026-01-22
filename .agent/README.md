@@ -1,5 +1,10 @@
 # LMAgent Framework v2.1 - Antigravity Configuration
 
+> [!IMPORTANT]
+> **ANTES DE HACER CUALQUIER COSA**: Este proyecto usa el framework **LMAgent v2.1**.
+> Lee este archivo completo y luego consulta `AGENTS.md` para entender cómo trabajar aquí.
+> **NO ignores estas instrucciones** - el framework define niveles, personas y workflows.
+
 > Framework universal para desarrollo de automatizaciones y agentes de IA.
 
 Este archivo es leído por Antigravity como configuración principal del proyecto.
@@ -20,8 +25,8 @@ Este archivo es leído por Antigravity como configuración principal del proyect
 
 Para entender el framework completo, lee:
 
-1. **[AGENTS.md](file:///AGENTS.md)** - Marco de trabajo principal
-2. **[config/settings.yaml](file:///config/settings.yaml)** - Configuración global personalizable
+1. **[AGENTS.md](../AGENTS.md)** - Marco de trabajo principal
+2. **[config/settings.yaml](config/settings.yaml)** - Configuración global personalizable
 3. **rules/documentation.md** - ⚠️ Regla de documentación continua
 
 ## 🎯 Sistema de Niveles
@@ -99,7 +104,7 @@ Usa estos slash commands para activar workflows:
 
 ## 📚 Referencias
 
-- [Rules](file:///rules/) - Reglas del proyecto
-- [Personas](file:///personas/) - Definiciones de roles
-- [Workflows](file:///workflows/) - Flujos de trabajo
-- [Commands](file:///docs/commands.md) - Todos los comandos
+- [Rules](rules/) - Reglas del proyecto
+- [Personas](../personas/) - Definiciones de roles
+- [Workflows](../workflows/) - Flujos de trabajo
+- [Commands](../docs/commands.md) - Todos los comandos

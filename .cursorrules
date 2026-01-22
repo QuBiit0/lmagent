@@ -1,5 +1,9 @@
 # LMAgent Framework Rules for Cursor
 
+# ⚠️ IMPORTANT: This project uses LMAgent Framework v2.1
+# BEFORE doing anything, read AGENTS.md for the complete workflow.
+# The framework defines complexity levels (0-4), specialized personas, and workflows.
+
 You are working with the LMAgent framework for automation and AI agent development.
 
 ## Core Documents

@@ -1,25 +1,49 @@
-# LMAgent - Marco de Trabajo para Agentes de IA
+# AGENTS.md
 
-> Este archivo define cómo deben trabajar los agentes de IA dentro de este repositorio.
-> **Léelo primero** antes de realizar cualquier cambio significativo.
+> **🤖 AI AGENT: READ THIS FIRST!**
+> This project uses the **LMAgent Framework v2.1**. Before making ANY changes:
+> 1. Read this entire file to understand the workflow
+> 2. Follow the level system (0-4) for task classification
+> 3. Use the appropriate persona for each task type
+> 4. NEVER skip documentation updates
 
-## 📚 Documentación de Uso
+---
 
-- **🆕 [Guía de Inicio Rápido](docs/getting-started.md)**: Empieza aquí si eres nuevo.
-- **📘 [Guía de Uso Completa](docs/usage-guide.md)**: Aprende a dominar niveles y personas.
-- **⚡ [Quick Reference](#-quick-reference-tabla-de-comandos)**: Comandos para expertos.
+## Setup Commands
 
-## ⚠️ REGLA CRÍTICA: Documentación Continua
+```bash
+# Install framework (if not installed)
+pip install -e .
 
-> **SIEMPRE** actualiza la documentación cuando hagas cambios significativos.
-> Un framework desactualizado genera confusión, errores y pérdida de tiempo.
+# Initialize in a new project
+lmagent init
 
-**Al terminar CADA tarea, pregúntate:**
-- ¿Creé algo nuevo que otros deberían saber? → Documentar
-- ¿Cambié algún patrón o convención? → Actualizar reglas
-- ¿Resolví un problema que podría repetirse? → Agregar notas
+# Verify installation
+lmagent doctor
 
-📚 **Ver**: `rules/documentation.md` para checklist completo.
+# Show version
+lmagent --version
+```
+
+## Code Style
+
+- **Python**: FastAPI, SQLModel, Pydantic v2, async/await
+- **TypeScript**: NestJS, Prisma, strict mode
+- **Testing**: pytest-asyncio, Jest (>80% coverage)
+- **Linting**: ruff (Python), ESLint (TS)
+- **Commits**: `type(scope): description` (feat, fix, refactor, docs, test)
+
+## Project Structure
+
+```
+personas/       # 18 specialized AI personas (V2.1 format)
+workflows/      # 12 reusable workflow templates
+rules/          # 9 rule files (stack, code-style, security, etc.)
+config/         # YAML configs (tools, commands, models, levels)
+agents/         # Python runtime with CLI and tools
+```
+
+---
 
 ## 🎯 Propósito
 
@@ -303,4 +327,4 @@ Los agentes deben mantener:
 
 ---
 
-*LMAgent v1.0 - Build More, Automate Dreams* 🚀
+*LMAgent v2.1 - Build More, Automate Dreams* 🚀

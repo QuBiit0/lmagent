@@ -5,7 +5,7 @@ Bienvenido a **LMAgent**, tu framework para desarrollo asistido por IA. Esta gu�
 ## 1. Instalación
 
 ### Requisitos previos
-- Python 3.10+
+- Python 3.12+
 - Git
 - Un IDE agéntico (Antigravity, Cursor, Windsurf, VS Code + Claude/Copilot)
 - API Keys para tus LLMs (OpenAI, Anthropic, Google)
