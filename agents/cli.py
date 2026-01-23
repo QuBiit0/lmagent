@@ -14,10 +14,11 @@ import argparse
 import asyncio
 import shutil
 import sys
+from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
-__version__ = "2.1.0"
+__version__ = "3.0.0"
 
 import yaml
 import structlog
@@ -209,19 +210,74 @@ def init_project(project_path: Path, force: bool = False) -> bool:
 """)
         print("   ✅ Created .agent/rules/project.md (customize this!)")
     
+    # Create .lmagent state directory for session persistence
+    lmagent_state_dir = project_path / ".lmagent"
+    lmagent_state_dir.mkdir(exist_ok=True)
+    
+    # Copy session.yaml template
+    session_template = package_root / "templates" / "session.yaml"
+    session_file = lmagent_state_dir / "session.yaml"
+    if session_template.exists() and not session_file.exists():
+        shutil.copy(session_template, session_file)
+        print("   ✅ Created .lmagent/session.yaml (state persistence)")
+    elif not session_file.exists():
+        # Create minimal session file if template not found
+        session_file.write_text(f"""# LMAgent Session State
+# Updated automatically by the agent
+
+project:
+  name: "{project_path.name}"
+  created_at: "{datetime.now().strftime('%Y-%m-%d')}"
+  last_updated: "{datetime.now().strftime('%Y-%m-%d %H:%M')}"
+  current_phase: setup
+
+current_context:
+  last_action: "Project initialized"
+  active_persona: null
+  awaiting_user_input: false
+
+sessions: []
+decisions: []
+blockers: []
+""")
+        print("   ✅ Created .lmagent/session.yaml (state persistence)")
+    
+    # Create checkpoints directory for auto-backups
+    checkpoints_dir = lmagent_state_dir / "checkpoints"
+    checkpoints_dir.mkdir(exist_ok=True)
+    print("   ✅ Created .lmagent/checkpoints/ (auto-backups)")
+    
+    # Copy PROJECT_KICKOFF.md template
+    kickoff_template = package_root / "templates" / "PROJECT_KICKOFF.md"
+    kickoff_file = project_path / "PROJECT_KICKOFF.md"
+    if kickoff_template.exists() and not kickoff_file.exists():
+        shutil.copy(kickoff_template, kickoff_file)
+        print("   ✅ Created PROJECT_KICKOFF.md (fill this or let agent ask)")
+    
+    # Create specs directory
+    specs_dir = project_path / "specs"
+    specs_dir.mkdir(exist_ok=True)
+    print("   ✅ Created specs/ (for spec.yaml, plan.yaml, tasks.yaml)")
+    
     print("\n✨ LMAgent initialized successfully!")
     print("\n📁 Structure created:")
-    print("   AGENTS.md          ← Main entry point for AI agents")
-    print("   .lmagent           ← Framework marker file")
-    print("   CLAUDE.md          ← Claude Code config")
-    print("   .cursorrules       ← Cursor config")
+    print("   AGENTS.md              ← Main entry point for AI agents")
+    print("   PROJECT_KICKOFF.md     ← Fill this or let agent ask (your project brief)")
+    print("   .lmagent               ← Framework marker file")
+    print("   CLAUDE.md              ← Claude Code config")
+    print("   .cursorrules           ← Cursor config")
+    print("   specs/                 ← Your spec.yaml, plan.yaml, tasks.yaml")
+    print("   .lmagent/")
+    print("   └── session.yaml       ← Session state (auto-updated)")
     print("   .agent/")
-    print("   ├── README.md")
     print("   ├── personas/")
     print("   ├── workflows/")
     print("   ├── checklists/")
     print("   ├── config/")
-    print("   └── rules/project.md  ← Add your project rules here")
+    print("   └── rules/project.md   ← Add your project rules here")
+    print("\n🚀 Next steps:")
+    print("   1. Fill PROJECT_KICKOFF.md OR just start talking to the agent")
+    print("   2. The agent will use SPEC DRIVEN workflow automatically")
     
     return True
 

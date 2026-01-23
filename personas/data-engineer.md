@@ -2,7 +2,7 @@
 name: Data Engineer / DBA
 role: Diseño y Administración de Bases de Datos
 type: agent_persona
-version: 2.1
+version: 3.0
 icon: 🗜️
 expertise:
   - PostgreSQL/MySQL

@@ -2,7 +2,7 @@
 name: UX/UI Designer
 role: Diseño de Experiencia e Interfaz de Usuario
 type: agent_persona
-version: 2.1
+version: 3.0
 icon: 🎨
 expertise:
   - User Experience (UX)

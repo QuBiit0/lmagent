@@ -4,7 +4,7 @@
   <br/>
   <h1>LMAgent</h1>
   <p><strong>Universal AI Agent Framework for 2026</strong></p>
-  <p><em>Version 2.1 - Enhanced with V2 Personas, Rules & Workflows</em></p>
+  <p><em>Version 3.0 (SPEC+LM) - BMAD + SWE + SPEC DRIVEN Development</em></p>
 </div>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -12,7 +12,9 @@
 [![Python 3.12+](https://img.shields.io/badge/Python-3.12%2B-blue.svg)](https://python.org)
 [![Token Optimized](https://img.shields.io/badge/Token%20Optimized-MoE-purple.svg)](#-token-efficiency-strategy)
 
-**LMAgent** es un marco de trabajo universal para equipos de automatización y desarrollo de agentes de IA. Combina lo mejor de [BMAD-METHOD](https://github.com/bmadcode/BMAD-METHOD) y [SWE-agent](https://github.com/princeton-nlp/SWE-agent) en un framework unificado compatible con cualquier IDE agéntico.
+**LMAgent** es un marco de trabajo universal para equipos de automatización y desarrollo de agentes de IA. Combina lo mejor de [BMAD-METHOD](https://github.com/bmadcode/BMAD-METHOD), [SWE-agent](https://github.com/princeton-nlp/SWE-agent), y **SPEC DRIVEN Development** en un framework unificado compatible con cualquier IDE agéntico.
+
+**Metodología SPEC+LM**: spec.yaml → plan.yaml → tasks.yaml → CODE → VERIFY
 
 > ⚠️ **Regla crítica**: Mantén la documentación actualizada. Ver `rules/documentation.md`.
 
@@ -165,5 +167,6 @@ MIT License - ver [LICENSE](LICENSE) para detalles.
 
 ---
 
-**LMAgent v2.1**
+**LMAgent v3.0 (SPEC+LM)**
 Developed with ❤️ by **Leandro Martín Alvarez (QuBiit)** - 2026.
+
