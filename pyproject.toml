@@ -36,6 +36,7 @@ dependencies = [
     "python-dotenv>=1.0",
     "fastapi>=0.115",
     "sqlmodel>=0.0.22",
+    "litellm>=1.45",
 ]
 
 [project.optional-dependencies]

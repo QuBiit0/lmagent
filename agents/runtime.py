@@ -428,38 +428,78 @@ class LMAgentRuntime:
         return f"Reached maximum iterations ({self.config.max_iterations}). Partial progress made."
     
     async def _call_llm(self) -> Optional[Dict]:
-        """
-        Call the LLM.
-        
-        This is a placeholder - implement with your preferred LLM library:
-        - OpenAI: openai.ChatCompletion.create()
-        - Anthropic: anthropic.messages.create()
-        - LiteLLM: litellm.acompletion()
-        """
-        # ------------------------------------------------------------------
-        # IMPLEMENTATION NOTE:
-        # In a real 2026 environment, use LiteLLM or LangChain here.
-        # Example:
-        # response = await litellm.acompletion(
-        #     model=self.config.model,
-        #     messages=self.messages,
-        #     tools=self.get_tools_for_llm()
-        # )
-        # ------------------------------------------------------------------
-        
+        """Call the LLM using LiteLLM."""
+        try:
+            import litellm
+            from dotenv import load_dotenv
+            
+            # Ensure env vars are loaded (looking for .env in project root)
+            load_dotenv(self.project_root / ".env")
+        except ImportError:
+            logger.error("dependency_missing", error="litellm or python-dotenv not installed")
+            return {
+                "content": "Error: Core dependencies missing. Please run `pip install -e .` again.",
+                "tool_calls": []
+            }
+
         logger.info("llm_call", model=self.config.model)
         
-        # Determine strictness based on model capabilities
-        # (Senior Agents use stronger models for critical tasks)
-        
-        # Simulate cost tracking
-        self.cost_tracker.track(self.config.model, 500, 200)
-        
-        # Return mock response for template (replace with real API call)
-        return {
-            "content": "This is a placeholder LLM response. Please configure a real provider in `agents/runtime.py` using LiteLLM.",
-            "tool_calls": []
-        }
+        try:
+            # Prepare tools
+            tools = self.get_tools_for_llm()
+            
+            # Make API call
+            # Note: litellm handles API keys automatically from os.environ
+            response = await litellm.acompletion(
+                model=self.config.model,
+                messages=self.messages,
+                tools=tools if tools else None,
+                tool_choice="auto" if tools else None,
+                temperature=self.config.temperature,
+                max_tokens=self.config.max_tokens,
+            )
+            
+            # Extract response
+            choice = response.choices[0]
+            message = choice.message
+            content = message.content or ""
+            
+            # Process tool calls
+            tool_calls = []
+            if hasattr(message, 'tool_calls') and message.tool_calls:
+                for tc in message.tool_calls:
+                    # Parse arguments safely
+                    try:
+                        args = json.loads(tc.function.arguments)
+                    except json.JSONDecodeError:
+                        args = {}
+                        
+                    tool_calls.append({
+                        "id": tc.id,
+                        "name": tc.function.name,
+                        "arguments": args
+                    })
+            
+            # Track Usage
+            if hasattr(response, 'usage'):
+                self.cost_tracker.track(
+                    self.config.model, 
+                    response.usage.prompt_tokens, 
+                    response.usage.completion_tokens
+                )
+            
+            return {
+                "content": content,
+                "tool_calls": tool_calls,
+                "thinking": "" 
+            }
+            
+        except Exception as e:
+            logger.error("llm_execution_error", error=str(e))
+            return {
+                "content": f"Error calling LLM provider: {str(e)}\n\nCheck your API keys in .env.",
+                "tool_calls": []
+            }
     
     def _get_system_prompt(self) -> str:
         """Get system prompt for the agent."""
