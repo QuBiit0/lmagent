@@ -165,8 +165,12 @@ def init_project(project_path: Path, force: bool = False) -> bool:
     # Copy AGENTS.md to project root (industry standard - main entry point)
     agents_md = package_root / "AGENTS.md"
     if agents_md.exists():
-        shutil.copy(agents_md, project_path / "AGENTS.md")
-        print("   ✅ Created AGENTS.md (main entry point)")
+        dst = project_path / "AGENTS.md"
+        if agents_md.resolve() != dst.resolve():
+            shutil.copy(agents_md, dst)
+            print("   ✅ Created AGENTS.md (main entry point)")
+        else:
+            print("   ✅ AGENTS.md already exists (source)")
     
     # Copy AGENTS.md to .agent/README.md as well (for compatibility)
     if agents_md.exists():
@@ -176,21 +180,33 @@ def init_project(project_path: Path, force: bool = False) -> bool:
     # Copy .lmagent marker file
     lmagent_marker = package_root / ".lmagent"
     if lmagent_marker.exists():
-        shutil.copy(lmagent_marker, project_path / ".lmagent")
-        print("   ✅ Created .lmagent (framework marker)")
+        dst = project_path / ".lmagent"
+        if lmagent_marker.resolve() != dst.resolve():
+            shutil.copy(lmagent_marker, dst)
+            print("   ✅ Created .lmagent (framework marker)")
+        else:
+            print("   ✅ .lmagent already exists (source)")
     
     # Create IDE config files in project root
     # CLAUDE.md
     claude_md = package_root / "CLAUDE.md"
     if claude_md.exists():
-        shutil.copy(claude_md, project_path / "CLAUDE.md")
-        print("   ✅ Created CLAUDE.md")
+        dst = project_path / "CLAUDE.md"
+        if claude_md.resolve() != dst.resolve():
+            shutil.copy(claude_md, dst)
+            print("   ✅ Created CLAUDE.md")
+        else:
+             print("   ✅ CLAUDE.md already exists (source)")
     
     # .cursorrules
     cursorrules = package_root / ".cursorrules"
     if cursorrules.exists():
-        shutil.copy(cursorrules, project_path / ".cursorrules")
-        print("   ✅ Created .cursorrules")
+        dst = project_path / ".cursorrules"
+        if cursorrules.resolve() != dst.resolve():
+            shutil.copy(cursorrules, dst)
+            print("   ✅ Created .cursorrules")
+        else:
+            print("   ✅ .cursorrules already exists (source)")
     
     # Create empty project rules file
     project_rules = agent_dir / "rules" / "project.md"
@@ -432,6 +448,13 @@ Use /command syntax:
         '--verbose', '-v',
         action='store_true',
         help='Verbose output'
+    )
+
+    parser.add_argument(
+        '--version',
+        action='version',
+        version=f'LMAgent v{__version__}',
+        help='Show LMAgent version'
     )
     
     subparsers = parser.add_subparsers(dest='command', help='Commands')
