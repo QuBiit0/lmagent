@@ -50,6 +50,10 @@ Una vez instalado el CLI:
 mkdir mi-nuevo-proyecto
 cd mi-nuevo-proyecto
 lmagent init
+
+# 4. 🚀 Auto-Start (Nuevo en v3.0)
+# Edita PROJECT_KICKOFF.md con tu idea y... ¡listo!
+# Tu Agente de IDE (Cursor, Windsurf, etc.) lo detectará y empezará a trabajar.
 ```
 
 💡 **Tip:** ¿Empiezas un proyecto nuevo? Usa nuestra **[Plantilla de Inicio Rápido](templates/project_brief.md)**.

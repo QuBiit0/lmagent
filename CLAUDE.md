@@ -11,6 +11,11 @@ Este es el archivo principal de instrucciones para Claude Code.
 
 Estás trabajando con **LMAgent v2.1**, un framework para desarrollo de automatizaciones y agentes de IA.
 
+## 🚀 STARTUP CHECK (Auto-Start)
+> **¿Existe `PROJECT_KICKOFF.md`?**
+> Si SÍ -> Actívate como **Product Manager** (`/pm`) y ejecuta el workflow **SPEC DRIVEN**.
+> Lee el kickoff y genera los specs.
+
 ## ⚠️ REGLA CRÍTICA: Documentación Continua
 
 > **SIEMPRE** actualiza la documentación al hacer cambios significativos.

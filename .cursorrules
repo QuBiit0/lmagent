@@ -14,6 +14,11 @@ Read these files to understand the project:
 - rules/ - Specific rules by area (stack, workflow, code-style, agents-ia, automations-n8n)
 - personas/ - Role-specific instructions
 
+## 🚀 STARTUP CHECK (Auto-Start)
+> **Detected `PROJECT_KICKOFF.md`?**
+> If YES -> Act as **Product Manager** (`/pm`) immediately and execute the **SPEC DRIVEN** workflow.
+> Do NOT wait for user input if the kickoff file is populated.
+
 ## Task Classification
 
 Classify every task by complexity level:
