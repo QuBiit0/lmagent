@@ -226,16 +226,16 @@ def init_project(project_path: Path, force: bool = False) -> bool:
 """)
         print("   ✅ Created .agent/rules/project.md (customize this!)")
     
-    # Create .lmagent state directory for session persistence
-    lmagent_state_dir = project_path / ".lmagent"
-    lmagent_state_dir.mkdir(exist_ok=True)
+    # Create .lmagent state directory -> Using .agent/ for state to avoid conflict
+    # lmagent_state_dir = project_path / ".lmagent"
+    lmagent_state_dir = agent_dir 
     
     # Copy session.yaml template
     session_template = package_root / "templates" / "session.yaml"
     session_file = lmagent_state_dir / "session.yaml"
     if session_template.exists() and not session_file.exists():
         shutil.copy(session_template, session_file)
-        print("   ✅ Created .lmagent/session.yaml (state persistence)")
+        print("   ✅ Created .agent/session.yaml (state persistence)")
     elif not session_file.exists():
         # Create minimal session file if template not found
         session_file.write_text(f"""# LMAgent Session State
@@ -256,12 +256,12 @@ sessions: []
 decisions: []
 blockers: []
 """)
-        print("   ✅ Created .lmagent/session.yaml (state persistence)")
+        print("   ✅ Created .agent/session.yaml (state persistence)")
     
     # Create checkpoints directory for auto-backups
     checkpoints_dir = lmagent_state_dir / "checkpoints"
     checkpoints_dir.mkdir(exist_ok=True)
-    print("   ✅ Created .lmagent/checkpoints/ (auto-backups)")
+    print("   ✅ Created .agent/checkpoints/ (auto-backups)")
     
     # Copy PROJECT_KICKOFF.md template
     kickoff_template = package_root / "templates" / "PROJECT_KICKOFF.md"
@@ -283,9 +283,8 @@ blockers: []
     print("   CLAUDE.md              ← Claude Code config")
     print("   .cursorrules           ← Cursor config")
     print("   specs/                 ← Your spec.yaml, plan.yaml, tasks.yaml")
-    print("   .lmagent/")
-    print("   └── session.yaml       ← Session state (auto-updated)")
     print("   .agent/")
+    print("   ├── session.yaml       ← Session state (auto-updated)")
     print("   ├── personas/")
     print("   ├── workflows/")
     print("   ├── checklists/")
