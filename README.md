@@ -19,50 +19,46 @@
 
 ## 🚀 Quick Start Guide
 
-Get your universal agent infrastructure up and running in minutes.
+The recommended way to use LMAgent is via `npx`, ensuring you always run the latest version without managing global packages.
 
-### 📋 Prerequisites
-- **Node.js 18+** installed.
-- An existing project (or create one with `npm init`).
-
-### Option A: Per-Project Setup (Recommended)
-Use `npx` to run LMAgent without installing it globally. This ensures you always use the latest version and keeps your project dependencies clean.
+### ⚡ Instant Run (No Install)
+Run these commands directly in your terminal:
 
 ```bash
-# 1. Initialize LMAgent (Copies AGENTS.md, CLAUDE.md & Configs)
-#    This gives your AI Agent the "Context" it needs to understand the skills.
+# 1. Initialize Project (Context)
+#    Copies AGENTS.md & CLAUDE.md to your root.
 npx @qubiit/lmagent init
 
-# 2. Install Skills & Rules to your IDE
-#    This configures .cursor, .vscode, or .windsurf with the actual executable prompts.
+# 2. Install/Update Skills (Tools)
+#    Configures your IDE (.cursor, .vscode, .windsurf, etc.)
 npx @qubiit/lmagent install
 
-# 3. Verify System Status
+# 3. Optimize & Verify
+#    Checks your environment health.
 npx @qubiit/lmagent doctor
 ```
 
-### Option B: Global Installation
-If you prefer having the `lmagent` command available globally in your terminal:
+### 📦 Global Installation (Optional)
+If you prefer having the `lmagent` command available globally:
 
 ```bash
-# 1. Install Global Package
+# Install
 npm install -g @qubiit/lmagent
 
-# 2. Run Commands Directly
+# Run
 lmagent init
 lmagent install
-lmagent doctor
 ```
 
-### Option C: Local Development (Contributors)
-If you are developing the LMAgent framework itself:
+### 🛠️ Developer Setup
+If you are contributing to the framework:
 
 ```bash
 git clone https://github.com/QuBit/lmagent.git
 cd lmagent
 npm install
 npm link
-lmagent install
+lmagent doctor
 ```
 
 ---

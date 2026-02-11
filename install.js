@@ -337,7 +337,7 @@ const IDE_CONFIGS = [
 program
     .name('lmagent')
     .description('CLI para instalar skills y reglas de LMAgent')
-    .version('2.5.8'); // Version bump
+    .version('2.5.9'); // Version bump
 
 program.command('install')
     .description('Instalar skills, rules y workflows en el IDE del proyecto')
@@ -591,66 +591,85 @@ async function runInstall(options) {
         // 1. Install SKILLS (Folders)
         if (selectedSkills.length > 0 && ide.skillsDir) {
             const targetDir = path.join(targetRoot, ide.skillsDir);
-            console.log(chalk.bold(`\nInstalling Skills to ${chalk.cyan(targetDir)}:`));
 
-            try {
-                if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
+            // OPTIMIZATION: If target is Global Repo, we entered "Global Sync" mode
+            // The initial sync already updated these files. Skipping redundant copy.
+            if (path.resolve(targetDir) === path.resolve(globalSkillsDir)) {
+                console.log(chalk.blue(`\n  ℹ  ${ide.name}: Skills updated via Global Sync`));
+            } else {
+                console.log(chalk.bold(`\nInstalling Skills to ${chalk.cyan(targetDir)}:`));
 
-                for (const skill of selectedSkills) {
-                    const srcFolder = path.join(SOURCE_SKILLS, skill);
-                    const destFolder = path.join(targetDir, skill);
+                try {
+                    if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
 
-                    if (fs.existsSync(srcFolder)) {
-                        await applyFile(srcFolder, destFolder, currentInstallMethod);
-                        console.log(`  ${chalk.green('✔')} ${skill}/`);
+                    for (const skill of selectedSkills) {
+                        const srcFolder = path.join(SOURCE_SKILLS, skill);
+                        const destFolder = path.join(targetDir, skill);
+
+                        if (fs.existsSync(srcFolder)) {
+                            await applyFile(srcFolder, destFolder, currentInstallMethod);
+                            console.log(`  ${chalk.green('✔')} ${skill}/`);
+                        }
                     }
+                } catch (e) {
+                    console.error(chalk.red(`❌ Error installing skills for ${ide.name}: ${e.message}`));
                 }
-            } catch (e) {
-                console.error(chalk.red(`❌ Error installing skills for ${ide.name}: ${e.message}`));
             }
         }
 
         // 2. Install RULES (Files)
         if (selectedRules.length > 0 && ide.rulesDir) {
             const targetDir = path.join(targetRoot, ide.rulesDir);
-            console.log(chalk.bold(`\nInstalling Rules to ${chalk.cyan(targetDir)}:`));
 
-            try {
-                if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
+            // OPTIMIZATION: If target is Global Repo, skip redundant copy
+            if (path.resolve(targetDir) === path.resolve(globalRulesDir)) {
+                console.log(chalk.blue(`  ℹ  ${ide.name}: Rules updated via Global Sync`));
+            } else {
+                console.log(chalk.bold(`\nInstalling Rules to ${chalk.cyan(targetDir)}:`));
 
-                for (const rule of selectedRules) {
-                    const srcVal = path.join(SOURCE_RULES, rule);
-                    const destVal = path.join(targetDir, rule);
+                try {
+                    if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
 
-                    if (fs.existsSync(srcVal)) {
-                        await applyFile(srcVal, destVal, currentInstallMethod);
-                        console.log(`  ${chalk.blue('✔')} ${rule}`);
+                    for (const rule of selectedRules) {
+                        const srcVal = path.join(SOURCE_RULES, rule);
+                        const destVal = path.join(targetDir, rule);
+
+                        if (fs.existsSync(srcVal)) {
+                            await applyFile(srcVal, destVal, currentInstallMethod);
+                            console.log(`  ${chalk.blue('✔')} ${rule}`);
+                        }
                     }
+                } catch (e) {
+                    console.error(chalk.red(`❌ Error installing rules for ${ide.name}: ${e.message}`));
                 }
-            } catch (e) {
-                console.error(chalk.red(`❌ Error installing rules for ${ide.name}: ${e.message}`));
             }
         }
 
         // 3. Install WORKFLOWS (Files)
         if (selectedWorkflows.length > 0 && ide.workflowsDir) {
             const targetDir = path.join(targetRoot, ide.workflowsDir);
-            console.log(chalk.bold(`\nInstalling Workflows to ${chalk.cyan(targetDir)}:`));
 
-            try {
-                if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
+            // OPTIMIZATION: If target is Global Repo, skip redundant copy
+            if (path.resolve(targetDir) === path.resolve(globalWorkflowsDir)) {
+                console.log(chalk.blue(`  ℹ  ${ide.name}: Workflows updated via Global Sync`));
+            } else {
+                console.log(chalk.bold(`\nInstalling Workflows to ${chalk.cyan(targetDir)}:`));
 
-                for (const wf of selectedWorkflows) {
-                    const srcVal = path.join(SOURCE_WORKFLOWS, wf);
-                    const destVal = path.join(targetDir, wf);
+                try {
+                    if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
 
-                    if (fs.existsSync(srcVal)) {
-                        await applyFile(srcVal, destVal, currentInstallMethod);
-                        console.log(`  ${chalk.magenta('✔')} ${wf}`);
+                    for (const wf of selectedWorkflows) {
+                        const srcVal = path.join(SOURCE_WORKFLOWS, wf);
+                        const destVal = path.join(targetDir, wf);
+
+                        if (fs.existsSync(srcVal)) {
+                            await applyFile(srcVal, destVal, currentInstallMethod);
+                            console.log(`  ${chalk.magenta('✔')} ${wf}`);
+                        }
                     }
+                } catch (e) {
+                    console.error(chalk.red(`❌ Error installing workflows for ${ide.name}: ${e.message}`));
                 }
-            } catch (e) {
-                console.error(chalk.red(`❌ Error installing workflows for ${ide.name}: ${e.message}`));
             }
         }
     }
