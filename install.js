@@ -345,6 +345,11 @@ async function runInstall(options) {
 
     console.log('');
     for (const ide of targetIdes) {
+        let currentInstallMethod = installMethod;
+        if (ide.value === 'cursor' && currentInstallMethod === 'symlink') {
+            console.log(chalk.yellow(`⚠️  Cursor detectado: Forzando método 'copy' (Skills no soportan symlinks en Cursor)`));
+            currentInstallMethod = 'copy';
+        }
 
         // 1. Install SKILLS (Folders)
         if (selectedSkills.length > 0 && ide.skillsDir) {
@@ -359,7 +364,7 @@ async function runInstall(options) {
                     const destFolder = path.join(targetDir, skill);
 
                     if (fs.existsSync(srcFolder)) {
-                        await applyFile(srcFolder, destFolder, installMethod);
+                        await applyFile(srcFolder, destFolder, currentInstallMethod);
                         console.log(`  ${chalk.green('✔')} ${skill}/`);
                     }
                 }
@@ -381,7 +386,7 @@ async function runInstall(options) {
                     const destVal = path.join(targetDir, rule);
 
                     if (fs.existsSync(srcVal)) {
-                        await applyFile(srcVal, destVal, installMethod);
+                        await applyFile(srcVal, destVal, currentInstallMethod);
                         console.log(`  ${chalk.blue('✔')} ${rule}`);
                     }
                 }
@@ -403,7 +408,7 @@ async function runInstall(options) {
                     const destVal = path.join(targetDir, wf);
 
                     if (fs.existsSync(srcVal)) {
-                        await applyFile(srcVal, destVal, installMethod);
+                        await applyFile(srcVal, destVal, currentInstallMethod);
                         console.log(`  ${chalk.magenta('✔')} ${wf}`);
                     }
                 }
