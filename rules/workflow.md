@@ -7,7 +7,7 @@
 | Paso | Acción |
 |------|--------|
 | 1. **Entender** | Leer AGENTS.md + reglas aplicables |
-| 2. **Clasificar** | Determinar Level (0-4) + persona(s) |
+| 2. **Clasificar** | Determinar Level (0-4) + skill(s) |
 | 3. **Planear** | (Level 2+) Crear `implementation_plan.md` + pedir aprobación |
 | 4. **Implementar** | Modelos → Repos → Services → Routers → Tests |
 | 5. **Validar** | `pytest` + `ruff check` + `ruff format` |
@@ -43,7 +43,7 @@ Este documento define el flujo de trabajo estándar que los agentes deben seguir
     ┌──────────────────────────────────────────────────────────┐
     │  2. CLASIFICAR                                            │
     │  • Determinar nivel (0-4) según config/levels.yaml       │
-    │  • Identificar persona(s) a activar                      │
+    │  • Identificar skill(s) a activar                        │
     │  • Estimar tiempo y complejidad                          │
     └────────────────────────┬─────────────────────────────────┘
                              │
@@ -102,7 +102,7 @@ Este documento define el flujo de trabajo estándar que los agentes deben seguir
 ### Siempre leer primero:
 1. **AGENTS.md** - Marco de trabajo general
 2. **Reglas aplicables** en `rules/`
-3. **Persona(s) relevante(s)** en `personas/`
+3. **Skill(s) relevante(s)** en `skills/`
 
 ### Preguntas clave:
 - ¿Cuál es el objetivo de negocio?
@@ -141,15 +141,19 @@ Subir nivel si:
 - Es breaking change → mínimo Level 3
 - Afecta producción → mínimo Level 2
 
-### Identificar Persona(s)
+### Identificar Skill(s)
 
 ```
-¿Diseño de sistema?        → Architect
-¿Implementación backend?   → Backend Engineer
-¿Automatización/n8n?       → Automation Engineer
-¿Agentes de IA?            → AI Agent Engineer
-¿Tests?                    → QA Engineer
-¿Seguridad?                → Security Analyst
+¿Diseño de sistema?        → architect (/arch)
+¿Implementación backend?   → backend-engineer (/dev)
+¿Frontend/UI?              → frontend-engineer (/front)
+¿Mobile?                   → mobile-engineer (/mobile)
+¿Automatización/n8n?       → automation-engineer (/auto)
+¿Agentes de IA?            → ai-agent-engineer (/agent)
+¿Tests?                    → qa-engineer (/qa)
+¿Seguridad?                → security-analyst (/sec)
+¿Performance?              → performance-engineer (/perf)
+¿No está claro?            → orchestrator (/orch)
 ```
 
 ---
@@ -200,7 +204,7 @@ Level [X] - [Nombre]
 
 ## Checklist Pre-implementación
 - [ ] Reglas relevantes leídas
-- [ ] Persona(s) correcta(s) activada(s)
+- [ ] Skill(s) correcto(s) activado(s)
 - [ ] Plan revisado por humano (si Level 3+)
 ```
 

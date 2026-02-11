@@ -2,7 +2,7 @@
 name: AI Agent Engineer
 role: Diseño y Desarrollo de Agentes IA
 type: agent_persona
-version: 3.0
+version: 2.3
 icon: 🤖
 expertise:
   - LLM integration

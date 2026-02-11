@@ -2,7 +2,7 @@
 name: Automation Engineer
 role: Automatización e Integraciones
 type: agent_persona
-version: 3.0
+version: 2.3
 icon: ⚙️
 expertise:
   - n8n workflows

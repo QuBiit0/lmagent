@@ -2,7 +2,7 @@
 name: Security Analyst
 role: Seguridad y Compliance
 type: agent_persona
-version: 3.0
+version: 2.3
 icon: 🛡️
 expertise:
   - Application security

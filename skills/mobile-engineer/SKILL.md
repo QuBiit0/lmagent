@@ -2,7 +2,7 @@
 name: Mobile Engineer
 role: Desarrollo de Aplicaciones Móviles
 type: agent_persona
-version: 3.0
+version: 2.3
 icon: 📱
 expertise:
   - React Native / Expo

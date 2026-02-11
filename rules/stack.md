@@ -11,7 +11,10 @@
 | **ORM** | SQLModel (Python) o Prisma (TypeScript) |
 | **Validation** | Pydantic v2 |
 | **LLM** | GPT-4o (complejo) / Gemini Flash (rápido) / Claude Haiku (volumen) |
+| **AI Frameworks** | LangGraph (agentes) / LangChain (chains) |
 | **Automation** | n8n |
+| **Frontend** | React / Next.js |
+| **Mobile** | React Native / Expo |
 | **Deploy** | Docker + Dokploy |
 
 ### 👥 Roles que usan esta regla
@@ -71,6 +74,17 @@ Prisma         - ORM para TypeScript
 | LLM Primary | OpenAI GPT-4o | Tareas complejas |
 | LLM Fast | Gemini Flash | Tareas rápidas |
 | LLM Cost-effective | Claude Haiku | Alto volumen |
+| Agent Framework | LangGraph | Agentes stateful, grafos |
+| Chain Framework | LangChain | Chains, RAG, embeddings |
+| MCP | Model Context Protocol | Tool-use, integración de herramientas |
+
+### Frontend & Mobile
+| Componente | Tecnología | Uso |
+|------------|------------|-----|
+| Web Framework | React / Next.js | Interfaces web |
+| Mobile | React Native / Expo | Apps iOS y Android |
+| State | Zustand / Redux Toolkit | Estado global |
+| Styling | TailwindCSS / CSS Modules | Estilos |
 
 ---
 

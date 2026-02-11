@@ -2,7 +2,7 @@
 name: Tech Lead
 role: Liderazgo Técnico y Mentorship
 type: agent_persona
-version: 3.0
+version: 2.3
 icon: 🧭
 expertise:
   - Technical decision making

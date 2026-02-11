@@ -2,7 +2,7 @@
 name: Technical Writer
 role: Documentación Técnica y Comunicación
 type: agent_persona
-version: 3.0
+version: 2.3
 icon: 📝
 expertise:
   - API documentation

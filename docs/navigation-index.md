@@ -18,7 +18,7 @@
 
 ---
 
-## 👥 Personas (18 Total)
+## 👥 Personas & Metodologías (21 Total)
 
 ### Roles de Producto & Gestión
 
@@ -62,6 +62,14 @@
 |---------|---------|---------|--------------|
 | **Technical Writer** | [technical-writer.md](../personas/technical-writer.md) | `/writer` | Documentación |
 | **UX/UI Designer** | [ux-ui-designer.md](../personas/ux-ui-designer.md) | `/ux` | Diseño, a11y |
+
+### Metodologías
+
+| Metodología | Archivo | Trigger | Especialidad |
+|---------|---------|---------|--------------|
+| **BMAD Methodology** | [bmad-methodology](../skills/bmad-methodology/SKILL.md) | `/bmad` | Scale-Adaptive Intelligence, kickoff |
+| **SWE-Agent** | [swe-agent](../skills/swe-agent/SKILL.md) | `/swe` | Resolución autónoma de issues |
+| **Spec-Driven Dev** | [spec-driven-dev](../skills/spec-driven-dev/SKILL.md) | `/spec-dev` | Pipeline SPECIFY→PLAN→TASKS→IMPL→VERIFY |
 
 ---
 

@@ -2,7 +2,7 @@
 name: DevOps Engineer
 role: Infrastructure, CI/CD y Operaciones
 type: agent_persona
-version: 3.0
+version: 2.3
 icon: 🚀
 expertise:
   - Docker/Kubernetes

@@ -47,6 +47,17 @@ aliases:
   perf: "persona:performance-engineer"
   performance: "persona:performance-engineer"
 
+  # Metodologías
+  bmad: "persona:bmad-methodology"
+  kickoff: "persona:bmad-methodology"
+  classify: "persona:bmad-methodology"
+  swe: "persona:swe-agent"
+  issue-solve: "persona:swe-agent"
+  trajectory: "persona:swe-agent"
+  spec-dev: "persona:spec-driven-dev"
+  sdd-skill: "persona:spec-driven-dev"
+  spec-method: "persona:spec-driven-dev"
+
   # Workflows
   new-auto: "workflow:new-automation"
   new-agent: "workflow:new-agent-ia"
@@ -56,6 +67,8 @@ aliases:
   security-review: "workflow:security-review"
   prd: "workflow:generate-prd"
   brainstorm: "workflow:ideation"
+  spec: "workflow:spec-driven"
+  feature: "workflow:new-feature"
 
   # Modos
   yolo: "mode:yolo"

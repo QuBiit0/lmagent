@@ -126,29 +126,48 @@ levels:
         min_level: 2
 
 # ============================================
-# PERSONAS / ROLES
+# SKILLS (Capacidades Especializadas)
 # ============================================
 
-personas:
-  # Directorio donde están las personas
-  directory: "personas"
+skills:
+  # Directorio donde están los skills
+  directory: "skills"
   
-  # Personas habilitadas (todas por default)
+  # Skills habilitados (todos por default)
   enabled:
+    # Meta-Skill
+    - orchestrator
+    # Engineering
+    - backend-engineer
+    - frontend-engineer
+    - mobile-engineer
+    - data-engineer
+    - devops-engineer
+    - performance-engineer
+    - security-analyst
+    - qa-engineer
+    # AI & Automation
+    - ai-agent-engineer
+    - automation-engineer
+    - prompt-engineer
+    # Management & Process
     - product-manager
     - architect
-    - backend-engineer
-    - automation-engineer
-    - ai-agent-engineer
-    - qa-engineer
-    - security-analyst
+    - tech-lead
+    - scrum-master
+    - technical-writer
+    - ux-ui-designer
+    # Methodologies
+    - bmad-methodology
+    - swe-agent
+    - spec-driven-dev
   
-  # Persona por defecto cuando no se especifica
-  default: "backend-engineer"
+  # Skill por defecto cuando no se especifica
+  default: "orchestrator"
   
-  # Permitir crear personas custom
+  # Permitir crear skills custom
   allow_custom: true
-  custom_directory: "personas/custom"
+  custom_directory: "skills/custom"
 
 # ============================================
 # HERRAMIENTAS (SWE-agent style)

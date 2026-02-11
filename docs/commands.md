@@ -23,6 +23,9 @@ Este documento define los comandos rápidos para activar personas y funcionalida
 | `/writer` | `/docs` | Technical Writer | Documentación |
 | `/mobile` | `/rn` | Mobile Engineer | React Native, apps |
 | `/perf` | `/performance` | Performance Engineer | Optimización |
+| `/bmad` | `/kickoff`, `/classify` | BMAD Methodology | Scale-adaptive intelligence, niveles |
+| `/swe` | `/issue-solve`, `/trajectory` | SWE-Agent | Resolución autónoma de issues |
+| `/spec-dev` | `/sdd-skill`, `/spec-method` | Spec-Driven Dev | Pipeline SPECIFY→PLAN→TASKS→IMPL→VERIFY |
 
 ## Modos
 
@@ -46,6 +49,8 @@ Este documento define los comandos rápidos para activar personas y funcionalida
 | `/security-review` | security-review.md |
 | `/prd` | generate-prd.md |
 | `/brainstorm` | ideation.md |
+| `/spec` | spec-driven.md |
+| `/feature` | new-feature.md |
 
 ## Niveles
 

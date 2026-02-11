@@ -1,6 +1,6 @@
 {
   "name": "lmagent-skills",
-  "version": "1.0.0",
+  "version": "2.3.0",
   "description": "CLI to install LMAgent skills and rules into your IDE",
   "main": "install.js",
   "bin": {

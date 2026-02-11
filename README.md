@@ -25,7 +25,14 @@ Get your agent infrastructure up and running in less than 2 minutes.
 The fastest way to enhance your current project.
 
 ```bash
+# Initialize project (copies CLAUDE.md, AGENTS.md, config, etc.)
+npx lmagent init
+
+# Install skills, rules & workflows into your IDE
 npx lmagent install
+
+# Verify everything is correctly configured
+npx lmagent doctor
 ```
 
 ### Option B: Local Development Setup
@@ -60,19 +67,19 @@ graph TD
     A --> C("📜 Rules")
     A --> D("⚡ Workflows")
     
-    B --> B1[".cursor/skills/"]
+    B --> B1["{ide}/skills/"]
     B --> B2["Executable Tools & Scripts"]
     
-    C --> C1[".cursor/rules/"]
+    C --> C1["{ide}/rules/"]
     C --> C2["Behavioral Guardrails & Context"]
     
-    D --> D1[".cursor/workflows/"]
+    D --> D1["{ide}/workflows/"]
     D --> D2["Standard Operating Procedures (SOPs)"]
 ```
 
 ### 1. 🛠️ Skills (Capabilities)
 *Executable units that allow the Agent to interact with the world.*  
-**Location:** `.cursor/skills/` or `~/.agents/skills/`
+**Location:** `{ide}/skills/` or `~/.agents/skills/`
 
 | Skill Name | Description | Tools Included |
 | :--- | :--- | :--- |
@@ -94,14 +101,18 @@ graph TD
 | **tech-lead** | Code review, technical decision making, mentoring. | `review-pr`, `enforce-standards` |
 | **technical-writer** | Documentation, API refs, user guides. | `generate-docs`, `update-readme` |
 | **ux-ui-designer** | Design systems, user flow, prototyping. | `analyze-ux`, `generate-palette` |
+| **bmad-methodology** | Scale-Adaptive Intelligence, project kickoff, complexity classification. | `classify-level`, `kickoff-project` |
+| **swe-agent** | Autonomous issue resolution, trajectory logging, Edit-Lint-Test loops. | `resolve-issue`, `trajectory-log` |
+| **spec-driven-dev** | Spec-first development pipeline: SPECIFY → PLAN → TASKS → IMPLEMENT → VERIFY. | `create-spec`, `validate-spec` |
 
 
 ### 2. 📜 Rules (Context & Guardrails)
 *Constraints and guidelines that shape Agent behavior.*  
-**Location:** `.cursor/rules/` or `~/.agents/rules/`
+**Location:** `{ide}/rules/` or `~/.agents/rules/`
 
 | Rule File | Description |
 | :--- | :--- |
+| **_bootstrap.md** | ⭐ **Entry point**: Startup check, skill activation, critical rules for ALL IDEs. |
 | **agents-ia.md** | Core guidelines for building AI Agents (Tool-first, Stateless, Observable). |
 | **api-design.md** | REST/GraphQL standards, error handling, versioning best practices. |
 | **automations-n8n.md** | Best practices for building robust n8n workflows. |
@@ -115,7 +126,7 @@ graph TD
 
 ### 3. ⚡ Workflows (SOPs)
 *Step-by-step guides for complex tasks.*  
-**Location:** `.cursor/workflows/` or `~/.agents/workflows/`
+**Location:** `{ide}/workflows/` or `~/.agents/workflows/`
 
 | Workflow Name | Purpose |
 | :--- | :--- |
