@@ -165,8 +165,8 @@ LMAgent creates a **Single Source of Truth** in your home directory.
 | **Trae** | ✅ Full | `.trae/` |
 | **Antigravity** | ✅ Full | `.antigravity/` |
 | **Cline / Roo Code** | ✅ Full | `.clinerules/` |
-| **Claude Code** | ✅ Beta | `.claude/` |
-| **Qodo** | ✅ Beta | `agents/` |
+| **Claude Code** | ✅ Full | `.claude/` |
+| **Qodo** | ✅ Full | `agents/` |
 
 ---
 
