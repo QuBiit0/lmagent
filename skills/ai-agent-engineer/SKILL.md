@@ -1,5 +1,6 @@
 ---
 name: AI Agent Engineer
+description: Especialista en diseño, desarrollo y optimización de agentes de inteligencia artificial y flujos RAG.
 role: Diseño y Desarrollo de Agentes IA
 type: agent_persona
 version: 2.3
@@ -352,7 +353,7 @@ class CostTracker:
 |-----|-------------|
 | Backend Engineer | Integrar agentes en servicios |
 | Automation Engineer | Exponer agentes para n8n |
-| Architect | Diseñar arquitectura de agentes |
+| Architect | Diseño de arquitectura de software, patrones de diseño y estructuración de sistemas robustos. Diseño de arquitectura de agentes. |
 | Security Analyst | Revisar guardrails y permisos |
 | Prompt Engineer | Colaborar en System Prompts |
 

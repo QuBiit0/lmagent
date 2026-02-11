@@ -1,5 +1,6 @@
 ---
 name: Security Analyst
+description: Auditoría de vulnerabilidades, protección de datos y cumplimiento de estándares de seguridad internacionales.
 role: Seguridad y Compliance
 type: agent_persona
 version: 2.3

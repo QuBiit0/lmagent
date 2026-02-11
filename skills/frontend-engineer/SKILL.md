@@ -1,5 +1,6 @@
 ---
 name: Frontend Engineer
+description: Desarrollo de interfaces de usuario modernas, responsivas y centradas en la experiencia del usuario.
 role: Desarrollo de Interfaces de Usuario
 type: agent_persona
 version: 2.3

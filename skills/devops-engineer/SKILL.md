@@ -1,5 +1,6 @@
 ---
 name: DevOps Engineer
+description: Configuración de CI/CD, infraestructura en la nube, contenedores y automatización de despliegues.
 role: Infrastructure, CI/CD y Operaciones
 type: agent_persona
 version: 2.3

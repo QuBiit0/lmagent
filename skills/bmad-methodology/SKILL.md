@@ -1,5 +1,6 @@
 ---
 name: BMAD Methodology
+description: Experto en la aplicación de la metodología Best Model Agent Driven (BMAD).
 role: Scale-Adaptive Intelligence & Project Orchestration
 type: methodology
 version: 2.3
