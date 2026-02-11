@@ -175,6 +175,19 @@ LMAgent creates a **Single Source of Truth** in your home directory.
 We welcome contributions to expand the **Universal Agent Brain**.
 Check out `CONTRIBUTING.md` to add new Skills, Rules, or IDE support.
 
+### 🛠️ Creating New Skills
+Need a custom agent? Us the interactive generator:
+
+```bash
+# Verify structure of existing skills
+python validate_skills.py
+
+# Create a new skill interactively
+python create_skill.py
+```
+This will generate the standard directory structure and `SKILL.md` template for you.
+
+
 ---
 
 <p align="center">

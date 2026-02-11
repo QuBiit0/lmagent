@@ -485,10 +485,7 @@ function getAllItems(dir, isNested) {
     if (isNested) {
         return items.filter(item => {
             const p = path.join(dir, item);
-            return fs.statSync(p).isDirectory() && (
-                fs.existsSync(path.join(p, 'SKILL.md')) ||
-                fs.readdirSync(p).length > 0
-            );
+            return fs.statSync(p).isDirectory() && fs.existsSync(path.join(p, 'SKILL.md'));
         });
     } else {
         return items.filter(item => item.endsWith('.md') || item.endsWith('.txt') || item.endsWith('.cursorrules') || item.endsWith('.toml'));
@@ -707,10 +704,15 @@ async function runDoctor() {
 
             // Verificar que tiene los skills correctos
             if (skillsExist) {
-                const skillCount = fs.readdirSync(path.join(projectRoot, ide.skillsDir))
-                    .filter(item => fs.statSync(path.join(projectRoot, ide.skillsDir, item)).isDirectory()).length;
-                if (skillCount < 21) {
-                    console.log(`    ${chalk.yellow('⚠')} Solo ${skillCount}/21 skills instalados → ejecuta ${chalk.bold('lmagent install')}`);
+                const installedSkills = fs.readdirSync(path.join(projectRoot, ide.skillsDir))
+                    .filter(item => fs.statSync(path.join(projectRoot, ide.skillsDir, item)).isDirectory());
+
+                // Calcular skills esperados dinámicamente
+                const expectedSkillsCount = getAllItems(PACKAGE_SKILLS_DIR, true).length;
+                const skillCount = installedSkills.length;
+
+                if (skillCount < expectedSkillsCount) {
+                    console.log(`    ${chalk.yellow('⚠')} Solo ${skillCount}/${expectedSkillsCount} skills instalados → ejecuta ${chalk.bold('lmagent install')}`);
                 } else {
                     console.log(`    ${chalk.green('✔')} ${skillCount} skills instalados`);
                 }
