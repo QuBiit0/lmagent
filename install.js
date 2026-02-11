@@ -108,10 +108,10 @@ const IDE_CONFIGS = [
     {
         name: 'Antigravity',
         value: 'antigravity',
-        rulesDir: '.antigravity/rules',
-        skillsDir: '.antigravity/skills',
-        workflowsDir: '.antigravity/workflows',
-        markerFile: '.antigravity'
+        rulesDir: '.gemini/antigravity/rules',
+        skillsDir: '.gemini/antigravity/skills',
+        workflowsDir: '.gemini/antigravity/workflows',
+        markerFile: '.gemini/antigravity'
     },
     {
         name: 'Custom Path',
@@ -463,18 +463,39 @@ async function applyFile(source, dest, method) {
 }
 
 function copyRecursiveSync(src, dest, overwrite) {
-    const exists = fs.existsSync(src);
-    const stats = exists && fs.statSync(src);
-    const isDirectory = exists && stats.isDirectory();
-    if (isDirectory) {
-        if (!fs.existsSync(dest)) fs.mkdirSync(dest, { recursive: true });
-        fs.readdirSync(src).forEach(function (childItemName) {
-            copyRecursiveSync(path.join(src, childItemName),
-                path.join(dest, childItemName), overwrite);
-        });
+    if (fs.cpSync) {
+        try {
+            fs.cpSync(src, dest, { recursive: true, force: overwrite, errorOnExist: false });
+        } catch (e) {
+            console.error(chalk.red(`Error copying (cpSync) ${path.basename(src)}: ${e.message}`));
+            // Fallback manual implementation just in case
+            if (fs.existsSync(src)) {
+                const stat = fs.statSync(src);
+                if (stat.isDirectory()) {
+                    if (!fs.existsSync(dest)) fs.mkdirSync(dest, { recursive: true });
+                    fs.readdirSync(src).forEach(child => {
+                        copyRecursiveSync(path.join(src, child), path.join(dest, child), overwrite);
+                    });
+                } else {
+                    fs.copyFileSync(src, dest);
+                }
+            }
+        }
     } else {
-        if (overwrite || !fs.existsSync(dest)) {
-            fs.copyFileSync(src, dest);
+        // Fallback for older Node versions
+        const exists = fs.existsSync(src);
+        const stats = exists && fs.statSync(src);
+        const isDirectory = exists && stats.isDirectory();
+        if (isDirectory) {
+            if (!fs.existsSync(dest)) fs.mkdirSync(dest, { recursive: true });
+            fs.readdirSync(src).forEach(function (childItemName) {
+                copyRecursiveSync(path.join(src, childItemName),
+                    path.join(dest, childItemName), overwrite);
+            });
+        } else {
+            if (overwrite || !fs.existsSync(dest)) {
+                fs.copyFileSync(src, dest);
+            }
         }
     }
 }
