@@ -10,7 +10,7 @@
                                                   by QuBit
 ```
 
-![Version](https://img.shields.io/badge/Version-2.5.0-purple?style=for-the-badge) ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge) ![Agentic](https://img.shields.io/badge/AI-Agentic_Workflow-cyan?style=for-the-badge)
+![Version](https://img.shields.io/badge/Version-2.6.0-purple?style=for-the-badge) ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge) ![Agentic](https://img.shields.io/badge/AI-Agentic_Workflow-cyan?style=for-the-badge)
 
 > **"Separate the reasoning from the execution."**  
 > LMAgent is the foundational runtime that empowers your AI Agents with standardized **Skills**, **Rules**, and **Workflows** across any IDE (Cursor, Windsurf, VSCode, Zed, Qodo).
@@ -60,6 +60,20 @@ npm install
 npm link
 lmagent doctor
 ```
+
+---
+
+## 🛠️ Creating New Skills
+Need a custom agent? Use the interactive generator:
+
+```bash
+# Verify structure of existing skills
+npx lmagent validate
+
+# Create a new skill interactively
+npx lmagent create-skill
+```
+This will generate the standard directory structure and `SKILL.md` template for you.
 
 ---
 
@@ -230,17 +244,7 @@ LMAgent creates a **Single Source of Truth** in your home directory.
 We welcome contributions to expand the **Universal Agent Brain**.
 Check out `CONTRIBUTING.md` to add new Skills, Rules, or IDE support.
 
-### 🛠️ Creating New Skills
-Need a custom agent? Use the interactive generator:
 
-```bash
-# Verify structure of existing skills
-npx lmagent validate
-
-# Create a new skill interactively
-npx lmagent create-skill
-```
-This will generate the standard directory structure and `SKILL.md` template for you.
 
 
 ---

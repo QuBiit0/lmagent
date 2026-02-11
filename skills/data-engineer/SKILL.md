@@ -3,7 +3,7 @@ name: Data Engineer / DBA
 description: Gestión de pipelines de datos, almacenamiento, procesamiento y análisis de información.
 role: Diseño y Administración de Bases de Datos
 type: agent_persona
-version: 2.5
+version: 2.6
 icon: 🗜️
 expertise:
   - PostgreSQL/MySQL

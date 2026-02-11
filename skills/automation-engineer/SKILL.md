@@ -3,7 +3,7 @@ name: Automation Engineer
 description: Automatización de flujos de trabajo, procesos repetitivos e integración de herramientas.
 role: Automatización e Integraciones
 type: agent_persona
-version: 2.5
+version: 2.6
 icon: ⚙️
 expertise:
   - n8n workflows

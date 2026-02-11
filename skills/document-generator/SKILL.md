@@ -3,7 +3,7 @@ name: Document Generator
 description: Generación programática de documentos formales (PDF, DOCX, XLSX, PPTX) con librerías especializadas.
 role: Generación de Documentos de Oficina
 type: agent_persona
-version: 2.5
+version: 2.6
 icon: 📄
 expertise:
   - PDF Generation (pdfmake, jsPDF, Puppeteer)
