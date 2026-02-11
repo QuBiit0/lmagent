@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * LMAgent Skills Validator — v2.3.0
+ * LMAgent Skills Validator — v2.5.6
  * 
  * Valida la integridad de todos los skills del framework.
  * Verifica: frontmatter YAML, campos obligatorios, estructura de directorio.

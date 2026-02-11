@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * LMAgent Skill Generator — v2.3.0
+ * LMAgent Skill Generator — v2.5.6
  * 
  * Genera la estructura completa de un nuevo skill interactivamente.
  * 
@@ -212,7 +212,7 @@ Antes de considerar una tarea terminada, verifica TODO:
 
 // ─── Main ─────────────────────────────────────────────────────
 async function main() {
-    console.log(c.bold('\n🛠️  LMAgent Skill Generator v2.3.0\n'));
+    console.log(c.bold('\n🛠️  LMAgent Skill Generator v2.5.6\n'));
 
     const prompt = createPrompt();
 

@@ -67,6 +67,21 @@ lmagent install
 
 ---
 
+## 🛠️ CLI Reference
+
+LMAgent includes a powerful CLI to manage your AI context.
+
+| Command | Usage | Description |
+| :--- | :--- | :--- |
+| **`init`** | `npx @qubiit/lmagent init` | Initializes the project. Copies `AGENTS.md` (catalog) and `CLAUDE.md` to your root. |
+| **`install`** | `npx @qubiit/lmagent install` | **Core Command**. Installs selected Skills, Rules & Workflows into your IDE configuration (Cursor, VSCode, Windsurf, etc.). |
+| **`update`** | `npx @qubiit/lmagent update` | Alias for `install`. Use this to refresh your skills when new versions are released. |
+| **`doctor`** | `npx @qubiit/lmagent doctor` | Verifies your environment, checking for correct file structures using `validate_skills` logic. |
+| **`validate`** | `npx @qubiit/lmagent validate` | Scans all `SKILL.md` files for syntax errors or missing required fields. |
+| **`create-skill`** | `npx @qubiit/lmagent create-skill` | Interactive wizard to generate a new Skill structure best practices. |
+
+---
+
 ## 🏛️ The 3-Pillar Architecture
 
 LMAgent organizes AI capabilities into three distinct pillars, enforcing a clear separation of concerns.
