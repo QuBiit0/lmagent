@@ -56,15 +56,35 @@ Respetamos estrictamente:
 
 ## Desarrollo Local
 
+### Prerrequisitos
+- Node.js >= 18
+- Python >= 3.10 (para ejecutar scripts de skills)
+
+### Setup del CLI (Node.js)
+
 ```bash
-# Instalar dependencias de desarrollo
-pip install -e ".[dev]"
+# 1. Instalar dependencias
+npm install
 
-# Correr tests
-pytest
+# 2. Linkear globalmente para desarrollo
+npm link
 
-# Correr linter
-ruff check .
+# 3. Probar cambios
+lmagent doctor
 ```
+
+### Desarrollo de Skills (Python)
+
+Si estás creando o modificando scripts Python dentro de `skills/`:
+
+```bash
+# Instalar dependencias de skills (opcional, recomendado usar venv)
+pip install -r skills/{skill-name}/requirements.txt
+```
+
+### Linting & Formatting
+
+- **JavaScript**: Eslint/Prettier (vía `npm test` si configurado)
+- **Python**: `ruff check .` (para scripts en `skills/`)
 
 ¡Gracias por ayudar a hacer LMAgent mejor!
