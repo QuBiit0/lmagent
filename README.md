@@ -165,10 +165,7 @@ LMAgent creates a **Single Source of Truth** in your home directory.
 
 ### 🧩 Multi-IDE Support
 
-| IDE / Agent | Support Level | Config Path |
-| :--- | :--- | :--- |
-| IDE / Agent | Support Level | Config Path |
-| :--- | :--- | :--- |
+
 | **Cursor** | ✅ Full | `.cursor/` |
 | **Windsurf** | ✅ Full | `.windsurf/` |
 | **VSCode / Copilot** | ✅ Full | `.github/` |
@@ -217,10 +214,10 @@ Need a custom agent? Use the interactive generator:
 
 ```bash
 # Verify structure of existing skills
-python validate_skills.py
+npx @qubiit/lmagent validate
 
 # Create a new skill interactively
-python create_skill.py
+npx @qubiit/lmagent create-skill
 ```
 This will generate the standard directory structure and `SKILL.md` template for you.
 
