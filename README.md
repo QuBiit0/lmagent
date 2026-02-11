@@ -19,41 +19,51 @@
 
 ## 🚀 Quick Start Guide
 
-Get your agent infrastructure up and running in less than 2 minutes.
+Get your universal agent infrastructure up and running in minutes.
 
-### Option A: Direct Execution (No Install)
-The fastest way to enhance your current project.
+### 📋 Prerequisites
+- **Node.js 18+** installed.
+- An existing project (or create one with `npm init`).
+
+### Option A: Per-Project Setup (Recommended)
+Use `npx` to run LMAgent without installing it globally. This ensures you always use the latest version and keeps your project dependencies clean.
 
 ```bash
-# Initialize project (copies CLAUDE.md, AGENTS.md, config, etc.)
+# 1. Initialize LMAgent (Copies AGENTS.md, CLAUDE.md & Configs)
+#    This gives your AI Agent the "Context" it needs to understand the skills.
 npx @qubiit/lmagent init
 
-# Install skills, rules & workflows into your IDE
+# 2. Install Skills & Rules to your IDE
+#    This configures .cursor, .vscode, or .windsurf with the actual executable prompts.
 npx @qubiit/lmagent install
 
-# Verify everything is correctly configured
+# 3. Verify System Status
 npx @qubiit/lmagent doctor
 ```
 
-### Option B: Local Development Setup
-If you want to contribute or fork the project:
+### Option B: Global Installation
+If you prefer having the `lmagent` command available globally in your terminal:
 
-1.  **Clone the Repository**
-    ```bash
-    git clone https://github.com/QuBit/lmagent.git
-    cd lmagent
-    ```
+```bash
+# 1. Install Global Package
+npm install -g @qubiit/lmagent
 
-2.  **Install Dependencies**
-    ```bash
-    npm install
-    ```
+# 2. Run Commands Directly
+lmagent init
+lmagent install
+lmagent doctor
+```
 
-3.  **Link Globally**
-    ```bash
-    npm link
-    lmagent install
-    ```
+### Option C: Local Development (Contributors)
+If you are developing the LMAgent framework itself:
+
+```bash
+git clone https://github.com/QuBit/lmagent.git
+cd lmagent
+npm install
+npm link
+lmagent install
+```
 
 ---
 
