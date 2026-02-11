@@ -20,12 +20,30 @@ agent_name/
 
 ## Uso
 
-1. Copiar este directorio
-2. Renombrar a tu agente
-3. Configurar `config.yaml`
-4. Personalizar `prompts/system.md`
-5. Agregar herramientas específicas si es necesario
-6. Escribir tests
+## Uso
+
+1. Copiar este directorio:
+   ```bash
+   cp -r templates/agent-python agents/my-new-agent
+   cd agents/my-new-agent
+   ```
+
+2. Crear entorno virtual e instalar dependencias:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # o venv\Scripts\activate en Windows
+   pip install -r requirements.txt
+   ```
+
+3. Configurar:
+   - Renombrar `config.yaml` y ajustar parámetros
+   - Personalizar `prompts/system.md`
+   - Crear `.env` con tus API Keys (ver `config.yaml` para referencias)
+
+4. Ejecutar:
+   ```bash
+   python agent.py
+   ```
 
 ## Archivos
 

@@ -29,7 +29,7 @@ class AgentConfig(BaseModel):
     name: str
     display_name: str
     description: str
-    version: str = "0.1.0"
+    version: str = "1.0.0"
     
     # LLM config
     llm_provider: str = "openai"

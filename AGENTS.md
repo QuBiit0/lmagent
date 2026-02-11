@@ -125,6 +125,8 @@ Workflows son **SOPs (Standard Operating Procedures)** que guían al agente en p
 ## 📦 5. Templates (Plantillas de Proyecto)
 *Ubicación: `templates/`*
 
+👉 **[Ver Guía de Uso de Templates](templates/USAGE.md)**
+
 | Template | Descripción |
 |----------|-------------|
 | **backend-python/** | FastAPI backend con SQLModel |
