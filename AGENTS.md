@@ -28,16 +28,16 @@ skills/{skill-name}/
 
 | Skill | Triggers | Descripción | Extras |
 |-------|----------|-------------|--------|
-| **backend-engineer** | `/dev`, `/backend`, `/api`, `/fix` | APIs, lógica de negocio, bases de datos (FastAPI, NestJS) | `scripts/scaffold_backend.py`, `references/design-patterns.md`, `references/debugging-guide.md`, `assets/fastapi-project-structure.yaml` |
+| **backend-engineer** | `/dev`, `/backend`, `/api`, `/fix` | APIs, lógica de negocio, bases de datos (FastAPI, NestJS) | **Uso:** Implementación código. **Vs API Designer:** Backend codifica; Designer define contrato. |
 | **frontend-engineer** | `/front`, `/ui`, `/react` | React, Next.js, interfaces web, accesibilidad | `scripts/audit_bundle.py`, `references/accessibility-guide.md` |
 | **mobile-engineer** | `/mobile`, `/rn`, `/ios`, `/android` | React Native, Expo, iOS/Android | `references/platform-guidelines.md` |
 | **data-engineer** | `/data`, `/db`, `/sql`, `/etl` | PostgreSQL, ETL, migraciones, índices | `scripts/backup_postgres.py`, `references/index-strategy.md`, `assets/pg-monitoring-queries.sql` |
 | **devops-engineer** | `/devops`, `/infra`, `/deploy`, `/docker` | CI/CD, Docker, Kubernetes, Terraform | `scripts/docker_healthcheck.py`, `references/ci-cd-patterns.md` |
 | **performance-engineer** | `/perf`, `/slow`, `/optimize`, `/load` | Profiling, caching, load testing | `scripts/profile_endpoint.py`, `references/caching-patterns.md` |
 | **security-analyst** | `/sec`, `/audit`, `/auth` | OWASP, auditoría de código, vulnerabilidades | `scripts/audit_security.py`, `references/owasp-top10.md` |
-| **qa-engineer** | `/qa`, `/test`, `/bug` | Testing, cobertura, E2E (Playwright, pytest, jest) | `scripts/run_coverage.py`, `references/testing-strategy.md` |
+| **qa-engineer** | `/qa`, `/test`, `/bug` | Testing, cobertura, E2E (Playwright, pytest, jest) | **Uso:** Ejecución de tests. **Vs Strategist:** QA escribe/corre code; Strategist define plan. |
 | **code-reviewer** | `/review`, `/critique` | Análisis estático, logic verification, clean code | `references/code-review-checklist.md` |
-| **systematic-debugger** | `/debug`, `/fix` | Debugging metódico, root cause analysis | `references/debugging-guide.md` |
+| **systematic-debugger** | `/debug`, `/fix` | Debugging metódico, root cause analysis | **Uso:** Análisis profundo manual. **Vs SWE:** Debugger diagnostica; SWE resuelve autónomamente. |
 | **api-designer** | `/api-design`, `/openapi` | Diseño de contratos API, REST/GraphQL | `references/api-standards.md` |
 | **supabase-expert** | `/supabase`, `/rls` | Backend as a Service, Auth, DB, Edge Functions | `references/supabase-patterns.md` |
 | **git-workflow** | `/git`, `/commit` | Gestión de ramas, conventional commits, PRs | `references/git-flow.md` |
@@ -64,7 +64,7 @@ skills/{skill-name}/
 | **scrum-master** | `/sm`, `/agile`, `/coach` | Ceremonias Scrum, sprints, retrospectivas | `references/sprint-ceremonies.md` |
 | **technical-writer** | `/doc`, `/readme`, `/guide` | Documentación, API refs, guías de usuario | `references/doc-templates.md` |
 | **ux-ui-designer** | `/ux`, `/ui`, `/design` | Design systems, UX research, accesibilidad | `references/design-system-foundation.md` |
-| **testing-strategist** | `/test-plan`, `/strategy` | Pirámide de testing, planificación y estrategia de QA | `references/testing-pyramid.md` |
+| **testing-strategist** | `/test-plan`, `/strategy` | Pirámide de testing, planificación y estrategia de QA | **Uso:** Definición de estrategia. **Vs QA:** Strategist piensa el 'qué'; QA ejecuta el 'cómo'. |
 
 ### 📐 Methodologies
 

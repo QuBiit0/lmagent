@@ -1,16 +1,16 @@
-# LMAgent Framework v2.3.0 - Claude Code Instructions
+# LMAgent Framework v2.5.0 - Claude Code Instructions
 
 > [!IMPORTANT]
-> **ANTES DE HACER CUALQUIER COSA**: Este proyecto usa el framework **LMAgent v2.3.0**.
+> **ANTES DE HACER CUALQUIER COSA**: Este proyecto usa el framework **LMAgent v2.5.0**.
 > **DEBES** leer `AGENTS.md` y `rules/_bootstrap.md` antes de implementar cualquier cambio.
 
 ## Framework
 
-Estás trabajando con **LMAgent v2.3.0**, un framework para desarrollo de automatizaciones y agentes de IA. Organiza las capacidades del agente en tres pilares: **Skills**, **Rules** y **Workflows**.
+Estás trabajando con **LMAgent v2.5.0**, un framework para desarrollo de automatizaciones y agentes de IA. Organiza las capacidades del agente en tres pilares: **Skills**, **Rules** y **Workflows**.
 
 ## ⚡ Inicio Rápido
 
-1. Lee `rules/_bootstrap.md` — **Entry point del framework** (startup check, 21 skills con triggers, reglas críticas)
+1. Lee `rules/_bootstrap.md` — **Entry point del framework** (startup check, 31 skills con triggers, reglas críticas)
 2. Lee `AGENTS.md` — Catálogo completo de skills, rules y workflows
 3. Lee las rules aplicables en `rules/`
 
@@ -33,11 +33,11 @@ Estás trabajando con **LMAgent v2.3.0**, un framework para desarrollo de automa
 
 | Documento | Propósito |
 |-----------|----------|
-| `rules/_bootstrap.md` | ⭐ Entry point: startup check, 21 skills con triggers, reglas |
+| `rules/_bootstrap.md` | ⭐ Entry point: startup, skills, reglas críticas |
 | `AGENTS.md` | Catálogo completo de capacidades |
 | `config/settings.yaml` | Configuración del framework |
 | `rules/` | Guardrails de comportamiento (ver abajo) |
-| `skills/` | 21 skills con `SKILL.md` + `scripts/` + `references/` + `assets/` |
+| `skills/` | 31 skills con `SKILL.md` + `scripts/` + `references/` + `assets/` |
 | `workflows/` | 13 procedimientos operativos |
 | `templates/` | Templates de proyecto reutilizables |
 

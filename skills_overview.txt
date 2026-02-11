@@ -1,0 +1,94 @@
+skills/ai-agent-engineer/SKILL.md:description: Especialista en diseño, desarrollo y optimización de agentes de inteligencia artificial y flujos RAG.
+skills/ai-agent-engineer/SKILL.md:role: Diseño y Desarrollo de Agentes IA
+skills/ai-agent-engineer/SKILL.md:triggers:
+skills/api-designer/SKILL.md:description: Arquitecto de APIs REST y GraphQL con enfoque en diseño consistente, documentación OpenAPI y experiencia del desarrollador.
+skills/api-designer/SKILL.md:role: Especialista en Diseño de APIs y Developer Experience
+skills/api-designer/SKILL.md:triggers:
+skills/architect/SKILL.md:description: Diseño de arquitectura de software, patrones de diseño y estructuración de sistemas robustos.
+skills/architect/SKILL.md:role: Senior Solutions Architect - Diseño de Sistemas Distribuidos
+skills/architect/SKILL.md:triggers:
+skills/automation-engineer/SKILL.md:description: Automatización de flujos de trabajo, procesos repetitivos e integración de herramientas.
+skills/automation-engineer/SKILL.md:role: Automatización e Integraciones
+skills/automation-engineer/SKILL.md:triggers:
+skills/automation-engineer/SKILL.md:description: Procesa una orden nueva desde n8n
+skills/backend-engineer/SKILL.md:description: Desarrollo de lógica de servidor, gestión de bases de datos, APIs y servicios escalables.
+skills/backend-engineer/SKILL.md:role: Senior Backend Engineer & Tech Lead - Ingeniería de Software Robusta
+skills/backend-engineer/SKILL.md:triggers:
+skills/bmad-methodology/SKILL.md:description: Experto en la aplicación de la metodología Best Model Agent Driven (BMAD).
+skills/bmad-methodology/SKILL.md:role: Scale-Adaptive Intelligence & Project Orchestration
+skills/bmad-methodology/SKILL.md:triggers:
+skills/browser-agent/SKILL.md:description: Automatización inteligente de navegador con Playwright/Puppeteer para scraping, auditorías, flujos interactivos y extracción de datos.
+skills/browser-agent/SKILL.md:role: Automatización de Navegador para Agentes IA
+skills/browser-agent/SKILL.md:triggers:
+skills/code-reviewer/SKILL.md:description: Especialista en revisiones de código sistemáticas, asegurando calidad, seguridad y mantenibilidad.
+skills/code-reviewer/SKILL.md:role: Experto en Code Review y Calidad de Código
+skills/code-reviewer/SKILL.md:triggers:
+skills/data-engineer/SKILL.md:description: Gestión de pipelines de datos, almacenamiento, procesamiento y análisis de información.
+skills/data-engineer/SKILL.md:role: Diseño y Administración de Bases de Datos
+skills/data-engineer/SKILL.md:triggers:
+skills/devops-engineer/SKILL.md:description: Configuración de CI/CD, infraestructura en la nube, contenedores y automatización de despliegues.
+skills/devops-engineer/SKILL.md:role: Infrastructure, CI/CD y Operaciones
+skills/devops-engineer/SKILL.md:triggers:
+skills/document-generator/SKILL.md:description: Generación programática de documentos formales (PDF, DOCX, XLSX, PPTX) con librerías especializadas.
+skills/document-generator/SKILL.md:role: Generación de Documentos de Oficina
+skills/document-generator/SKILL.md:triggers:
+skills/frontend-engineer/SKILL.md:description: Desarrollo de interfaces de usuario modernas, responsivas y centradas en la experiencia del usuario.
+skills/frontend-engineer/SKILL.md:role: Desarrollo de Interfaces de Usuario
+skills/frontend-engineer/SKILL.md:triggers:
+skills/git-workflow/SKILL.md:description: Experto en estrategias de branching, flujos de trabajo Git, y gestión de releases.
+skills/git-workflow/SKILL.md:role: Especialista en Git Workflows y Release Management
+skills/git-workflow/SKILL.md:triggers:
+skills/mcp-builder/SKILL.md:description: Experto en construir MCP Servers, Tools, Resources y Prompts para extender agentes de IA.
+skills/mcp-builder/SKILL.md:role: Especialista en Model Context Protocol y Agent Tooling
+skills/mcp-builder/SKILL.md:triggers:
+skills/mobile-engineer/SKILL.md:description: Desarrollo de aplicaciones móviles utilizando React Native, Expo y otras tecnologías nativas.
+skills/mobile-engineer/SKILL.md:role: Desarrollo de Aplicaciones Móviles
+skills/mobile-engineer/SKILL.md:triggers:
+skills/orchestrator/SKILL.md:description: Agente orquestador encargado de dirigir las solicitudes al experto más adecuado.
+skills/orchestrator/SKILL.md:role: Meta-Agent que decide qué persona y workflow activar
+skills/orchestrator/SKILL.md:triggers:
+skills/performance-engineer/SKILL.md:description: Especialista en identificación y resolución de cuellos de botella para optimizar el rendimiento y la escalabilidad.
+skills/performance-engineer/SKILL.md:role: Optimización de Rendimiento y Escalabilidad
+skills/performance-engineer/SKILL.md:triggers:
+skills/product-manager/SKILL.md:description: Definición de la visión del producto, roadmap y requisitos detallados para maximizar el valor al usuario.
+skills/product-manager/SKILL.md:role: Senior Product Manager - Estrategia y Visión de Producto
+skills/product-manager/SKILL.md:triggers:
+skills/prompt-engineer/SKILL.md:description: Optimización de prompts para maximizar la calidad, precisión y razonamiento de los outputs de los LLMs.
+skills/prompt-engineer/SKILL.md:role: Ingeniería de Prompts y Arquitectura Cognitiva
+skills/prompt-engineer/SKILL.md:triggers:
+skills/qa-engineer/SKILL.md:description: Aseguramiento de la calidad mediante pruebas automatizadas, manuales y validación rigurosa de criterios de aceptación.
+skills/qa-engineer/SKILL.md:role: Testing y Aseguramiento de Calidad
+skills/qa-engineer/SKILL.md:triggers:
+skills/scrum-master/SKILL.md:description: Facilitador de metodologías ágiles enfocado en la eliminación de obstáculos y la mejora continua del equipo.
+skills/scrum-master/SKILL.md:role: Agile Coach & Senior Scrum Master - Facilitador de Alto Rendimiento
+skills/scrum-master/SKILL.md:triggers:
+skills/security-analyst/SKILL.md:description: Auditoría de vulnerabilidades, protección de datos y cumplimiento de estándares de seguridad internacionales.
+skills/security-analyst/SKILL.md:role: Seguridad y Compliance
+skills/security-analyst/SKILL.md:triggers:
+skills/seo-auditor/SKILL.md:description: Auditoría técnica completa de sitios web incluyendo SEO on-page, Core Web Vitals, accesibilidad WCAG, schema markup y Open Graph.
+skills/seo-auditor/SKILL.md:role: Auditoría Web y SEO Técnico
+skills/seo-auditor/SKILL.md:triggers:
+skills/spec-driven-dev/SKILL.md:description: Metodología de desarrollo basada rigurosamente en especificaciones y contratos técnicos para garantizar trazabilidad.
+skills/spec-driven-dev/SKILL.md:role: Development Methodology - Specification as Source of Truth
+skills/spec-driven-dev/SKILL.md:triggers:
+skills/supabase-expert/SKILL.md:description: Especialista en Supabase, incluyendo PostgreSQL, RLS, Edge Functions, Auth, Realtime y Storage.
+skills/supabase-expert/SKILL.md:role: Experto en Supabase Platform & PostgreSQL
+skills/supabase-expert/SKILL.md:triggers:
+skills/swe-agent/SKILL.md:description: Agente de ingeniería de software especializado en la resolución autónoma de issues y refactorización sistemática.
+skills/swe-agent/SKILL.md:role: Autonomous Software Engineering Agent
+skills/swe-agent/SKILL.md:triggers:
+skills/systematic-debugger/SKILL.md:description: Metodología rigurosa de debugging en 4 fases para encontrar la causa raíz antes de aplicar cualquier fix.
+skills/systematic-debugger/SKILL.md:role: Debugging Metódico y Resolución de Problemas
+skills/systematic-debugger/SKILL.md:triggers:
+skills/tech-lead/SKILL.md:description: Liderazgo técnico, revisión de código crítica y establecimiento de mejores prácticas de ingeniería de software.
+skills/tech-lead/SKILL.md:role: Liderazgo Técnico y Mentorship
+skills/tech-lead/SKILL.md:triggers:
+skills/technical-writer/SKILL.md:description: Creación de documentación técnica clara, manuales de usuario y guías que reducen la curva de aprendizaje.
+skills/technical-writer/SKILL.md:role: Documentación Técnica y Comunicación
+skills/technical-writer/SKILL.md:triggers:
+skills/testing-strategist/SKILL.md:description: Experto en estrategias de testing automatizado, TDD/BDD, y frameworks de testing modernos.
+skills/testing-strategist/SKILL.md:role: Especialista en Testing Strategy y Quality Assurance Automation
+skills/testing-strategist/SKILL.md:triggers:
+skills/ux-ui-designer/SKILL.md:description: Diseño visual e interactivo centrado en la usabilidad, estética moderna y accesibilidad universal.
+skills/ux-ui-designer/SKILL.md:role: Diseño de Experiencia e Interfaz de Usuario
+skills/ux-ui-designer/SKILL.md:triggers:

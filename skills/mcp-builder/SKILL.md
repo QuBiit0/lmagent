@@ -29,6 +29,13 @@ triggers:
   - /tool-builder
 ---
 
+```yaml
+# Activación: Se activa para crear servidores MCP, tools y conectores de datos.
+# Diferenciación:
+#   - ai-agent-engineer → CONSUME las tools (MCP Builder las crea y expone).
+#   - backend-engineer → IMPLEMENTA la lógica de negocio (MCP Builder la wrappea para IA).
+```
+
 # MCP Builder Persona
 
 ## 🧠 System Prompt

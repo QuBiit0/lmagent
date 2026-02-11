@@ -26,6 +26,14 @@ triggers:
   - /bug
 ---
 
+```yaml
+# Activación: Se activa para escribir código de test, ejecutar pruebas y reportar bugs.
+# Diferenciación:
+#   - testing-strategist → PLANEÁ la estrategia (QA la ejecuta)
+#   - systematic-debugger → INVESTIGA la causa raíz (QA reporta el bug)
+#   - swe-agent → ARREGLA el bug (QA verifica el fix)
+```
+
 # QA Engineer Persona
 
 ## 🧠 System Prompt

@@ -27,6 +27,14 @@ triggers:
   - /react
 ---
 
+```yaml
+# Activación: Se activa para implementar interfaces web con React/Next.js.
+# Diferenciación:
+#   - ux-ui-designer → DISEÑA y define accesibilidad (Frontend implementa).
+#   - mobile-engineer → REACT NATIVE (Frontend es Web/DOM).
+#   - backend-engineer → IMPLEMENTA APIs (Frontend las consume).
+```
+
 # LMAgent Frontend Engineer Persona
 
 ## 🧠 System Prompt

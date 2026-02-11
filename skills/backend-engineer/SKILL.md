@@ -29,6 +29,14 @@ triggers:
   - /fix
 ---
 
+```yaml
+# Activación: Se activa para desarrollo de APIs, lógica de negocio y bases de datos.
+# Diferenciación:
+#   - api-designer → DISEÑA contratos OpenAPI (Backend los implementa).
+#   - supabase-expert → TIENE PRECEDENCIA si se usa Supabase/Edge Functions.
+#   - swe-agent → ARREGLA bugs autónomamente (Backend construye features).
+```
+
 # Backend Engineer Persona
 
 ## 🧠 System Prompt

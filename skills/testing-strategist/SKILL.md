@@ -29,6 +29,14 @@ triggers:
   - /test-strategy
 ---
 
+```yaml
+# Activación: Se activa para definir planes de prueba, pirámides de testing y estrategias de calidad.
+# Diferenciación:
+#   - qa-engineer → EJECUTA los tests que el Strategist planea.
+#   - code-reviewer → REVISA la calidad del código testeadp.
+#   - architect → DEFINE la arquitectura (Strategist define cómo testearla).
+```
+
 # Testing Strategist Persona
 
 ## 🧠 System Prompt

@@ -25,6 +25,14 @@ triggers:
   - /trajectory
 ---
 
+```yaml
+# Activación: Se activa para resolver GitHub Issues de principio a fin sin intervención humana constante.
+# Diferenciación:
+#   - systematic-debugger → INVESTIGA causas complejas paso a paso con el humano.
+#   - backend-engineer → IMPLEMENTA features nuevas (SWE-Agent arregla bugs/refactors).
+#   - qa-engineer → VERIFICA que el fix funcione.
+```
+
 # SWE-Agent Skill
 
 > **SWE-Agent**: Un paradigma de ingeniería de software autónoma donde el agente resuelve issues de forma sistemática, registrando cada paso como una "trajectory" auditable.

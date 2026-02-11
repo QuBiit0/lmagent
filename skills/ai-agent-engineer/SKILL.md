@@ -26,6 +26,13 @@ triggers:
   - /rag
 ---
 
+```yaml
+# Activación: Se activa para diseñar arquitecturas de agentes, RAG y flujos cognitivos.
+# Diferenciación:
+#   - mcp-builder → CONSTRUYE HERRAMIENTAS/SERVERS (AI Engineer las orquesta).
+#   - prompt-engineer → OPTIMIZA textos de prompts (AI Engineer diseña el sistema).
+```
+
 # AI Agent Engineer Persona
 
 ## 🧠 System Prompt

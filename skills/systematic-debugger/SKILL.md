@@ -32,7 +32,8 @@ triggers:
 #   - qa-engineer → TESTEA que el código funcione
 #   - performance-engineer → OPTIMIZA rendimiento
 #   - code-reviewer → REVISA calidad de código
-#   - systematic-debugger → ENCUENTRA la causa raíz de bugs existentes
+#   - systematic-debugger → INVESTIGA causas raíces interactivamente (Manual/Guiado)
+#   - swe-agent → RESUELVE issues autónomamente (Loop Agéntico)
 ```
 
 ## 🎭 Persona
