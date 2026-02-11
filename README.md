@@ -84,12 +84,19 @@ graph TD
 | Skill Name | Description | Tools Included |
 | :--- | :--- | :--- |
 | **ai-agent-engineer** | Expert in building LLM-based systems & MCP servers. | `create-agent`, `scaffold-mcp` |
+| **api-designer** | Design REST/GraphQL contracts, OpenAPI standards. | `scaffold-api`, `lint-openapi` |
 | **architect** | System design, scalable patterns, cloud infrastructure. | `design-system`, `review-architecture` |
 | **automation-engineer** | n8n workflows, Zapier integration, scripting. | `deploy-n8n`, `check-webhook` |
 | **backend-engineer** | API design, Database schema, Authentication. | `scaffold-api`, `optimize-query` |
+| **bmad-methodology** | Scale-Adaptive Intelligence, project kickoff, complexity classification. | `classify-level`, `kickoff-project` |
+| **browser-agent** | Web automation, scraping, UI testing with Playwright. | `scrape-site`, `automate-flow` |
+| **code-reviewer** | Static analysis, logic verification, clean code standards. | `review-pr`, `analyze-complexity` |
 | **data-engineer** | ETL pipelines, SQL optimization, Data warehousing. | `analyze-schema`, `run-migration` |
 | **devops-engineer** | CI/CD, Docker, Kubernetes, Terraform. | `docker-build`, `k8s-deploy` |
+| **document-generator** | Programmatic PDF/DOCX/XLSX generation. | `gen-pdf`, `gen-report` |
 | **frontend-engineer** | React, Next.js, Tailwind, State Management. | `scaffold-component`, `check-accessibility` |
+| **git-workflow** | Branch management, conventional commits, release flow. | `feature-start`, `release-prep` |
+| **mcp-builder** | Build MCP servers, tools, and resources. | `new-mcp-server`, `test-tool` |
 | **mobile-engineer** | React Native, Expo, iOS/Android build pipelines. | `build-ios`, `debug-android` |
 | **orchestrator** | High-level task planning and agent coordination. | `plan-task`, `delegate-subtask` |
 | **performance-engineer** | Profiling, load testing, optimization. | `run-lighthouse`, `profile-memory` |
@@ -98,12 +105,15 @@ graph TD
 | **qa-engineer** | E2E testing (Playwright), Unit tests, QA strategy. | `run-playwright`, `generate-test-plan` |
 | **scrum-master** | Agile ceremonies, sprint planning, retrospective. | `start-sprint`, `generate-retro` |
 | **security-analyst** | Vulnerability scanning, code auditing, OWASP. | `scan-vulnerabilities`, `audit-code` |
+| **seo-auditor** | Technical SEO, Core Web Vitals, accessibility audit. | `audit-seo`, `check-meta` |
+| **spec-driven-dev** | Spec-first development pipeline: SPECIFY → PLAN → TASKS → IMPLEMENT → VERIFY. | `create-spec`, `validate-spec` |
+| **supabase-expert** | Supabase architecture, RLS, Edge Functions. | `init-supabase`, `deploy-edge` |
+| **swe-agent** | Autonomous issue resolution, trajectory logging, Edit-Lint-Test loops. | `resolve-issue`, `trajectory-log` |
+| **systematic-debugger** | Methodical 4-phase debugging (RCA). | `debug-session`, `analyze-logs` |
 | **tech-lead** | Code review, technical decision making, mentoring. | `review-pr`, `enforce-standards` |
 | **technical-writer** | Documentation, API refs, user guides. | `generate-docs`, `update-readme` |
+| **testing-strategist** | Test planning, pyramid strategy, coverage goals. | `plan-testing`, `define-coverage` |
 | **ux-ui-designer** | Design systems, user flow, prototyping. | `analyze-ux`, `generate-palette` |
-| **bmad-methodology** | Scale-Adaptive Intelligence, project kickoff, complexity classification. | `classify-level`, `kickoff-project` |
-| **swe-agent** | Autonomous issue resolution, trajectory logging, Edit-Lint-Test loops. | `resolve-issue`, `trajectory-log` |
-| **spec-driven-dev** | Spec-first development pipeline: SPECIFY → PLAN → TASKS → IMPLEMENT → VERIFY. | `create-spec`, `validate-spec` |
 
 
 ### 2. 📜 Rules (Context & Guardrails)
@@ -157,16 +167,43 @@ LMAgent creates a **Single Source of Truth** in your home directory.
 
 | IDE / Agent | Support Level | Config Path |
 | :--- | :--- | :--- |
+| IDE / Agent | Support Level | Config Path |
+| :--- | :--- | :--- |
 | **Cursor** | ✅ Full | `.cursor/` |
 | **Windsurf** | ✅ Full | `.windsurf/` |
 | **VSCode / Copilot** | ✅ Full | `.github/` |
 | **Zed** | ✅ Full | `.rules/` |
 | **Continue** | ✅ Full | `.continue/` |
 | **Trae** | ✅ Full | `.trae/` |
-| **Antigravity** | ✅ Full | `.antigravity/` |
-| **Cline / Roo Code** | ✅ Full | `.clinerules/` |
+| **Antigravity** | ✅ Full | `.agent/` |
+| **Cline / Roo Code** | ✅ Full | `.clinerules/` / `.roo/` |
 | **Claude Code** | ✅ Full | `.claude/` |
 | **Qodo** | ✅ Full | `agents/` |
+| **Amp / Kimi / Replit** | ✅ Full | `.agents/` |
+| **Augment** | ✅ Full | `.augment/` |
+| **OpenHands** | ✅ Full | `.openhands/` |
+| **Goose** | ✅ Full | `.goose/` |
+| **Mistral Vibe** | ✅ Full | `.vibe/` |
+| **Envoid (OpenClaw)** | ✅ Full | `openclaw.json` |
+| **CodeBuddy** | ✅ Full | `.codebuddy/` |
+| **Command Code** | ✅ Full | `.commandcode/` |
+| **Crush** | ✅ Full | `.crush/` |
+| **Droid** | ✅ Full | `.factory/` |
+| **Junie** | ✅ Full | `.junie/` |
+| **iFlow** | ✅ Full | `.iflow/` |
+| **Kilo Code** | ✅ Full | `.kilocode/` |
+| **Kiro** | ✅ Full | `.kiro/` |
+| **Kode** | ✅ Full | `.kode/` |
+| **MCPJam** | ✅ Full | `.mcpjam/` |
+| **Mux** | ✅ Full | `.mux/` |
+| **Pi** | ✅ Full | `.pi/` |
+| **Qoder** | ✅ Full | `.qoder/` |
+| **Qwen Code** | ✅ Full | `.qwen/` |
+| **Trae CN** | ✅ Full | `.trae-cn/` |
+| **Zencoder** | ✅ Full | `.zencoder/` |
+| **Neovate** | ✅ Full | `.neovate/` |
+| **Pochi** | ✅ Full | `.pochi/` |
+| **AdaL** | ✅ Full | `.adal/` |
 
 ---
 
