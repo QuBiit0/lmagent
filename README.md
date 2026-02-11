@@ -10,7 +10,7 @@
                                                   by QuBit
 ```
 
-![Version](https://img.shields.io/badge/Version-2.6.1-purple?style=for-the-badge) ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge) ![Agentic](https://img.shields.io/badge/AI-Agentic_Workflow-cyan?style=for-the-badge)
+![Version](https://img.shields.io/badge/Version-2.6.2-purple?style=for-the-badge) ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge) ![Agentic](https://img.shields.io/badge/AI-Agentic_Workflow-cyan?style=for-the-badge)
 
 > **"Separate the reasoning from the execution."**  
 > LMAgent is the foundational runtime that empowers your AI Agents with standardized **Skills**, **Rules**, and **Workflows** across any IDE (Cursor, Windsurf, VSCode, Zed, Qodo).
@@ -201,15 +201,17 @@ LMAgent creates a **Single Source of Truth** in your home directory.
 ### 🧩 Multi-IDE Support
 
 
+| IDE | Status | Config Path |
+| :--- | :--- | :--- |
 | **Cursor** | ✅ Full | `.cursor/` |
 | **Windsurf** | ✅ Full | `.windsurf/` |
 | **VSCode / Copilot** | ✅ Full | `.github/` |
 | **Zed** | ✅ Full | `.rules/` |
+| **Antigravity** | ✅ Full | `.agent/` |
+| **Claude Code** | ✅ Full | `.claude/` |
+| **Cline / Roo Code** | ✅ Full | `.clinerules/` / `.roo/` |
 | **Continue** | ✅ Full | `.continue/` |
 | **Trae** | ✅ Full | `.trae/` |
-| **Antigravity** | ✅ Full | `.agent/` |
-| **Cline / Roo Code** | ✅ Full | `.clinerules/` / `.roo/` |
-| **Claude Code** | ✅ Full | `.claude/` |
 | **Qodo** | ✅ Full | `agents/` |
 | **Amp / Kimi / Replit** | ✅ Full | `.agents/` |
 | **Augment** | ✅ Full | `.augment/` |

@@ -1,12 +1,12 @@
-# LMAgent Framework v2.6.1 - Claude Code Instructions
+# LMAgent Framework v2.6.2 - Claude Code Instructions
 
 > [!IMPORTANT]
-> **ANTES DE HACER CUALQUIER COSA**: Este proyecto usa el framework **LMAgent v2.6.1**.
+> **ANTES DE HACER CUALQUIER COSA**: Este proyecto usa el framework **LMAgent v2.6.2**.
 > **DEBES** leer `AGENTS.md` y `rules/_bootstrap.md` antes de implementar cualquier cambio.
 
 ## Framework
 
-Estás trabajando con **LMAgent v2.6.1**, un framework para desarrollo de automatizaciones y agentes de IA. Organiza las capacidades del agente en tres pilares: **Skills**, **Rules** y **Workflows**.
+Estás trabajando con **LMAgent v2.6.2**, un framework para desarrollo de automatizaciones y agentes de IA. Organiza las capacidades del agente en tres pilares: **Skills**, **Rules** y **Workflows**.
 
 ## ⚡ Inicio Rápido
 
