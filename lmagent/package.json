@@ -1,0 +1,32 @@
+{
+  "name": "lmagent-skills",
+  "version": "1.0.0",
+  "description": "CLI to install LMAgent skills and rules into your IDE",
+  "main": "install.js",
+  "bin": {
+    "lmagent-skills": "./install.js",
+    "lmagent": "./install.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node install.js"
+  },
+  "keywords": [
+    "ai",
+    "agent",
+    "skills",
+    "cursor",
+    "windsurf",
+    "ide"
+  ],
+  "author": "Leandro Martín Alvarez (QuBiit)",
+  "license": "MIT",
+  "dependencies": {
+    "boxen": "^8.0.1",
+    "chalk": "^4.1.2",
+    "commander": "^13.1.0",
+    "figlet": "^1.10.0",
+    "gradient-string": "^3.0.0",
+    "inquirer": "^8.2.6"
+  }
+}

@@ -46,18 +46,18 @@ LMAgent organizes AI capabilities into three distinct pillars, enforcing a clear
 
 ```mermaid
 graph TD
-    A[🤖 AI Agent] --> B(🛠️ Skills)
-    A --> C(📜 Rules)
-    A --> D(⚡ Workflows)
+    A["🤖 AI Agent"] --> B("🛠️ Skills")
+    A --> C("📜 Rules")
+    A --> D("⚡ Workflows")
     
-    B --> B1[.cursor/skills/]
-    B --> B2[Executable Tools & Scripts]
+    B --> B1[".cursor/skills/"]
+    B --> B2["Executable Tools & Scripts"]
     
-    C --> C1[.cursor/rules/]
-    C --> C2[Behavioral Guardrails & Context]
+    C --> C1[".cursor/rules/"]
+    C --> C2["Behavioral Guardrails & Context"]
     
-    D --> D1[.cursor/workflows/]
-    D --> D2[Standard Operating Procedures (SOPs)]
+    D --> D1[".cursor/workflows/"]
+    D --> D2["Standard Operating Procedures (SOPs)"]
 ```
 
 ### 1. 🛠️ Skills (Capabilities)

@@ -1,0 +1,51 @@
+# LMAgent Sandbox Dockerfile
+# Used for secure code execution in an isolated environment
+
+FROM python:3.11-slim
+
+# Metadata
+LABEL maintainer="LMAgent"
+LABEL description="Sandbox environment for secure code execution"
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV PIP_NO_CACHE_DIR=1
+ENV PIP_DISABLE_PIP_VERSION_CHECK=1
+
+# Create non-root user for security
+RUN groupadd -r sandbox && useradd -r -g sandbox sandbox
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git \
+    curl \
+    jq \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create working directory
+WORKDIR /workspace
+
+# Install Python dependencies for common tasks
+RUN pip install --no-cache-dir \
+    httpx \
+    pydantic \
+    pyyaml \
+    structlog \
+    pytest \
+    ruff \
+    mypy
+
+# Copy sandbox scripts
+COPY sandbox/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# Set resource limits via Docker run command
+# --memory=256m --cpus=0.5 --network=none
+
+# Switch to non-root user
+USER sandbox
+
+# Set the entrypoint
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["python"]
