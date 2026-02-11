@@ -1,33 +1,11 @@
 # 🧠 LMAgent: The Universal AI Agent Runtime
 
-![LMAgent Banner](https://img.shields.io/badge/AI%20Agent-Runtime-cyan?style=for-the-badge&logo=robot-framework) ![Version](https://img.shields.io/badge/Version-2.3.0-purple?style=for-the-badge) ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+![LMAgent Banner](lmagent_banner_v2.png)
+
+![Version](https://img.shields.io/badge/Version-2.3.0-purple?style=for-the-badge) ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge) ![Agentic](https://img.shields.io/badge/AI-Agentic_Workflow-cyan?style=for-the-badge)
 
 > **"Separate the reasoning from the execution."**  
-> LMAgent is the foundational runtime that empowers your AI Agents with standardized **Skills**, **Rules**, and **Workflows** across any IDE.
-
----
-
-## 🌟 Why LMAgent?
-
-In the era of Agentic AI, your "System Prompt" is not enough. You need a structured **Cognitive Architecture**. LMAgent provides the **3 Pillars** of Agent Identity, instantly compatible with Cursor, Windsurf, VSCode, Zed, Qodo, and more.
-
-### 🏛️ The 3-Pillar Architecture
-
-```mermaid
-graph TD
-    A[🤖 AI Agent] --> B(🛠️ Skills)
-    A --> C(📜 Rules)
-    A --> D(⚡ Workflows)
-    
-    B --> B1[.cursor/skills/]
-    B --> B2[Executable Tools]
-    
-    C --> C1[.cursor/rules/]
-    C --> C2[Behavioral Guardrails]
-    
-    D --> D1[.cursor/workflows/]
-    D --> D2[Standard Operating Procedures]
-```
+> LMAgent is the foundational runtime that empowers your AI Agents with standardized **Skills**, **Rules**, and **Workflows** across any IDE (Cursor, Windsurf, VSCode, Zed, Qodo).
 
 ---
 
@@ -56,7 +34,7 @@ If you want to contribute or fork the project:
     npm install
     ```
 
-3.  **Link Globally (Optional)**
+3.  **Link Globally**
     ```bash
     npm link
     lmagent install
@@ -64,38 +42,99 @@ If you want to contribute or fork the project:
 
 ---
 
-## ✨ The Installation Experience
+## 🏛️ The 3-Pillar Architecture
 
-The interactive CLI detects your environment and sets up the optimal configuration:
+LMAgent organizes AI capabilities into three distinct pillars, enforcing a clear separation of concerns.
 
-```text
-🔄 Sincronizando repositorio global (~/.agents)...
-✔ Repositorio global sincronizado correctamente.
-
-🔹 Configuración de Instalación
-? ¿Dónde quieres instalar los artefactos?
-> En mi Usuario / Global IDE Config (~/) (Recomendado) 👈 
-  En este Proyecto (./)
-
-? Método de Instalación: Symlink (Recomendado - Live Updates)
-? Selecciona los Skills: [✔] ai-agent-engineer, [✔] fullstack-dev...
-? Selecciona las Reglas: [✔] code-style, [✔] security...
-? Selecciona los Workflows: [✔] new-feature, [✔] bugfix...
-
-✨ Instalación Finalizada ✨
+```mermaid
+graph TD
+    A[🤖 AI Agent] --> B(🛠️ Skills)
+    A --> C(📜 Rules)
+    A --> D(⚡ Workflows)
+    
+    B --> B1[.cursor/skills/]
+    B --> B2[Executable Tools & Scripts]
+    
+    C --> C1[.cursor/rules/]
+    C --> C2[Behavioral Guardrails & Context]
+    
+    D --> D1[.cursor/workflows/]
+    D --> D2[Standard Operating Procedures (SOPs)]
 ```
+
+### 1. 🛠️ Skills (Capabilities)
+*Executable units that allow the Agent to interact with the world.*  
+**Location:** `.cursor/skills/` or `~/.agents/skills/`
+
+| Skill Name | Description | Tools Included |
+| :--- | :--- | :--- |
+| **ai-agent-engineer** | Expert in building LLM-based systems & MCP servers. | `create-agent`, `scaffold-mcp` |
+| **architect** | System design, scalable patterns, cloud infrastructure. | `design-system`, `review-architecture` |
+| **automation-engineer** | n8n workflows, Zapier integration, scripting. | `deploy-n8n`, `check-webhook` |
+| **backend-engineer** | API design, Database schema, Authentication. | `scaffold-api`, `optimize-query` |
+| **data-engineer** | ETL pipelines, SQL optimization, Data warehousing. | `analyze-schema`, `run-migration` |
+| **devops-engineer** | CI/CD, Docker, Kubernetes, Terraform. | `docker-build`, `k8s-deploy` |
+| **frontend-engineer** | React, Next.js, Tailwind, State Management. | `scaffold-component`, `check-accessibility` |
+| **mobile-engineer** | React Native, Expo, iOS/Android build pipelines. | `build-ios`, `debug-android` |
+| **orchestrator** | High-level task planning and agent coordination. | `plan-task`, `delegate-subtask` |
+| **performance-engineer** | Profiling, load testing, optimization. | `run-lighthouse`, `profile-memory` |
+| **product-manager** | PRD generation, user stories, roadmap planning. | `generate-user-story`, `prioritize-backlog` |
+| **prompt-engineer** | Optimizing system prompts and LLM interactions. | `optimize-prompt`, `eval-prompt` |
+| **qa-engineer** | E2E testing (Playwright), Unit tests, QA strategy. | `run-playwright`, `generate-test-plan` |
+| **scrum-master** | Agile ceremonies, sprint planning, retrospective. | `start-sprint`, `generate-retro` |
+| **security-analyst** | Vulnerability scanning, code auditing, OWASP. | `scan-vulnerabilities`, `audit-code` |
+| **tech-lead** | Code review, technical decision making, mentoring. | `review-pr`, `enforce-standards` |
+| **technical-writer** | Documentation, API refs, user guides. | `generate-docs`, `update-readme` |
+| **ux-ui-designer** | Design systems, user flow, prototyping. | `analyze-ux`, `generate-palette` |
+
+
+### 2. 📜 Rules (Context & Guardrails)
+*Constraints and guidelines that shape Agent behavior.*  
+**Location:** `.cursor/rules/` or `~/.agents/rules/`
+
+| Rule File | Description |
+| :--- | :--- |
+| **agents-ia.md** | Core guidelines for building AI Agents (Tool-first, Stateless, Observable). |
+| **api-design.md** | REST/GraphQL standards, error handling, versioning best practices. |
+| **automations-n8n.md** | Best practices for building robust n8n workflows. |
+| **code-style.md** | Linter configuration, naming conventions, project structure. |
+| **documentation.md** | Standards for code comments, READMEs, and architectural decision records (ADRs). |
+| **security.md** | **Critical**: Input validation, secret management, OWASP Top 10 prevention. |
+| **stack.md** | Approved technology stack and library choices for the project. |
+| **testing.md** | Mandatory Test-Driven Development (TDD) workflows and coverage requirements. |
+| **workflow.md** | General git flow and contribution guidelines. |
+
+
+### 3. ⚡ Workflows (SOPs)
+*Step-by-step guides for complex tasks.*  
+**Location:** `.cursor/workflows/` or `~/.agents/workflows/`
+
+| Workflow Name | Purpose |
+| :--- | :--- |
+| **bugfix-backend.md** | Protocol for diagnosing, fixing, and verifying server-side bugs. |
+| **documentation.md** | Guide for updating and maintaining project documentation. |
+| **generate-prd.md** | Template and instructions for creating Product Requirement Documents. |
+| **ideation.md** | Brainstorming process for new features or products. |
+| **new-agent-ia.md** | End-to-end guide for creating a new AI Agent from scratch. |
+| **new-automation.md** | Steps to design and deploy a new automation (n8n/script). |
+| **new-feature.md** | Standard flow: Ticket -> Design -> Implementation -> Test -> PR. |
+| **optimize-performance.md** | Systematic approach to identifying and fixing bottlenecks. |
+| **resolve-github-issue.md** | Standard flow for addressing GitHub Issues. |
+| **security-review.md** | Checklist for pre-deployment security audits. |
+| **spec-driven.md** | Development methodology based on detailed specifications (Spec-First). |
+| **testing-strategy.md** | Defining the testing pyramid and strategy for a feature. |
+| **third-party-integration.md** | Guide for securely integrating external APIs and SDKs. |
 
 ---
 
-## 💎 Key Features
+## 💎 Features & IDE Support
 
-### 1. 🌍 Centralized "Brain" (`~/.agents`)
+### 🌍 Centralized "Brain" (`~/.agents`)
 LMAgent creates a **Single Source of Truth** in your home directory.
 *   **Update Once, Reflect Everywhere**: Modify a rule in `~/.agents/rules/code-style.md`, and *every project* using Symlinks updates instantly.
 *   **Zero-Copy Efficiency**: No more valid/duplicate `.md` files cluttering every repo.
 
-### 2. 🧩 Multi-IDE Support
-We speak your IDE's language perfectly.
+### 🧩 Multi-IDE Support
 
 | IDE / Agent | Support Level | Config Path |
 | :--- | :--- | :--- |
@@ -105,27 +144,6 @@ We speak your IDE's language perfectly.
 | **Zed** | ✅ Full | `.rules/` |
 | **Claude Code** | ✅ Beta | `.claude/` |
 | **Qodo** | ✅ Beta | `agents/` |
-
-### 3. 📦 Standardized Skills (`skills.sh`)
-We follow the [Agent Skills Standard](https://github.com/skills-sh/spec).
-Each Skill is a self-contained unit:
-```text
-skills/
-  react-best-practices/
-    SKILL.md       # Metadata & Instructions for the LLM
-    scripts/       # Executable bash/python scripts
-    templates/     # Code templates
-```
-
----
-
-## 📚 Included Capabilities
-
-See [AGENTS.md](./lmagent/AGENTS.md) for the full catalog.
-
-*   **🧠 Personas**: `ai-agent-engineer`, `fullstack-architect`, `devops-specialist`
-*   **🛡️ Rules**: `code-style`, `security`, `testing`
-*   **⚡ Workflows**: `new-feature`, `bugfix-backend`, `generate-prd`
 
 ---
 
