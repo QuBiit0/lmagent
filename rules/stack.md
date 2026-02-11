@@ -29,9 +29,9 @@ Este documento define el stack tecnológico base y las buenas prácticas para pr
 ### Lenguajes
 | Lenguaje | Versión | Uso |
 |----------|---------|-----|
-| Python | 3.11+ | Backends, agentes IA, scripts |
-| TypeScript | 5.0+ | Backends Node, frontends |
-| JavaScript | ES2022+ | Scripts, n8n custom nodes |
+| Python | 3.14+ | Backends, agentes IA, scripts |
+| TypeScript | 6.0+ | Backends Node, frontends |
+| JavaScript | ES2026+ | Scripts, n8n custom nodes |
 
 ### Frameworks Backend
 
@@ -54,8 +54,8 @@ Prisma         - ORM para TypeScript
 ### Base de Datos
 | Componente | Tecnología | Uso |
 |------------|------------|-----|
-| Principal | PostgreSQL 15+ | Datos relacionales |
-| Cache | Redis 7+ | Cache, sesiones, colas |
+| Principal | PostgreSQL 18+ | Datos relacionales |
+| Cache | Redis 8+ | Cache, sesiones, colas |
 | Colas | Redis Streams | Mensajería async |
 | Búsqueda | PostgreSQL FTS | Búsqueda de texto |
 

@@ -1,12 +1,12 @@
 [project]
 name = "lmagent"
-version = "2.1.0"
+version = "2.3.0"
 description = "Framework for automation and AI agent development"
 readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.12"
 authors = [
-    { name = "QuBiit0", email = "qubiit@tec5.tech" }
+    { name = "QuBiit0", email = "info@leandroalvarez.com.ar" }
 ]
 keywords = [
     "ai",
