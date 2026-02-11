@@ -194,7 +194,7 @@ function validateSkill(skillDir) {
 function main() {
     const filterSkill = process.argv[2];
 
-    console.log(gradient.pastel.multiline('\n🚀 LMAgent Skills Validator v2.6.0\n'));
+    console.log(gradient.pastel.multiline('\n🚀 LMAgent Skills Validator v2.6.1\n'));
     console.log(chalk.dim(`   Directorio: ${SKILLS_DIR}`));
     console.log(chalk.dim(`   Campos obligatorios: ${REQUIRED_FIELDS.length}`));
     console.log('');

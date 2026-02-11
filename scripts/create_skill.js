@@ -212,7 +212,7 @@ Antes de considerar una tarea terminada, verifica TODO:
 
 // ─── Main ─────────────────────────────────────────────────────
 async function main() {
-    console.log(c.bold('\n🛠️  LMAgent Skill Generator v2.6.0\n'));
+    console.log(c.bold('\n🛠️  LMAgent Skill Generator v2.6.1\n'));
 
     const prompt = createPrompt();
 
