@@ -1,11 +1,14 @@
 {
-  "name": "lmagent-skills",
+  "name": "@qubiit/lmagent",
+  "publishConfig": {
+    "access": "public"
+  },
   "version": "2.5.0",
   "description": "CLI to install LMAgent skills and rules into your IDE",
   "main": "install.js",
   "bin": {
-    "lmagent-skills": "./install.js",
-    "lmagent": "./install.js"
+    "lmagent-skills": "install.js",
+    "lmagent": "install.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

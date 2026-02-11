@@ -120,3 +120,5 @@ lmagent install   # Instalar skills, rules y workflows en el IDE
 lmagent doctor    # Verificar configuración
 lmagent version   # Mostrar versión
 ```
+
+> **Nota**: Si ejecutas sin instalar: `npx @qubiit/lmagent init`

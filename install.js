@@ -335,9 +335,9 @@ const IDE_CONFIGS = [
 ];
 
 program
-    .name('lmagent-skills')
+    .name('lmagent')
     .description('CLI para instalar skills y reglas de LMAgent')
-    .version('2.5.0'); // Version bump
+    .version('2.5.1'); // Version bump
 
 program.command('install')
     .description('Instalar skills, rules y workflows en el IDE del proyecto')

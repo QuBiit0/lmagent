@@ -26,13 +26,13 @@ The fastest way to enhance your current project.
 
 ```bash
 # Initialize project (copies CLAUDE.md, AGENTS.md, config, etc.)
-npx lmagent init
+npx @qubiit/lmagent init
 
 # Install skills, rules & workflows into your IDE
-npx lmagent install
+npx @qubiit/lmagent install
 
 # Verify everything is correctly configured
-npx lmagent doctor
+npx @qubiit/lmagent doctor
 ```
 
 ### Option B: Local Development Setup
