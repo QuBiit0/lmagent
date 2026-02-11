@@ -1,5 +1,7 @@
 # 🧠 LMAgent: The Universal AI Agent Runtime
 
+![LMAgent Banner](lmagent_banner_v3.png)
+
 ![Version](https://img.shields.io/badge/Version-2.3.0-purple?style=for-the-badge) ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge) ![Agentic](https://img.shields.io/badge/AI-Agentic_Workflow-cyan?style=for-the-badge)
 
 > **"Separate the reasoning from the execution."**  
