@@ -31,14 +31,15 @@ const INIT_DIRS = [
     { src: 'docs', desc: 'Documentación extendida' },
 ];
 
-// Configuración: IDEs soportados
+// Configuración: IDEs y Agentes soportados
 const IDE_CONFIGS = [
+    // --- IDEs Principales ---
     {
         name: 'Cursor',
         value: 'cursor',
         rulesDir: '.cursor/rules',
         skillsDir: '.cursor/skills',
-        workflowsDir: '.cursor/workflows', // New
+        workflowsDir: '.cursor/workflows',
         markerFile: '.cursorrules'
     },
     {
@@ -46,15 +47,15 @@ const IDE_CONFIGS = [
         value: 'windsurf',
         rulesDir: '.windsurf/rules',
         skillsDir: '.windsurf/skills',
-        workflowsDir: '.windsurf/workflows', // New
+        workflowsDir: '.windsurf/workflows',
         markerFile: '.windsurf'
     },
     {
-        name: 'VSCode / Copilot',
+        name: 'VSCode / GitHub Copilot',
         value: 'vscode',
         rulesDir: '.github/instructions',
         skillsDir: '.github/skills',
-        workflowsDir: '.github/agent-workflows', // Avoid conflict with CI/CD
+        workflowsDir: '.github/workflows',
         markerFile: '.vscode'
     },
     {
@@ -66,12 +67,20 @@ const IDE_CONFIGS = [
         markerFile: '.claude'
     },
     {
-        name: 'Cline / Roo Code',
+        name: 'Cline',
         value: 'cline',
-        rulesDir: '.clinerules',
-        skillsDir: '.clineskills',
-        workflowsDir: '.clineworkflows',
-        markerFile: '.clinerules'
+        rulesDir: '.clinesrules',
+        skillsDir: '.cline/skills',
+        workflowsDir: '.cline/workflows',
+        markerFile: '.clinesrules'
+    },
+    {
+        name: 'Roo Code',
+        value: 'roo',
+        rulesDir: '.roo/rules',
+        skillsDir: '.roo/skills',
+        workflowsDir: '.roo/workflows',
+        markerFile: '.roo'
     },
     {
         name: 'Trae',
@@ -80,6 +89,32 @@ const IDE_CONFIGS = [
         skillsDir: '.trae/skills',
         workflowsDir: '.trae/workflows',
         markerFile: '.trae'
+    },
+
+    // --- Otros Agentes ---
+    {
+        name: 'Antigravity',
+        value: 'antigravity',
+        rulesDir: '.agent/rules',
+        skillsDir: '.agent/skills',
+        workflowsDir: '.agent/workflows',
+        markerFile: '.agent'
+    },
+    {
+        name: 'Amp / Kimi / Replit',
+        value: 'amp',
+        rulesDir: '.agents/rules',
+        skillsDir: '.agents/skills',
+        workflowsDir: '.agents/workflows',
+        markerFile: '.agents'
+    },
+    {
+        name: 'Augment',
+        value: 'augment',
+        rulesDir: '.augment/rules',
+        skillsDir: '.augment/skills',
+        workflowsDir: '.augment/workflows',
+        markerFile: '.augment'
     },
     {
         name: 'Continue',
@@ -90,6 +125,30 @@ const IDE_CONFIGS = [
         markerFile: '.continue'
     },
     {
+        name: 'OpenHands',
+        value: 'openhands',
+        rulesDir: '.openhands/rules',
+        skillsDir: '.openhands/skills',
+        workflowsDir: '.openhands/workflows',
+        markerFile: '.openhands'
+    },
+    {
+        name: 'Goose',
+        value: 'goose',
+        rulesDir: '.goose/rules',
+        skillsDir: '.goose/skills',
+        workflowsDir: '.goose/workflows',
+        markerFile: '.goose'
+    },
+    {
+        name: 'Mistral Vibe',
+        value: 'vibe',
+        rulesDir: '.vibe/rules',
+        skillsDir: '.vibe/skills',
+        workflowsDir: '.vibe/workflows',
+        markerFile: '.vibe'
+    },
+    {
         name: 'Zed',
         value: 'zed',
         rulesDir: '.rules',
@@ -98,23 +157,175 @@ const IDE_CONFIGS = [
         markerFile: '.zed'
     },
     {
-        name: 'Qodo',
-        value: 'qodo',
-        rulesDir: 'agents',
-        skillsDir: 'agents/skills',
-        workflowsDir: 'agents/workflows',
-        markerFile: 'agent.toml'
+        name: 'Envoid (OpenClaw)',
+        value: 'openclaw',
+        rulesDir: 'rules',
+        skillsDir: 'skills',
+        workflowsDir: 'workflows',
+        markerFile: 'openclaw.json'
     },
     {
-        name: 'Antigravity',
-        value: 'antigravity',
-        rulesDir: '.gemini/antigravity/rules',
-        skillsDir: '.gemini/antigravity/skills',
-        workflowsDir: '.gemini/antigravity/workflows',
-        markerFile: '.gemini/antigravity'
+        name: 'CodeBuddy',
+        value: 'codebuddy',
+        rulesDir: '.codebuddy/rules',
+        skillsDir: '.codebuddy/skills',
+        workflowsDir: '.codebuddy/workflows',
+        markerFile: '.codebuddy'
     },
     {
-        name: 'Custom Path',
+        name: 'Command Code',
+        value: 'command-code',
+        rulesDir: '.commandcode/rules',
+        skillsDir: '.commandcode/skills',
+        workflowsDir: '.commandcode/workflows',
+        markerFile: '.commandcode'
+    },
+    {
+        name: 'Crush',
+        value: 'crush',
+        rulesDir: '.crush/rules',
+        skillsDir: '.crush/skills',
+        workflowsDir: '.crush/workflows',
+        markerFile: '.crush'
+    },
+    {
+        name: 'Droid',
+        value: 'droid',
+        rulesDir: '.factory/rules',
+        skillsDir: '.factory/skills',
+        workflowsDir: '.factory/workflows',
+        markerFile: '.factory'
+    },
+    {
+        name: 'Junie',
+        value: 'junie',
+        rulesDir: '.junie/rules',
+        skillsDir: '.junie/skills',
+        workflowsDir: '.junie/workflows',
+        markerFile: '.junie'
+    },
+    {
+        name: 'iFlow',
+        value: 'iflow',
+        rulesDir: '.iflow/rules',
+        skillsDir: '.iflow/skills',
+        workflowsDir: '.iflow/workflows',
+        markerFile: '.iflow'
+    },
+    {
+        name: 'Kilo Code',
+        value: 'kilo',
+        rulesDir: '.kilocode/rules',
+        skillsDir: '.kilocode/skills',
+        workflowsDir: '.kilocode/workflows',
+        markerFile: '.kilocode'
+    },
+    {
+        name: 'Kiro',
+        value: 'kiro',
+        rulesDir: '.kiro/rules',
+        skillsDir: '.kiro/skills',
+        workflowsDir: '.kiro/workflows',
+        markerFile: '.kiro'
+    },
+    {
+        name: 'Kode',
+        value: 'kode',
+        rulesDir: '.kode/rules',
+        skillsDir: '.kode/skills',
+        workflowsDir: '.kode/workflows',
+        markerFile: '.kode'
+    },
+    {
+        name: 'MCPJam',
+        value: 'mcpjam',
+        rulesDir: '.mcpjam/rules',
+        skillsDir: '.mcpjam/skills',
+        workflowsDir: '.mcpjam/workflows',
+        markerFile: '.mcpjam'
+    },
+    {
+        name: 'Mux',
+        value: 'mux',
+        rulesDir: '.mux/rules',
+        skillsDir: '.mux/skills',
+        workflowsDir: '.mux/workflows',
+        markerFile: '.mux'
+    },
+    {
+        name: 'Pi',
+        value: 'pi',
+        rulesDir: '.pi/rules',
+        skillsDir: '.pi/skills',
+        workflowsDir: '.pi/workflows',
+        markerFile: '.pi'
+    },
+    {
+        name: 'Qoder',
+        value: 'qoder',
+        rulesDir: '.qoder/rules',
+        skillsDir: '.qoder/skills',
+        workflowsDir: '.qoder/workflows',
+        markerFile: '.qoder'
+    },
+    {
+        name: 'Qwen Code',
+        value: 'qwen',
+        rulesDir: '.qwen/rules',
+        skillsDir: '.qwen/skills',
+        workflowsDir: '.qwen/workflows',
+        markerFile: '.qwen'
+    },
+    {
+        name: 'Trae CN',
+        value: 'trae-cn',
+        rulesDir: '.trae-cn/rules',
+        skillsDir: '.trae-cn/skills',
+        workflowsDir: '.trae-cn/workflows',
+        markerFile: '.trae-cn'
+    },
+    {
+        name: 'Zencoder',
+        value: 'zencoder',
+        rulesDir: '.zencoder/rules',
+        skillsDir: '.zencoder/skills',
+        workflowsDir: '.zencoder/workflows',
+        markerFile: '.zencoder'
+    },
+    {
+        name: 'Neovate',
+        value: 'neovate',
+        rulesDir: '.neovate/rules',
+        skillsDir: '.neovate/skills',
+        workflowsDir: '.neovate/workflows',
+        markerFile: '.neovate'
+    },
+    {
+        name: 'Pochi',
+        value: 'pochi',
+        rulesDir: '.pochi/rules',
+        skillsDir: '.pochi/skills',
+        workflowsDir: '.pochi/workflows',
+        markerFile: '.pochi'
+    },
+    {
+        name: 'AdaL',
+        value: 'adal',
+        rulesDir: '.adal/rules',
+        skillsDir: '.adal/skills',
+        workflowsDir: '.adal/workflows',
+        markerFile: '.adal'
+    },
+    {
+        name: 'Generic/Other',
+        value: 'generic',
+        rulesDir: '.agents/rules',
+        skillsDir: '.agents/skills',
+        workflowsDir: '.agents/workflows',
+        markerFile: '.agents'
+    },
+    {
+        name: 'Custom Path (Manual)',
         value: 'custom',
         rulesDir: '',
         skillsDir: '',
@@ -126,7 +337,7 @@ const IDE_CONFIGS = [
 program
     .name('lmagent-skills')
     .description('CLI para instalar skills y reglas de LMAgent')
-    .version('2.3.0'); // Version bump
+    .version('2.5.0'); // Version bump
 
 program.command('install')
     .description('Instalar skills, rules y workflows en el IDE del proyecto')
@@ -157,6 +368,32 @@ program.command('doctor')
     .description('Verificar que el proyecto está correctamente configurado')
     .action(() => {
         runDoctor();
+    });
+
+program.command('validate')
+    .description('Validar integridad de todos los skills (frontmatter, estructura)')
+    .argument('[skill]', 'Nombre parcial del skill a validar (opcional)')
+    .action((skill) => {
+        const { execSync } = require('child_process');
+        const scriptPath = path.join(__dirname, 'scripts', 'validate_skills.js');
+        const args = skill ? ` ${skill}` : '';
+        try {
+            execSync(`node "${scriptPath}"${args}`, { stdio: 'inherit' });
+        } catch (e) {
+            process.exit(e.status || 1);
+        }
+    });
+
+program.command('create-skill')
+    .description('Crear un nuevo skill interactivamente')
+    .action(() => {
+        const { execSync } = require('child_process');
+        const scriptPath = path.join(__dirname, 'scripts', 'create_skill.js');
+        try {
+            execSync(`node "${scriptPath}"`, { stdio: 'inherit' });
+        } catch (e) {
+            process.exit(e.status || 1);
+        }
     });
 
 if (process.argv.length === 2) {

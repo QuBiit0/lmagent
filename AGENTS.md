@@ -1,6 +1,6 @@
 # 🤖 LMAgent Intelligence Catalog
 
-> Catálogo completo de capacidades del ecosistema **LMAgent v2.3.0**.
+> Catálogo completo de capacidades del ecosistema **LMAgent v2.5.0**.
 > Última actualización: 2026-02-11
 
 ---
@@ -36,6 +36,13 @@ skills/{skill-name}/
 | **performance-engineer** | `/perf`, `/slow`, `/optimize`, `/load` | Profiling, caching, load testing | `scripts/profile_endpoint.py`, `references/caching-patterns.md` |
 | **security-analyst** | `/sec`, `/audit`, `/auth` | OWASP, auditoría de código, vulnerabilidades | `scripts/audit_security.py`, `references/owasp-top10.md` |
 | **qa-engineer** | `/qa`, `/test`, `/bug` | Testing, cobertura, E2E (Playwright, pytest, jest) | `scripts/run_coverage.py`, `references/testing-strategy.md` |
+| **code-reviewer** | `/review`, `/critique` | Análisis estático, logic verification, clean code | `references/code-review-checklist.md` |
+| **systematic-debugger** | `/debug`, `/fix` | Debugging metódico, root cause analysis | `references/debugging-guide.md` |
+| **api-designer** | `/api-design`, `/openapi` | Diseño de contratos API, REST/GraphQL | `references/api-standards.md` |
+| **supabase-expert** | `/supabase`, `/rls` | Backend as a Service, Auth, DB, Edge Functions | `references/supabase-patterns.md` |
+| **git-workflow** | `/git`, `/commit` | Gestión de ramas, conventional commits, PRs | `references/git-flow.md` |
+| **browser-agent** | `/browser`, `/scrape` | Automatización web, scraping, testing UI | `scripts/playwright_setup.ts` |
+| **seo-auditor** | `/seo`, `/audit` | Auditoría técnica SEO, Core Web Vitals, accesibilidad | `references/seo-checklist.md` |
 
 ### 🤖 AI & Automation
 
@@ -44,6 +51,8 @@ skills/{skill-name}/
 | **ai-agent-engineer** | `/agent`, `/mcp`, `/tool` | Agentes IA, MCP servers, tool-use, RAG | `references/agent-patterns.md` |
 | **automation-engineer** | `/auto`, `/n8n`, `/webhook` | n8n workflows, automatizaciones, webhooks | `references/n8n-patterns.md` |
 | **prompt-engineer** | `/prompt`, `/cot`, `/llm` | Optimización de prompts, evaluación, few-shot | `references/prompt-patterns.md` |
+| **mcp-builder** | `/mcp`, `/server` | Construcción de servidores MCP y herramientas | `references/mcp-server-guide.md` |
+| **document-generator** | `/pdf`, `/docx` | Generación de reportes y documentos programáticos | `references/pdf-generation.md` |
 
 ### 📋 Management & Process
 
@@ -55,6 +64,7 @@ skills/{skill-name}/
 | **scrum-master** | `/sm`, `/agile`, `/coach` | Ceremonias Scrum, sprints, retrospectivas | `references/sprint-ceremonies.md` |
 | **technical-writer** | `/doc`, `/readme`, `/guide` | Documentación, API refs, guías de usuario | `references/doc-templates.md` |
 | **ux-ui-designer** | `/ux`, `/ui`, `/design` | Design systems, UX research, accesibilidad | `references/design-system-foundation.md` |
+| **testing-strategist** | `/test-plan`, `/strategy` | Pirámide de testing, planificación y estrategia de QA | `references/testing-pyramid.md` |
 
 ### 📐 Methodologies
 

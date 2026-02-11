@@ -23,7 +23,26 @@ Estás trabajando con **LMAgent v2.3.0**. Antes de implementar cualquier cambio:
 
 ---
 
-## 🎯 Skills Disponibles (21)
+## 🤖 Activación de Skills por IDE
+
+**La forma de activar skills depende del IDE:**
+
+| IDE | Mecanismo | Ejemplo |
+|-----|-----------|---------|
+| **Cursor** | `/slash-commands` nativos del IDE | Escribir `/dev` en el chat |
+| **Antigravity** | Automático por contexto | El agente lee `SKILL.md` al detectar tarea relevante |
+| **Claude Code** | Lectura de `SKILL.md` | El agente accede al directorio `skills/` |
+| **Otros IDEs** | Según configuración del IDE | Ver documentación del IDE |
+
+> **En Antigravity**: Los triggers como `/dev` o `/pm` **no son comandos ejecutables**. Son convenciones para que el agente identifique qué skill activar. El agente debe:
+> 1. Detectar la naturaleza de la tarea (ej: "crear endpoint" → backend)
+> 2. Leer el `SKILL.md` completo del skill relevante
+> 3. Adoptar el rol, principios y patrones descritos
+> 4. Seguir la "Definition of Done" del skill
+
+---
+
+## 🎯 Skills Disponibles (31)
 
 Activa el skill apropiado según la tarea. Cada skill tiene `SKILL.md` con instrucciones detalladas, y opcionalmente `scripts/`, `references/` y `assets/`.
 
@@ -43,20 +62,38 @@ Activa el skill apropiado según la tarea. Cada skill tiene `SKILL.md` con instr
 | **performance-engineer** | `/perf`, `/slow`, `/optimize`, `/load` | Profiling, caching, optimización |
 | **security-analyst** | `/sec`, `/audit`, `/auth` | OWASP, auditoría, vulnerabilidades |
 | **qa-engineer** | `/qa`, `/test`, `/bug` | Testing, cobertura, E2E |
+| **systematic-debugger** | `/debug`, `/bug`, `/fix`, `/rca` | Debugging metódico en 4 fases, root cause analysis |
+
+### Quality & Testing
+| Skill | Triggers | Descripción |
+|-------|----------|-------------|
+| **code-reviewer** | `/review`, `/cr`, `/code-review` | Reviews sistemáticos multi-pass, anti-patrones |
+| **testing-strategist** | `/tdd`, `/testing`, `/test-strategy` | TDD/BDD, testing pyramid, estrategia de tests |
+| **git-workflow** | `/git`, `/branch`, `/release` | Branching, conventional commits, release management |
+| **api-designer** | `/api`, `/endpoint`, `/rest`, `/graphql` | Diseño REST/GraphQL, OpenAPI, DX |
 
 ### AI & Automation
 | Skill | Triggers | Descripción |
 |-------|----------|-------------|
-| **ai-agent-engineer** | `/agent`, `/mcp`, `/tool` | Agentes IA, MCP servers, tool-use |
+| **ai-agent-engineer** | `/agent`, `/tool` | Agentes IA, tool-use, multi-agent |
+| **mcp-builder** | `/mcp`, `/mcp-server`, `/tool-builder` | MCP Servers, Tools, Resources, Prompts |
 | **automation-engineer** | `/auto`, `/n8n`, `/webhook` | n8n workflows, automatizaciones |
 | **prompt-engineer** | `/prompt`, `/cot`, `/llm` | Optimización de prompts |
+
+### Platform & Tools
+| Skill | Triggers | Descripción |
+|-------|----------|-------------|
+| **supabase-expert** | `/supa`, `/supabase`, `/rls`, `/edge-function` | RLS, Auth, Edge Functions, Realtime, Storage |
+| **browser-agent** | `/browser`, `/scrape`, `/crawl`, `/automate` | Playwright/Puppeteer, scraping, flujos web automáticos |
+| **document-generator** | `/pdf`, `/doc`, `/excel`, `/pptx` | Generación de PDF, DOCX, XLSX, PPTX programáticos |
+| **seo-auditor** | `/seo`, `/audit`, `/lighthouse`, `/a11y` | SEO técnico, Core Web Vitals, WCAG, schema markup |
 
 ### Management & Process
 | Skill | Triggers | Descripción |
 |-------|----------|-------------|
 | **product-manager** | `/pm`, `/product`, `/prd` | PRD, user stories, roadmap |
 | **architect** | `/arch`, `/design`, `/system` | Diseño de sistemas, C4, ADRs |
-| **tech-lead** | `/tl`, `/review`, `/adr`, `/debt` | Code review, decisiones técnicas |
+| **tech-lead** | `/tl`, `/adr`, `/debt` | Decisiones técnicas, tech debt |
 | **scrum-master** | `/sm`, `/agile`, `/coach` | Ceremonias, sprints, retrospectivas |
 | **technical-writer** | `/doc`, `/readme`, `/guide` | Documentación, guías |
 | **ux-ui-designer** | `/ux`, `/ui`, `/design` | Design systems, UX research |

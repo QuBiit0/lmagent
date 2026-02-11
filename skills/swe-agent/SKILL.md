@@ -3,7 +3,7 @@ name: SWE-Agent
 description: Agente de ingeniería de software especializado en la resolución autónoma de issues y refactorización sistemática.
 role: Autonomous Software Engineering Agent
 type: methodology
-version: 2.3
+version: 2.5
 icon: 🔧
 expertise:
   - Autonomous issue resolution

@@ -46,11 +46,13 @@ Respetamos estrictamente:
 
 ## Estructura del Proyecto
 
-- `agents/`: Código fuente del runtime y CLI.
-- `personas/`: Definiciones de roles (.md).
-- `workflows/`: Definiciones de flujos (.md).
-- `rules/`: Reglas del sistema (.md).
+- `install.js`: CLI principal (Node.js) — comandos `init`, `install`, `update`, `doctor`.
+- `skills/`: Definiciones de skills/roles (`SKILL.md` + `scripts/`, `references/`, `assets/`).
+- `workflows/`: Definiciones de flujos operativos (.md).
+- `rules/`: Reglas de comportamiento del agente (.md).
 - `config/`: Archivos YAML de configuración.
+- `templates/`: Plantillas de proyecto reutilizables.
+- `docs/`: Documentación extendida.
 
 ## Desarrollo Local
 

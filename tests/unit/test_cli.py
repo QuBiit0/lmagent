@@ -1,33 +1,19 @@
-import pytest
-from agents.cli import __version__
-from agents import cli
-
-def test_version_exists():
-    """Verify that version is defined."""
-    assert __version__ is not None
-    assert isinstance(__version__, str)
-
-def test_parse_commands_simple():
-    """Test parsing a single command."""
-    commands, task = cli.parse_commands("/dev Fix bug")
-    assert "dev" in commands
-    assert task == "Fix bug"
-
-def test_parse_commands_multiple():
-    """Test parsing multiple commands."""
-    commands, task = cli.parse_commands("/yolo /dev Fix bug")
-    assert "yolo" in commands
-    assert "dev" in commands
-    assert task == "Fix bug"
-
-def test_parse_commands_no_slash():
-    """Test parsing logic when no commands are present."""
-    commands, task = cli.parse_commands("Just a task")
-    assert len(commands) == 0
-    assert task == "Just a task"
-
-def test_parse_commands_empty():
-    """Test parsing empty string."""
-    commands, task = cli.parse_commands("")
-    assert len(commands) == 0
-    assert task == ""
+# LMAgent CLI Tests — Placeholder
+# =================================
+#
+# NOTA: El CLI principal de LMAgent es Node.js (install.js).
+# Los tests unitarios del CLI deben escribirse con un framework JS.
+#
+# Los tests anteriores importaban `agents.cli` (módulo Python inexistente).
+# Cuando se implemente el runtime Python (módulo agents/), agregar tests aquí.
+#
+# Para testear el CLI Node.js, crear:
+#   tests/cli/          ← tests JS con Jest o Vitest
+#   package.json        ← agregar script "test" con el runner elegido
+#
+# Ejemplo de test futuro para el runtime Python:
+#
+# def test_version_exists():
+#     from agents.cli import __version__
+#     assert __version__ is not None
+#     assert isinstance(__version__, str)

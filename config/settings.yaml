@@ -1,7 +1,7 @@
 # LMAgent Global Settings
 # Configuración global personalizable del framework
 
-version: "1.0"
+version: "2.3.0"
 
 # ============================================
 # PERSONALIZACIÓN DEL FRAMEWORK
@@ -275,12 +275,19 @@ workflows:
   
   # Workflows habilitados
   enabled:
-    - new-automation
-    - new-agent-ia
     - bugfix-backend
+    - documentation
+    - generate-prd
+    - ideation
+    - new-agent-ia
+    - new-automation
+    - new-feature
     - optimize-performance
     - resolve-github-issue
     - security-review
+    - spec-driven
+    - testing-strategy
+    - third-party-integration
   
   # Permitir workflows custom
   allow_custom: true

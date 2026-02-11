@@ -10,7 +10,7 @@
                                                   by QuBit
 ```
 
-![Version](https://img.shields.io/badge/Version-2.3.0-purple?style=for-the-badge) ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge) ![Agentic](https://img.shields.io/badge/AI-Agentic_Workflow-cyan?style=for-the-badge)
+![Version](https://img.shields.io/badge/Version-2.5.0-purple?style=for-the-badge) ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge) ![Agentic](https://img.shields.io/badge/AI-Agentic_Workflow-cyan?style=for-the-badge)
 
 > **"Separate the reasoning from the execution."**  
 > LMAgent is the foundational runtime that empowers your AI Agents with standardized **Skills**, **Rules**, and **Workflows** across any IDE (Cursor, Windsurf, VSCode, Zed, Qodo).
@@ -176,7 +176,7 @@ We welcome contributions to expand the **Universal Agent Brain**.
 Check out `CONTRIBUTING.md` to add new Skills, Rules, or IDE support.
 
 ### 🛠️ Creating New Skills
-Need a custom agent? Us the interactive generator:
+Need a custom agent? Use the interactive generator:
 
 ```bash
 # Verify structure of existing skills
