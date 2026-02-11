@@ -27,15 +27,15 @@ Run these commands directly in your terminal:
 ```bash
 # 1. Initialize Project (Context)
 #    Copies AGENTS.md & CLAUDE.md to your root.
-npx @qubiit/lmagent init
+npx lmagent init
 
 # 2. Install/Update Skills (Tools)
 #    Configures your IDE (.cursor, .vscode, .windsurf, etc.)
-npx @qubiit/lmagent install
+npx lmagent install
 
 # 3. Optimize & Verify
 #    Checks your environment health.
-npx @qubiit/lmagent doctor
+npx lmagent doctor
 ```
 
 ### 📦 Global Installation (Optional)
@@ -69,12 +69,12 @@ LMAgent includes a powerful CLI to manage your AI context.
 
 | Command | Usage | Description |
 | :--- | :--- | :--- |
-| **`init`** | `npx @qubiit/lmagent init` | Initializes the project. Copies `AGENTS.md` (catalog) and `CLAUDE.md` to your root. |
-| **`install`** | `npx @qubiit/lmagent install` | **Core Command**. Installs selected Skills, Rules & Workflows into your IDE configuration (Cursor, VSCode, Windsurf, etc.). |
-| **`update`** | `npx @qubiit/lmagent update` | Alias for `install`. Use this to refresh your skills when new versions are released. |
-| **`doctor`** | `npx @qubiit/lmagent doctor` | Verifies your environment, checking for correct file structures using `validate_skills` logic. |
-| **`validate`** | `npx @qubiit/lmagent validate` | Scans all `SKILL.md` files for syntax errors or missing required fields. |
-| **`create-skill`** | `npx @qubiit/lmagent create-skill` | Interactive wizard to generate a new Skill structure best practices. |
+| **`init`** | `npx lmagent init` | Initializes the project. Copies `AGENTS.md` (catalog) and `CLAUDE.md` to your root. |
+| **`install`** | `npx lmagent install` | **Core Command**. Installs selected Skills, Rules & Workflows into your IDE configuration (Cursor, VSCode, Windsurf, etc.). |
+| **`update`** | `npx lmagent update` | Alias for `install`. Use this to refresh your skills when new versions are released. |
+| **`doctor`** | `npx lmagent doctor` | Verifies your environment, checking for correct file structures using `validate_skills` logic. |
+| **`validate`** | `npx lmagent validate` | Scans all `SKILL.md` files for syntax errors or missing required fields. |
+| **`create-skill`** | `npx lmagent create-skill` | Interactive wizard to generate a new Skill structure best practices. |
 
 ---
 
@@ -235,10 +235,10 @@ Need a custom agent? Use the interactive generator:
 
 ```bash
 # Verify structure of existing skills
-npx @qubiit/lmagent validate
+npx lmagent validate
 
 # Create a new skill interactively
-npx @qubiit/lmagent create-skill
+npx lmagent create-skill
 ```
 This will generate the standard directory structure and `SKILL.md` template for you.
 
