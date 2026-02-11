@@ -337,7 +337,7 @@ const IDE_CONFIGS = [
 program
     .name('lmagent')
     .description('CLI para instalar skills y reglas de LMAgent')
-    .version('2.5.6'); // Version bump
+    .version('2.5.7'); // Version bump
 
 program.command('install')
     .description('Instalar skills, rules y workflows en el IDE del proyecto')
@@ -658,6 +658,10 @@ async function runInstall(options) {
 }
 
 async function applyFile(source, dest, method) {
+    if (path.resolve(source) === path.resolve(dest)) {
+        // console.log(chalk.gray(`    (Skipping: Source and destination are the same)`));
+        return;
+    }
     if (fs.existsSync(dest) || (fs.existsSync(path.dirname(dest)) && fs.readdirSync(path.dirname(dest)).includes(path.basename(dest)))) {
         try {
             const stat = fs.statSync(dest);
