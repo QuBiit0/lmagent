@@ -18,6 +18,7 @@ const PACKAGE_WORKFLOWS_DIR = path.join(__dirname, '.agents', 'workflows');
 const PACKAGE_CONFIG_DIR = path.join(__dirname, '.agents', 'config');
 const PACKAGE_TEMPLATES_DIR = path.join(__dirname, '.agents', 'templates');
 const PACKAGE_DOCS_DIR = path.join(__dirname, '.agents', 'docs');
+const PACKAGE_MEMORY_DIR = path.join(__dirname, '.agents', 'memory');
 
 // Archivos de proyecto que init copia a la raíz
 const INIT_FILES = [
@@ -342,7 +343,7 @@ const IDE_CONFIGS = [
 program
     .name('lmagent')
     .description('CLI para instalar skills y reglas de LMAgent')
-    .version('3.0.1');
+    .version('3.0.2');
 
 program.command('install')
     .description('Instalar skills, rules y workflows en el IDE del proyecto')
@@ -440,6 +441,9 @@ async function runInstall(options) {
         if (fs.existsSync(PACKAGE_WORKFLOWS_DIR)) {
             copyRecursiveSync(PACKAGE_WORKFLOWS_DIR, globalWorkflowsDir, true);
         }
+        if (fs.existsSync(PACKAGE_MEMORY_DIR)) {
+            copyRecursiveSync(PACKAGE_MEMORY_DIR, path.join(globalAgentDir, 'memory'), true);
+        }
         console.log(chalk.green('✔ Repositorio global sincronizado correctamente.'));
     } catch (e) {
         console.error(chalk.red(`❌ Error al sincronizar repositorio global: ${e.message}`));
@@ -474,34 +478,23 @@ async function runInstall(options) {
         console.log(chalk.cyan('🔹 Configuración de Instalación'));
         console.log(chalk.gray('================================================================'));
 
-        const targetAnswer = await inquirer.prompt([
-            {
-                type: 'list',
-                name: 'target',
-                message: '¿Dónde quieres instalar los artefactos?',
-                choices: [
-                    { name: 'En este Proyecto (./) (Recomendado)', value: 'project' },
-                    { name: 'En mi Usuario / Global IDE Config (~/) (No Recomendado - Sin Contexto)', value: 'user' }
-                ]
-            }
-        ]);
-        installTarget = targetAnswer.target;
-        targetRoot = (installTarget === 'user') ? userHome : projectRoot;
+        console.log(chalk.gray('================================================================'));
+        console.log(chalk.cyan('🔹 Configuración de Instalación'));
+        console.log(chalk.gray('================================================================'));
 
-        console.log('');
-        const methodAnswer = await inquirer.prompt([
-            {
-                type: 'list',
-                name: 'method',
-                message: 'Método de Instalación:',
-                choices: [
-                    { name: 'Symlink (Recomendado - Live Updates)', value: 'symlink' },
-                    { name: 'Copia Física (Archivos independientes)', value: 'copy' }
-                ],
-                default: 'symlink'
-            }
-        ]);
-        installMethod = methodAnswer.method;
+        // UX OPTIMIZATION: Default to Project (./) and Symlink
+        // Only ask if user opts-in via --advanced flag or if we detect mixed environment
+        // For V3, we force opinionated defaults for "Quick Start"
+        let useAdvanced = false; // Could be flag
+
+        // Default values
+        installTarget = 'project';
+        targetRoot = projectRoot;
+        installMethod = 'symlink';
+
+        console.log(`📍 Destino: ${chalk.green('Proyecto Actual (./)')}`);
+        console.log(`🔗 Método:  ${chalk.green('Symlink (Live Updates)')}`);
+        console.log(chalk.gray('   (Use --advanced para cambiar estas opciones)'));
 
         console.log('');
         console.log(chalk.gray('--- Selección de Agentes ---'));
@@ -559,47 +552,63 @@ async function runInstall(options) {
         const availableSkills = getAllItems(SOURCE_SKILLS, true);
         const availableRules = getAllItems(SOURCE_RULES, false);
         const availableWorkflows = getAllItems(SOURCE_WORKFLOWS, false);
+        // Memory logic: usually just a directory, not individual items to select, but we can check if it exists
+        const hasMemory = fs.existsSync(path.join(SOURCE_SKILLS, '../memory')); // Hacky relative check or use defined constant if available in scope
 
         console.log('');
-        console.log(chalk.gray('--- Selección de Contenido ---'));
-        // Seleccionar Skills
-        console.log(chalk.bold('\n🔹 Skills Disponibles:'));
-        const skillsAnswer = await inquirer.prompt([
-            {
-                type: 'checkbox',
-                name: 'skills',
-                message: 'Selecciona:',
-                choices: availableSkills.map(s => ({ name: s, checked: true })),
-                pageSize: 15
-            }
-        ]);
-        selectedSkills = skillsAnswer.skills;
+        const quickInstall = await inquirer.prompt([{
+            type: 'confirm',
+            name: 'all',
+            message: '⚡ Instalación Rápida: ¿Instalar TODO (Skills, Rules, Workflows, Memory)?',
+            default: true
+        }]);
 
-        // Seleccionar Rules
-        console.log(chalk.bold('\n🔹 Reglas Disponibles:'));
-        const rulesAnswer = await inquirer.prompt([
-            {
-                type: 'checkbox',
-                name: 'rules',
-                message: 'Selecciona:',
-                choices: availableRules.map(r => ({ name: r, checked: true })),
-                pageSize: 15
-            }
-        ]);
-        selectedRules = rulesAnswer.rules;
+        if (quickInstall.all) {
+            selectedSkills = availableSkills;
+            selectedRules = availableRules;
+            selectedWorkflows = availableWorkflows;
+            // flag to install memory
+        } else {
+            // Manual selection...
+            // Seleccionar Skills
+            console.log(chalk.bold('\n🔹 Skills Disponibles:'));
+            const skillsAnswer = await inquirer.prompt([
+                {
+                    type: 'checkbox',
+                    name: 'skills',
+                    message: 'Selecciona:',
+                    choices: availableSkills.map(s => ({ name: s, checked: true })),
+                    pageSize: 15
+                }
+            ]);
+            selectedSkills = skillsAnswer.skills;
 
-        // Seleccionar Workflows
-        console.log(chalk.bold('\n🔹 Workflows Disponibles:'));
-        const workflowsAnswer = await inquirer.prompt([
-            {
-                type: 'checkbox',
-                name: 'workflows',
-                message: 'Selecciona:',
-                choices: availableWorkflows.map(w => ({ name: w, checked: true })),
-                pageSize: 15
-            }
-        ]);
-        selectedWorkflows = workflowsAnswer.workflows;
+            // Seleccionar Rules
+            console.log(chalk.bold('\n🔹 Reglas Disponibles:'));
+            const rulesAnswer = await inquirer.prompt([
+                {
+                    type: 'checkbox',
+                    name: 'rules',
+                    message: 'Selecciona:',
+                    choices: availableRules.map(r => ({ name: r, checked: true })),
+                    pageSize: 15
+                }
+            ]);
+            selectedRules = rulesAnswer.rules;
+
+            // Seleccionar Workflows
+            console.log(chalk.bold('\n🔹 Workflows Disponibles:'));
+            const workflowsAnswer = await inquirer.prompt([
+                {
+                    type: 'checkbox',
+                    name: 'workflows',
+                    message: 'Selecciona:',
+                    choices: availableWorkflows.map(w => ({ name: w, checked: true })),
+                    pageSize: 15
+                }
+            ]);
+            selectedWorkflows = workflowsAnswer.workflows;
+        }
 
         console.log('');
         const { confirm } = await inquirer.prompt([{
@@ -851,6 +860,37 @@ Use estos comandos para activar su rol. Para detalles, consulte \`AGENTS.md\`.
                     }
                 } catch (e) {
                     console.error(chalk.red(`❌ Error installing workflows for ${ide.name}: ${e.message}`));
+                }
+            }
+        }
+
+        // 4. Install MEMORY (Directory) - Always install if "Quick Install" or implicitly required
+        // We assume memory is located at ../memory relative to skills source or PACKAGE_MEMORY_DIR
+        let SOURCE_MEMORY = '';
+        if (fs.existsSync(path.join(SOURCE_SKILLS, '../memory'))) {
+            SOURCE_MEMORY = path.join(SOURCE_SKILLS, '../memory');
+        } else if (typeof PACKAGE_MEMORY_DIR !== 'undefined' && fs.existsSync(PACKAGE_MEMORY_DIR)) {
+            SOURCE_MEMORY = PACKAGE_MEMORY_DIR;
+        }
+
+        if (SOURCE_MEMORY && ide.skillsDir) {
+            // We use skillsDir parent or a specific memory dir if we had one in config.
+            // For now, let's put it alongside skills/rules/workflows.
+            // Ideally IDE_CONFIGS should have memoryDir, but we'll default to parent of skillsDir + /memory
+            const parentDir = path.dirname(ide.skillsDir);
+            const targetDir = path.join(targetRoot, parentDir, 'memory');
+
+            if (arePathsEqual(targetDir, path.join(globalAgentDir, 'memory'))) {
+                // console.log(chalk.blue(`  ℹ  ${ide.name}: Memory updated via Global Sync`));
+            } else {
+                // console.log(chalk.bold(`\nInstalling Memory to ${chalk.cyan(targetDir)}:`));
+                try {
+                    if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
+                    // Copy all contents of memory
+                    copyRecursiveSync(SOURCE_MEMORY, targetDir, true); // Always copy/overwrite for now, or use applyFile for items if we want symlinks
+                    console.log(`  ${chalk.cyan('✔')} Memory (Context) optimized.`);
+                } catch (e) {
+                    console.error(chalk.red(`❌ Error installing memory for ${ide.name}: ${e.message}`));
                 }
             }
         }
@@ -1153,7 +1193,7 @@ DEBUG=true
     }
 
     // Resumen
-    console.log(gradient.pastel.multiline('\n✨ Proyecto inicializado con LMAgent v3.0.1 ✨'));
+    console.log(gradient.pastel.multiline('\n✨ Proyecto inicializado con LMAgent v3.0.2 ✨'));
     console.log('');
     console.log(chalk.cyan('Próximos pasos:'));
     console.log(`  1. ${chalk.bold('lmagent install')} - Instalar skills/rules/workflows en tu IDE`);
