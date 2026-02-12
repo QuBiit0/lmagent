@@ -1,6 +1,6 @@
 # 🤖 LMAgent Intelligence Catalog
 
-> Catálogo completo de capacidades del ecosistema **LMAgent v2.6.7**.
+> Catálogo completo de capacidades del ecosistema **LMAgent v2.6.8**.
 > Última actualización: 2026-02-11
 
 ---

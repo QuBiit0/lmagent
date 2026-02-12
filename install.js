@@ -369,7 +369,7 @@ const IDE_CONFIGS = [
 program
     .name('lmagent')
     .description('CLI para instalar skills y reglas de LMAgent')
-    .version('2.6.7'); // Version bump
+    .version('2.6.8'); // Version bump
 
 program.command('install')
     .description('Instalar skills, rules y workflows en el IDE del proyecto')
@@ -912,9 +912,6 @@ async function runInit(options) {
                 }))
             }
         ]);
-        filesToCopy = INIT_FILES.filter(f => answers.files.includes(f.src));
-        dirsToCopy = INIT_DIRS.filter(d => answers.dirs.includes(d.src));
-        filesToCopy = INIT_FILES.filter(f => answers.files.includes(f.src));
         dirsToCopy = INIT_DIRS.filter(d => answers.dirs.includes(d.src));
 
         // Seleccionar IDE para destino de archivos
@@ -1020,7 +1017,7 @@ DEBUG=true
     }
 
     // Resumen
-    console.log(gradient.pastel.multiline('\n✨ Proyecto inicializado con LMAgent v2.6.5 ✨'));
+    console.log(gradient.pastel.multiline('\n✨ Proyecto inicializado con LMAgent v2.6.8 ✨'));
     console.log('');
     console.log(chalk.cyan('Próximos pasos:'));
     console.log(`  1. ${chalk.bold('lmagent install')} - Instalar skills/rules/workflows en tu IDE`);
