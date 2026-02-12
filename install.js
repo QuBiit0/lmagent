@@ -368,7 +368,7 @@ const IDE_CONFIGS = [
 program
     .name('lmagent')
     .description('CLI para instalar skills y reglas de LMAgent')
-    .version('2.6.3'); // Version bump
+    .version('2.6.4'); // Version bump
 
 program.command('install')
     .description('Instalar skills, rules y workflows en el IDE del proyecto')
@@ -514,6 +514,7 @@ async function runInstall(options) {
         installTarget = targetAnswer.target;
         targetRoot = (installTarget === 'user') ? userHome : projectRoot;
 
+        console.log('');
         const methodAnswer = await inquirer.prompt([
             {
                 type: 'list',
@@ -587,21 +588,31 @@ async function runInstall(options) {
 
         console.log('');
         console.log(chalk.gray('--- Selección de Contenido ---'));
-        const contentAnswers = await inquirer.prompt([
+        const skillsAnswer = await inquirer.prompt([
             {
                 type: 'checkbox',
                 name: 'skills',
                 message: 'Selecciona los Skills:',
                 choices: availableSkills.map(s => ({ name: s, checked: true })),
                 pageSize: 15
-            },
+            }
+        ]);
+        selectedSkills = skillsAnswer.skills;
+
+        console.log('');
+        const rulesAnswer = await inquirer.prompt([
             {
                 type: 'checkbox',
                 name: 'rules',
                 message: 'Selecciona las Reglas:',
                 choices: availableRules.map(r => ({ name: r, checked: true })),
                 pageSize: 15
-            },
+            }
+        ]);
+        selectedRules = rulesAnswer.rules;
+
+        console.log('');
+        const workflowsAnswer = await inquirer.prompt([
             {
                 type: 'checkbox',
                 name: 'workflows',
@@ -610,10 +621,9 @@ async function runInstall(options) {
                 pageSize: 15
             }
         ]);
-        selectedSkills = contentAnswers.skills;
-        selectedRules = contentAnswers.rules;
-        selectedWorkflows = contentAnswers.workflows;
+        selectedWorkflows = workflowsAnswer.workflows;
 
+        console.log('');
         const { confirm } = await inquirer.prompt([{
             type: 'confirm',
             name: 'confirm',

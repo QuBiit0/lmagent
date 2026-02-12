@@ -1,6 +1,6 @@
 # 🚀 LMAgent Bootstrap — Instrucciones Iniciales
 
-> **Tipo**: `rule` | **Versión**: 2.6.3 | **Prioridad**: MÁXIMA
+> **Tipo**: `rule` | **Versión**: 2.6.4 | **Prioridad**: MÁXIMA
 > Esta regla se aplica **SIEMPRE** como primer paso antes de cualquier tarea.
 
 ---
@@ -15,7 +15,7 @@
 
 ## 🧠 Framework
 
-Estás trabajando con **LMAgent v2.6.3**. Antes de implementar cualquier cambio:
+Estás trabajando con **LMAgent v2.6.4**. Antes de implementar cualquier cambio:
 
 1. **Lee `AGENTS.md`** — Catálogo completo de skills, rules y workflows
 2. **Clasifica la tarea** — Nivel 0-4 según complejidad (ver `rules/workflow.md`)

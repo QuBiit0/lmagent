@@ -6,7 +6,7 @@
 
 ## Framework
 
-Estás trabajando con **LMAgent v2.6.3**, un framework para desarrollo de automatizaciones y agentes de IA. Organiza las capacidades del agente en tres pilares: **Skills**, **Rules** y **Workflows**.
+Estás trabajando con **LMAgent v2.6.4**, un framework para desarrollo de automatizaciones y agentes de IA. Organiza las capacidades del agente en tres pilares: **Skills**, **Rules** y **Workflows**.
 
 ## ⚡ Inicio Rápido
 

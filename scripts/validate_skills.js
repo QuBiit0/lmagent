@@ -194,12 +194,13 @@ function validateSkill(skillDir) {
 function main() {
     const filterSkill = process.argv[2];
 
-    console.log(gradient.pastel.multiline('\n🚀 LMAgent Skills Validator v2.6.3\n'));
+    const c = chalk;
+
+    console.log(c.bold('\n🔍 LMAgent Skill Validator v2.6.4\n'));
     console.log(chalk.dim(`   Directorio: ${SKILLS_DIR}`));
     console.log(chalk.dim(`   Campos obligatorios: ${REQUIRED_FIELDS.length}`));
     console.log('');
 
-    const c = chalk;
 
     if (!existsSync(SKILLS_DIR)) {
         console.error(c.red('❌ No se encontró el directorio skills/'));
