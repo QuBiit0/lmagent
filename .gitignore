@@ -130,6 +130,7 @@ trajectories/
 *.trajectory.json
 *_output.txt
 *_list.txt
+skills_overview.txt
 
 # Backups
 *.bak
