@@ -426,4 +426,4 @@ components:
 
 ---
 
-*Skill version: 2.3 | LMAgent Framework*
+

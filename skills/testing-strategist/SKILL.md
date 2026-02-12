@@ -473,4 +473,4 @@ it('should debounce search', async () => {
 
 ---
 
-*Skill version: 2.3 | LMAgent Framework*
+

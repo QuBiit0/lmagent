@@ -371,4 +371,4 @@ git rebase --abort  # Volver al estado anterior
 
 ---
 
-*Skill version: 2.3 | LMAgent Framework*
+

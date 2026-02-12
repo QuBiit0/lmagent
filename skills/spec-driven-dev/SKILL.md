@@ -338,5 +338,5 @@ User Input → Orchestrator clasifica nivel
 
 ---
 
-*Skill version: 2.3 | SPEC+LM Methodology*
+
 *Compatible con: BMAD-METHOD + SWE-Agent*

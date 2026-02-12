@@ -198,5 +198,5 @@ BMAD coordina personas según la fase del proyecto:
 
 ---
 
-*Skill version: 2.3 | Inspirado en BMAD-METHOD Scale-Adaptive Intelligence*
+
 *Compatible con: Spec-Driven Development + SWE-Agent*

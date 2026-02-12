@@ -599,4 +599,4 @@ CREATE INDEX idx_users_auth_id ON public.users(auth_id);
 
 ---
 
-*Skill version: 2.3 | LMAgent Framework*
+

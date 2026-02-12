@@ -307,5 +307,5 @@ SWE-Agent utiliza el sistema de herramientas definido en el framework:
 
 ---
 
-*Skill version: 2.3 | Inspirado en SWE-agent (Princeton NLP)*
+
 *Compatible con: BMAD-METHOD + Spec-Driven Development*
