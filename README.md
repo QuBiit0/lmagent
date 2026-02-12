@@ -10,7 +10,7 @@
                                                   by QuBit
 ```
 
-![Version](https://img.shields.io/badge/version-2.7.1-blue.svg) ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge) ![Agentic](https://img.shields.io/badge/AI-Agentic_Workflow-cyan?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-3.0.0-blue.svg) ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge) ![Agentic](https://img.shields.io/badge/AI-Agentic_Workflow-cyan?style=for-the-badge)
 
 > **"Separate the reasoning from the execution."**  
 > LMAgent is the foundational runtime that empowers your AI Agents with standardized **Skills**, **Rules**, and **Workflows** across any IDE (Cursor, Windsurf, VSCode, Zed, Qodo).
@@ -108,11 +108,38 @@ LMAgent includes a powerful CLI to manage your AI context.
 | Command | Usage | Description |
 | :--- | :--- | :--- |
 | **`init`** | `npx lmagent init` | Initializes the project. Copies `AGENTS.md` (catalog) and `CLAUDE.md` to your root. |
-| **`install`** | `npx lmagent install` | **Core Command**. Installs selected Skills, Rules & Workflows into your IDE configuration (Cursor, VSCode, Windsurf, etc.). |
+| **`install`** | `npx lmagent install` | **Core Command**. This command will deploy the **Universal Intelligence** (`.agents/`) folder and the core pillars (`AGENTS.md`, `CLAUDE.md`) to your project root. |
 | **`update`** | `npx lmagent update` | Alias for `install`. Use this to refresh your skills when new versions are released. |
 | **`doctor`** | `npx lmagent doctor` | Verifies your environment, checking for correct file structures using `validate_skills` logic. |
 | **`validate`** | `npx lmagent validate` | Scans all `SKILL.md` files for syntax errors or missing required fields. |
 | **`create-skill`** | `npx lmagent create-skill` | Interactive wizard to generate a new Skill structure best practices. |
+
+---
+
+## 📂 Universal Project Structure
+
+When you install **LMAgent** in your project, it creates a pristine environment:
+
+```text
+/
+├── .agents/                    # [UNIVERSAL BRAIN]
+│   ├── rules/                  # Core Behavior (00-master, personality, etc.)
+│   ├── skills/                 # Capabilities (backend-engineer, etc.)
+│   ├── workflows/              # Procedures (SOPs)
+│   ├── templates/              # Project scaffolds
+│   ├── memory/                 # Documentation & Logs
+│   ├── scripts/                # Utility scripts
+│   └── config/                 # Global settings
+│
+├── AGENTS.md                   # [PILLAR 1] Capability Catalog (Root)
+├── CLAUDE.md                   # [PILLAR 2] Context & Instructions (Root)
+│
+└── package.json
+```
+
+### 🧠 The Two Pillars
+1. **AGENTS.md**: The catalog of all capabilities. It tells the agent *what* it can do and *where* to find instructions.
+2. **CLAUDE.md**: The context file. It tells the agent *how* to behave and points to the Master Rule in `.agents/rules/00-master.md`.
 
 ---
 

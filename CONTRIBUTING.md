@@ -35,7 +35,7 @@ Este proyecto se rige por un Código de Conducta estándar. Al participar, se es
 - [ ] ¿Actualizaste la documentación?
 - [ ] ¿Agregaste tests para tu código?
 - [ ] ¿Pasaste el linter (`ruff check .`)?
-- [ ] ¿Cumple con las reglas en `rules/`?
+- [ ] ¿Cumple con las reglas en `.agents/rules/`?
 
 ## Estilo de Código
 
@@ -47,12 +47,12 @@ Respetamos estrictamente:
 ## Estructura del Proyecto
 
 - `install.js`: CLI principal (Node.js) — comandos `init`, `install`, `update`, `doctor`.
-- `skills/`: Definiciones de skills/roles (`SKILL.md` + `scripts/`, `references/`, `assets/`).
-- `workflows/`: Definiciones de flujos operativos (.md).
-- `rules/`: Reglas de comportamiento del agente (.md).
-- `config/`: Archivos YAML de configuración.
-- `templates/`: Plantillas de proyecto reutilizables.
-- `docs/`: Documentación extendida.
+- `.agents/skills/`: Definiciones de skills/roles (`SKILL.md` + `scripts/`, `references/`, `assets/`).
+- `.agents/workflows/`: Definiciones de flujos operativos (.md).
+- `.agents/rules/`: Reglas de comportamiento del agente (.md).
+- `.agents/config/`: Archivos YAML de configuración.
+- `.agents/templates/`: Plantillas de proyecto reutilizables.
+- `.agents/docs/`: Documentación extendida.
 
 ## Desarrollo Local
 
@@ -79,12 +79,12 @@ Si estás creando o modificando scripts Python dentro de `skills/`:
 
 ```bash
 # Instalar dependencias de skills (opcional, recomendado usar venv)
-pip install -r skills/{skill-name}/requirements.txt
+pip install -r .agents/skills/{skill-name}/requirements.txt
 ```
 
 ### Linting & Formatting
 
 - **JavaScript**: Eslint/Prettier (vía `npm test` si configurado)
-- **Python**: `ruff check .` (para scripts en `skills/`)
+- **Python**: `ruff check .` (para scripts en `.agents/skills/`)
 
 ¡Gracias por ayudar a hacer LMAgent mejor!

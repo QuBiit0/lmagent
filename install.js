@@ -12,12 +12,12 @@ const gradient = require('gradient-string');
 const program = new Command();
 
 // Configuración: Directorios fuente del paquete
-const PACKAGE_SKILLS_DIR = path.join(__dirname, 'skills');
-const PACKAGE_RULES_DIR = path.join(__dirname, 'rules');
-const PACKAGE_WORKFLOWS_DIR = path.join(__dirname, 'workflows');
-const PACKAGE_CONFIG_DIR = path.join(__dirname, 'config');
-const PACKAGE_TEMPLATES_DIR = path.join(__dirname, 'templates');
-const PACKAGE_DOCS_DIR = path.join(__dirname, 'docs');
+const PACKAGE_SKILLS_DIR = path.join(__dirname, '.agents', 'skills');
+const PACKAGE_RULES_DIR = path.join(__dirname, '.agents', 'rules');
+const PACKAGE_WORKFLOWS_DIR = path.join(__dirname, '.agents', 'workflows');
+const PACKAGE_CONFIG_DIR = path.join(__dirname, '.agents', 'config');
+const PACKAGE_TEMPLATES_DIR = path.join(__dirname, '.agents', 'templates');
+const PACKAGE_DOCS_DIR = path.join(__dirname, '.agents', 'docs');
 
 // Archivos de proyecto que init copia a la raíz
 const INIT_FILES = [
@@ -33,110 +33,56 @@ const INIT_DIRS = [
 ];
 
 // Configuración: IDEs y Agentes soportados
+// Configuración: IDEs y Agentes soportados
 const IDE_CONFIGS = [
-    // --- IDEs Principales ---
-    {
-        name: 'Cursor',
-        value: 'cursor',
-        rulesDir: '.cursor/rules',
-        skillsDir: '.cursor/skills',
-        workflowsDir: '.cursor/workflows',
-        markerFile: '.cursorrules',
-        forceCopy: true
-    },
-    {
-        name: 'Windsurf',
-        value: 'windsurf',
-        rulesDir: '.windsurf/rules',
-        skillsDir: '.windsurf/skills',
-        workflowsDir: '.windsurf/workflows',
-        markerFile: '.windsurf',
-        forceCopy: true
-    },
-    {
-        name: 'VSCode / GitHub Copilot',
-        value: 'vscode',
-        rulesDir: '.github/instructions',
-        skillsDir: '.github/skills',
-        workflowsDir: '.github/workflows',
-        markerFile: '.vscode'
-    },
-    {
-        name: 'Claude Code',
-        value: 'claude',
-        rulesDir: '.claude/rules',
-        skillsDir: '.claude/skills',
-        workflowsDir: '.claude/workflows',
-        markerFile: '.claude',
-        forceCopy: true
-    },
-    {
-        name: 'Cline',
-        value: 'cline',
-        rulesDir: '.clinesrules',
-        skillsDir: '.cline/skills',
-        workflowsDir: '.cline/workflows',
-        markerFile: '.clinesrules',
-        forceCopy: true
-    },
-    {
-        name: 'Roo Code',
-        value: 'roo',
-        rulesDir: '.roo/rules',
-        skillsDir: '.roo/skills',
-        workflowsDir: '.roo/workflows',
-        markerFile: '.roo',
-        forceCopy: true
-    },
-    {
-        name: 'Trae',
-        value: 'trae',
-        rulesDir: '.trae/rules',
-        skillsDir: '.trae/skills',
-        workflowsDir: '.trae/workflows',
-        markerFile: '.trae',
-        forceCopy: true
-    },
+    // --- IDEs & Tiers Principales (Auto-Detected) ---
+    { name: 'Cursor', value: 'cursor', rulesDir: '.cursor/rules', skillsDir: '.cursor/skills', workflowsDir: '.cursor/workflows', configFile: '.cursorrules', bridgeFile: 'lmagent.mdc', markerFile: '.cursorrules', forceCopy: true },
+    { name: 'Windsurf', value: 'windsurf', rulesDir: '.windsurf/rules', skillsDir: '.windsurf/skills', workflowsDir: '.windsurf/workflows', configFile: '.windsurfrules', bridgeFile: 'lmagent.md', markerFile: '.windsurfrules', forceCopy: true },
+    { name: 'Cline', value: 'cline', rulesDir: '.clinerules', skillsDir: '.cline/skills', workflowsDir: '.cline/workflows', configFile: null, bridgeFile: '00-lmagent.md', markerFile: '.clinerules', forceCopy: true },
+    { name: 'Roo Code', value: 'roo', rulesDir: '.clinerules', skillsDir: '.roo/skills', workflowsDir: '.roo/workflows', configFile: null, bridgeFile: '00-lmagent.md', markerFile: '.roo', forceCopy: true },
+    { name: 'VSCode Copilot', value: 'vscode', rulesDir: '.github/instructions', skillsDir: '.github/skills', workflowsDir: '.github/workflows', configFile: '.github/copilot-instructions.md', markerFile: '.vscode' },
+    { name: 'Trae', value: 'trae', rulesDir: '.trae/rules', skillsDir: '.trae/skills', workflowsDir: '.trae/workflows', configFile: null, bridgeFile: 'lmagent.md', markerFile: '.trae', forceCopy: true },
+    { name: 'Claude Code', value: 'claude', rulesDir: '.claude/rules', skillsDir: '.claude/skills', workflowsDir: '.claude/workflows', configFile: 'CLAUDE.md', markerFile: '.claude', forceCopy: true },
 
-    // --- Otros Agentes ---
-    {
-        name: 'Antigravity',
-        value: 'antigravity',
-        rulesDir: '.agent/rules',
-        skillsDir: '.agent/skills',
-        workflowsDir: '.agent/workflows',
-        markerFile: '.agent'
-    },
-    {
-        name: 'Amp / Kimi / Replit',
-        value: 'amp',
-        rulesDir: '.agents/rules',
-        skillsDir: '.agents/skills',
-        workflowsDir: '.agents/workflows',
-        markerFile: '.agents'
-    },
-    {
-        name: 'Augment',
-        value: 'augment',
-        rulesDir: '.augment/rules',
-        skillsDir: '.augment/skills',
-        workflowsDir: '.augment/workflows',
-        markerFile: '.augment'
-    },
-    {
-        name: 'Codex',
-        value: 'codex',
-        rulesDir: '.agents/rules',
-        skillsDir: '.codex/skills',
-        workflowsDir: '.agents/workflows',
-        markerFile: '.codex'
-    },
+    // --- Expanded Agent Support (Manual/Config Injection) ---
+    { name: 'Amp / Kimi / Replit', value: 'amp', rulesDir: '.agents/rules', skillsDir: '.agents/skills', workflowsDir: '.agents/workflows', configFile: null, markerFile: '.agents' },
+    { name: 'Antigravity', value: 'antigravity', rulesDir: '.agent/rules', skillsDir: '.agent/skills', workflowsDir: '.agent/workflows', configFile: null, markerFile: '.agent' },
+    { name: 'Augment', value: 'augment', rulesDir: '.augment/rules', skillsDir: '.augment/skills', workflowsDir: '.augment/workflows', configFile: null, markerFile: '.augment' },
+    { name: 'OpenClaw', value: 'openclaw', rulesDir: 'rules', skillsDir: 'skills', workflowsDir: 'workflows', configFile: null, markerFile: 'openclaw.yaml' },
+    { name: 'CodeBuddy', value: 'codebuddy', rulesDir: '.codebuddy/rules', skillsDir: '.codebuddy/skills', workflowsDir: '.codebuddy/workflows', configFile: null, markerFile: '.codebuddy' },
+    { name: 'Codex', value: 'codex', rulesDir: '.codex/rules', skillsDir: '.codex/skills', workflowsDir: '.codex/workflows', configFile: null, markerFile: '.codex' },
+    { name: 'Command Code', value: 'command-code', rulesDir: '.commandcode/rules', skillsDir: '.commandcode/skills', workflowsDir: '.commandcode/workflows', configFile: null, markerFile: '.commandcode' },
+    { name: 'Continue', value: 'continue', rulesDir: '.continue/rules', skillsDir: '.continue/skills', workflowsDir: '.continue/workflows', configFile: null, bridgeFile: '00-lmagent.md', markerFile: '.continue' },
+    { name: 'Crush', value: 'crush', rulesDir: '.crush/rules', skillsDir: '.crush/skills', workflowsDir: '.crush/workflows', configFile: null, markerFile: '.crush' },
+    { name: 'Droid', value: 'droid', rulesDir: '.factory/rules', skillsDir: '.factory/skills', workflowsDir: '.factory/workflows', configFile: null, markerFile: '.factory' },
+    { name: 'Gemini CLI', value: 'gemini', rulesDir: '.agents/rules', skillsDir: '.agents/skills', workflowsDir: '.agents/workflows', configFile: null, markerFile: '.gemini' },
+    { name: 'Goose', value: 'goose', rulesDir: '.goose/rules', skillsDir: '.goose/skills', workflowsDir: '.goose/workflows', configFile: null, bridgeFile: 'lmagent.md', markerFile: '.goose' },
+    { name: 'Junie', value: 'junie', rulesDir: '.junie/rules', skillsDir: '.junie/skills', workflowsDir: '.junie/workflows', configFile: null, markerFile: '.junie' },
+    { name: 'iFlow CLI', value: 'iflow', rulesDir: '.iflow/rules', skillsDir: '.iflow/skills', workflowsDir: '.iflow/workflows', configFile: null, markerFile: '.iflow' },
+    { name: 'Kilo Code', value: 'kilo', rulesDir: '.kilocode/rules', skillsDir: '.kilocode/skills', workflowsDir: '.kilocode/workflows', configFile: null, markerFile: '.kilocode' },
+    { name: 'Kiro CLI', value: 'kiro', rulesDir: '.kiro/rules', skillsDir: '.kiro/skills', workflowsDir: '.kiro/workflows', configFile: null, markerFile: '.kiro' },
+    { name: 'Kode', value: 'kode', rulesDir: '.kode/rules', skillsDir: '.kode/skills', workflowsDir: '.kode/workflows', configFile: null, markerFile: '.kode' },
+    { name: 'MCPJam', value: 'mcpjam', rulesDir: '.mcpjam/rules', skillsDir: '.mcpjam/skills', workflowsDir: '.mcpjam/workflows', configFile: null, markerFile: '.mcpjam' },
+    { name: 'Mistral Vibe', value: 'mistral', rulesDir: '.vibe/rules', skillsDir: '.vibe/skills', workflowsDir: '.vibe/workflows', configFile: null, markerFile: '.vibe' },
+    { name: 'Mux', value: 'mux', rulesDir: '.mux/rules', skillsDir: '.mux/skills', workflowsDir: '.mux/workflows', configFile: null, markerFile: '.mux' },
+    { name: 'OpenCode', value: 'opencode', rulesDir: '.opencode/rules', skillsDir: '.opencode/skills', workflowsDir: '.opencode/workflows', configFile: null, markerFile: '.opencode' },
+    { name: 'OpenHands', value: 'openhands', rulesDir: '.openhands/microagents', skillsDir: '.openhands/skills', workflowsDir: '.openhands/workflows', configFile: null, bridgeFile: 'repo.md', markerFile: '.openhands' },
+    { name: 'Pi', value: 'pi', rulesDir: '.pi/rules', skillsDir: '.pi/skills', workflowsDir: '.pi/workflows', configFile: null, markerFile: '.pi' },
+    { name: 'Qoder', value: 'qoder', rulesDir: '.qoder/rules', skillsDir: '.qoder/skills', workflowsDir: '.qoder/workflows', configFile: null, markerFile: '.qoder' },
+    { name: 'Qwen Code', value: 'qwen', rulesDir: '.qwen/rules', skillsDir: '.qwen/skills', workflowsDir: '.qwen/workflows', configFile: null, markerFile: '.qwen' },
+    { name: 'Trae CN', value: 'trae-cn', rulesDir: '.trae-cn/rules', skillsDir: '.trae-cn/skills', workflowsDir: '.trae-cn/workflows', configFile: null, bridgeFile: 'lmagent.md', markerFile: '.trae-cn' },
+    { name: 'Zencoder', value: 'zencoder', rulesDir: '.zencoder/rules', skillsDir: '.zencoder/skills', workflowsDir: '.zencoder/workflows', configFile: null, markerFile: '.zencoder' },
+    { name: 'Neovate', value: 'neovate', rulesDir: '.neovate/rules', skillsDir: '.neovate/skills', workflowsDir: '.neovate/workflows', configFile: null, markerFile: '.neovate' },
+    { name: 'Pochi', value: 'pochi', rulesDir: '.pochi/rules', skillsDir: '.pochi/skills', workflowsDir: '.pochi/workflows', configFile: null, markerFile: '.pochi' },
+    { name: 'AdaL', value: 'adal', rulesDir: '.adal/rules', skillsDir: '.adal/skills', workflowsDir: '.adal/workflows', configFile: null, markerFile: '.adal' },
+
     {
         name: 'Gemini CLI',
         value: 'gemini',
         rulesDir: '.agents/rules',
         skillsDir: '.gemini/skills',
         workflowsDir: '.agents/workflows',
+        configFile: '.gemini/config',
         markerFile: '.gemini'
     },
     {
@@ -145,6 +91,7 @@ const IDE_CONFIGS = [
         rulesDir: '.continue/rules',
         skillsDir: '.continue/skills',
         workflowsDir: '.continue/workflows',
+        configFile: '.continue/config.json',
         markerFile: '.continue'
     },
     {
@@ -153,6 +100,7 @@ const IDE_CONFIGS = [
         rulesDir: '.agents/rules',
         skillsDir: '.config/opencode/skills',
         workflowsDir: '.agents/workflows',
+        configFile: '.opencode/config',
         markerFile: '.opencode'
     },
     {
@@ -161,6 +109,7 @@ const IDE_CONFIGS = [
         rulesDir: '.openhands/rules',
         skillsDir: '.openhands/skills',
         workflowsDir: '.openhands/workflows',
+        configFile: '.openhands/config',
         markerFile: '.openhands'
     },
     {
@@ -169,6 +118,7 @@ const IDE_CONFIGS = [
         rulesDir: '.goose/rules',
         skillsDir: '.goose/skills',
         workflowsDir: '.goose/workflows',
+        configFile: '.goose/config',
         markerFile: '.goose'
     },
     {
@@ -177,6 +127,7 @@ const IDE_CONFIGS = [
         rulesDir: '.vibe/rules',
         skillsDir: '.vibe/skills',
         workflowsDir: '.vibe/workflows',
+        configFile: '.vibe/config',
         markerFile: '.vibe'
     },
     {
@@ -185,6 +136,7 @@ const IDE_CONFIGS = [
         rulesDir: '.rules',
         skillsDir: '.rules/skills',
         workflowsDir: '.rules/workflows',
+        configFile: '.rules/config',
         markerFile: '.zed'
     },
     {
@@ -193,6 +145,7 @@ const IDE_CONFIGS = [
         rulesDir: 'rules',
         skillsDir: 'skills',
         workflowsDir: 'workflows',
+        configFile: 'openclaw.json',
         markerFile: 'openclaw.json'
     },
     {
@@ -201,6 +154,7 @@ const IDE_CONFIGS = [
         rulesDir: '.codebuddy/rules',
         skillsDir: '.codebuddy/skills',
         workflowsDir: '.codebuddy/workflows',
+        configFile: '.codebuddy/config',
         markerFile: '.codebuddy',
         forceCopy: true
     },
@@ -210,6 +164,7 @@ const IDE_CONFIGS = [
         rulesDir: '.commandcode/rules',
         skillsDir: '.commandcode/skills',
         workflowsDir: '.commandcode/workflows',
+        configFile: '.commandcode/config',
         markerFile: '.commandcode'
     },
     {
@@ -218,6 +173,7 @@ const IDE_CONFIGS = [
         rulesDir: '.crush/rules',
         skillsDir: '.crush/skills',
         workflowsDir: '.crush/workflows',
+        configFile: '.crush/config',
         markerFile: '.crush'
     },
     {
@@ -226,6 +182,7 @@ const IDE_CONFIGS = [
         rulesDir: '.factory/rules',
         skillsDir: '.factory/skills',
         workflowsDir: '.factory/workflows',
+        configFile: '.factory/config',
         markerFile: '.factory'
     },
     {
@@ -234,6 +191,7 @@ const IDE_CONFIGS = [
         rulesDir: '.junie/rules',
         skillsDir: '.junie/skills',
         workflowsDir: '.junie/workflows',
+        configFile: '.junie/config',
         markerFile: '.junie'
     },
     {
@@ -242,6 +200,7 @@ const IDE_CONFIGS = [
         rulesDir: '.iflow/rules',
         skillsDir: '.iflow/skills',
         workflowsDir: '.iflow/workflows',
+        configFile: '.iflow/config',
         markerFile: '.iflow'
     },
     {
@@ -250,6 +209,7 @@ const IDE_CONFIGS = [
         rulesDir: '.kilocode/rules',
         skillsDir: '.kilocode/skills',
         workflowsDir: '.kilocode/workflows',
+        configFile: '.kilocode/config',
         markerFile: '.kilocode'
     },
     {
@@ -258,6 +218,7 @@ const IDE_CONFIGS = [
         rulesDir: '.kiro/rules',
         skillsDir: '.kiro/skills',
         workflowsDir: '.kiro/workflows',
+        configFile: '.kiro/config',
         markerFile: '.kiro'
     },
     {
@@ -266,6 +227,7 @@ const IDE_CONFIGS = [
         rulesDir: '.kode/rules',
         skillsDir: '.kode/skills',
         workflowsDir: '.kode/workflows',
+        configFile: '.kode/config',
         markerFile: '.kode'
     },
     {
@@ -274,6 +236,7 @@ const IDE_CONFIGS = [
         rulesDir: '.mcpjam/rules',
         skillsDir: '.mcpjam/skills',
         workflowsDir: '.mcpjam/workflows',
+        configFile: '.mcpjam/config',
         markerFile: '.mcpjam'
     },
     {
@@ -282,6 +245,7 @@ const IDE_CONFIGS = [
         rulesDir: '.mux/rules',
         skillsDir: '.mux/skills',
         workflowsDir: '.mux/workflows',
+        configFile: '.mux/config',
         markerFile: '.mux'
     },
     {
@@ -290,6 +254,7 @@ const IDE_CONFIGS = [
         rulesDir: '.pi/rules',
         skillsDir: '.pi/skills',
         workflowsDir: '.pi/workflows',
+        configFile: '.pi/config',
         markerFile: '.pi'
     },
     {
@@ -298,6 +263,7 @@ const IDE_CONFIGS = [
         rulesDir: '.qoder/rules',
         skillsDir: '.qoder/skills',
         workflowsDir: '.qoder/workflows',
+        configFile: '.qoder/config',
         markerFile: '.qoder'
     },
     {
@@ -306,6 +272,7 @@ const IDE_CONFIGS = [
         rulesDir: '.qwen/rules',
         skillsDir: '.qwen/skills',
         workflowsDir: '.qwen/workflows',
+        configFile: '.qwen/config',
         markerFile: '.qwen'
     },
     {
@@ -314,6 +281,7 @@ const IDE_CONFIGS = [
         rulesDir: '.trae-cn/rules',
         skillsDir: '.trae-cn/skills',
         workflowsDir: '.trae-cn/workflows',
+        configFile: '.trae-cn/config',
         markerFile: '.trae-cn'
     },
     {
@@ -322,6 +290,7 @@ const IDE_CONFIGS = [
         rulesDir: '.zencoder/rules',
         skillsDir: '.zencoder/skills',
         workflowsDir: '.zencoder/workflows',
+        configFile: '.zencoder/config',
         markerFile: '.zencoder'
     },
     {
@@ -330,6 +299,7 @@ const IDE_CONFIGS = [
         rulesDir: '.neovate/rules',
         skillsDir: '.neovate/skills',
         workflowsDir: '.neovate/workflows',
+        configFile: '.neovate/config',
         markerFile: '.neovate'
     },
     {
@@ -338,6 +308,7 @@ const IDE_CONFIGS = [
         rulesDir: '.pochi/rules',
         skillsDir: '.pochi/skills',
         workflowsDir: '.pochi/workflows',
+        configFile: '.pochi/config',
         markerFile: '.pochi'
     },
     {
@@ -346,6 +317,7 @@ const IDE_CONFIGS = [
         rulesDir: '.adal/rules',
         skillsDir: '.adal/skills',
         workflowsDir: '.adal/workflows',
+        configFile: '.adal/config',
         markerFile: '.adal'
     },
     {
@@ -354,6 +326,7 @@ const IDE_CONFIGS = [
         rulesDir: '.agents/rules',
         skillsDir: '.agents/skills',
         workflowsDir: '.agents/workflows',
+        configFile: 'AGENTS.md',
         markerFile: '.agents'
     },
     {
@@ -369,7 +342,7 @@ const IDE_CONFIGS = [
 program
     .name('lmagent')
     .description('CLI para instalar skills y reglas de LMAgent')
-    .version('2.7.1'); // Hotfix bump
+    .version('3.0.0');
 
 program.command('install')
     .description('Instalar skills, rules y workflows en el IDE del proyecto')
@@ -507,8 +480,8 @@ async function runInstall(options) {
                 name: 'target',
                 message: '¿Dónde quieres instalar los artefactos?',
                 choices: [
-                    { name: 'En mi Usuario / Global IDE Config (~/) (Recomendado)', value: 'user' },
-                    { name: 'En este Proyecto (./)', value: 'project' }
+                    { name: 'En este Proyecto (./) (Recomendado)', value: 'project' },
+                    { name: 'En mi Usuario / Global IDE Config (~/) (No Recomendado - Sin Contexto)', value: 'user' }
                 ]
             }
         ]);
@@ -674,6 +647,147 @@ async function runInstall(options) {
             }
         }
 
+        // 4. Generate/Update Global Config File (Bootstrap)
+        let bootstrapStatus = 'SKIP';
+        if (ide.configFile) {
+            // Safety: Don't inject Markdown into JSON/YAML
+            if (ide.configFile.endsWith('.json') || ide.configFile.endsWith('.yaml') || ide.configFile.endsWith('.yml')) {
+                // console.log(chalk.gray(`  ℹ Skipping bootstrap for ${ide.name} (Structured Config)`));
+                bootstrapStatus = 'SKIP';
+            } else {
+                const configPath = path.join(targetRoot, ide.configFile);
+                const relativeRulesPath = getRelLink(ide.configFile, '.agents/rules/00-master.md');
+                const relativeCatalogPath = getRelLink(ide.configFile, 'AGENTS.md');
+                const relativeContextPath = getRelLink(ide.configFile, 'CLAUDE.md');
+
+                // console.log(chalk.bold(`\nConfiguring ${ide.name} auto-detect:`));
+                try {
+                    let content = `
+# 🤖 LMAgent Framework v3.0.0
+> Contexto Activo: Este proyecto utiliza el estándar LMAgent V3.
+
+## 🚨 SOURCE OF TRUTH (CEREBRO)
+**TU CONTEXTO Y REGLAS VIVEN AQUÍ 👉 [AGENTS.md](${relativeCatalogPath})**
+*Lee este archivo INMEDIATAMENTE para obtener tu identidad, skills y reglas operativas.*
+
+## ⚡ QUICK START TRIGGERS (Menu Rápido)
+Use estos comandos para activar su rol. Para detalles, consulte \`AGENTS.md\`.
+
+| Trigger | Rol / Skill | Objetivo |
+|:--- |:--- |:--- |
+| \`/orch\` | **Orchestrator** | Clasificar y delegar. |
+| \`/dev\` | **Backend** | APIs y Lógica. |
+| \`/front\` | **Frontend** | UI/UX, React. |
+| \`/pm\` | **Product** | PRDs y Roadmap. |
+| \`/fix\` | **Debugger** | Análisis de bugs. |
+| \`/arch\` | **Architect** | Diseño de sistemas. |
+
+!! SYSTEM NOTE: Read AGENTS.md to understand how to execute these roles. !!
+`;
+                    // If file exists, check if we need to append
+                    if (fs.existsSync(configPath)) {
+                        // Check if it's a directory (Edge case: Cline legacy folders)
+                        if (fs.statSync(configPath).isDirectory()) {
+                            console.error(chalk.red(`  ❌ Cannot bootstrap ${ide.configFile}: Is a directory.`));
+                            bootstrapStatus = 'ERROR';
+                        } else {
+                            const existingContent = fs.readFileSync(configPath, 'utf8');
+                            if (!existingContent.includes('QUICK START TRIGGERS')) {
+                                fs.appendFileSync(configPath, '\n' + content);
+                                bootstrapStatus = 'UPDATED';
+                            } else {
+                                bootstrapStatus = 'OK';
+                            }
+                        }
+                    } else {
+                        // Create parent dir if needed (for .github/copilot... etc)
+                        if (!fs.existsSync(path.dirname(configPath))) fs.mkdirSync(path.dirname(configPath), { recursive: true });
+                        fs.writeFileSync(configPath, content);
+                        bootstrapStatus = 'CREATED';
+                    }
+                } catch (e) {
+                    console.error(chalk.red(`  ❌ Error bootstrapping ${ide.name}: ${e.message}`));
+                    bootstrapStatus = 'ERROR';
+                }
+            }
+        }
+
+        if (bootstrapStatus !== 'SKIP' && bootstrapStatus !== 'OK') {
+            console.log(`  ${bootstrapStatus === 'CREATED' ? chalk.green('✔') : chalk.blue('ℹ')} ${ide.name} Bootstrap: ${bootstrapStatus}`);
+        }
+
+        // 4.1 Generate Bridge Rule if supported
+        const bridgeFile = ide.bridgeFile || 'lmagent.md';
+        if (ide.rulesDir && bridgeFile) {
+            const bridgePath = path.join(targetRoot, ide.rulesDir, bridgeFile);
+            const relativeBridgeToRoot = path.join(ide.rulesDir, bridgeFile);
+            const relContext = getRelLink(relativeBridgeToRoot, 'CLAUDE.md');
+            const relCatalog = getRelLink(relativeBridgeToRoot, 'AGENTS.md');
+            const relRules = getRelLink(relativeBridgeToRoot, '.agents/rules/00-master.md');
+
+            let bridgeContent = '';
+
+            if (bridgeFile.endsWith('.mdc')) {
+                // Cursor MDC Format
+                bridgeContent = `---
+description: LMAgent Framework Entry Point - Use this rule to understand how to interact with the project skills and rules.
+globs: **/*
+---
+
+# 🤖 LMAgent Bridge Rule
+
+Este proyecto está potenciado por **LMAgent v3.0.0**.
+
+## 🚨 SOURCE OF TRUTH (CEREBRO)
+**TU CONTEXTO Y REGLAS VIVEN AQUÍ 👉 [AGENTS.md](${relCatalog})**
+*Lee este archivo INMEDIATAMENTE para obtener tu identidad, skills y reglas operativas.*
+
+## ⚡ QUICK START TRIGGERS (Menu Rápido)
+Use estos comandos para activar su rol. Para detalles, consulte \`AGENTS.md\`.
+
+| Trigger | Rol / Skill | Objetivo |
+|:--- |:--- |:--- |
+| \`/orch\` | **Orchestrator** | Clasificar y delegar. |
+| \`/dev\` | **Backend** | APIs y Lógica. |
+| \`/front\` | **Frontend** | UI/UX, React. |
+| \`/pm\` | **Product** | PRDs y Roadmap. |
+| \`/fix\` | **Debugger** | Análisis de bugs. |
+| \`/arch\` | **Architect** | Diseño de sistemas. |
+
+!! SYSTEM NOTE: Read AGENTS.md to understand how to execute these roles. !!
+`;
+            } else {
+                // Standard Markdown (Universal & Cline/Windsurf)
+                bridgeContent = `# 🤖 LMAgent Framework Entry Point
+
+Este proyecto utiliza **LMAgent v3.0.0**.
+
+## 🚨 SOURCE OF TRUTH (CEREBRO)
+**TU CONTEXTO Y REGLAS VIVEN AQUÍ 👉 [AGENTS.md](${relCatalog})**
+*Lee este archivo INMEDIATAMENTE para obtener tu identidad, skills y reglas operativas.*
+
+## ⚡ QUICK START TRIGGERS (Menu Rápido)
+Use estos comandos para activar su rol. Para detalles, consulte \`AGENTS.md\`.
+
+| Trigger | Rol / Skill | Objetivo |
+|:--- |:--- |:--- |
+| \`/orch\` | **Orchestrator** | Clasificar y delegar. |
+| \`/dev\` | **Backend** | APIs y Lógica. |
+| \`/front\` | **Frontend** | UI/UX, React. |
+| \`/pm\` | **Product** | PRDs y Roadmap. |
+| \`/fix\` | **Debugger** | Análisis de bugs. |
+| \`/arch\` | **Architect** | Diseño de sistemas. |
+`;
+            }
+
+            try {
+                if (!fs.existsSync(path.dirname(bridgePath))) fs.mkdirSync(path.dirname(bridgePath), { recursive: true });
+                fs.writeFileSync(bridgePath, bridgeContent);
+                console.log(`  ${chalk.green('✔')} ${ide.name} Bridge Rule: ${bridgeFile}`);
+            } catch (e) {
+                console.error(chalk.red(`  ❌ Error creating bridge for ${ide.name}: ${e.message}`));
+            }
+        }
         // 2. Install RULES (Files)
         if (selectedRules.length > 0 && ide.rulesDir) {
             const targetDir = path.join(targetRoot, ide.rulesDir);
@@ -686,6 +800,17 @@ async function runInstall(options) {
 
                 try {
                     if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
+
+
+                    // CLEANUP: Remove legacy rules (V2)
+                    const legacyRules = ['_bootstrap.md', '_bootstrap.mdc', '00-bootstrap.md'];
+                    for (const legacy of legacyRules) {
+                        const legacyPath = path.join(targetDir, legacy);
+                        if (fs.existsSync(legacyPath)) {
+                            fs.unlinkSync(legacyPath);
+                            console.log(`  ${chalk.yellow('🗑  Eliminado regla obsoleta:')} ${legacy}`);
+                        }
+                    }
 
                     for (const rule of selectedRules) {
                         const srcVal = path.join(SOURCE_RULES, rule);
@@ -950,11 +1075,10 @@ async function runInit(options) {
         // Crear directorio root si no existe
         if (!fs.existsSync(agentRootDir)) fs.mkdirSync(agentRootDir, { recursive: true });
 
-        // Copiar Archivos (AGENTS.md, etc - EXCEPTO CLAUDE.md que suele ir en root)
+        // Copiar Archivos (AGENTS.md, CLAUDE.md van a root)
         for (const file of filesToCopy) {
-            if (file.src === 'CLAUDE.md') {
-                // CLAUDE.md se queda en projectRoot para visibilidad inmediata si se usa Claude
-                // Opcional: Podríamos moverlo también, pero por ahora lo dejamos en root para compatibilidad
+            if (file.src === 'CLAUDE.md' || file.src === 'AGENTS.md') {
+                // Se copian a projectRoot para visibilidad inmediata
                 const dest = path.join(projectRoot, file.src);
                 if (fs.existsSync(path.join(__dirname, file.src))) {
                     fs.copyFileSync(path.join(__dirname, file.src), dest);
@@ -978,6 +1102,17 @@ async function runInit(options) {
             if (fs.existsSync(src)) {
                 copyRecursiveSync(src, dest, true); // Force overwrite
                 console.log(`   ${chalk.green('✔')} ${dir.src}/ -> ${path.dirname(ide.skillsDir)}/${dir.src}/`);
+
+                // CLEANUP: If docs, remove assets (legacy logo, etc.)
+                if (dir.src === 'docs') {
+                    const assetsDir = path.join(dest, 'assets');
+                    if (fs.existsSync(assetsDir)) {
+                        try {
+                            fs.rmSync(assetsDir, { recursive: true, force: true });
+                            console.log(`   ${chalk.yellow('🗑  Eliminado assets heredados (logo, etc.)')}`);
+                        } catch (e) { }
+                    }
+                }
             }
         }
     }
@@ -1018,7 +1153,7 @@ DEBUG=true
     }
 
     // Resumen
-    console.log(gradient.pastel.multiline('\n✨ Proyecto inicializado con LMAgent v2.7.0 ✨'));
+    console.log(gradient.pastel.multiline('\n✨ Proyecto inicializado con LMAgent v3.0.0 ✨'));
     console.log('');
     console.log(chalk.cyan('Próximos pasos:'));
     console.log(`  1. ${chalk.bold('lmagent install')} - Instalar skills/rules/workflows en tu IDE`);
@@ -1161,6 +1296,14 @@ async function runDoctor() {
     } else {
         console.log(chalk.yellow(`\n⚠️  ${issues} problema(s) encontrado(s), ${ok} verificaciones OK.\n`));
     }
+}
+
+// Helper: Calculate relative Markdown link
+function getRelLink(fromRelPath, toRelPath) {
+    const fromDir = path.dirname(fromRelPath);
+    let rel = path.relative(fromDir, toRelPath);
+    if (!rel.startsWith('.')) rel = './' + rel;
+    return rel.replace(/\\/g, '/'); // Force forward slashes for Markdown
 }
 
 // Helper: Contar archivos recursivamente
