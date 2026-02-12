@@ -105,7 +105,19 @@ skills/{skill-name}/
 | **scrum-master** | `/sm`, `/agile`, `/coach` | Ceremonias Scrum, sprints, retrospectivas | `references/sprint-ceremonies.md` |
 | **technical-writer** | `/doc`, `/readme`, `/guide` | Documentación, API refs, guías de usuario | `references/doc-templates.md` |
 | **ux-ui-designer** | `/ux`, `/ui`, `/design` | Design systems, UX research, accesibilidad | `references/design-system-foundation.md` |
-| **testing-strategist** | `/test-plan`, `/strategy` | Pirámide de testing, planificación y estrategia de QA | **Uso:** Definición de estrategia. **Vs QA:** Strategist piensa el 'qué'; QA ejecuta el 'cómo'. |
+
+## 📚 2. Knowledge Base (Documentación)
+*Ubicación: `docs/` en la raíz del proyecto.*
+
+El agente debe consultar estos archivos si el usuario tiene dudas sobre el framework:
+
+| Archivo | Propósito |
+| :--- | :--- |
+| `docs/getting-started.md` | Configuración inicial y primeros pasos |
+| `docs/usage-guide.md` | Cómo interactuar con el agente y comandos |
+| `docs/customization-guide.md` | Cómo crear nuevos skills o reglas |
+| `docs/commands.md` | Referencia de comandos CLI (`lmagent ...`) |
+| `docs/navigation-index.md` | Mapa completo de archivos y sus relaciones |
 
 ### 📐 Methodologies
 
