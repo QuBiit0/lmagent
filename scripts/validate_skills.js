@@ -196,7 +196,7 @@ function main() {
 
     const c = chalk;
 
-    console.log(c.bold('\n🔍 LMAgent Skill Validator v2.6.4\n'));
+    console.log(c.bold('\n🔍 LMAgent Skill Validator v2.6.5\n'));
     console.log(chalk.dim(`   Directorio: ${SKILLS_DIR}`));
     console.log(chalk.dim(`   Campos obligatorios: ${REQUIRED_FIELDS.length}`));
     console.log('');

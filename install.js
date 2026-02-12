@@ -368,7 +368,7 @@ const IDE_CONFIGS = [
 program
     .name('lmagent')
     .description('CLI para instalar skills y reglas de LMAgent')
-    .version('2.6.4'); // Version bump
+    .version('2.6.5'); // Version bump
 
 program.command('install')
     .description('Instalar skills, rules y workflows en el IDE del proyecto')
@@ -910,32 +910,50 @@ async function runInit(options) {
         dirsToCopy = INIT_DIRS.filter(d => answers.dirs.includes(d.src));
     }
 
-    // Copiar archivos individuales
-    console.log(chalk.bold('\n📄 Copiando archivos de proyecto:'));
-    for (const file of filesToCopy) {
-        const src = path.join(__dirname, file.src);
-        const dest = path.join(projectRoot, file.src);
-        if (fs.existsSync(src)) {
-            const exists = fs.existsSync(dest);
-            fs.copyFileSync(src, dest);
-            console.log(`  ${chalk.green('✔')} ${file.src} ${exists ? chalk.yellow('(actualizado)') : chalk.green('(nuevo)')}`);
-        } else {
-            console.log(`  ${chalk.red('✘')} ${file.src} ${chalk.red('(no encontrado en el paquete)')}`);
-        }
-    }
+    // Copiar archivos del framework a la carpeta del Agente (Clean Root)
+    console.log(chalk.bold('\n📦 Instalando framework en directorios de Agente:'));
 
-    // Copiar directorios
-    console.log(chalk.bold('\n📁 Copiando directorios:'));
-    for (const dir of dirsToCopy) {
-        const src = path.join(__dirname, dir.src);
-        const dest = path.join(projectRoot, dir.src);
-        if (fs.existsSync(src)) {
-            const exists = fs.existsSync(dest);
-            copyRecursiveSync(src, dest, true);
-            const itemCount = getAllItemsFlat(src).length;
-            console.log(`  ${chalk.green('✔')} ${dir.src}/ (${itemCount} archivos) ${exists ? chalk.yellow('(actualizado)') : chalk.green('(nuevo)')}`);
-        } else {
-            console.log(`  ${chalk.red('✘')} ${dir.src}/ ${chalk.red('(no encontrado en el paquete)')}`);
+    for (const ide of targetIdes) {
+        if (!ide.skillsDir) continue; // Skip custom/manual if no dir defined
+
+        // Determinar "Agent Root" (ej: .cursor/ o .github/)
+        // Asume que skillsDir es "root/skills", así que dirname obtiene "root"
+        const agentRootDir = path.join(targetRoot, path.dirname(ide.skillsDir));
+
+        console.log(chalk.dim(`   Destino: ${agentRootDir}`));
+
+        // Crear directorio root si no existe
+        if (!fs.existsSync(agentRootDir)) fs.mkdirSync(agentRootDir, { recursive: true });
+
+        // Copiar Archivos (AGENTS.md, etc - EXCEPTO CLAUDE.md que suele ir en root)
+        for (const file of filesToCopy) {
+            if (file.src === 'CLAUDE.md') {
+                // CLAUDE.md se queda en projectRoot para visibilidad inmediata si se usa Claude
+                // Opcional: Podríamos moverlo también, pero por ahora lo dejamos en root para compatibilidad
+                const dest = path.join(projectRoot, file.src);
+                if (fs.existsSync(path.join(__dirname, file.src))) {
+                    fs.copyFileSync(path.join(__dirname, file.src), dest);
+                    console.log(`   ${chalk.green('✔')} ${file.src} (Project Root)`);
+                }
+                continue;
+            }
+
+            const src = path.join(__dirname, file.src);
+            const dest = path.join(agentRootDir, file.src);
+            if (fs.existsSync(src)) {
+                fs.copyFileSync(src, dest);
+                console.log(`   ${chalk.green('✔')} ${file.src} -> ${path.dirname(ide.skillsDir)}/${file.src}`);
+            }
+        }
+
+        // Copiar Directorios (docs, config, templates)
+        for (const dir of dirsToCopy) {
+            const src = path.join(__dirname, dir.src);
+            const dest = path.join(agentRootDir, dir.src);
+            if (fs.existsSync(src)) {
+                copyRecursiveSync(src, dest, true); // Force overwrite
+                console.log(`   ${chalk.green('✔')} ${dir.src}/ -> ${path.dirname(ide.skillsDir)}/${dir.src}/`);
+            }
         }
     }
 
