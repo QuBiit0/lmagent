@@ -1,7 +1,7 @@
-# LMAgent Framework v2.6.5 - Claude Code Instructions
+# LMAgent Framework v2.6.6 - Claude Code Instructions
 
 > [!IMPORTANT]
-> **ANTES DE HACER CUALQUIER COSA**: Este proyecto usa el framework **LMAgent v2.6.5**.
+> **ANTES DE HACER CUALQUIER COSA**: Este proyecto usa el framework **LMAgent v2.6.6**.
 > **DEBES** leer `AGENTS.md` y `rules/_bootstrap.md` antes de implementar cualquier cambio.
 
 ## Framework

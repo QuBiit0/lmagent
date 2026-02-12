@@ -369,7 +369,7 @@ const IDE_CONFIGS = [
 program
     .name('lmagent')
     .description('CLI para instalar skills y reglas de LMAgent')
-    .version('2.6.5'); // Version bump
+    .version('2.6.6'); // Version bump
 
 program.command('install')
     .description('Instalar skills, rules y workflows en el IDE del proyecto')
@@ -589,35 +589,39 @@ async function runInstall(options) {
 
         console.log('');
         console.log(chalk.gray('--- Selección de Contenido ---'));
+        // Seleccionar Skills
+        console.log(chalk.bold('\n🔹 Skills Disponibles:'));
         const skillsAnswer = await inquirer.prompt([
             {
                 type: 'checkbox',
                 name: 'skills',
-                message: 'Selecciona los Skills:',
+                message: 'Selecciona:',
                 choices: availableSkills.map(s => ({ name: s, checked: true })),
                 pageSize: 15
             }
         ]);
         selectedSkills = skillsAnswer.skills;
 
-        console.log('');
+        // Seleccionar Rules
+        console.log(chalk.bold('\n🔹 Reglas Disponibles:'));
         const rulesAnswer = await inquirer.prompt([
             {
                 type: 'checkbox',
                 name: 'rules',
-                message: 'Selecciona las Reglas:',
+                message: 'Selecciona:',
                 choices: availableRules.map(r => ({ name: r, checked: true })),
                 pageSize: 15
             }
         ]);
         selectedRules = rulesAnswer.rules;
 
-        console.log('');
+        // Seleccionar Workflows
+        console.log(chalk.bold('\n🔹 Workflows Disponibles:'));
         const workflowsAnswer = await inquirer.prompt([
             {
                 type: 'checkbox',
                 name: 'workflows',
-                message: 'Selecciona los Workflows:',
+                message: 'Selecciona:',
                 choices: availableWorkflows.map(w => ({ name: w, checked: true })),
                 pageSize: 15
             }
