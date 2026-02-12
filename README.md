@@ -63,6 +63,30 @@ lmagent doctor
 
 ---
 
+## 🏛️ Architecture: Global Brain vs. Local Project
+
+LMAgent uses a **Hybrid Architecture** to balance **Centralized Updates** with **Project Portability**.
+
+### The Problem it Solves
+*   **Global Installs** run the risk of breaking projects if they rely on your specific machine paths.
+*   **Local Copies** become stale and are hard to update across 10+ projects.
+
+### The Solution: "Symlink Bridge"
+
+| Layer | Location | Purpose |
+| :--- | :--- | :--- |
+| **1. Global Brain** | `~/.agents/` | **Single Source of Truth**. Hosted in your user home. Updated via `npm update -g`. |
+| **2. Local Project** | `./.cursor/skills/` | **Symlinks** pointing to the Global Brain. Lightweight and bridge-like. |
+| **3. Context** | `./CLAUDE.md` | Points to **Local Symlinks** (Relative Paths). **100% Portable** to other devs. |
+
+### Why `init` and `install` are separate?
+1.  **`lmagent init`**: Creates the **Portable Structure** (files that *must* exist in the repo to work, like `CLAUDE.md`).
+2.  **`lmagent install`**: Builds the **Bridge** (Symlinks) specific to *your* machine's environment.
+
+> **Best Practice**: Commit `CLAUDE.md` and `AGENTS.md`. **Do NOT** commit the `.cursor/skills` folder (add it to `.gitignore`), as each developer should run `lmagent install` to link their own brain.
+
+---
+
 ## 🛠️ Creating New Skills
 Need a custom agent? Use the interactive generator:
 
