@@ -28,8 +28,6 @@ const INIT_FILES = [
 const INIT_DIRS = [
     { src: 'config', desc: 'Configuración del framework' },
     { src: 'templates', desc: 'Templates de proyecto' },
-    { src: 'config', desc: 'Configuración del framework' },
-    { src: 'templates', desc: 'Templates de proyecto' },
     { src: 'docs', desc: 'Documentación extendida' },
     { src: 'workflows', desc: 'SOPs y Procedimientos' },
 ];
