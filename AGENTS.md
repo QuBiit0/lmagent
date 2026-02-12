@@ -153,6 +153,8 @@ Rules definen **CÓMO** debe comportarse el agente. Son restricciones y estánda
 
 Workflows son **SOPs (Standard Operating Procedures)** que guían al agente en procesos complejos multi-paso.
 
+> **Instrucción para Agente**: Antes de iniciar una tarea compleja, **verifica si existe un workflow** aquí. Si existe, **LÉELO** y síguelo paso a paso.
+
 | Workflow | Propósito |
 |----------|----------|
 | **bugfix-backend.md** | Protocolo para diagnosticar, corregir y verificar bugs de backend |
@@ -189,6 +191,8 @@ Workflows son **SOPs (Standard Operating Procedures)** que guían al agente en p
 *Ubicación: `templates/`*
 
 👉 **[Ver Guía de Uso de Templates](templates/USAGE.md)**
+
+> **Instrucción para Agente**: Cuando debas crear nuevos archivos o proyectos, **usa estos templates como referencia** para mantener la consistencia, no inventes estructuras desde cero.
 
 | Template | Descripción |
 |----------|-------------|
