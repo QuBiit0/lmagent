@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * LMAgent Skills Validator — v2.6.0
+ * LMAgent Skills Validator — v2.7.0
  * 
  * Valida la integridad de todos los skills del framework.
  * Verifica: frontmatter YAML, campos obligatorios, estructura de directorio.
@@ -29,7 +29,7 @@ const SKILLS_DIR = join(ROOT, 'skills');
 // ─── Configuración ────────────────────────────────────────────
 const REQUIRED_FIELDS = ['name', 'description', 'role', 'type', 'version', 'icon', 'expertise', 'activates_on', 'triggers'];
 const VALID_TYPES = ['agent_persona', 'methodology'];
-const CURRENT_VERSION = 2.6;
+const CURRENT_VERSION = 2.7;
 const OPTIONAL_DIRS = ['scripts', 'references', 'assets'];
 
 // ─── Colores (sin dependencias) ───────────────────────────────
@@ -196,7 +196,7 @@ function main() {
 
     const c = chalk;
 
-    console.log(c.bold('\n🔍 LMAgent Skill Validator v2.6.8\n'));
+    console.log(c.bold('\n🔍 LMAgent Skill Validator v2.7.0\n'));
     console.log(chalk.dim(`   Directorio: ${SKILLS_DIR}`));
     console.log(chalk.dim(`   Campos obligatorios: ${REQUIRED_FIELDS.length}`));
     console.log('');

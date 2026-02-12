@@ -369,7 +369,7 @@ const IDE_CONFIGS = [
 program
     .name('lmagent')
     .description('CLI para instalar skills y reglas de LMAgent')
-    .version('2.6.8'); // Version bump
+    .version('2.7.0'); // Version bump
 
 program.command('install')
     .description('Instalar skills, rules y workflows en el IDE del proyecto')
@@ -1017,7 +1017,7 @@ DEBUG=true
     }
 
     // Resumen
-    console.log(gradient.pastel.multiline('\n✨ Proyecto inicializado con LMAgent v2.6.8 ✨'));
+    console.log(gradient.pastel.multiline('\n✨ Proyecto inicializado con LMAgent v2.7.0 ✨'));
     console.log('');
     console.log(chalk.cyan('Próximos pasos:'));
     console.log(`  1. ${chalk.bold('lmagent install')} - Instalar skills/rules/workflows en tu IDE`);

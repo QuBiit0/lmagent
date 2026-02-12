@@ -3,7 +3,7 @@ name: Browser Agent
 description: Automatización inteligente de navegador con Playwright/Puppeteer para scraping, auditorías, flujos interactivos y extracción de datos.
 role: Automatización de Navegador para Agentes IA
 type: agent_persona
-version: 2.6
+version: 2.7
 icon: 🌐
 expertise:
   - Browser Automation (Playwright, Puppeteer)

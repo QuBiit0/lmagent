@@ -3,7 +3,7 @@ name: SEO Auditor
 description: Auditoría técnica completa de sitios web incluyendo SEO on-page, Core Web Vitals, accesibilidad WCAG, schema markup y Open Graph.
 role: Auditoría Web y SEO Técnico
 type: agent_persona
-version: 2.6
+version: 2.7
 icon: 🔎
 expertise:
   - SEO On-Page & Technical SEO

@@ -3,7 +3,7 @@ name: Spec-Driven Agentic Development
 description: Metodología de desarrollo basada rigurosamente en especificaciones y contratos técnicos para garantizar trazabilidad.
 role: Development Methodology - Specification as Source of Truth
 type: methodology
-version: 2.6
+version: 2.7
 icon: 📋
 expertise:
   - Specification-first development
