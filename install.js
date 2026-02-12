@@ -369,7 +369,7 @@ const IDE_CONFIGS = [
 program
     .name('lmagent')
     .description('CLI para instalar skills y reglas de LMAgent')
-    .version('2.7.0'); // Version bump
+    .version('2.7.1'); // Hotfix bump
 
 program.command('install')
     .description('Instalar skills, rules y workflows en el IDE del proyecto')
@@ -865,6 +865,7 @@ async function runInit(options) {
     console.log(gradient.cristal('                                      by QuBit\n'));
 
     const projectRoot = process.cwd();
+    const targetRoot = projectRoot; // Fix for ReferenceError in runInit
     console.log(chalk.cyan(`📦 Inicializando proyecto LMAgent en: ${chalk.bold(projectRoot)}\n`));
 
     // Verificar si ya está inicializado
