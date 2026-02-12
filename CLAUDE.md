@@ -21,11 +21,22 @@ However, they may be in hidden directories depending on your environment.
 
 ### 1. 🔍 Locate Skills
 Check these paths (in order) to find installed skills:
+
 1. `.agent/skills/` (Antigravity standard)
 2. `.cursor/skills/` (Cursor)
 3. `.windsurf/skills/` (Windsurf)
 4. `.github/skills/` (VSCode/Copilot)
-5. `skills/` (Source repo / custom setup)
+5. `.claude/skills/` (Claude Code)
+6. `.clinerules/skills/` or `.roo/skills/` (Cline / Roo Code)
+7. `.continue/skills/` (Continue)
+8. `.trae/skills/` (Trae)
+9. `.agents/skills/` (Amp, Kimi, Replit)
+10. `.augment/skills/` (Augment)
+11. `.codex/skills/` (Codex)
+12. `.gemini/skills/` (Gemini CLI)
+13. `.opencode/skills/` (OpenCode)
+14. `skills/` (Source repo / custom setup)
+*(And many others: .openhands, .goose, .vibe, .codebuddy, etc. - See AGENTS.md for full list)*
 
 ### 2. ⚡ Activate Skills
 **IF** the user request matches a trigger in `AGENTS.md` or implies a specific role:

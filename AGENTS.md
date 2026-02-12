@@ -6,7 +6,48 @@
 ---
 
 ## 🏗️ 1. Skills (Capacidades Ejecutables)
-*Ubicación: `skills/` (Source), `.agent/skills/` (Antigravity), `.cursor/skills/` (Cursor), or similar.*
+*Ubicación: Tu directorio de configuración de agente. Consulta la siguiente tabla para encontrar tu ruta:*
+
+| IDE / Agente | Ruta de Configuración |
+| :--- | :--- |
+| **Cursor** | `.cursor/` |
+| **Windsurf** | `.windsurf/` |
+| **VSCode / Copilot** | `.github/` |
+| **Zed** | `.rules/` |
+| **Antigravity** | `.agent/` |
+| **Claude Code** | `.claude/` |
+| **Cline / Roo Code** | `.clinerules/` / `.roo/` |
+| **Continue** | `.continue/` |
+| **Trae** | `.trae/` |
+| **Qodo** | `agents/` |
+| **Amp / Kimi / Replit** | `.agents/` |
+| **Augment** | `.augment/` |
+| **Codex** | `.codex/` |
+| **Gemini CLI** | `.gemini/` |
+| **OpenCode** | `.opencode/` |
+| **OpenHands** | `.openhands/` |
+| **Goose** | `.goose/` |
+| **Mistral Vibe** | `.vibe/` |
+| **Envoid (OpenClaw)** | `openclaw.json` |
+| **CodeBuddy** | `.codebuddy/` |
+| **Command Code** | `.commandcode/` |
+| **Crush** | `.crush/` |
+| **Droid** | `.factory/` |
+| **Junie** | `.junie/` |
+| **iFlow** | `.iflow/` |
+| **Kilo Code** | `.kilocode/` |
+| **Kiro** | `.kiro/` |
+| **Kode** | `.kode/` |
+| **MCPJam** | `.mcpjam/` |
+| **Mux** | `.mux/` |
+| **Pi** | `.pi/` |
+| **Qoder** | `.qoder/` |
+| **Qwen Code** | `.qwen/` |
+| **Trae CN** | `.trae-cn/` |
+| **Zencoder** | `.zencoder/` |
+| **Neovate** | `.neovate/` |
+| **Pochi** | `.pochi/` |
+| **AdaL** | `.adal/` |
 
 Skills son unidades especializadas que definen el comportamiento del agente para dominios específicos. Cada skill contiene:
 
