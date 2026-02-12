@@ -1,12 +1,12 @@
 # 🤖 LMAgent Intelligence Catalog
 
-> Catálogo completo de capacidades del ecosistema **LMAgent v2.6.2**.
+> Catálogo completo de capacidades del ecosistema **LMAgent v2.6.3**.
 > Última actualización: 2026-02-11
 
 ---
 
 ## 🏗️ 1. Skills (Capacidades Ejecutables)
-*Ubicación: `skills/`*
+*Ubicación: `skills/` (Source), `.agent/skills/` (Antigravity), `.cursor/skills/` (Cursor), or similar.*
 
 Skills son unidades especializadas que definen el comportamiento del agente para dominios específicos. Cada skill contiene:
 

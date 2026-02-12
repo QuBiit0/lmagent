@@ -1,18 +1,42 @@
-# LMAgent Framework v2.6.2 - Claude Code Instructions
+# LMAgent Framework v2.6.3 - Claude Code Instructions
 
 > [!IMPORTANT]
-> **ANTES DE HACER CUALQUIER COSA**: Este proyecto usa el framework **LMAgent v2.6.2**.
+> **ANTES DE HACER CUALQUIER COSA**: Este proyecto usa el framework **LMAgent v2.6.3**.
 > **DEBES** leer `AGENTS.md` y `rules/_bootstrap.md` antes de implementar cualquier cambio.
 
 ## Framework
 
-Estás trabajando con **LMAgent v2.6.2**, un framework para desarrollo de automatizaciones y agentes de IA. Organiza las capacidades del agente en tres pilares: **Skills**, **Rules** y **Workflows**.
+Estás trabajando con **LMAgent v2.6.3**, un framework para desarrollo de automatizaciones y agentes de IA. Organiza las capacidades del agente en tres pilares: **Skills**, **Rules** y **Workflows**.
 
 ## ⚡ Inicio Rápido
 
 1. Lee `rules/_bootstrap.md` — **Entry point del framework** (startup check, 31 skills con triggers, reglas críticas)
 2. Lee `AGENTS.md` — Catálogo completo de skills, rules y workflows
 3. Lee las rules aplicables en `rules/`
+
+## 🧠 CRITICAL: Agent Capabilities & Skill Loading
+
+**You have access to a rich set of capabilities (Skills) installed in this project.**
+However, they may be in hidden directories depending on your environment.
+
+### 1. 🔍 Locate Skills
+Check these paths (in order) to find installed skills:
+1. `.agent/skills/` (Antigravity standard)
+2. `.cursor/skills/` (Cursor)
+3. `.windsurf/skills/` (Windsurf)
+4. `.github/skills/` (VSCode/Copilot)
+5. `skills/` (Source repo / custom setup)
+
+### 2. ⚡ Activate Skills
+**IF** the user request matches a trigger in `AGENTS.md` or implies a specific role:
+1. **FIND** the corresponding `SKILL.md` in one of the paths above.
+2. **READ** the `SKILL.md` file using `view_file` **IMMEDIATELY**.
+3. **ADOPT** the persona and instructions defined in that skill.
+
+> **Example:** User says "Fix this bug".
+> 1. You see `/fix` trigger for `systematic-debugger`.
+> 2. You look for `.agent/skills/systematic-debugger/SKILL.md`.
+> 3. You read it and follow the debugging protocol.
 
 ## 🚀 STARTUP CHECK (Auto-Start)
 

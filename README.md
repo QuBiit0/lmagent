@@ -10,7 +10,7 @@
                                                   by QuBit
 ```
 
-![Version](https://img.shields.io/badge/Version-2.6.2-purple?style=for-the-badge) ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge) ![Agentic](https://img.shields.io/badge/AI-Agentic_Workflow-cyan?style=for-the-badge)
+![Version](https://img.shields.io/badge/Version-2.6.3-purple?style=for-the-badge) ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge) ![Agentic](https://img.shields.io/badge/AI-Agentic_Workflow-cyan?style=for-the-badge)
 
 > **"Separate the reasoning from the execution."**  
 > LMAgent is the foundational runtime that empowers your AI Agents with standardized **Skills**, **Rules**, and **Workflows** across any IDE (Cursor, Windsurf, VSCode, Zed, Qodo).
@@ -215,6 +215,9 @@ LMAgent creates a **Single Source of Truth** in your home directory.
 | **Qodo** | ✅ Full | `agents/` |
 | **Amp / Kimi / Replit** | ✅ Full | `.agents/` |
 | **Augment** | ✅ Full | `.augment/` |
+| **Codex** | ✅ Full | `.codex/` |
+| **Gemini CLI** | ✅ Full | `.gemini/` |
+| **OpenCode** | ✅ Full | `.opencode/` |
 | **OpenHands** | ✅ Full | `.openhands/` |
 | **Goose** | ✅ Full | `.goose/` |
 | **Mistral Vibe** | ✅ Full | `.vibe/` |

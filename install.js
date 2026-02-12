@@ -40,7 +40,8 @@ const IDE_CONFIGS = [
         rulesDir: '.cursor/rules',
         skillsDir: '.cursor/skills',
         workflowsDir: '.cursor/workflows',
-        markerFile: '.cursorrules'
+        markerFile: '.cursorrules',
+        forceCopy: true
     },
     {
         name: 'Windsurf',
@@ -48,7 +49,8 @@ const IDE_CONFIGS = [
         rulesDir: '.windsurf/rules',
         skillsDir: '.windsurf/skills',
         workflowsDir: '.windsurf/workflows',
-        markerFile: '.windsurf'
+        markerFile: '.windsurf',
+        forceCopy: true
     },
     {
         name: 'VSCode / GitHub Copilot',
@@ -64,7 +66,8 @@ const IDE_CONFIGS = [
         rulesDir: '.claude/rules',
         skillsDir: '.claude/skills',
         workflowsDir: '.claude/workflows',
-        markerFile: '.claude'
+        markerFile: '.claude',
+        forceCopy: true
     },
     {
         name: 'Cline',
@@ -72,7 +75,8 @@ const IDE_CONFIGS = [
         rulesDir: '.clinesrules',
         skillsDir: '.cline/skills',
         workflowsDir: '.cline/workflows',
-        markerFile: '.clinesrules'
+        markerFile: '.clinesrules',
+        forceCopy: true
     },
     {
         name: 'Roo Code',
@@ -80,7 +84,8 @@ const IDE_CONFIGS = [
         rulesDir: '.roo/rules',
         skillsDir: '.roo/skills',
         workflowsDir: '.roo/workflows',
-        markerFile: '.roo'
+        markerFile: '.roo',
+        forceCopy: true
     },
     {
         name: 'Trae',
@@ -88,7 +93,8 @@ const IDE_CONFIGS = [
         rulesDir: '.trae/rules',
         skillsDir: '.trae/skills',
         workflowsDir: '.trae/workflows',
-        markerFile: '.trae'
+        markerFile: '.trae',
+        forceCopy: true
     },
 
     // --- Otros Agentes ---
@@ -117,12 +123,36 @@ const IDE_CONFIGS = [
         markerFile: '.augment'
     },
     {
+        name: 'Codex',
+        value: 'codex',
+        rulesDir: '.agents/rules',
+        skillsDir: '.codex/skills',
+        workflowsDir: '.agents/workflows',
+        markerFile: '.codex'
+    },
+    {
+        name: 'Gemini CLI',
+        value: 'gemini',
+        rulesDir: '.agents/rules',
+        skillsDir: '.gemini/skills',
+        workflowsDir: '.agents/workflows',
+        markerFile: '.gemini'
+    },
+    {
         name: 'Continue',
         value: 'continue',
         rulesDir: '.continue/rules',
         skillsDir: '.continue/skills',
         workflowsDir: '.continue/workflows',
         markerFile: '.continue'
+    },
+    {
+        name: 'OpenCode',
+        value: 'opencode',
+        rulesDir: '.agents/rules',
+        skillsDir: '.config/opencode/skills',
+        workflowsDir: '.agents/workflows',
+        markerFile: '.opencode'
     },
     {
         name: 'OpenHands',
@@ -157,7 +187,7 @@ const IDE_CONFIGS = [
         markerFile: '.zed'
     },
     {
-        name: 'Envoid (OpenClaw)',
+        name: 'Envoid (OpenClaw / Moltbot)',
         value: 'openclaw',
         rulesDir: 'rules',
         skillsDir: 'skills',
@@ -170,7 +200,8 @@ const IDE_CONFIGS = [
         rulesDir: '.codebuddy/rules',
         skillsDir: '.codebuddy/skills',
         workflowsDir: '.codebuddy/workflows',
-        markerFile: '.codebuddy'
+        markerFile: '.codebuddy',
+        forceCopy: true
     },
     {
         name: 'Command Code',
@@ -337,7 +368,7 @@ const IDE_CONFIGS = [
 program
     .name('lmagent')
     .description('CLI para instalar skills y reglas de LMAgent')
-    .version('2.6.2'); // Version bump
+    .version('2.6.3'); // Version bump
 
 program.command('install')
     .description('Instalar skills, rules y workflows en el IDE del proyecto')
@@ -465,7 +496,9 @@ async function runInstall(options) {
         selectedRules = getAllItems(SOURCE_RULES, false);
         selectedWorkflows = getAllItems(SOURCE_WORKFLOWS, false);
     } else {
+        console.log(chalk.gray('================================================================'));
         console.log(chalk.cyan('🔹 Configuración de Instalación'));
+        console.log(chalk.gray('================================================================'));
 
         const targetAnswer = await inquirer.prompt([
             {
@@ -495,6 +528,8 @@ async function runInstall(options) {
         ]);
         installMethod = methodAnswer.method;
 
+        console.log('');
+        console.log(chalk.gray('--- Selección de Agentes ---'));
         const ideAnswer = await inquirer.prompt([{
             type: 'checkbox',
             name: 'ides',
@@ -550,6 +585,8 @@ async function runInstall(options) {
         const availableRules = getAllItems(SOURCE_RULES, false);
         const availableWorkflows = getAllItems(SOURCE_WORKFLOWS, false);
 
+        console.log('');
+        console.log(chalk.gray('--- Selección de Contenido ---'));
         const contentAnswers = await inquirer.prompt([
             {
                 type: 'checkbox',
@@ -589,8 +626,8 @@ async function runInstall(options) {
     console.log('');
     for (const ide of targetIdes) {
         let currentInstallMethod = installMethod;
-        if (ide.value === 'cursor' && currentInstallMethod === 'symlink') {
-            console.log(chalk.yellow(`⚠️  Cursor detectado: Forzando método 'copy' (Skills no soportan symlinks en Cursor)`));
+        if (ide.forceCopy && currentInstallMethod === 'symlink') {
+            console.log(chalk.yellow(`⚠️  ${ide.name} detectado: Forzando método 'copy' (Mejor compatibilidad)`));
             currentInstallMethod = 'copy';
         }
 
@@ -679,6 +716,20 @@ async function runInstall(options) {
         }
     }
     console.log(gradient.pastel.multiline('\n✨ Instalación Finalizada ✨'));
+
+    console.log(chalk.gray('================================================================'));
+    console.log(chalk.bold.green('🎉 ¡Todo listo! Aquí tienes cómo usar tus nuevos superpoderes:'));
+    console.log('');
+    console.log(chalk.cyan('🤖  Para Cursor / Windsurf / Trae:'));
+    console.log(chalk.white('    1. Tus skills aparecen como Reglas (.cursorrules, etc.)'));
+    console.log(chalk.white('    2. En el Chat (Ctrl+L) o Composer (Ctrl+I), simplemente pídelo.'));
+    console.log(chalk.gray('       Ej: "Crea un nuevo componente de React" (El agente usará frontend-engineer automáticamente)'));
+    console.log('');
+    console.log(chalk.magenta('🧠  Para Antigravity / Claude Code / Agentes Autónomos:'));
+    console.log(chalk.white('    1. El agente lee automáticamente tu carpeta .agent/ o configuración local.'));
+    console.log(chalk.white('    2. Escribe tu petición en lenguaje natural.'));
+    console.log(chalk.gray('       Ej: "Analiza la base de datos" (El agente buscará y usará backend-engineer/data-engineer)'));
+    console.log(chalk.gray('================================================================'));
 }
 
 async function applyFile(source, dest, method) {
