@@ -28,7 +28,10 @@ const INIT_FILES = [
 const INIT_DIRS = [
     { src: 'config', desc: 'Configuración del framework' },
     { src: 'templates', desc: 'Templates de proyecto' },
+    { src: 'config', desc: 'Configuración del framework' },
+    { src: 'templates', desc: 'Templates de proyecto' },
     { src: 'docs', desc: 'Documentación extendida' },
+    { src: 'workflows', desc: 'SOPs y Procedimientos' },
 ];
 
 // Configuración: IDEs y Agentes soportados
@@ -853,6 +856,7 @@ function getAllItems(dir, isNested) {
 // ============================================
 
 async function runInit(options) {
+    let targetIdes = []; // Initialize targetIdes
     console.clear();
     const branding = figlet.textSync('LMAGENT', { font: 'ANSI Shadow' });
     console.log(gradient.pastel.multiline(branding));
@@ -908,6 +912,27 @@ async function runInit(options) {
         ]);
         filesToCopy = INIT_FILES.filter(f => answers.files.includes(f.src));
         dirsToCopy = INIT_DIRS.filter(d => answers.dirs.includes(d.src));
+        filesToCopy = INIT_FILES.filter(f => answers.files.includes(f.src));
+        dirsToCopy = INIT_DIRS.filter(d => answers.dirs.includes(d.src));
+
+        // Seleccionar IDE para destino de archivos
+        console.log('');
+        const ideAnswer = await inquirer.prompt([
+            {
+                type: 'checkbox',
+                name: 'ides',
+                message: 'Selecciona tu IDE principal (para ubicar las carpetas):',
+                choices: IDE_CONFIGS.filter(i => i.value !== 'custom').map(i => ({
+                    name: i.name,
+                    value: i.value,
+                    checked: i.value === 'cursor'
+                }))
+            }
+        ]);
+        targetIdes = IDE_CONFIGS.filter(i => ideAnswer.ides.includes(i.value));
+    } else {
+        // Defaults for non-interactive
+        targetIdes = [IDE_CONFIGS.find(i => i.value === 'cursor')];
     }
 
     // Copiar archivos del framework a la carpeta del Agente (Clean Root)
@@ -993,7 +1018,7 @@ DEBUG=true
     }
 
     // Resumen
-    console.log(gradient.pastel.multiline('\n✨ Proyecto inicializado con LMAgent v2.3.0 ✨'));
+    console.log(gradient.pastel.multiline('\n✨ Proyecto inicializado con LMAgent v2.6.5 ✨'));
     console.log('');
     console.log(chalk.cyan('Próximos pasos:'));
     console.log(`  1. ${chalk.bold('lmagent install')} - Instalar skills/rules/workflows en tu IDE`);
