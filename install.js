@@ -890,45 +890,44 @@ Use estos comandos para activar su rol. Para detalles, consulte \`AGENTS.md\`.
         }
 
         SOURCE_MEMORY = PACKAGE_MEMORY_DIR;
-    }
 
-    if (SOURCE_MEMORY && ide.skillsDir) {
-        // We use skillsDir parent or a specific memory dir if we had one in config.
-        // For now, let's put it alongside skills/rules/workflows.
-        // Ideally IDE_CONFIGS should have memoryDir, but we'll default to parent of skillsDir + /memory
-        const parentDir = path.dirname(ide.skillsDir);
-        const targetDir = path.join(targetRoot, parentDir, 'memory');
+        if (SOURCE_MEMORY && ide.skillsDir) {
+            // We use skillsDir parent or a specific memory dir if we had one in config.
+            // For now, let's put it alongside skills/rules/workflows.
+            // Ideally IDE_CONFIGS should have memoryDir, but we'll default to parent of skillsDir + /memory
+            const parentDir = path.dirname(ide.skillsDir);
+            const targetDir = path.join(targetRoot, parentDir, 'memory');
 
-        if (arePathsEqual(targetDir, path.join(globalAgentDir, 'memory'))) {
-            // console.log(chalk.blue(`  ℹ  ${ide.name}: Memory updated via Global Sync`));
-        } else {
-            // console.log(chalk.bold(`\nInstalling Memory to ${chalk.cyan(targetDir)}:`));
-            try {
-                if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
-                // Copy all contents of memory
-                copyRecursiveSync(SOURCE_MEMORY, targetDir, true); // Always copy/overwrite for now, or use applyFile for items if we want symlinks
-                console.log(`  ${chalk.cyan('✔')} Memory (Context) optimized.`);
-            } catch (e) {
-                console.error(chalk.red(`❌ Error installing memory for ${ide.name}: ${e.message}`));
+            if (arePathsEqual(targetDir, path.join(globalAgentDir, 'memory'))) {
+                // console.log(chalk.blue(`  ℹ  ${ide.name}: Memory updated via Global Sync`));
+            } else {
+                // console.log(chalk.bold(`\nInstalling Memory to ${chalk.cyan(targetDir)}:`));
+                try {
+                    if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
+                    // Copy all contents of memory
+                    copyRecursiveSync(SOURCE_MEMORY, targetDir, true); // Always copy/overwrite for now, or use applyFile for items if we want symlinks
+                    console.log(`  ${chalk.cyan('✔')} Memory (Context) optimized.`);
+                } catch (e) {
+                    console.error(chalk.red(`❌ Error installing memory for ${ide.name}: ${e.message}`));
+                }
             }
         }
     }
-}
-console.log(gradient.pastel.multiline('\n✨ Instalación Finalizada ✨'));
+    console.log(gradient.pastel.multiline('\n✨ Instalación Finalizada ✨'));
 
-console.log(chalk.gray('================================================================'));
-console.log(chalk.bold.green('🎉 ¡Todo listo! Aquí tienes cómo usar tus nuevos superpoderes:'));
-console.log('');
-console.log(chalk.cyan('🤖  Para Cursor / Windsurf / Trae:'));
-console.log(chalk.white('    1. Tus skills aparecen como Reglas (.cursorrules, etc.)'));
-console.log(chalk.white('    2. En el Chat (Ctrl+L) o Composer (Ctrl+I), simplemente pídelo.'));
-console.log(chalk.gray('       Ej: "Crea un nuevo componente de React" (El agente usará frontend-engineer automáticamente)'));
-console.log('');
-console.log(chalk.magenta('🧠  Para Antigravity / Claude Code / Agentes Autónomos:'));
-console.log(chalk.white('    1. El agente lee automáticamente tu carpeta .agent/ o configuración local.'));
-console.log(chalk.white('    2. Escribe tu petición en lenguaje natural.'));
-console.log(chalk.gray('       Ej: "Analiza la base de datos" (El agente buscará y usará backend-engineer/data-engineer)'));
-console.log(chalk.gray('================================================================'));
+    console.log(chalk.gray('================================================================'));
+    console.log(chalk.bold.green('🎉 ¡Todo listo! Aquí tienes cómo usar tus nuevos superpoderes:'));
+    console.log('');
+    console.log(chalk.cyan('🤖  Para Cursor / Windsurf / Trae:'));
+    console.log(chalk.white('    1. Tus skills aparecen como Reglas (.cursorrules, etc.)'));
+    console.log(chalk.white('    2. En el Chat (Ctrl+L) o Composer (Ctrl+I), simplemente pídelo.'));
+    console.log(chalk.gray('       Ej: "Crea un nuevo componente de React" (El agente usará frontend-engineer automáticamente)'));
+    console.log('');
+    console.log(chalk.magenta('🧠  Para Antigravity / Claude Code / Agentes Autónomos:'));
+    console.log(chalk.white('    1. El agente lee automáticamente tu carpeta .agent/ o configuración local.'));
+    console.log(chalk.white('    2. Escribe tu petición en lenguaje natural.'));
+    console.log(chalk.gray('       Ej: "Analiza la base de datos" (El agente buscará y usará backend-engineer/data-engineer)'));
+    console.log(chalk.gray('================================================================'));
 }
 
 async function applyFile(source, dest, method) {
