@@ -343,7 +343,7 @@ const IDE_CONFIGS = [
 program
     .name('lmagent')
     .description('CLI para instalar skills y reglas de LMAgent')
-    .version('3.0.7');
+    .version('3.0.8');
 
 program.command('install')
     .description('Instalar skills, rules y workflows en el IDE del proyecto')
@@ -444,6 +444,7 @@ async function runInstall(options) {
     const SOURCE_SKILLS = PACKAGE_SKILLS_DIR;
     const SOURCE_RULES = PACKAGE_RULES_DIR;
     const SOURCE_WORKFLOWS = PACKAGE_WORKFLOWS_DIR;
+    const SOURCE_MEMORY = PACKAGE_MEMORY_DIR;
 
     let targetIdes = [];
     let selectedSkills = [];
@@ -486,13 +487,24 @@ async function runInstall(options) {
         console.log('');
 
         // 3. Auto-Detect IDEs
-        const detectedIdes = IDE_CONFIGS.filter(ide =>
-            ide.value !== 'custom' && (
-                (ide.rulesDir && fs.existsSync(path.join(projectRoot, ide.rulesDir.split('/')[0]))) ||
-                (ide.markerFile && fs.existsSync(path.join(projectRoot, ide.markerFile)))
-            )
-        );
+        const detectedIdes = IDE_CONFIGS.filter(ide => {
+            if (ide.value === 'custom') return false; // Custom is never auto-detected
 
+            // Check Project Root
+            const inProject = (ide.rulesDir && fs.existsSync(path.join(projectRoot, ide.rulesDir.split('/')[0]))) ||
+                (ide.markerFile && fs.existsSync(path.join(projectRoot, ide.markerFile)));
+
+            // Check User Home (Heuristic for installed IDEs)
+            const inHome = (ide.markerFile && fs.existsSync(path.join(userHome, ide.markerFile))) ||
+                (ide.value === 'vscode' && fs.existsSync(path.join(userHome, '.vscode'))) ||
+                (ide.value === 'cursor' && fs.existsSync(path.join(userHome, '.cursor'))) ||
+                (ide.value === 'windsurf' && fs.existsSync(path.join(userHome, '.windsurf'))) ||
+                (ide.value === 'trae' && fs.existsSync(path.join(userHome, '.trae'))) ||
+                (ide.value === 'cline' && fs.existsSync(path.join(userHome, '.cline'))) ||
+                (ide.value === 'roo' && fs.existsSync(path.join(userHome, '.roo')));
+
+            return inProject || inHome;
+        });
         // 4. Smart Prompt
         let defaultChoice = detectedIdes.length > 0 ? detectedIdes.map(i => i.value) : ['cursor']; // Default to Cursor if nothing found
 
@@ -563,7 +575,7 @@ async function runInstall(options) {
             selectedSkills = availableSkills;
             selectedRules = availableRules;
             selectedWorkflows = availableWorkflows;
-            // flag to install memory
+            options.installMemory = true; // Flag to install memory
         } else {
             // Manual selection...
             // Seleccionar Skills
@@ -598,12 +610,24 @@ async function runInstall(options) {
                 {
                     type: 'checkbox',
                     name: 'workflows',
-                    message: 'Selecciona:',
+                    message: 'Selecciona (Espacio para elegir, Enter para confirmar):',
                     choices: availableWorkflows.map(w => ({ name: w, checked: true })),
                     pageSize: 15
                 }
             ]);
             selectedWorkflows = workflowsAnswer.workflows;
+
+            // Seleccionar Memory
+            console.log(chalk.bold('\n🔹 Memoria (Contexto):'));
+            const memoryAnswer = await inquirer.prompt([
+                {
+                    type: 'confirm',
+                    name: 'memory',
+                    message: '¿Instalar estructura de Memoria (.agents/memory)?',
+                    default: true
+                }
+            ]);
+            options.installMemory = memoryAnswer.memory;
         }
 
         console.log('');
@@ -865,52 +889,46 @@ Use estos comandos para activar su rol. Para detalles, consulte \`AGENTS.md\`.
             }
         }
 
-        // 4. Install MEMORY (Directory) - Always install if "Quick Install" or implicitly required
-        // We assume memory is located at ../memory relative to skills source or PACKAGE_MEMORY_DIR
-        let SOURCE_MEMORY = '';
-        if (fs.existsSync(path.join(SOURCE_SKILLS, '../memory'))) {
-            SOURCE_MEMORY = path.join(SOURCE_SKILLS, '../memory');
-        } else if (typeof PACKAGE_MEMORY_DIR !== 'undefined' && fs.existsSync(PACKAGE_MEMORY_DIR)) {
-            SOURCE_MEMORY = PACKAGE_MEMORY_DIR;
-        }
+        SOURCE_MEMORY = PACKAGE_MEMORY_DIR;
+    }
 
-        if (SOURCE_MEMORY && ide.skillsDir) {
-            // We use skillsDir parent or a specific memory dir if we had one in config.
-            // For now, let's put it alongside skills/rules/workflows.
-            // Ideally IDE_CONFIGS should have memoryDir, but we'll default to parent of skillsDir + /memory
-            const parentDir = path.dirname(ide.skillsDir);
-            const targetDir = path.join(targetRoot, parentDir, 'memory');
+    if (SOURCE_MEMORY && ide.skillsDir) {
+        // We use skillsDir parent or a specific memory dir if we had one in config.
+        // For now, let's put it alongside skills/rules/workflows.
+        // Ideally IDE_CONFIGS should have memoryDir, but we'll default to parent of skillsDir + /memory
+        const parentDir = path.dirname(ide.skillsDir);
+        const targetDir = path.join(targetRoot, parentDir, 'memory');
 
-            if (arePathsEqual(targetDir, path.join(globalAgentDir, 'memory'))) {
-                // console.log(chalk.blue(`  ℹ  ${ide.name}: Memory updated via Global Sync`));
-            } else {
-                // console.log(chalk.bold(`\nInstalling Memory to ${chalk.cyan(targetDir)}:`));
-                try {
-                    if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
-                    // Copy all contents of memory
-                    copyRecursiveSync(SOURCE_MEMORY, targetDir, true); // Always copy/overwrite for now, or use applyFile for items if we want symlinks
-                    console.log(`  ${chalk.cyan('✔')} Memory (Context) optimized.`);
-                } catch (e) {
-                    console.error(chalk.red(`❌ Error installing memory for ${ide.name}: ${e.message}`));
-                }
+        if (arePathsEqual(targetDir, path.join(globalAgentDir, 'memory'))) {
+            // console.log(chalk.blue(`  ℹ  ${ide.name}: Memory updated via Global Sync`));
+        } else {
+            // console.log(chalk.bold(`\nInstalling Memory to ${chalk.cyan(targetDir)}:`));
+            try {
+                if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
+                // Copy all contents of memory
+                copyRecursiveSync(SOURCE_MEMORY, targetDir, true); // Always copy/overwrite for now, or use applyFile for items if we want symlinks
+                console.log(`  ${chalk.cyan('✔')} Memory (Context) optimized.`);
+            } catch (e) {
+                console.error(chalk.red(`❌ Error installing memory for ${ide.name}: ${e.message}`));
             }
         }
     }
-    console.log(gradient.pastel.multiline('\n✨ Instalación Finalizada ✨'));
+}
+console.log(gradient.pastel.multiline('\n✨ Instalación Finalizada ✨'));
 
-    console.log(chalk.gray('================================================================'));
-    console.log(chalk.bold.green('🎉 ¡Todo listo! Aquí tienes cómo usar tus nuevos superpoderes:'));
-    console.log('');
-    console.log(chalk.cyan('🤖  Para Cursor / Windsurf / Trae:'));
-    console.log(chalk.white('    1. Tus skills aparecen como Reglas (.cursorrules, etc.)'));
-    console.log(chalk.white('    2. En el Chat (Ctrl+L) o Composer (Ctrl+I), simplemente pídelo.'));
-    console.log(chalk.gray('       Ej: "Crea un nuevo componente de React" (El agente usará frontend-engineer automáticamente)'));
-    console.log('');
-    console.log(chalk.magenta('🧠  Para Antigravity / Claude Code / Agentes Autónomos:'));
-    console.log(chalk.white('    1. El agente lee automáticamente tu carpeta .agent/ o configuración local.'));
-    console.log(chalk.white('    2. Escribe tu petición en lenguaje natural.'));
-    console.log(chalk.gray('       Ej: "Analiza la base de datos" (El agente buscará y usará backend-engineer/data-engineer)'));
-    console.log(chalk.gray('================================================================'));
+console.log(chalk.gray('================================================================'));
+console.log(chalk.bold.green('🎉 ¡Todo listo! Aquí tienes cómo usar tus nuevos superpoderes:'));
+console.log('');
+console.log(chalk.cyan('🤖  Para Cursor / Windsurf / Trae:'));
+console.log(chalk.white('    1. Tus skills aparecen como Reglas (.cursorrules, etc.)'));
+console.log(chalk.white('    2. En el Chat (Ctrl+L) o Composer (Ctrl+I), simplemente pídelo.'));
+console.log(chalk.gray('       Ej: "Crea un nuevo componente de React" (El agente usará frontend-engineer automáticamente)'));
+console.log('');
+console.log(chalk.magenta('🧠  Para Antigravity / Claude Code / Agentes Autónomos:'));
+console.log(chalk.white('    1. El agente lee automáticamente tu carpeta .agent/ o configuración local.'));
+console.log(chalk.white('    2. Escribe tu petición en lenguaje natural.'));
+console.log(chalk.gray('       Ej: "Analiza la base de datos" (El agente buscará y usará backend-engineer/data-engineer)'));
+console.log(chalk.gray('================================================================'));
 }
 
 async function applyFile(source, dest, method) {
