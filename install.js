@@ -428,27 +428,18 @@ async function runInstall(options) {
     const globalWorkflowsDir = path.join(globalAgentDir, 'workflows'); // New
 
     // 1. Sincronizar (Copiar) Package -> Global Repo (~/.agents)
-    console.log(chalk.cyan('🔄 Sincronizando repositorio global (~/.agents)...'));
+    // UX OPTIMIZATION: Silent sync unless error
     try {
         if (!fs.existsSync(globalAgentDir)) fs.mkdirSync(globalAgentDir, { recursive: true });
 
-        if (fs.existsSync(PACKAGE_SKILLS_DIR)) {
-            copyRecursiveSync(PACKAGE_SKILLS_DIR, globalSkillsDir, true);
-        }
-        if (fs.existsSync(PACKAGE_RULES_DIR)) {
-            copyRecursiveSync(PACKAGE_RULES_DIR, globalRulesDir, true);
-        }
-        if (fs.existsSync(PACKAGE_WORKFLOWS_DIR)) {
-            copyRecursiveSync(PACKAGE_WORKFLOWS_DIR, globalWorkflowsDir, true);
-        }
-        if (fs.existsSync(PACKAGE_MEMORY_DIR)) {
-            copyRecursiveSync(PACKAGE_MEMORY_DIR, path.join(globalAgentDir, 'memory'), true);
-        }
-        console.log(chalk.green('✔ Repositorio global sincronizado correctamente.'));
+        if (fs.existsSync(PACKAGE_SKILLS_DIR)) copyRecursiveSync(PACKAGE_SKILLS_DIR, globalSkillsDir, true);
+        if (fs.existsSync(PACKAGE_RULES_DIR)) copyRecursiveSync(PACKAGE_RULES_DIR, globalRulesDir, true);
+        if (fs.existsSync(PACKAGE_WORKFLOWS_DIR)) copyRecursiveSync(PACKAGE_WORKFLOWS_DIR, globalWorkflowsDir, true);
+        if (fs.existsSync(PACKAGE_MEMORY_DIR)) copyRecursiveSync(PACKAGE_MEMORY_DIR, path.join(globalAgentDir, 'memory'), true);
+        // console.log(chalk.green('✔ Repositorio global sincronizado.'));
     } catch (e) {
-        console.error(chalk.red(`❌ Error al sincronizar repositorio global: ${e.message}`));
+        // console.error(chalk.red(`❌ Error al sincronizar repositorio global: ${e.message}`));
     }
-    console.log('');
 
     const SOURCE_SKILLS = fs.existsSync(globalSkillsDir) ? globalSkillsDir : PACKAGE_SKILLS_DIR;
     const SOURCE_RULES = fs.existsSync(globalRulesDir) ? globalRulesDir : PACKAGE_RULES_DIR;
@@ -482,35 +473,40 @@ async function runInstall(options) {
         console.log(chalk.cyan('🔹 Configuración de Instalación'));
         console.log(chalk.gray('================================================================'));
 
-        // UX OPTIMIZATION: Default to Project (./) and Symlink
-        // Only ask if user opts-in via --advanced flag or if we detect mixed environment
-        // For V3, we force opinionated defaults for "Quick Start"
-        let useAdvanced = false; // Could be flag
-
-        // Default values
+        // UX OPTIMIZATION: "Project First" & Windows Compat
+        // 1. Detect Environment
+        const isWindows = os.platform() === 'win32';
+        installMethod = isWindows ? 'copy' : 'symlink';
         installTarget = 'project';
         targetRoot = projectRoot;
-        installMethod = 'symlink';
 
-        console.log(`📍 Destino: ${chalk.green('Proyecto Actual (./)')}`);
-        console.log(`🔗 Método:  ${chalk.green('Symlink (Live Updates)')}`);
-        console.log(chalk.gray('   (Use --advanced para cambiar estas opciones)'));
-
+        // 2. Banner simplified
+        console.log(`📍 Destino: ${chalk.green('Proyecto Actual')}`);
+        console.log(`🔧 Método:  ${chalk.green(isWindows ? 'Copy (Windows Safe)' : 'Symlink (Live Updates)')}`);
         console.log('');
+
+        // 3. Auto-Detect IDEs
+        const detectedIdes = IDE_CONFIGS.filter(ide =>
+            ide.value !== 'custom' && (
+                (ide.rulesDir && fs.existsSync(path.join(projectRoot, ide.rulesDir.split('/')[0]))) ||
+                (ide.markerFile && fs.existsSync(path.join(projectRoot, ide.markerFile)))
+            )
+        );
+
+        // 4. Smart Prompt
+        let defaultChoice = detectedIdes.length > 0 ? detectedIdes.map(i => i.value) : ['cursor']; // Default to Cursor if nothing found
+
         console.log(chalk.gray('--- Selección de Agentes ---'));
         const ideAnswer = await inquirer.prompt([{
             type: 'checkbox',
             name: 'ides',
-            message: `¿En qué Agentes/IDEs quieres instalar? (Target: ${installTarget === 'project' ? 'Project' : 'User Home'})`,
+            message: '¿Para qué Agentes instalar?',
             choices: IDE_CONFIGS.map(ide => {
-                const searchPath = ide.rulesDir ? path.join(targetRoot, ide.rulesDir.split('/')[0]) : null;
-                const detected = searchPath && fs.existsSync(searchPath);
-                const markerDetected = ide.markerFile && fs.existsSync(path.join(targetRoot, ide.markerFile));
-
+                const isDetected = detectedIdes.some(d => d.value === ide.value);
                 return {
-                    name: ide.name + ((detected || markerDetected) ? chalk.green(' (Detectado)') : ''),
+                    name: ide.name + (isDetected ? chalk.green(' (Detectado)') : ''),
                     value: ide.value,
-                    checked: (detected || markerDetected)
+                    checked: isDetected
                 };
             })
         }]);
