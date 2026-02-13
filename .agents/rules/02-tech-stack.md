@@ -30,14 +30,14 @@ Este documento define el stack tecnológico base y las buenas prácticas para pr
 | Lenguaje | Versión | Uso |
 |----------|---------|-----|
 | Python | 3.14+ | Backends, agentes IA, scripts |
-| TypeScript | 6.0+ | Backends Node, frontends |
+| TypeScript | 5.9+ | Backends Node, frontends |
 | JavaScript | ES2026+ | Scripts, n8n custom nodes |
 
 ### Frameworks Backend
 
 #### Python (Preferido para APIs y Agentes)
 ```
-FastAPI        - Framework web async
+FastAPI (0.128+) - Framework web async
 SQLModel       - ORM + validación (combina SQLAlchemy + Pydantic)
 Pydantic       - Validación de datos
 Pydantic-Settings - Configuración via env vars
@@ -46,7 +46,7 @@ Uvicorn        - Servidor ASGI
 
 #### NodeJS/TypeScript (Cuando sea necesario)
 ```
-NestJS         - Framework estructurado (preferido)
+NestJS (v11+)  - Framework estructurado (preferido)
 Express        - Framework minimalista
 Prisma         - ORM para TypeScript
 ```
@@ -54,8 +54,8 @@ Prisma         - ORM para TypeScript
 ### Base de Datos
 | Componente | Tecnología | Uso |
 |------------|------------|-----|
-| Principal | PostgreSQL 18+ | Datos relacionales |
-| Cache | Redis 8+ | Cache, sesiones, colas |
+| Principal | PostgreSQL 17+ | Datos relacionales |
+| Cache | Redis 7.4+ | Cache, sesiones, colas |
 | Colas | Redis Streams | Mensajería async |
 | Búsqueda | PostgreSQL FTS | Búsqueda de texto |
 
