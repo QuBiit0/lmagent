@@ -1,25 +1,30 @@
-# 🚀 How to Start with LMAgent
+# 🤖 Tu Primera Interacción con LMAgent
 
-## Paso 1: Inicialización
-En la raíz de tu proyecto, ejecuta:
-```bash
-npx @qubiit/lmagent@latest init
-```
+Una vez instalado LMAgent, sigue este guión para tu primera sesión de trabajo.
 
-## Paso 2: Instalación de Skills
-Ejecuta:
-```bash
-npx lmagent install
-```
-Selecciona tu IDE (ej. Cursor) y elige "Instalación Rápida" (Recommended).
+## 1. El Check-in Inicial
+Abre el chat de tu IDE y preséntate al sistema.
 
-## Paso 3: Definir el Proyecto
-Crea o edita `.agents/memory/01-project.md`:
-- ¿De qué trata este proyecto?
-- ¿Quiénes son los usuarios?
+> "Hola. Soy nuevo en este proyecto. Lee `AGENTS.md` y explícame qué roles tengo disponibles."
 
-## Paso 4: Tu primer comando
-Abre el chat de tu IDE y escribe:
-> "Hola `/orch`. Lee mi `01-project.md` y ayúdame a planear el MVP."
+El agente leerá su propia configuración y te listará los skills activos.
 
-¡Listo! El orquestador tomará el control.
+## 2. La Primera Tarea (Ejemplo)
+Supongamos que quieres crear un endpoint de Login.
+
+### Paso A: Invoca al Experto
+> "Actúa como `/dev`. Vamos a crear un endpoint de login en Node.js."
+
+### Paso B: Dale Contexto
+> "El login debe usar JWT y validar contra una base de datos PostgreSQL. Usa las reglas de `04-security.md`."
+
+### Paso C: Refinamiento
+El agente te mostrará un plan o código.
+> "Eso se ve bien, pero agrega validación de email con Zod."
+
+## 3. Comandos Mágicos
+Recuerda estos atajos para el chat:
+
+- **`/orch`**: "Estoy perdido, ayúdame a empezar".
+- **`/test`**: "Crea tests para este archivo".
+- **`/fix`**: "Arregla este error que veo en la terminal".
