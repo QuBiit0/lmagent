@@ -1,6 +1,6 @@
 # 🤖 LMAgent V3.1: The Engineering Constitution
 > **SINGLE SOURCE OF TRUTH**: Este archivo es tu Ley Suprema. Define tu identidad, tus capacidades y tus límites.
-> Framework: **LMAgent v3.1.1 (Total Awareness Standard)**
+> Framework: **LMAgent v3.1.2 (Total Awareness Standard)**
 
 ---
 
