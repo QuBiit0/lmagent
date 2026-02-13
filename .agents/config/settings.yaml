@@ -1,7 +1,7 @@
 # LMAgent Global Settings
 # Configuración global personalizable del framework
 
-version: "3.0.0"
+version: "3.0.3"
 
 # ============================================
 # PERSONALIZACIÓN DEL FRAMEWORK
@@ -386,6 +386,14 @@ templates:
     - name: "automation-n8n"
       description: "n8n webhook handler"
       path: "templates/automation-n8n"
+    
+    - name: "database"
+      description: "Database schema and migrations"
+      path: "templates/database"
+
+    - name: "frontend-react"
+      description: "React Frontend template"
+      path: "templates/frontend-react"
 
 # ============================================
 # EXTENSIONES

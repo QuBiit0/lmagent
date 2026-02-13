@@ -1,7 +1,7 @@
 # LMAgent LLM Models Configuration
 # Configuración de proveedores de modelos de lenguaje
 
-version: "3.0.0"
+version: "3.0.3"
 
 # Configuración global
 settings:
