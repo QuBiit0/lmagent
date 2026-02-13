@@ -343,7 +343,7 @@ const IDE_CONFIGS = [
 program
     .name('lmagent')
     .description('CLI para instalar skills y reglas de LMAgent')
-    .version('3.0.9');
+    .version('3.0.10');
 
 program.command('install')
     .description('Instalar skills, rules y workflows en el IDE del proyecto')
@@ -1134,23 +1134,38 @@ async function runInit(options) {
         // Crear directorio root si no existe
         if (!fs.existsSync(agentRootDir)) fs.mkdirSync(agentRootDir, { recursive: true });
 
-        // Copiar Archivos (AGENTS.md, CLAUDE.md van a root)
-        for (const file of filesToCopy) {
-            if (file.src === 'CLAUDE.md' || file.src === 'AGENTS.md') {
-                // Se copian a projectRoot para visibilidad inmediata
-                const dest = path.join(projectRoot, file.src);
-                if (fs.existsSync(path.join(__dirname, file.src))) {
-                    fs.copyFileSync(path.join(__dirname, file.src), dest);
-                    console.log(`   ${chalk.green('✔')} ${file.src} (Project Root)`);
-                }
-                continue;
-            }
+        // 5. Install Root Configs (CLAUDE.md, AGENTS.md) with Prompt
+        console.log(chalk.bold('\nChecking Root Configurations:'));
+        for (const file of INIT_FILES) {
+            const srcPath = path.join(__dirname, file.src);
+            const destPath = path.join(targetRoot, file.src);
 
-            const src = path.join(__dirname, file.src);
-            const dest = path.join(agentRootDir, file.src);
-            if (fs.existsSync(src)) {
-                fs.copyFileSync(src, dest);
-                console.log(`   ${chalk.green('✔')} ${file.src} -> ${path.dirname(ide.skillsDir)}/${file.src}`);
+            if (fs.existsSync(srcPath)) {
+                if (!fs.existsSync(destPath)) {
+                    fs.copyFileSync(srcPath, destPath);
+                    console.log(`  ${chalk.green('✔')} ${file.src} (Created)`);
+                } else {
+                    // Exists: Ask to overwrite (unless force/yes)
+                    let shouldOverwrite = false;
+                    if (options.force) {
+                        shouldOverwrite = true;
+                    } else if (!options.yes) {
+                        const answer = await inquirer.prompt([{
+                            type: 'confirm',
+                            name: 'overwrite',
+                            message: `⚠️  ${file.src} ya existe. ¿Sobrescribir?`,
+                            default: false
+                        }]);
+                        shouldOverwrite = answer.overwrite;
+                    }
+
+                    if (shouldOverwrite) {
+                        fs.copyFileSync(srcPath, destPath);
+                        console.log(`  ${chalk.yellow('✎')} ${file.src} (Overwritten)`);
+                    } else {
+                        console.log(`  ${chalk.gray('SKIP')} ${file.src} (Kept existing)`);
+                    }
+                }
             }
         }
 
