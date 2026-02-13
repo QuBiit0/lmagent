@@ -343,7 +343,7 @@ const IDE_CONFIGS = [
 program
     .name('lmagent')
     .description('CLI para instalar skills y reglas de LMAgent')
-    .version('3.0.6');
+    .version('3.0.7');
 
 program.command('install')
     .description('Instalar skills, rules y workflows en el IDE del proyecto')
@@ -573,7 +573,7 @@ async function runInstall(options) {
                     type: 'checkbox',
                     name: 'skills',
                     message: 'Selecciona (Espacio para elegir, Enter para confirmar):',
-                    choices: availableSkills.map(s => ({ name: s, checked: false })),
+                    choices: availableSkills.map(s => ({ name: s, checked: true })),
                     pageSize: 15
                 }
             ]);
@@ -586,7 +586,7 @@ async function runInstall(options) {
                     type: 'checkbox',
                     name: 'rules',
                     message: 'Selecciona (Espacio para elegir, Enter para confirmar):',
-                    choices: availableRules.map(r => ({ name: r, checked: false })),
+                    choices: availableRules.map(r => ({ name: r, checked: true })),
                     pageSize: 15
                 }
             ]);
