@@ -343,7 +343,7 @@ const IDE_CONFIGS = [
 program
     .name('lmagent')
     .description('CLI para instalar skills y reglas de LMAgent')
-    .version('3.0.5');
+    .version('3.0.6');
 
 program.command('install')
     .description('Instalar skills, rules y workflows en el IDE del proyecto')
@@ -572,8 +572,8 @@ async function runInstall(options) {
                 {
                     type: 'checkbox',
                     name: 'skills',
-                    message: 'Selecciona:',
-                    choices: availableSkills.map(s => ({ name: s, checked: true })),
+                    message: 'Selecciona (Espacio para elegir, Enter para confirmar):',
+                    choices: availableSkills.map(s => ({ name: s, checked: false })),
                     pageSize: 15
                 }
             ]);
@@ -585,8 +585,8 @@ async function runInstall(options) {
                 {
                     type: 'checkbox',
                     name: 'rules',
-                    message: 'Selecciona:',
-                    choices: availableRules.map(r => ({ name: r, checked: true })),
+                    message: 'Selecciona (Espacio para elegir, Enter para confirmar):',
+                    choices: availableRules.map(r => ({ name: r, checked: false })),
                     pageSize: 15
                 }
             ]);
@@ -811,8 +811,8 @@ Use estos comandos para activar su rol. Para detalles, consulte \`AGENTS.md\`.
                     // CLEANUP: Remove legacy rules (V2 & Duplicates)
                     const legacyRules = [
                         '_bootstrap.md', '_bootstrap.mdc', '00-bootstrap.md',
-                        'agents-ia', 'stack', 'testing', 'security', 'code-style', 'documentation',
-                        'workflow', 'api-design', 'automations-n8n'
+                        'agents-ia.md', 'stack.md', 'testing.md', 'security.md', 'code-style.md', 'documentation.md',
+                        'workflow.md', 'api-design.md', 'automations-n8n.md', 'frontend.md', 'backend.md'
                     ];
                     for (const legacy of legacyRules) {
                         const legacyPath = path.join(targetDir, legacy);
