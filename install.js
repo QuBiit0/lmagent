@@ -343,7 +343,7 @@ const IDE_CONFIGS = [
 program
     .name('lmagent')
     .description('CLI para instalar skills y reglas de LMAgent')
-    .version('3.1.0');
+    .version('3.1.1');
 
 program.command('install')
     .description('Instalar skills, rules y workflows en el IDE del proyecto')
@@ -414,6 +414,45 @@ function arePathsEqual(p1, p2) {
     return path.resolve(p1).toLowerCase() === path.resolve(p2).toLowerCase();
 }
 
+// Helper to deploy AGENTS.md and CLAUDE.md to project root
+async function deployCorePillars(options, projectRoot) {
+    console.log(chalk.bold('\n🚀 Desplegando Pilares de Inteligencia (Contexto Root):'));
+    for (const file of INIT_FILES) {
+        const srcPath = path.join(__dirname, file.src);
+        const destPath = path.join(projectRoot, file.src);
+
+        if (fs.existsSync(srcPath)) {
+            let shouldCopy = false;
+            if (!fs.existsSync(destPath)) {
+                shouldCopy = true;
+                console.log(`  ${chalk.green('✔')} ${file.src} (Creado en la raíz)`);
+            } else {
+                if (options.force) {
+                    shouldCopy = true;
+                    console.log(`  ${chalk.yellow('✎')} ${file.src} (Sobrescribiendo por --force)`);
+                } else if (options.yes) {
+                    // En modo --yes, si ya existe, NO sobrescribimos para no borrar personalización del usuario
+                    // PERO informamos.
+                    console.log(`  ${chalk.blue('ℹ')} ${file.src} ya existe (Manteniendo versión local)`);
+                } else {
+                    const answer = await inquirer.prompt([{
+                        type: 'confirm',
+                        name: 'overwrite',
+                        message: `⚠️  ${file.src} ya existe en la raíz. ¿Deseas actualizarlo/sobrescribirlo?`,
+                        default: false
+                    }]);
+                    shouldCopy = answer.overwrite;
+                    if (shouldCopy) console.log(`  ${chalk.yellow('✎')} ${file.src} (Actualizado)`);
+                }
+            }
+
+            if (shouldCopy) {
+                fs.copyFileSync(srcPath, destPath);
+            }
+        }
+    }
+}
+
 async function runInstall(options) {
     console.clear();
     const branding = figlet.textSync('LMAGENT', { font: 'ANSI Shadow' });
@@ -441,6 +480,7 @@ async function runInstall(options) {
         // console.error(chalk.red(`❌ Error al sincronizar repositorio global: ${e.message}`));
     }
 
+    await deployCorePillars(options, projectRoot);
     const SOURCE_SKILLS = PACKAGE_SKILLS_DIR;
     const SOURCE_RULES = PACKAGE_RULES_DIR;
     const SOURCE_WORKFLOWS = PACKAGE_WORKFLOWS_DIR;
