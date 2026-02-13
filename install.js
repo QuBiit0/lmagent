@@ -343,7 +343,7 @@ const IDE_CONFIGS = [
 program
     .name('lmagent')
     .description('CLI para instalar skills y reglas de LMAgent')
-    .version('3.0.4');
+    .version('3.0.5');
 
 program.command('install')
     .description('Instalar skills, rules y workflows en el IDE del proyecto')
@@ -441,9 +441,9 @@ async function runInstall(options) {
         // console.error(chalk.red(`❌ Error al sincronizar repositorio global: ${e.message}`));
     }
 
-    const SOURCE_SKILLS = fs.existsSync(globalSkillsDir) ? globalSkillsDir : PACKAGE_SKILLS_DIR;
-    const SOURCE_RULES = fs.existsSync(globalRulesDir) ? globalRulesDir : PACKAGE_RULES_DIR;
-    const SOURCE_WORKFLOWS = fs.existsSync(globalWorkflowsDir) ? globalWorkflowsDir : PACKAGE_WORKFLOWS_DIR;
+    const SOURCE_SKILLS = PACKAGE_SKILLS_DIR;
+    const SOURCE_RULES = PACKAGE_RULES_DIR;
+    const SOURCE_WORKFLOWS = PACKAGE_WORKFLOWS_DIR;
 
     let targetIdes = [];
     let selectedSkills = [];
@@ -808,7 +808,12 @@ Use estos comandos para activar su rol. Para detalles, consulte \`AGENTS.md\`.
 
 
                     // CLEANUP: Remove legacy rules (V2)
-                    const legacyRules = ['_bootstrap.md', '_bootstrap.mdc', '00-bootstrap.md'];
+                    // CLEANUP: Remove legacy rules (V2 & Duplicates)
+                    const legacyRules = [
+                        '_bootstrap.md', '_bootstrap.mdc', '00-bootstrap.md',
+                        'agents-ia', 'stack', 'testing', 'security', 'code-style', 'documentation',
+                        'workflow', 'api-design', 'automations-n8n'
+                    ];
                     for (const legacy of legacyRules) {
                         const legacyPath = path.join(targetDir, legacy);
                         if (fs.existsSync(legacyPath)) {
