@@ -1,4 +1,4 @@
-# 🤖 LMAgent Framework v3.0.0
+# 🤖 LMAgent Framework v3.1.0
 
 > [!IMPORTANT]
 > **REDIRECT NOTICE**: La configuración de este framework se ha centralizado.

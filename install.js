@@ -343,7 +343,7 @@ const IDE_CONFIGS = [
 program
     .name('lmagent')
     .description('CLI para instalar skills y reglas de LMAgent')
-    .version('3.0.10');
+    .version('3.1.0');
 
 program.command('install')
     .description('Instalar skills, rules y workflows en el IDE del proyecto')
