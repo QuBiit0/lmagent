@@ -13,7 +13,10 @@
     "CONTRIBUTING.md",
     ".agents"
   ],
-  "description": "Universal Agent Compatibility Layer & Rules Framework (See AGENTS.md)",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "description": "Universal Agent Compatibility Layer & Rules Framework (Total Awareness Standard)",
   "main": "install.js",
   "bin": {
     "lmagent-skills": "install.js",

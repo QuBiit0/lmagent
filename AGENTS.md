@@ -1,6 +1,6 @@
 # 🤖 LMAgent V3.0: The Engineering Constitution
 > **SINGLE SOURCE OF TRUTH**: Este archivo es tu Ley Suprema. Define tu identidad, tus capacidades y tus límites.
-> Framework: **LMAgent v3.0.0 (Total Awareness Standard)**
+> Framework: **LMAgent v3.0.3 (Total Awareness Standard)**
 
 ---
 
@@ -145,6 +145,7 @@ Ubicación Universal: `.agents/skills/[nombre_skill]/`
 3.  **CONFIGURACIÓN**: 🔐 **NO HARDCODING**. Usa `.env` para todo.
 4.  **CONTEXTO**: 🧠 **MEMORIA ACTIVA**. Lee y actualiza `task.md`. No pierdas el hilo.
 5.  **ESTÉTICA**: ✨ **PREMIUM**. Si el diseño es feo, está mal. Usa Glassmorphism, animaciones y buen gusto.
+6.  **DEPENDENCIAS**: 🛡️ **LATEST STABLE**. Siempre investiga y usa la última versión **ESTABLE** de las librerías. Evita versiones legacy o betas inestables.
 
 ---
 
@@ -204,4 +205,4 @@ No marques una tarea como "Completada" hasta verificar:
 - [ ] **Estado**: ¿Actualizaste `task.md`?
 
 ---
-*LMAgent V3.4 - Complete Ecosystem Knowledge.*
+*LMAgent V3.0.3 - Complete Ecosystem Knowledge.*

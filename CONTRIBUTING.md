@@ -57,8 +57,8 @@ Respetamos estrictamente:
 ## Desarrollo Local
 
 ### Prerrequisitos
-- Node.js >= 18
-- Python >= 3.10 (para ejecutar scripts de skills)
+- Node.js >= 22
+- Python >= 3.14 (para ejecutar scripts de skills)
 
 ### Setup del CLI (Node.js)
 
