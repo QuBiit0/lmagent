@@ -247,56 +247,57 @@ DEBUG=true
 ### Python - requirements.txt base
 ```
 # Framework
-fastapi>=0.109.0
-uvicorn[standard]>=0.27.0
+fastapi>=0.128.0
+uvicorn[standard]>=0.34.0
 
 # Database
-sqlmodel>=0.0.14
-asyncpg>=0.29.0
-sqlalchemy[asyncio]>=2.0.0
+sqlmodel>=0.0.24
+asyncpg>=0.30.0
+sqlalchemy[asyncio]>=2.0.36
 
 # Validation
-pydantic>=2.5.0
-pydantic-settings>=2.1.0
+pydantic>=2.10.0
+pydantic-settings>=2.7.0
 
 # Redis
-redis>=5.0.0
+redis>=5.2.0
 
 # HTTP Client
-httpx>=0.26.0
+httpx>=0.28.0
 
 # Security
 python-jose[cryptography]>=3.3.0
 passlib[bcrypt]>=1.7.4
 
 # Logging
-structlog>=24.1.0
+structlog>=24.4.0
 
 # Dev
-pytest>=8.0.0
-pytest-asyncio>=0.23.0
-pytest-cov>=4.1.0
-ruff>=0.2.0
+pytest>=9.0.0
+pytest-asyncio>=0.25.0
+pytest-cov>=6.0.0
+ruff>=0.9.0
+
 ```
 
 ### Node - package.json base
 ```json
 {
   "dependencies": {
-    "@nestjs/common": "^10.0.0",
-    "@nestjs/core": "^10.0.0",
-    "@nestjs/platform-express": "^10.0.0",
-    "@prisma/client": "^5.0.0",
-    "ioredis": "^5.3.0",
-    "class-validator": "^0.14.0",
+    "@nestjs/common": "^11.0.0",
+    "@nestjs/core": "^11.0.0",
+    "@nestjs/platform-express": "^11.0.0",
+    "@prisma/client": "^6.0.0",
+    "ioredis": "^5.4.0",
+    "class-validator": "^0.14.1",
     "class-transformer": "^0.5.1"
   },
   "devDependencies": {
-    "@types/node": "^20.0.0",
-    "typescript": "^5.0.0",
-    "jest": "^29.0.0",
-    "eslint": "^8.0.0",
-    "prettier": "^3.0.0"
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0",
+    "jest": "^29.7.0",
+    "eslint": "^9.0.0",
+    "prettier": "^3.4.0"
   }
 }
 ```
@@ -308,14 +309,14 @@ ruff>=0.2.0
 ### Dockerfile Python (multi-stage)
 ```dockerfile
 # Build stage
-FROM python:3.11-slim as builder
+FROM python:3.14-slim as builder
 
 WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir --user -r requirements.txt
 
 # Production stage
-FROM python:3.11-slim
+FROM python:3.14-slim
 
 WORKDIR /app
 COPY --from=builder /root/.local /root/.local

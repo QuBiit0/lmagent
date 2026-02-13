@@ -35,7 +35,7 @@ mypy app/
 ### Configuración (pyproject.toml)
 ```toml
 [tool.ruff]
-target-version = "py311"
+target-version = "py312"
 line-length = 88
 select = [
     "E",    # pycodestyle errors
