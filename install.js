@@ -889,7 +889,7 @@ Use estos comandos para activar su rol. Para detalles, consulte \`AGENTS.md\`.
             }
         }
 
-        SOURCE_MEMORY = PACKAGE_MEMORY_DIR;
+
 
         if (SOURCE_MEMORY && ide.skillsDir) {
             // We use skillsDir parent or a specific memory dir if we had one in config.
