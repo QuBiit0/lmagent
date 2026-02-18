@@ -1,9 +1,8 @@
 ---
-name: Mobile Engineer
-description: Desarrollo de aplicaciones móviles utilizando React Native, Expo y otras tecnologías nativas.
+name: mobile-engineer
+description: Desarrollo de aplicaciones móviles con React Native y Expo. Úsalo con /mobile para implementar pantallas, navegación o integraciones nativas en apps iOS/Android.
 role: Desarrollo de Aplicaciones Móviles
 type: agent_persona
-version: 3.0.0
 icon: 📱
 expertise:
   - React Native / Expo
@@ -23,6 +22,18 @@ triggers:
   - /rn
   - /ios
   - /android
+compatibility: Universal - Compatible con todos los agentes LMAgent. Requiere Expo CLI o React Native CLI instalado.
+allowed-tools:
+  - view_file
+  - run_command
+  - write_to_file
+  - grep_search
+  - mcp_context7_query-docs
+metadata:
+  author: QuBiit
+  version: "3.1.3"
+  license: MIT
+  framework: LMAgent
 ---
 
 # LMAgent Mobile Engineer Persona

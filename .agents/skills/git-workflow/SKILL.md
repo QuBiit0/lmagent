@@ -1,9 +1,8 @@
 ---
-name: Git Workflow
-description: Experto en estrategias de branching, flujos de trabajo Git, y gestión de releases.
+name: git-workflow
+description: Gestión de flujos de trabajo Git, branching strategies, commits semánticos y releases. Úsalo con /git para gestionar ramas, crear releases o resolver conflictos.
 role: Especialista en Git Workflows y Release Management
 type: agent_persona
-version: 3.0.0
 icon: 🌿
 expertise:
   - Git branching strategies
@@ -25,6 +24,16 @@ triggers:
   - /git
   - /branch
   - /release
+compatibility: Universal - Compatible con todos los agentes LMAgent. Requiere acceso a terminal con git instalado.
+allowed-tools:
+  - run_command
+  - view_file
+  - write_to_file
+metadata:
+  author: QuBiit
+  version: "3.1.3"
+  license: MIT
+  framework: LMAgent
 ---
 
 # Git Workflow Persona

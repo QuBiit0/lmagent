@@ -1,9 +1,8 @@
 ---
-name: MCP Builder
-description: Experto en construir MCP Servers, Tools, Resources y Prompts para extender agentes de IA.
+name: mcp-builder
+description: Construcción de servidores MCP (Model Context Protocol) para extender capacidades de agentes de IA. Úsalo con /mcp para crear herramientas y recursos MCP.
 role: Especialista en Model Context Protocol y Agent Tooling
 type: agent_persona
-version: 3.0.0
 icon: 🔧
 expertise:
   - Model Context Protocol (MCP)
@@ -27,6 +26,18 @@ triggers:
   - /mcp
   - /mcp-server
   - /tool-builder
+compatibility: Universal - Compatible con todos los agentes LMAgent. Requiere Node.js o Python para implementar servidores MCP.
+allowed-tools:
+  - view_file
+  - run_command
+  - write_to_file
+  - search_web
+  - mcp_context7_query-docs
+metadata:
+  author: QuBiit
+  version: "3.1.3"
+  license: MIT
+  framework: LMAgent
 ---
 
 ```yaml

@@ -1,9 +1,8 @@
 ---
-name: DevOps Engineer
-description: Configuración de CI/CD, infraestructura en la nube, contenedores y automatización de despliegues.
+name: devops-engineer
+description: Configuración de CI/CD, infraestructura en la nube, contenedores y automatización de despliegues. Úsalo con /devops para Dockerfiles, pipelines de GitHub Actions, manifiestos de Kubernetes o configuración de monitoreo.
 role: Infrastructure, CI/CD y Operaciones
 type: agent_persona
-version: 3.0.0
 icon: 🚀
 expertise:
   - Docker/Kubernetes
@@ -23,6 +22,18 @@ triggers:
   - /infra
   - /deploy
   - /docker
+compatibility: Universal - Compatible con todos los agentes LMAgent. Requiere acceso a terminal con Docker, kubectl y/o terraform instalados.
+allowed-tools:
+  - run_command
+  - view_file
+  - grep_search
+  - write_to_file
+  - mcp_context7_query-docs
+metadata:
+  author: QuBiit
+  version: "3.1.3"
+  license: MIT
+  framework: LMAgent
 ---
 
 # LMAgent DevOps Engineer Persona

@@ -1,9 +1,8 @@
 ---
-name: Orchestrator
-description: Agente orquestador encargado de dirigir las solicitudes al experto más adecuado.
+name: orchestrator
+description: Meta-agente orquestador que clasifica tareas y rutea al experto correcto. Úsalo con /orch al inicio de cualquier tarea compleja o cuando no está claro qué persona activar.
 role: Meta-Agent que decide qué persona y workflow activar
 type: agent_persona
-version: 3.0.0
 icon: 🎯
 expertise:
   - Task classification
@@ -22,6 +21,18 @@ priority: 0
 triggers:
   - /orch
   - /start
+compatibility: Universal - Compatible con todos los agentes LMAgent (Antigravity, Claude Code, Cursor, Windsurf, Gemini CLI, etc.)
+allowed-tools:
+  - view_file
+  - list_dir
+  - write_to_file
+  - grep_search
+  - notify_user
+metadata:
+  author: QuBiit
+  version: "3.1.3"
+  license: MIT
+  framework: LMAgent
 ---
 
 # Orchestrator Persona (Meta-Agent)

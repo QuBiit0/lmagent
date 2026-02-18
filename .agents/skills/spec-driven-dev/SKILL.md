@@ -1,9 +1,8 @@
 ---
-name: Spec-Driven Agentic Development
-description: Metodología de desarrollo basada rigurosamente en especificaciones y contratos técnicos para garantizar trazabilidad.
+name: spec-driven-dev
+description: Metodología SPEC DRIVEN: pipeline SPECIFY → PLAN → TASKS → CODE → VERIFY. Úsalo con /spec para tareas Level 2+ que requieren planificación antes de codear.
 role: Development Methodology - Specification as Source of Truth
 type: methodology
-version: 3.0.0
 icon: 📋
 expertise:
   - Specification-first development
@@ -23,6 +22,18 @@ triggers:
   - /spec-dev
   - /sdd-skill
   - /spec-method
+compatibility: Universal - Compatible con todos los agentes LMAgent. Es el workflow central para tareas complejas en LMAgent.
+allowed-tools:
+  - view_file
+  - write_to_file
+  - notify_user
+  - list_dir
+  - grep_search
+metadata:
+  author: QuBiit
+  version: "3.1.3"
+  license: MIT
+  framework: LMAgent
 ---
 
 # Spec-Driven Agentic Development Skill

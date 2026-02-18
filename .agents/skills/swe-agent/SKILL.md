@@ -1,9 +1,8 @@
 ---
-name: SWE-Agent
-description: Agente de ingeniería de software especializado en la resolución autónoma de issues y refactorización sistemática.
+name: swe-agent
+description: Resolución autónoma de issues de GitHub usando trajectory-based debugging. Úsalo con /swe para resolver bugs complejos de forma sistemática y autónoma.
 role: Autonomous Software Engineering Agent
 type: methodology
-version: 3.0.0
 icon: 🔧
 expertise:
   - Autonomous issue resolution
@@ -23,6 +22,20 @@ triggers:
   - /swe
   - /issue-solve
   - /trajectory
+compatibility: Universal - Compatible con todos los agentes LMAgent. Especializado en resolución autónoma de issues.
+allowed-tools:
+  - view_file
+  - view_file_outline
+  - grep_search
+  - run_command
+  - replace_file_content
+  - multi_replace_file_content
+  - write_to_file
+metadata:
+  author: QuBiit
+  version: "3.1.3"
+  license: MIT
+  framework: LMAgent
 ---
 
 ```yaml

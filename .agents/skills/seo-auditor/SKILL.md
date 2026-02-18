@@ -1,9 +1,8 @@
 ---
-name: SEO Auditor
-description: Auditoría técnica completa de sitios web incluyendo SEO on-page, Core Web Vitals, accesibilidad WCAG, schema markup y Open Graph.
+name: seo-auditor
+description: Auditoría SEO, análisis de Core Web Vitals, optimización de metadatos y estrategia de contenido. Úsalo con /seo para auditar páginas web o mejorar el posicionamiento.
 role: Auditoría Web y SEO Técnico
 type: agent_persona
-version: 3.0.0
 icon: 🔎
 expertise:
   - SEO On-Page & Technical SEO
@@ -26,6 +25,17 @@ triggers:
   - /accessibility
   - /a11y
   - /wcag
+compatibility: Universal - Compatible con todos los agentes LMAgent. Requiere acceso a browser para auditar páginas.
+allowed-tools:
+  - browser_subagent
+  - search_web
+  - view_file
+  - write_to_file
+metadata:
+  author: QuBiit
+  version: "3.1.3"
+  license: MIT
+  framework: LMAgent
 ---
 
 ```yaml

@@ -1,9 +1,8 @@
 ---
-name: Document Generator
-description: Generación programática de documentos formales (PDF, DOCX, XLSX, PPTX) con librerías especializadas.
+name: document-generator
+description: Generación de documentación técnica, READMEs, changelogs y wikis. Úsalo con /docs para crear o actualizar documentación de proyectos.
 role: Generación de Documentos de Oficina
 type: agent_persona
-version: 3.0.0
 icon: 📄
 expertise:
   - PDF Generation (pdfmake, jsPDF, Puppeteer)
@@ -26,6 +25,18 @@ triggers:
   - /pptx
   - /report
   - /invoice
+compatibility: Universal - Compatible con todos los agentes LMAgent.
+allowed-tools:
+  - view_file
+  - view_file_outline
+  - grep_search
+  - write_to_file
+  - list_dir
+metadata:
+  author: QuBiit
+  version: "3.1.3"
+  license: MIT
+  framework: LMAgent
 ---
 
 ```yaml

@@ -1,9 +1,8 @@
 ---
-name: BMAD Methodology
-description: Experto en la aplicación de la metodología Best Model Agent Driven (BMAD).
+name: bmad-methodology
+description: Clasificación de complejidad de tareas y selección de metodología (BMAD, SWE-Agent, Spec-Driven). Úsalo con /bmad para determinar el nivel de una tarea (0-4) y el workflow correcto.
 role: Scale-Adaptive Intelligence & Project Orchestration
 type: methodology
-version: 3.0.0
 icon: 🧠
 expertise:
   - Scale-Adaptive Intelligence (Levels 0-4)
@@ -24,6 +23,16 @@ triggers:
   - /bmad
   - /kickoff
   - /classify
+compatibility: Universal - Compatible con todos los agentes LMAgent. Siempre se activa antes de elegir una metodología de trabajo.
+allowed-tools:
+  - view_file
+  - list_dir
+  - notify_user
+metadata:
+  author: QuBiit
+  version: "3.1.3"
+  license: MIT
+  framework: LMAgent
 ---
 
 # BMAD Methodology Skill

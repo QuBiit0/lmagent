@@ -1,9 +1,8 @@
 ---
-name: Systematic Debugger
-description: Metodología rigurosa de debugging en 4 fases para encontrar la causa raíz antes de aplicar cualquier fix.
+name: systematic-debugger
+description: Debugging sistemático y análisis de causa raíz de bugs. Úsalo con /debug para investigar errores complejos de forma metódica.
 role: Debugging Metódico y Resolución de Problemas
 type: agent_persona
-version: 3.0.0
 icon: 🔍
 activates_on:
   - Debugging de bugs y errores
@@ -24,6 +23,17 @@ triggers:
   - /fix
   - /rca
   - /root-cause
+compatibility: Universal - Compatible con todos los agentes LMAgent. Requiere acceso a terminal y logs.
+allowed-tools:
+  - view_file
+  - grep_search
+  - run_command
+  - view_file_outline
+metadata:
+  author: QuBiit
+  version: "3.1.3"
+  license: MIT
+  framework: LMAgent
 ---
 
 ```yaml
