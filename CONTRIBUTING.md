@@ -36,7 +36,7 @@ Este proyecto se rige por un Código de Conducta estándar. Al participar, se es
 - [ ] ¿Actualizaste la documentación relevante?
 - [ ] ¿Actualizaste `AGENTS.md` si agregaste un nuevo agente o skill?
 - [ ] ¿Cumple con las reglas en `.agents/rules/`?
-- [ ] ¿Probaste los cambios con `npx lmagent doctor`?
+- [ ] ¿Probaste los cambios con `npx @qubiit/lmagent doctor`?
 
 ---
 
@@ -101,7 +101,7 @@ lmagent/
 ## Agregar un Nuevo Skill
 
 ```bash
-npx lmagent@latest create-skill
+npx @qubiit/lmagent@latest create-skill
 ```
 
 O manualmente:
@@ -115,7 +115,7 @@ description: Descripción del skill
 version: 1.0.0
 ---
 ```
-3. Validá con `npx lmagent@latest validate mi-skill`
+3. Validá con `npx @qubiit/lmagent@latest validate mi-skill`
 4. Actualizá el catálogo en `AGENTS.md` — Sección 5
 
 ---

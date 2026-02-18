@@ -4,7 +4,7 @@
 ## ⚡ Comando Principal
 
 ```bash
-npx lmagent@latest
+npx @qubiit/lmagent@latest
 ```
 Ejecuta el instalador interactivo. Detecta automáticamente los agentes instalados en tu sistema y los pre-selecciona.
 

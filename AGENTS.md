@@ -277,7 +277,7 @@ No marques una tarea como "Completada" hasta verificar:
 ## 🚀 9. CLI Reference (Comandos Disponibles)
 
 ```bash
-npx lmagent@latest          # Instalar framework (one-shot, sin instalación previa)
+npx @qubiit/lmagent@latest          # Instalar framework (one-shot, sin instalación previa)
 npx lmagent install         # Instalar/actualizar en el proyecto actual
 npx lmagent update          # Alias de install
 npx lmagent init            # Inicializar proyecto nuevo con LMAgent

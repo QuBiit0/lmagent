@@ -20,7 +20,7 @@
 ## ⚡ One Command. Any Agent.
 
 ```bash
-npx lmagent@latest
+npx @qubiit/lmagent@latest
 ```
 
 That's it. No global install required. LMAgent will:
@@ -37,25 +37,25 @@ That's it. No global install required. LMAgent will:
 
 ### Step 1 — Initialize your project (first time only)
 ```bash
-npx lmagent@latest init
+npx @qubiit/lmagent@latest init
 ```
 Copies `AGENTS.md`, `CLAUDE.md`, and `GEMINI.md` to your project root. These are the entry points that agents read automatically when they start.
 
 ### Step 2 — Install the framework
 ```bash
-npx lmagent@latest install
+npx @qubiit/lmagent@latest install
 ```
 Deploys skills, rules, and workflows to all detected agents. Generates agent-specific config files.
 
 ### Step 3 — Verify
 ```bash
-npx lmagent@latest doctor
+npx @qubiit/lmagent@latest doctor
 ```
 Checks that everything is correctly configured.
 
 ### Update (when new versions are released)
 ```bash
-npx lmagent@latest update
+npx @qubiit/lmagent@latest update
 ```
 
 ---
@@ -212,21 +212,21 @@ Activate any skill by typing its trigger in the chat:
 
 ```bash
 # Core
-npx lmagent@latest              # Interactive install (auto-detects agents)
-npx lmagent@latest init         # Initialize project (copies AGENTS.md, CLAUDE.md, GEMINI.md)
-npx lmagent@latest install      # Install/update framework in current project
-npx lmagent@latest update       # Alias for install
-npx lmagent@latest uninstall    # Remove all LMAgent files from project
-npx lmagent@latest uninstall --all  # Also remove root entry points (CLAUDE.md, etc.)
+npx @qubiit/lmagent@latest              # Interactive install (auto-detects agents)
+npx @qubiit/lmagent@latest init         # Initialize project (copies AGENTS.md, CLAUDE.md, GEMINI.md)
+npx @qubiit/lmagent@latest install      # Install/update framework in current project
+npx @qubiit/lmagent@latest update       # Alias for install
+npx @qubiit/lmagent@latest uninstall    # Remove all LMAgent files from project
+npx @qubiit/lmagent@latest uninstall --all  # Also remove root entry points (CLAUDE.md, etc.)
 
 # Diagnostics
-npx lmagent@latest doctor       # Verify project configuration
-npx lmagent@latest validate     # Validate integrity of all skills
-npx lmagent@latest tokens       # Analyze framework token consumption
+npx @qubiit/lmagent@latest doctor       # Verify project configuration
+npx @qubiit/lmagent@latest validate     # Validate integrity of all skills
+npx @qubiit/lmagent@latest tokens       # Analyze framework token consumption
 
 # Skills Management
-npx lmagent@latest create-skill             # Create a new skill interactively
-npx lmagent@latest skills add owner/repo    # Install external skill from GitHub
+npx @qubiit/lmagent@latest create-skill             # Create a new skill interactively
+npx @qubiit/lmagent@latest skills add owner/repo    # Install external skill from GitHub
 ```
 
 ---
@@ -235,13 +235,13 @@ npx lmagent@latest skills add owner/repo    # Install external skill from GitHub
 
 ```bash
 # Create a new skill interactively
-npx lmagent@latest create-skill
+npx @qubiit/lmagent@latest create-skill
 
 # Install an external skill from GitHub
-npx lmagent@latest skills add owner/repo-name
+npx @qubiit/lmagent@latest skills add owner/repo-name
 
 # Validate all skills
-npx lmagent@latest validate
+npx @qubiit/lmagent@latest validate
 ```
 
 Skills follow the standard structure:

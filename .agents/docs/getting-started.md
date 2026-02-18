@@ -11,7 +11,7 @@ Bienvenido a **LMAgent v3.1.3** — el framework que transforma cualquier agente
 ## Instalación (One Command)
 
 ```bash
-npx lmagent@latest
+npx @qubiit/lmagent@latest
 ```
 
 Eso es todo. El instalador:
@@ -26,19 +26,19 @@ Eso es todo. El instalador:
 
 ### Paso 1 — Inicializar el proyecto
 ```bash
-npx lmagent@latest init
+npx @qubiit/lmagent@latest init
 ```
 Copia `AGENTS.md`, `CLAUDE.md` y `GEMINI.md` a la raíz de tu proyecto. Estos son los archivos que los agentes leen automáticamente al arrancar.
 
 ### Paso 2 — Instalar el framework
 ```bash
-npx lmagent@latest install
+npx @qubiit/lmagent@latest install
 ```
 Seleccioná los agentes que usás y el instalador configura todo.
 
 ### Paso 3 — Verificar
 ```bash
-npx lmagent@latest doctor
+npx @qubiit/lmagent@latest doctor
 ```
 
 ---
@@ -63,11 +63,11 @@ El agente detectará `/pm`, cargará el skill **product-manager** y actuará en 
 ## Comandos Útiles
 
 ```bash
-npx lmagent@latest doctor       # Verificar configuración
-npx lmagent@latest update       # Actualizar a la última versión
-npx lmagent@latest validate     # Validar integridad de skills
-npx lmagent@latest tokens       # Ver consumo de tokens del framework
-npx lmagent@latest uninstall    # Limpiar archivos del framework
+npx @qubiit/lmagent@latest doctor       # Verificar configuración
+npx @qubiit/lmagent@latest update       # Actualizar a la última versión
+npx @qubiit/lmagent@latest validate     # Validar integridad de skills
+npx @qubiit/lmagent@latest tokens       # Ver consumo de tokens del framework
+npx @qubiit/lmagent@latest uninstall    # Limpiar archivos del framework
 ```
 
 ---
