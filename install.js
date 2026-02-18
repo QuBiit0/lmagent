@@ -36,8 +36,6 @@ const INIT_DIRS = [
     { src: 'workflows', desc: 'SOPs y Procedimientos' },
 ];
 
-// Configuración: IDEs y Agentes soportados
-// Configuración: IDEs y Agentes soportados
 // IDE_CONFIGS: Lista ÚNICA y DEDUPLICADA de todos los agentes soportados
 const IDE_CONFIGS = [
     // --- IDEs Principales (Auto-Detectados) ---
@@ -161,6 +159,71 @@ program.command('create-skill')
             execSync(`node "${scriptPath}"`, { stdio: 'inherit' });
         } catch (e) {
             process.exit(e.status || 1);
+        }
+    });
+
+program.command('tokens')
+    .description('Analizar consumo de tokens del framework instalado en el proyecto')
+    .option('--json', 'Salida en formato JSON')
+    .option('--report', 'Generar reporte en .agents/token-report.md')
+    .action((options) => {
+        const { execSync } = require('child_process');
+        const scriptPath = path.join(__dirname, 'scripts', 'token-analyzer.js');
+        const args = [options.json ? '--json' : '', options.report ? '--report' : ''].filter(Boolean).join(' ');
+        try {
+            execSync(`node "${scriptPath}" ${args}`, { stdio: 'inherit' });
+        } catch (e) {
+            process.exit(e.status || 1);
+        }
+    });
+
+program.command('skills')
+    .description('Gestionar skills externos desde GitHub (compatible con el estándar skills.sh)')
+    .argument('<action>', 'Acción: add')
+    .argument('<source>', 'Repositorio GitHub: owner/repo o URL completa')
+    .option('--skill <name>', 'Nombre específico del skill a instalar (opcional)')
+    .action(async (action, source, opts) => {
+        if (action !== 'add') {
+            console.error(chalk.red(`❌ Acción desconocida: ${action}. Usa: lmagent skills add <owner/repo>`));
+            process.exit(1);
+        }
+        const { execSync } = require('child_process');
+        const repoSlug = source.replace('https://github.com/', '').replace(/\.git$/, '');
+        const [owner, repo] = repoSlug.split('/');
+        if (!owner || !repo) {
+            console.error(chalk.red('❌ Formato inválido. Usa: lmagent skills add owner/repo'));
+            process.exit(1);
+        }
+        const tmpDir = path.join(os.tmpdir(), `lmagent-skill-${Date.now()}`);
+        const targetSkillsDir = path.join(process.cwd(), '.agents', 'skills');
+        console.log(chalk.cyan(`📦 Descargando skill desde github.com/${owner}/${repo}...`));
+        try {
+            execSync(`git clone --depth 1 https://github.com/${owner}/${repo} "${tmpDir}"`, { stdio: 'pipe' });
+            const skillsPath = fs.existsSync(path.join(tmpDir, 'skills')) ? path.join(tmpDir, 'skills') : tmpDir;
+            const items = fs.readdirSync(skillsPath).filter(i => {
+                const p = path.join(skillsPath, i);
+                return fs.statSync(p).isDirectory() && fs.existsSync(path.join(p, 'SKILL.md'));
+            });
+            if (items.length === 0) {
+                console.log(chalk.yellow('⚠️  No se encontraron skills con SKILL.md en el repositorio.'));
+                fs.rmSync(tmpDir, { recursive: true, force: true });
+                return;
+            }
+            const toInstall = opts.skill ? items.filter(i => i.includes(opts.skill)) : items;
+            if (!fs.existsSync(targetSkillsDir)) fs.mkdirSync(targetSkillsDir, { recursive: true });
+            for (const skill of toInstall) {
+                const src = path.join(skillsPath, skill);
+                const dest = path.join(targetSkillsDir, skill);
+                copyRecursiveSync(src, dest, true);
+                console.log(`  ${chalk.green('✔')} ${skill}/`);
+            }
+            fs.rmSync(tmpDir, { recursive: true, force: true });
+            console.log(chalk.green(`✨ ${toInstall.length} skill(s) instalado(s) en .agents/skills/`));
+            console.log(chalk.dim('   Ejecuta `lmagent install` para sincronizarlos a tu agente.'));
+        } catch (e) {
+            console.error(chalk.red(`❌ Error al instalar skill: ${e.message}`));
+            try { fs.rmSync(tmpDir, { recursive: true, force: true }); } catch (_) { }
+            process.exit(1);
         }
     });
 
@@ -443,6 +506,16 @@ async function runInstall(options) {
             options.installMemory = memoryAnswer.memory;
         }
 
+        // Opción global: sincronizar también a ~/.agents/
+        console.log('');
+        const globalAnswer = await inquirer.prompt([{
+            type: 'confirm',
+            name: 'global',
+            message: '🌐 ¿También sincronizar al repositorio global (~/.agents/)? (Útil para Gemini CLI, Codex y agentes CLI)',
+            default: false
+        }]);
+        if (globalAnswer.global) options.global = true;
+
         console.log('');
         const { confirm } = await inquirer.prompt([{
             type: 'confirm',
@@ -558,9 +631,11 @@ Use estos comandos para activar su rol. Para detalles, consulte \`AGENTS.md\`.
             console.log(`  ${bootstrapStatus === 'CREATED' ? chalk.green('✔') : chalk.blue('ℹ')} ${ide.name} Bootstrap: ${bootstrapStatus}`);
         }
 
-        // 4.1 Generate Bridge Rule if supported
-        const bridgeFile = ide.bridgeFile || 'lmagent.md';
-        if (ide.rulesDir && bridgeFile) {
+        // 4.1 Generate Bridge Rule si el agente NO tiene configFile propio que ya apunte a AGENTS.md
+        // (evitar archivos redundantes cuando configFile ya cubre la auto-invocación)
+        const bridgeFile = ide.bridgeFile;
+        const needsBridge = bridgeFile && !ide.configFile;
+        if (ide.rulesDir && needsBridge) {
             const bridgePath = path.join(targetRoot, ide.rulesDir, bridgeFile);
             const relativeBridgeToRoot = path.join(ide.rulesDir, bridgeFile);
             const relContext = getRelLink(relativeBridgeToRoot, 'CLAUDE.md');
@@ -731,15 +806,18 @@ Use estos comandos para activar su rol. Para detalles, consulte \`AGENTS.md\`.
     console.log(chalk.gray('================================================================'));
     console.log(chalk.bold.green('🎉 ¡Todo listo! Aquí tienes cómo usar tus nuevos superpoderes:'));
     console.log('');
-    console.log(chalk.cyan('🤖  Para Cursor / Windsurf / Trae:'));
-    console.log(chalk.white('    1. Tus skills aparecen como Reglas (.cursorrules, etc.)'));
-    console.log(chalk.white('    2. En el Chat (Ctrl+L) o Composer (Ctrl+I), simplemente pídelo.'));
-    console.log(chalk.gray('       Ej: "Crea un nuevo componente de React" (El agente usará frontend-engineer automáticamente)'));
+
+    // Mensaje dinámico según agentes instalados
+    const ideNames = targetIdes.map(i => i.name).join(', ');
+    console.log(chalk.cyan(`🤖  Agentes configurados: ${chalk.bold(ideNames)}`));
     console.log('');
-    console.log(chalk.magenta('🧠  Para Antigravity / Claude Code / Agentes Autónomos:'));
-    console.log(chalk.white('    1. El agente lee automáticamente tu carpeta .agent/ o configuración local.'));
-    console.log(chalk.white('    2. Escribe tu petición en lenguaje natural.'));
-    console.log(chalk.gray('       Ej: "Analiza la base de datos" (El agente buscará y usará backend-engineer/data-engineer)'));
+    console.log(chalk.white('    1. Abre tu agente en este proyecto — leerá el contexto automáticamente.'));
+    console.log(chalk.white('    2. Usa los triggers para activar un rol específico:'));
+    console.log(chalk.gray('       /dev → Backend  |  /front → Frontend  |  /arch → Arquitecto'));
+    console.log(chalk.gray('       /fix → Debugger  |  /pm → Product  |  /orch → Orchestrator'));
+    console.log('');
+    console.log(chalk.dim('    💡 Ejecuta `lmagent doctor` para verificar la instalación.'));
+    console.log(chalk.dim('    💡 Ejecuta `lmagent tokens` para ver el consumo de tokens del framework.'));
     console.log(chalk.gray('================================================================'));
 }
 
@@ -954,7 +1032,9 @@ async function runInit(options) {
 
             if (fs.existsSync(srcPath)) {
                 if (!fs.existsSync(destPath)) {
-                    fs.copyFileSync(srcPath, destPath);
+                    let content = fs.readFileSync(srcPath, 'utf8');
+                    if (file.versionTemplate) content = content.replace(/\{\{VERSION\}\}/g, PKG_VERSION);
+                    fs.writeFileSync(destPath, content, 'utf8');
                     console.log(`  ${chalk.green('✔')} ${file.src} (Created)`);
                 } else {
                     // Exists: Ask to overwrite (unless force/yes)
@@ -972,7 +1052,9 @@ async function runInit(options) {
                     }
 
                     if (shouldOverwrite) {
-                        fs.copyFileSync(srcPath, destPath);
+                        let content = fs.readFileSync(srcPath, 'utf8');
+                        if (file.versionTemplate) content = content.replace(/\{\{VERSION\}\}/g, PKG_VERSION);
+                        fs.writeFileSync(destPath, content, 'utf8');
                         console.log(`  ${chalk.yellow('✎')} ${file.src} (Overwritten)`);
                     } else {
                         console.log(`  ${chalk.gray('SKIP')} ${file.src} (Kept existing)`);
@@ -1039,7 +1121,7 @@ DEBUG=true
     }
 
     // Resumen
-    console.log(gradient.pastel.multiline('\n✨ Proyecto inicializado con LMAgent v3.1.2 ✨'));
+    console.log(gradient.pastel.multiline(`\n✨ Proyecto inicializado con LMAgent v${PKG_VERSION} ✨`));
     console.log('');
     console.log(chalk.cyan('Próximos pasos:'));
     console.log(`  1. ${chalk.bold('lmagent install')} - Instalar skills/rules/workflows en tu IDE`);
