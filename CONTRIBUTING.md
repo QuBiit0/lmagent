@@ -1,4 +1,4 @@
-# Contributing directly to LMAgent
+# Contributing to LMAgent
 
 ¡Gracias por tu interés en contribuir a LMAgent! 🚀
 
@@ -8,83 +8,146 @@ Este documento define el proceso para contribuir código, documentación o repor
 
 Este proyecto se rige por un Código de Conducta estándar. Al participar, se espera que mantengas un ambiente respetuoso y colaborativo.
 
+---
+
 ## ¿Cómo Contribuir?
 
 ### 1. Reportar Bugs
-- Abre un Issue en GitHub.
-- Usa el template de **Bug Report**.
-- Incluye pasos para reproducir, logs y screenshots.
+- Abrí un Issue en GitHub con el template de **Bug Report**
+- Incluí pasos para reproducir, logs y screenshots
+- Especificá tu agente (Cursor, Claude Code, etc.) y sistema operativo
 
 ### 2. Sugerir Features
-- Abre un Issue en GitHub con la etiqueta `enhancement`.
-- Explica el "por qué" y el caso de uso.
-- Si es posible, describe la solución técnica propuesta.
+- Abrí un Issue con la etiqueta `enhancement`
+- Explicá el "por qué" y el caso de uso
+- Si es posible, describí la solución técnica propuesta
 
 ### 3. Pull Requests (PRs)
 
 #### Proceso
-1. Haz un Fork del repositorio.
-2. Crea una rama para tu feature: `git checkout -b feature/mi-nueva-feature`
-3. Implementa tus cambios siguiendo las reglas del proyecto.
-4. Asegúrate de pasar todos los tests: `pytest`
-5. Haz commit con mensajes descriptivos: `feat: agrega soporte para anthropic`
-6. Push a tu rama: `git push origin feature/mi-nueva-feature`
-7. Abre un Pull Request hacia `main`.
+1. Hacé un Fork del repositorio
+2. Creá una rama: `git checkout -b feature/mi-nueva-feature`
+3. Implementá tus cambios siguiendo las reglas del proyecto
+4. Hacé commit con mensajes descriptivos: `feat: agrega soporte para nuevo-agente`
+5. Push a tu rama: `git push origin feature/mi-nueva-feature`
+6. Abrí un Pull Request hacia `main`
 
 #### Checklist para PRs
-- [ ] ¿Actualizaste la documentación?
-- [ ] ¿Agregaste tests para tu código?
-- [ ] ¿Pasaste el linter (`ruff check .`)?
+- [ ] ¿Actualizaste la documentación relevante?
+- [ ] ¿Actualizaste `AGENTS.md` si agregaste un nuevo agente o skill?
 - [ ] ¿Cumple con las reglas en `.agents/rules/`?
+- [ ] ¿Probaste los cambios con `npx lmagent doctor`?
 
-## Estilo de Código
-
-Respetamos estrictamente:
-- **Python**: PEP 8, Type Hints (mypy strict), Ruff para linting/formatting.
-- **Commit Messages**: Conventional Commits (`feat:`, `fix:`, `docs:`, etc).
-- **Documentación**: Markdown claro y conciso.
+---
 
 ## Estructura del Proyecto
 
-- `install.js`: CLI principal (Node.js) — comandos `init`, `install`, `update`, `doctor`.
-- `.agents/skills/`: Definiciones de skills/roles (`SKILL.md` + `scripts/`, `references/`, `assets/`).
-- `.agents/workflows/`: Definiciones de flujos operativos (.md).
-- `.agents/rules/`: Reglas de comportamiento del agente (.md).
-- `.agents/config/`: Archivos YAML de configuración.
-- `.agents/templates/`: Plantillas de proyecto reutilizables.
-- `.agents/docs/`: Documentación extendida.
+```text
+lmagent/
+├── install.js                  # CLI principal — todos los comandos
+├── scripts/
+│   ├── create_skill.js         # Wizard para crear skills
+│   ├── validate_skills.js      # Validador de integridad de skills
+│   └── token-analyzer.js       # Analizador de tokens del framework
+│
+├── .agents/
+│   ├── rules/                  # 11 reglas de comportamiento (.md)
+│   ├── skills/                 # 31 skills especializados (SKILL.md)
+│   ├── workflows/              # 13 SOPs (.md)
+│   ├── memory/                 # 5 archivos de contexto persistente
+│   ├── templates/
+│   │   └── agent-configs/      # Templates de configFile por agente
+│   ├── config/                 # 6 archivos YAML de configuración
+│   ├── docs/                   # Documentación extendida
+│   └── scripts/                # Scripts de utilidad del framework
+│
+├── AGENTS.md                   # Cerebro del framework (leer primero)
+├── CLAUDE.md                   # Entry point para Claude Code / Antigravity
+├── GEMINI.md                   # Entry point para Gemini CLI / Antigravity
+├── README.md                   # Documentación principal
+└── package.json                # Paquete npm: @qubiit/lmagent
+```
+
+---
+
+## Agregar un Nuevo Agente
+
+1. Agregá la configuración en `IDE_CONFIGS` en `install.js`:
+```js
+{ 
+  name: 'Nombre del Agente', 
+  value: 'valor-unico',
+  rulesDir: '.agente/rules',
+  skillsDir: '.agente/skills',
+  workflowsDir: '.agente/workflows',
+  configFile: '.agenterules',        // null si no tiene
+  configTemplate: 'template.md',    // null si usa _generic.md
+  bridgeFile: '00-lmagent.md',       // null si tiene configFile
+  markerFile: '.agente'
+}
+```
+
+2. Agregá la ruta de instalación global en `HOME_PATHS`:
+```js
+'valor-unico': ['.agente', '.config/agente'],
+```
+
+3. Actualizá la tabla de agentes en `AGENTS.md` y `README.md`
+
+4. Si el agente tiene un formato de configFile especial, creá el template en `.agents/templates/agent-configs/`
+
+---
+
+## Agregar un Nuevo Skill
+
+```bash
+npx lmagent@latest create-skill
+```
+
+O manualmente:
+1. Creá el directorio `.agents/skills/mi-skill/`
+2. Creá `SKILL.md` con el frontmatter correcto:
+```yaml
+---
+name: Mi Skill
+trigger: /mi-trigger
+description: Descripción del skill
+version: 1.0.0
+---
+```
+3. Validá con `npx lmagent@latest validate mi-skill`
+4. Actualizá el catálogo en `AGENTS.md` — Sección 5
+
+---
 
 ## Desarrollo Local
 
 ### Prerrequisitos
 - Node.js >= 22
-- Python >= 3.14 (para ejecutar scripts de skills)
 
-### Setup del CLI (Node.js)
-
+### Setup
 ```bash
-# 1. Instalar dependencias
+git clone https://github.com/QuBiit0/lmagent.git
+cd lmagent
 npm install
-
-# 2. Linkear globalmente para desarrollo
 npm link
 
-# 3. Probar cambios
+# Probar cambios
 lmagent doctor
+lmagent validate
+lmagent tokens
 ```
 
-### Desarrollo de Skills (Python)
+### Convenciones de Commits
+Usamos [Conventional Commits](https://www.conventionalcommits.org/):
+- `feat:` — nueva funcionalidad
+- `fix:` — corrección de bug
+- `docs:` — cambios en documentación
+- `refactor:` — refactoring sin cambio de funcionalidad
+- `chore:` — tareas de mantenimiento
 
-Si estás creando o modificando scripts Python dentro de `skills/`:
+---
 
-```bash
-# Instalar dependencias de skills (opcional, recomendado usar venv)
-pip install -r .agents/skills/{skill-name}/requirements.txt
-```
+¡Gracias por ayudar a hacer LMAgent mejor! 🚀
 
-### Linting & Formatting
-
-- **JavaScript**: Eslint/Prettier (vía `npm test` si configurado)
-- **Python**: `ruff check .` (para scripts en `.agents/skills/`)
-
-¡Gracias por ayudar a hacer LMAgent mejor!
+Ver [README.md](README.md) para la documentación completa.

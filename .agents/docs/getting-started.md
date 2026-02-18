@@ -1,77 +1,81 @@
 # 🚀 Getting Started with LMAgent
 
-Bienvenido a **LMAgent v3.0.3**, el framework que transforma tu IDE en una agencia de desarrollo de software.
+Bienvenido a **LMAgent v3.1.3** — el framework que transforma cualquier agente de IA en una agencia de desarrollo de software completa.
 
-## 1. Requisitos Previos
-- **Node.js**: v18+ (Requerido para el CLI).
-- **IDE**: Cursor, VSCode, Windsurf o cualquier editor que soporte `.cursorrules` o contexto por archivo.
-- **LLM**: Una key de OpenAI, Anthropic o Google configurada en tu IDE.
-
-## 2. Instalación e Inicialización
-
-### Opción A: Proyecto Nuevo (Recomendado)
-Para empezar un proyecto con toda la estructura lista:
-
-```bash
-# 1. Crea tu directorio
-mkdir mi-nuevo-proyecto
-cd mi-nuevo-proyecto
-
-# 2. Inicializa LMAgent (No requiere instalación global)
-npx @qubiit/lmagent@latest init
-```
-
-### Opción B: Proyecto Existente
-Agrega inteligencia a tu código legacy sin tocar tu código fuente:
-
-```bash
-cd mi-proyecto-brownfield
-npx @qubiit/lmagent@latest init
-```
-
-### ¿Qué acaba de pasar?
-El comando `init`:
-1. Creó `.agents/` con la estructura de reglas y configuración.
-2. Copió `AGENTS.md` (El cerebro central) y `CLAUDE.md` (Contexto para LLMs).
-3. Configuró `.gitignore` para no subir archivos basura.
-
-## 3. Instalación de Skills (Bridge)
-Para que tu IDE entienda los skills, necesitas instalarlos localmente:
-
-```bash
-npx lmagent install
-```
-Selecciona tu IDE (ej. Cursor) y elige **"Instalación Rápida"**.
-Esto creará enlaces simbólicos (o copias) en `.cursor/rules` apuntando a `.agents/skills`.
+## Requisitos Previos
+- **Node.js**: v22+ (requerido para el CLI)
+- **Un agente de IA**: Cursor, Claude Code, Windsurf, Gemini CLI, o cualquiera de los [37 agentes soportados](../../README.md#-37-supported-agents)
 
 ---
 
-## 4. Tu Primer Flujo de Trabajo
+## Instalación (One Command)
 
-### Paso 1: Define el Proyecto (Memoria)
-Edita `.agents/memory/01-project.md`. Dile al agente quién eres y qué construyes.
-*Ejemplo:*
-> "Este es un SaaS de gestión de gastos para freelancers en Latam."
+```bash
+npx lmagent@latest
+```
 
-### Paso 2: Activa un Skill
-Abre el chat de tu IDE (Ctrl+L / Cmd+L) y escribe:
+Eso es todo. El instalador:
+1. Detecta automáticamente qué agentes tenés instalados en tu sistema
+2. Pre-selecciona los detectados para instalación
+3. Despliega skills, rules y workflows a cada agente
+4. Genera el entry point de auto-invocación
+
+---
+
+## Setup Paso a Paso (Primera Vez)
+
+### Paso 1 — Inicializar el proyecto
+```bash
+npx lmagent@latest init
+```
+Copia `AGENTS.md`, `CLAUDE.md` y `GEMINI.md` a la raíz de tu proyecto. Estos son los archivos que los agentes leen automáticamente al arrancar.
+
+### Paso 2 — Instalar el framework
+```bash
+npx lmagent@latest install
+```
+Seleccioná los agentes que usás y el instalador configura todo.
+
+### Paso 3 — Verificar
+```bash
+npx lmagent@latest doctor
+```
+
+---
+
+## Tu Primer Flujo de Trabajo
+
+### 1. Define el contexto del proyecto
+Editá `.agents/memory/01-project.md` con una descripción de tu proyecto:
+> "Este es un SaaS de gestión de gastos para freelancers en Latam. Stack: Next.js + Supabase."
+
+### 2. Activá un skill en el chat
+Abrí el chat de tu agente y escribí:
 > "Hola `/pm`. Lee la memoria del proyecto y ayúdame a crear las historias de usuario para el Login."
 
-El agente detectará `/pm`, leerá las reglas de **Product Manager** y actuará en consecuencia.
+El agente detectará `/pm`, cargará el skill **product-manager** y actuará en consecuencia.
 
-### Paso 3: Código
-Luego, cambia de sombrero:
+### 3. Cambiá de rol cuando necesites
 > "Gracias PM. Ahora `/dev`, implementa el Login en Next.js siguiendo las historias de usuario."
 
 ---
 
-## 5. Comandos Útiles
+## Comandos Útiles
 
-- `npx lmagent doctor`: Verifica que todo esté bien configurado.
-- `npx lmagent update`: Actualiza tus skills a la última versión.
-- `npx lmagent validate`: (Para creadores) Valida que tus skills custom sigan el estándar.
+```bash
+npx lmagent@latest doctor       # Verificar configuración
+npx lmagent@latest update       # Actualizar a la última versión
+npx lmagent@latest validate     # Validar integridad de skills
+npx lmagent@latest tokens       # Ver consumo de tokens del framework
+npx lmagent@latest uninstall    # Limpiar archivos del framework
+```
 
-## 🔗 Referencias
-- [Guía de Uso Completa](usage-guide.md)
-- [Índice de Comandos](commands.md)
+---
+
+## Referencias
+
+- [Catálogo completo de Skills y Reglas](../../AGENTS.md)
+- [Referencia de Comandos CLI](commands.md)
+- [Guía de Uso](usage-guide.md)
 - [Reglas del Sistema](../rules/00-master.md)
+- [Cómo Contribuir](../../CONTRIBUTING.md)

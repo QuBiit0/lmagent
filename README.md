@@ -3,58 +3,262 @@
 ```text
 ██╗     ███╗   ███╗ █████╗  ██████╗ ███████╗███╗   ██╗████████╗
 ██║     ████╗ ████║██╔══██╗██╔════╝ ██╔════╝████╗  ██║╚══██╔══╝
-██║     ██╔████╔██║███████║██║  ███╗█████╗  ██╔██╗ ██║   ██║   
-██║     ██║╚██╔╝██║██╔══██║██║   ██║██╔══╝  ██║╚██╗██║   ██║   
-███████╗██║ ╚═╝ ██║██║  ██║╚██████╔╝███████╗██║ ╚████║   ██║   
-╚══════╝╚╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═══╝   ╚═╝   
+██║     ██╔████╔██║███████║██║  ███╗█████╗  ██╔██╗ ██║   ██║
+██║     ██║╚██╔╝██║██╔══██║██║   ██║██╔══╝  ██║╚██╗██║   ██║
+███████╗██║ ╚═╝ ██║██║  ██║╚██████╔╝███████╗██║ ╚████║   ██║
+╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═══╝   ╚═╝
                                                   by QuBit
 ```
 
-![Version](https://img.shields.io/badge/version-3.1.2-blue.svg) ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge) ![Agentic](https://img.shields.io/badge/AI-Agentic_Workflow-cyan?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-3.1.3-blue.svg) ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge) ![Agents](https://img.shields.io/badge/Agents-37_Supported-cyan?style=for-the-badge) ![Skills](https://img.shields.io/badge/Skills-31_Available-purple?style=for-the-badge)
 
-> **"Separate the reasoning from the execution."**  
-> LMAgent is the foundational runtime that empowers your AI Agents with standardized **Skills**, **Rules**, and **Workflows** across any IDE (Cursor, Windsurf, VSCode, Zed, Qodo).
+> **"Separate the reasoning from the execution."**
+> LMAgent is the foundational runtime that empowers your AI Agents with standardized **Skills**, **Rules**, and **Workflows** across **37 supported agents** (Cursor, Claude Code, Windsurf, Gemini CLI, Cline, Roo, Copilot, and many more).
 
 ---
 
-## 🚀 Quick Start Guide
-
-The recommended way to use LMAgent is via `npx`, ensuring you always run the latest version without managing global packages.
-
-### ⚡ Instant Run (No Install)
-Run these commands directly in your terminal:
+## ⚡ One Command. Any Agent.
 
 ```bash
-# 1. Initialize Project (Context)
-#    Copies AGENTS.md & CLAUDE.md to your root.
-npx lmagent init
-
-# 2. Install/Update Skills (Tools)
-#    Configures your IDE (.cursor, .vscode, .windsurf, etc.)
-npx lmagent install
-
-# 3. Optimize & Verify
-#    Checks your environment health.
-npx lmagent doctor
+npx lmagent@latest
 ```
 
-### 📦 Global Installation (Optional)
-If you prefer having the `lmagent` command available globally:
+That's it. No global install required. LMAgent will:
+1. **Auto-detect** which AI agents you have installed on your system
+2. **Pre-select** the detected agents for installation
+3. **Deploy** skills, rules, and workflows to each agent's directory
+4. **Generate** the entry point file so each agent auto-invokes the framework
+
+> **Requires Node.js ≥ 22**. Works on macOS, Linux, and Windows.
+
+---
+
+## 🚀 Full Setup Guide
+
+### Step 1 — Initialize your project (first time only)
+```bash
+npx lmagent@latest init
+```
+Copies `AGENTS.md`, `CLAUDE.md`, and `GEMINI.md` to your project root. These are the entry points that agents read automatically when they start.
+
+### Step 2 — Install the framework
+```bash
+npx lmagent@latest install
+```
+Deploys skills, rules, and workflows to all detected agents. Generates agent-specific config files.
+
+### Step 3 — Verify
+```bash
+npx lmagent@latest doctor
+```
+Checks that everything is correctly configured.
+
+### Update (when new versions are released)
+```bash
+npx lmagent@latest update
+```
+
+---
+
+## 🏛️ Architecture
+
+LMAgent uses a **Hub & Spoke** model: one universal brain (`.agents/`) that feeds all agents.
+
+```text
+Your Project/
+├── .agents/                    # ← UNIVERSAL BRAIN (source of truth)
+│   ├── rules/                  # 11 behavioral rules
+│   ├── skills/                 # 31 specialized roles
+│   ├── workflows/              # 13 SOPs (Standard Operating Procedures)
+│   ├── memory/                 # 5 persistent context files
+│   ├── templates/              # Project scaffolds & agent config templates
+│   ├── scripts/                # Utility scripts
+│   ├── config/                 # Framework settings
+│   └── docs/                   # Extended documentation
+│
+├── AGENTS.md                   # ← PILLAR 1: Capability catalog (read by all agents)
+├── CLAUDE.md                   # ← PILLAR 2: Entry point for Claude Code / Antigravity
+├── GEMINI.md                   # ← PILLAR 3: Entry point for Gemini CLI / Antigravity
+│
+├── .cursor/rules/              # ← Cursor-specific rules & skills
+├── .windsurf/rules/            # ← Windsurf-specific rules & skills
+├── .claude/rules/              # ← Claude Code-specific rules & skills
+└── ...                         # (one directory per installed agent)
+```
+
+### How auto-invocation works
+
+Each agent reads a specific file when it starts. LMAgent generates that file automatically:
+
+| Agent | Entry Point Generated |
+|:---|:---|
+| Cursor | `.cursorrules` |
+| Claude Code | `CLAUDE.md` |
+| Gemini CLI / Antigravity | `GEMINI.md` |
+| Windsurf | `.windsurf/rules/lmagent.md` |
+| Cline | `.clinerules/00-lmagent.md` |
+| Roo Code | `.roo/rules/00-lmagent.md` |
+| VSCode Copilot | `.github/copilot-instructions.md` |
+| Goose | `.goosehints` |
+| Continue | `.continuerules` |
+| Junie | `.junie/guidelines.md` |
+| OpenHands | `.openhands/microagents/repo.md` |
+| Codex CLI | `AGENTS.md` |
+| All others | `00-lmagent.md` in their `rulesDir` |
+
+All entry points point to `AGENTS.md` — the single source of truth.
+
+---
+
+## 🧩 Skills Catalog (31 Skills)
+
+Activate any skill by typing its trigger in the chat:
+
+### 🎯 Management & Architecture
+| Trigger | Skill | Description |
+|:---|:---|:---|
+| `/orch` | **orchestrator** | High-level task planning and agent coordination |
+| `/pm` | **product-manager** | PRD generation, user stories, roadmap planning |
+| `/arch` | **architect** | System design, scalable patterns, cloud infrastructure |
+| `/lead` | **tech-lead** | Code review, technical decisions, mentoring |
+| `/sm` | **scrum-master** | Agile ceremonies, sprint planning, retrospectives |
+| `/doc` | **technical-writer** | Documentation, API refs, user guides |
+
+### 🔧 Engineering
+| Trigger | Skill | Description |
+|:---|:---|:---|
+| `/dev` | **backend-engineer** | APIs, database schema, authentication |
+| `/front` | **frontend-engineer** | React, Next.js, Tailwind, state management |
+| `/mobile` | **mobile-engineer** | React Native, Expo, iOS/Android pipelines |
+| `/data` | **data-engineer** | ETL pipelines, SQL optimization, data warehousing |
+| `/devops` | **devops-engineer** | CI/CD, Docker, Kubernetes, Terraform |
+| `/sec` | **security-analyst** | Vulnerability scanning, OWASP, code auditing |
+| `/test` | **qa-engineer** | E2E testing (Playwright), unit tests, QA strategy |
+| `/review` | **code-reviewer** | Static analysis, logic verification, clean code |
+| `/api` | **api-designer** | REST/GraphQL contracts, OpenAPI standards |
+| `/supa` | **supabase-expert** | Supabase architecture, RLS, Edge Functions |
+| `/git` | **git-workflow** | Branch management, conventional commits, releases |
+| `/web` | **browser-agent** | Web automation, scraping, UI testing |
+| `/seo` | **seo-auditor** | Technical SEO, Core Web Vitals, accessibility |
+
+### ⚡ Specialized & AI
+| Trigger | Skill | Description |
+|:---|:---|:---|
+| `/fix` | **systematic-debugger** | Methodical 4-phase debugging (RCA) |
+| `/perf` | **performance-engineer** | Profiling, load testing, optimization |
+| `/ux` | **ux-ui-designer** | Design systems, user flow, prototyping |
+| `/agent` | **ai-agent-engineer** | Building LLM-based systems & MCP servers |
+| `/auto` | **automation-engineer** | n8n workflows, Zapier, scripting |
+| `/prompt` | **prompt-engineer** | Optimizing system prompts and LLM interactions |
+| `/mcp` | **mcp-builder** | Build MCP servers, tools, and resources |
+| `/pdf` | **document-generator** | Programmatic PDF/DOCX/XLSX generation |
+
+### 🧠 Methodologies
+| Trigger | Skill | Description |
+|:---|:---|:---|
+| `/bmad` | **bmad-methodology** | Scale-Adaptive Intelligence, complexity classification |
+| `/sdd` | **spec-driven-dev** | Spec-first development pipeline |
+| `/swe` | **swe-agent** | Autonomous issue resolution, trajectory logging |
+| `/test-s` | **testing-strategist** | Test planning, pyramid strategy, coverage goals |
+
+---
+
+## 🌍 37 Supported Agents
+
+| Agent | Config Path | Entry Point |
+|:---|:---|:---|
+| **Cursor** | `.cursor/` | `.cursorrules` |
+| **Windsurf** | `.windsurf/` | `.windsurf/rules/lmagent.md` |
+| **Cline** | `.clinerules/` | `.clinerules/00-lmagent.md` |
+| **Roo Code** | `.roo/` | `.roo/rules/00-lmagent.md` |
+| **VSCode Copilot** | `.github/` | `.github/copilot-instructions.md` |
+| **Trae** | `.trae/` | `.trae/rules/lmagent.md` |
+| **Trae CN** | `.trae-cn/` | `.trae-cn/rules/lmagent.md` |
+| **Claude Code** | `.claude/` | `CLAUDE.md` |
+| **Zed** | `.rules/` | `.rules/lmagent.md` |
+| **Amp / Kimi / Replit** | `.agents/` | `.agents/rules/00-lmagent.md` |
+| **Antigravity** | `.agent/` | `GEMINI.md` |
+| **Augment** | `.augment/` | `.augment/rules/00-lmagent.md` |
+| **Gemini CLI** | `.gemini/` | `GEMINI.md` |
+| **OpenClaw / Envoid** | `rules/` | `openclaw.json` |
+| **CodeBuddy** | `.codebuddy/` | `.codebuddy/rules/00-lmagent.md` |
+| **Codex CLI** | `.codex/` | `AGENTS.md` |
+| **Command Code** | `.commandcode/` | `.commandcode/rules/00-lmagent.md` |
+| **Continue** | `.continue/` | `.continuerules` |
+| **Crush** | `.crush/` | `.crush/rules/00-lmagent.md` |
+| **Droid** | `.factory/` | `.factory/rules/00-lmagent.md` |
+| **Goose** | `.goose/` | `.goosehints` |
+| **Junie** | `.junie/` | `.junie/guidelines.md` |
+| **iFlow CLI** | `.iflow/` | `.iflow/rules/00-lmagent.md` |
+| **Kilo Code** | `.kilocode/` | `.kilocode/rules/00-lmagent.md` |
+| **Kiro CLI** | `.kiro/` | `.kiro/rules/00-lmagent.md` |
+| **Kode** | `.kode/` | `.kode/rules/00-lmagent.md` |
+| **MCPJam** | `.mcpjam/` | `.mcpjam/rules/00-lmagent.md` |
+| **Mistral Vibe** | `.vibe/` | `.vibe/rules/00-lmagent.md` |
+| **Mux** | `.mux/` | `.mux/rules/00-lmagent.md` |
+| **OpenCode** | `.opencode/` | `.opencode/rules/00-lmagent.md` |
+| **OpenHands** | `.openhands/` | `.openhands/microagents/repo.md` |
+| **Pi** | `.pi/` | `.pi/rules/00-lmagent.md` |
+| **Qoder** | `.qoder/` | `.qoder/rules/00-lmagent.md` |
+| **Qwen Code** | `.qwen/` | `.qwen/rules/00-lmagent.md` |
+| **Zencoder** | `.zencoder/` | `.zencoder/rules/00-lmagent.md` |
+| **Neovate** | `.neovate/` | `.neovate/rules/00-lmagent.md` |
+| **Pochi** | `.pochi/` | `.pochi/rules/00-lmagent.md` |
+| **AdaL** | `.adal/` | `.adal/rules/00-lmagent.md` |
+
+---
+
+## 🛠️ CLI Reference
 
 ```bash
-# Install
-npm install -g @qubiit/lmagent
+# Core
+npx lmagent@latest              # Interactive install (auto-detects agents)
+npx lmagent@latest init         # Initialize project (copies AGENTS.md, CLAUDE.md, GEMINI.md)
+npx lmagent@latest install      # Install/update framework in current project
+npx lmagent@latest update       # Alias for install
+npx lmagent@latest uninstall    # Remove all LMAgent files from project
+npx lmagent@latest uninstall --all  # Also remove root entry points (CLAUDE.md, etc.)
 
-# Run
-lmagent init
-lmagent install
+# Diagnostics
+npx lmagent@latest doctor       # Verify project configuration
+npx lmagent@latest validate     # Validate integrity of all skills
+npx lmagent@latest tokens       # Analyze framework token consumption
+
+# Skills Management
+npx lmagent@latest create-skill             # Create a new skill interactively
+npx lmagent@latest skills add owner/repo    # Install external skill from GitHub
 ```
 
-### 🛠️ Developer Setup
+---
+
+## 🛠️ Creating Custom Skills
+
+```bash
+# Create a new skill interactively
+npx lmagent@latest create-skill
+
+# Install an external skill from GitHub
+npx lmagent@latest skills add owner/repo-name
+
+# Validate all skills
+npx lmagent@latest validate
+```
+
+Skills follow the standard structure:
+```text
+.agents/skills/my-skill/
+├── SKILL.md          # Main instructions (required)
+└── ...               # Optional additional files
+```
+
+---
+
+## 👨‍💻 Developer Setup
+
 If you are contributing to the framework:
 
 ```bash
-git clone https://github.com/QuBit/lmagent.git
+git clone https://github.com/QuBiit0/lmagent.git
 cd lmagent
 npm install
 npm link
@@ -63,248 +267,13 @@ lmagent doctor
 
 ---
 
-## 🏛️ Architecture: Global Brain vs. Local Project
-
-LMAgent uses a **Hybrid Architecture** to balance **Centralized Updates** with **Project Portability**.
-
-### The Problem it Solves
-*   **Global Installs** run the risk of breaking projects if they rely on your specific machine paths.
-*   **Local Copies** become stale and are hard to update across 10+ projects.
-
-### The Solution: "Symlink Bridge"
-
-| Layer | Location | Purpose |
-| :--- | :--- | :--- |
-| **1. Global Brain** | `~/.agents/` | **Single Source of Truth**. Hosted in your user home. Updated via `npm update -g`. |
-| **2. Local Project** | `./.cursor/skills/` | **Symlinks** pointing to the Global Brain. Lightweight and bridge-like. |
-| **3. Context** | `./CLAUDE.md` | Points to **Local Symlinks** (Relative Paths). **100% Portable** to other devs. |
-
-### Why `init` and `install` are separate?
-1.  **`lmagent init`**: Creates the **Portable Structure** (files that *must* exist in the repo to work, like `CLAUDE.md`).
-2.  **`lmagent install`**: Builds the **Bridge** (Symlinks) specific to *your* machine's environment.
-
-> **Best Practice**: Commit `CLAUDE.md` and `AGENTS.md`. **Do NOT** commit the `.cursor/skills` folder (add it to `.gitignore`), as each developer should run `lmagent install` to link their own brain.
-
----
-
-## 🛠️ Creating New Skills
-Need a custom agent? Use the interactive generator:
-
-```bash
-# Verify structure of existing skills
-npx lmagent validate
-
-# Create a new skill interactively
-npx lmagent create-skill
-```
-This will generate the standard directory structure and `SKILL.md` template for you.
-
----
-
-## 🛠️ CLI Reference
-
-LMAgent includes a powerful CLI to manage your AI context.
-
-| Command | Usage | Description |
-| :--- | :--- | :--- |
-| **`init`** | `npx lmagent init` | Initializes the project. Copies `AGENTS.md` (catalog) and `CLAUDE.md` to your root. |
-| **`install`** | `npx lmagent install` | **Core Command**. This command will deploy the **Universal Intelligence** (`.agents/`) folder and the core pillars (`AGENTS.md`, `CLAUDE.md`) to your project root. |
-| **`update`** | `npx lmagent update` | Alias for `install`. Use this to refresh your skills when new versions are released. |
-| **`doctor`** | `npx lmagent doctor` | Verifies your environment, checking for correct file structures using `validate_skills` logic. |
-| **`validate`** | `npx lmagent validate` | Scans all `SKILL.md` files for syntax errors or missing required fields. |
-| **`create-skill`** | `npx lmagent create-skill` | Interactive wizard to generate a new Skill structure best practices. |
-
----
-
-## 📂 Universal Project Structure
-
-When you install **LMAgent** in your project, it creates a pristine environment:
-
-```text
-/
-├── .agents/                    # [UNIVERSAL BRAIN]
-│   ├── rules/                  # Core Behavior (00-master, personality, etc.)
-│   ├── skills/                 # Capabilities (backend-engineer, etc.)
-│   ├── workflows/              # Procedures (SOPs)
-│   ├── templates/              # Project scaffolds
-│   ├── memory/                 # Documentation & Logs
-│   ├── scripts/                # Utility scripts
-│   └── config/                 # Global settings
-│
-├── AGENTS.md                   # [PILLAR 1] Capability Catalog (Root)
-├── CLAUDE.md                   # [PILLAR 2] Context & Instructions (Root)
-│
-└── package.json
-```
-
-### 🧠 The Two Pillars
-1. **AGENTS.md**: The catalog of all capabilities. It tells the agent *what* it can do and *where* to find instructions.
-2. **CLAUDE.md**: The context file. It tells the agent *how* to behave and points to the Master Rule in `.agents/rules/00-master.md`.
-
----
-
-## 🏛️ The 3-Pillar Architecture
-
-LMAgent organizes AI capabilities into three distinct pillars, enforcing a clear separation of concerns.
-
-```mermaid
-graph TD
-    A["🤖 AI Agent"] --> B("🛠️ Skills")
-    A --> C("📜 Rules")
-    A --> D("⚡ Workflows")
-    
-    B --> B1["{ide}/skills/"]
-    B --> B2["Executable Tools & Scripts"]
-    
-    C --> C1["{ide}/rules/"]
-    C --> C2["Behavioral Guardrails & Context"]
-    
-    D --> D1["{ide}/workflows/"]
-    D --> D2["Standard Operating Procedures (SOPs)"]
-```
-
-### 1. 🛠️ Skills (Capabilities)
-*Executable units that allow the Agent to interact with the world.*  
-**Location:** `{ide}/skills/` or `~/.agents/skills/`
-
-| Skill Name | Description | Tools Included |
-| :--- | :--- | :--- |
-| **ai-agent-engineer** | Expert in building LLM-based systems & MCP servers. | `create-agent`, `scaffold-mcp` |
-| **api-designer** | Design REST/GraphQL contracts, OpenAPI standards. | `scaffold-api`, `lint-openapi` |
-| **architect** | System design, scalable patterns, cloud infrastructure. | `design-system`, `review-architecture` |
-| **automation-engineer** | n8n workflows, Zapier integration, scripting. | `deploy-n8n`, `check-webhook` |
-| **backend-engineer** | API design, Database schema, Authentication. | `scaffold-api`, `optimize-query` |
-| **bmad-methodology** | Scale-Adaptive Intelligence, project kickoff, complexity classification. | `classify-level`, `kickoff-project` |
-| **browser-agent** | Web automation, scraping, UI testing with Playwright. | `scrape-site`, `automate-flow` |
-| **code-reviewer** | Static analysis, logic verification, clean code standards. | `review-pr`, `analyze-complexity` |
-| **data-engineer** | ETL pipelines, SQL optimization, Data warehousing. | `analyze-schema`, `run-migration` |
-| **devops-engineer** | CI/CD, Docker, Kubernetes, Terraform. | `docker-build`, `k8s-deploy` |
-| **document-generator** | Programmatic PDF/DOCX/XLSX generation. | `gen-pdf`, `gen-report` |
-| **frontend-engineer** | React, Next.js, Tailwind, State Management. | `scaffold-component`, `check-accessibility` |
-| **git-workflow** | Branch management, conventional commits, release flow. | `feature-start`, `release-prep` |
-| **mcp-builder** | Build MCP servers, tools, and resources. | `new-mcp-server`, `test-tool` |
-| **mobile-engineer** | React Native, Expo, iOS/Android build pipelines. | `build-ios`, `debug-android` |
-| **orchestrator** | High-level task planning and agent coordination. | `plan-task`, `delegate-subtask` |
-| **performance-engineer** | Profiling, load testing, optimization. | `run-lighthouse`, `profile-memory` |
-| **product-manager** | PRD generation, user stories, roadmap planning. | `generate-user-story`, `prioritize-backlog` |
-| **prompt-engineer** | Optimizing system prompts and LLM interactions. | `optimize-prompt`, `eval-prompt` |
-| **qa-engineer** | E2E testing (Playwright), Unit tests, QA strategy. | `run-playwright`, `generate-test-plan` |
-| **scrum-master** | Agile ceremonies, sprint planning, retrospective. | `start-sprint`, `generate-retro` |
-| **security-analyst** | Vulnerability scanning, code auditing, OWASP. | `scan-vulnerabilities`, `audit-code` |
-| **seo-auditor** | Technical SEO, Core Web Vitals, accessibility audit. | `audit-seo`, `check-meta` |
-| **spec-driven-dev** | Spec-first development pipeline: SPECIFY → PLAN → TASKS → IMPLEMENT → VERIFY. | `create-spec`, `validate-spec` |
-| **supabase-expert** | Supabase architecture, RLS, Edge Functions. | `init-supabase`, `deploy-edge` |
-| **swe-agent** | Autonomous issue resolution, trajectory logging, Edit-Lint-Test loops. | `resolve-issue`, `trajectory-log` |
-| **systematic-debugger** | Methodical 4-phase debugging (RCA). | `debug-session`, `analyze-logs` |
-| **tech-lead** | Code review, technical decision making, mentoring. | `review-pr`, `enforce-standards` |
-| **technical-writer** | Documentation, API refs, user guides. | `generate-docs`, `update-readme` |
-| **testing-strategist** | Test planning, pyramid strategy, coverage goals. | `plan-testing`, `define-coverage` |
-| **ux-ui-designer** | Design systems, user flow, prototyping. | `analyze-ux`, `generate-palette` |
-
-
-### 2. 📜 Rules (Context & Guardrails)
-*Constraints and guidelines that shape Agent behavior.*  
-**Location:** `{ide}/rules/` or `~/.agents/rules/`
-
-| Rule File | Description |
-| :--- | :--- |
-| **_bootstrap.md** | ⭐ **Entry point**: Startup check, skill activation, critical rules for ALL IDEs. |
-| **agents-ia.md** | Core guidelines for building AI Agents (Tool-first, Stateless, Observable). |
-| **api-design.md** | REST/GraphQL standards, error handling, versioning best practices. |
-| **automations-n8n.md** | Best practices for building robust n8n workflows. |
-| **code-style.md** | Linter configuration, naming conventions, project structure. |
-| **documentation.md** | Standards for code comments, READMEs, and architectural decision records (ADRs). |
-| **security.md** | **Critical**: Input validation, secret management, OWASP Top 10 prevention. |
-| **stack.md** | Approved technology stack and library choices for the project. |
-| **testing.md** | Mandatory Test-Driven Development (TDD) workflows and coverage requirements. |
-| **workflow.md** | General git flow and contribution guidelines. |
-
-
-### 3. ⚡ Workflows (SOPs)
-*Step-by-step guides for complex tasks.*  
-**Location:** `{ide}/workflows/` or `~/.agents/workflows/`
-
-| Workflow Name | Purpose |
-| :--- | :--- |
-| **bugfix-backend.md** | Protocol for diagnosing, fixing, and verifying server-side bugs. |
-| **documentation.md** | Guide for updating and maintaining project documentation. |
-| **generate-prd.md** | Template and instructions for creating Product Requirement Documents. |
-| **ideation.md** | Brainstorming process for new features or products. |
-| **new-agent-ia.md** | End-to-end guide for creating a new AI Agent from scratch. |
-| **new-automation.md** | Steps to design and deploy a new automation (n8n/script). |
-| **new-feature.md** | Standard flow: Ticket -> Design -> Implementation -> Test -> PR. |
-| **optimize-performance.md** | Systematic approach to identifying and fixing bottlenecks. |
-| **resolve-github-issue.md** | Standard flow for addressing GitHub Issues. |
-| **security-review.md** | Checklist for pre-deployment security audits. |
-| **spec-driven.md** | Development methodology based on detailed specifications (Spec-First). |
-| **testing-strategy.md** | Defining the testing pyramid and strategy for a feature. |
-| **third-party-integration.md** | Guide for securely integrating external APIs and SDKs. |
-
----
-
-## 💎 Features & IDE Support
-
-### 🌍 Centralized "Brain" (`~/.agents`)
-LMAgent creates a **Single Source of Truth** in your home directory.
-*   **Update Once, Reflect Everywhere**: Modify a rule in `~/.agents/rules/code-style.md`, and *every project* using Symlinks updates instantly.
-*   **Zero-Copy Efficiency**: No more valid/duplicate `.md` files cluttering every repo.
-
-### 🧩 Multi-IDE Support
-
-
-| IDE | Status | Config Path |
-| :--- | :--- | :--- |
-| **Cursor** | ✅ Full | `.cursor/` |
-| **Windsurf** | ✅ Full | `.windsurf/` |
-| **VSCode / Copilot** | ✅ Full | `.github/` |
-| **Zed** | ✅ Full | `.rules/` |
-| **Antigravity** | ✅ Full | `.agent/` |
-| **Claude Code** | ✅ Full | `.claude/` |
-| **Cline / Roo Code** | ✅ Full | `.clinerules/` / `.roo/` |
-| **Continue** | ✅ Full | `.continue/` |
-| **Trae** | ✅ Full | `.trae/` |
-| **Qodo** | ✅ Full | `agents/` |
-| **Amp / Kimi / Replit** | ✅ Full | `.agents/` |
-| **Augment** | ✅ Full | `.augment/` |
-| **Codex** | ✅ Full | `.codex/` |
-| **Gemini CLI** | ✅ Full | `.gemini/` |
-| **OpenCode** | ✅ Full | `.opencode/` |
-| **OpenHands** | ✅ Full | `.openhands/` |
-| **Goose** | ✅ Full | `.goose/` |
-| **Mistral Vibe** | ✅ Full | `.vibe/` |
-| **Envoid (OpenClaw)** | ✅ Full | `openclaw.json` |
-| **CodeBuddy** | ✅ Full | `.codebuddy/` |
-| **Command Code** | ✅ Full | `.commandcode/` |
-| **Crush** | ✅ Full | `.crush/` |
-| **Droid** | ✅ Full | `.factory/` |
-| **Junie** | ✅ Full | `.junie/` |
-| **iFlow** | ✅ Full | `.iflow/` |
-| **Kilo Code** | ✅ Full | `.kilocode/` |
-| **Kiro** | ✅ Full | `.kiro/` |
-| **Kode** | ✅ Full | `.kode/` |
-| **MCPJam** | ✅ Full | `.mcpjam/` |
-| **Mux** | ✅ Full | `.mux/` |
-| **Pi** | ✅ Full | `.pi/` |
-| **Qoder** | ✅ Full | `.qoder/` |
-| **Qwen Code** | ✅ Full | `.qwen/` |
-| **Trae CN** | ✅ Full | `.trae-cn/` |
-| **Zencoder** | ✅ Full | `.zencoder/` |
-| **Neovate** | ✅ Full | `.neovate/` |
-| **Pochi** | ✅ Full | `.pochi/` |
-| **AdaL** | ✅ Full | `.adal/` |
-
----
-
 ## 🤝 Contributing
 
 We welcome contributions to expand the **Universal Agent Brain**.
 Check out `CONTRIBUTING.md` to add new Skills, Rules, or IDE support.
 
-
-
-
 ---
 
 <p align="center">
-  Built with ❤️ by <b>QuBit</b>
+  Built with ❤️ by <b>QuBit</b> · <a href="https://github.com/QuBiit0/lmagent">GitHub</a>
 </p>
