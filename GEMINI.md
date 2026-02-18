@@ -1,4 +1,4 @@
-# 🤖 LMAgent Framework v3.1.2
+# 🤖 LMAgent Framework v{{VERSION}}
 
 > [!IMPORTANT]
 > **REDIRECT NOTICE**: La configuración de este framework se ha centralizado.
@@ -7,7 +7,7 @@
 
 Tu "Cerebro" y "Manual de Operaciones" ahora viven en un único archivo maestro.
 
-**� [LEER AGENTS.md](./AGENTS.md) 👈**
+**👉 [LEER AGENTS.md](./AGENTS.md) 👈**
 
 **No intentes hacer nada sin leer `AGENTS.md` primero.**
 Allí encontrarás:

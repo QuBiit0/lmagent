@@ -22,9 +22,11 @@ const PACKAGE_DOCS_DIR = path.join(__dirname, '.agents', 'docs');
 const PACKAGE_MEMORY_DIR = path.join(__dirname, '.agents', 'memory');
 
 // Archivos de proyecto que init copia a la raíz
+// Usan {{VERSION}} como placeholder; se reemplaza dinámicamente al instalar
 const INIT_FILES = [
-    { src: 'CLAUDE.md', desc: 'Instrucciones para Claude Code' },
-    { src: 'AGENTS.md', desc: 'Catálogo de capacidades LMAgent' },
+    { src: 'CLAUDE.md', desc: 'Instrucciones para Claude Code / Antigravity', versionTemplate: true },
+    { src: 'GEMINI.md', desc: 'Instrucciones para Gemini CLI / Antigravity', versionTemplate: true },
+    { src: 'AGENTS.md', desc: 'Catálogo de capacidades LMAgent', versionTemplate: false },
 ];
 
 const INIT_DIRS = [
@@ -39,20 +41,27 @@ const INIT_DIRS = [
 // IDE_CONFIGS: Lista ÚNICA y DEDUPLICADA de todos los agentes soportados
 const IDE_CONFIGS = [
     // --- IDEs Principales (Auto-Detectados) ---
+    // Cursor: usa .cursor/rules/*.mdc (formato MDC con frontmatter)
     { name: 'Cursor', value: 'cursor', rulesDir: '.cursor/rules', skillsDir: '.cursor/skills', workflowsDir: '.cursor/workflows', configFile: '.cursorrules', bridgeFile: 'lmagent.mdc', markerFile: '.cursorrules', forceCopy: true },
-    { name: 'Windsurf', value: 'windsurf', rulesDir: '.windsurf/rules', skillsDir: '.windsurf/skills', workflowsDir: '.windsurf/workflows', configFile: '.windsurfrules', bridgeFile: 'lmagent.md', markerFile: '.windsurfrules', forceCopy: true },
+    // Windsurf Wave 8+: usa .windsurf/rules/*.md (directorio, NO .windsurfrules)
+    { name: 'Windsurf', value: 'windsurf', rulesDir: '.windsurf/rules', skillsDir: '.windsurf/skills', workflowsDir: '.windsurf/workflows', configFile: null, bridgeFile: 'lmagent.md', markerFile: '.windsurf', forceCopy: true },
+    // Cline: usa .clinerules/ (directorio con .md files)
     { name: 'Cline', value: 'cline', rulesDir: '.clinerules', skillsDir: '.cline/skills', workflowsDir: '.cline/workflows', configFile: null, bridgeFile: '00-lmagent.md', markerFile: '.clinerules', forceCopy: true },
     { name: 'Roo Code', value: 'roo', rulesDir: '.clinerules', skillsDir: '.roo/skills', workflowsDir: '.roo/workflows', configFile: null, bridgeFile: '00-lmagent.md', markerFile: '.roo', forceCopy: true },
+    // GitHub Copilot: usa .github/copilot-instructions.md + .github/instructions/*.md
     { name: 'VSCode Copilot', value: 'vscode', rulesDir: '.github/instructions', skillsDir: '.github/skills', workflowsDir: '.github/workflows', configFile: '.github/copilot-instructions.md', bridgeFile: null, markerFile: '.vscode' },
     { name: 'Trae', value: 'trae', rulesDir: '.trae/rules', skillsDir: '.trae/skills', workflowsDir: '.trae/workflows', configFile: null, bridgeFile: 'lmagent.md', markerFile: '.trae', forceCopy: true },
+    // Claude Code: usa CLAUDE.md (raíz) + .claude/rules/ + .claude/skills/
     { name: 'Claude Code', value: 'claude', rulesDir: '.claude/rules', skillsDir: '.claude/skills', workflowsDir: '.claude/workflows', configFile: 'CLAUDE.md', bridgeFile: null, markerFile: '.claude', forceCopy: true },
     { name: 'Zed', value: 'zed', rulesDir: '.rules', skillsDir: '.rules/skills', workflowsDir: '.rules/workflows', configFile: null, bridgeFile: 'lmagent.md', markerFile: '.zed' },
 
     // --- Agentes CLI & Autónomos ---
     { name: 'Amp / Kimi / Replit', value: 'amp', rulesDir: '.agents/rules', skillsDir: '.agents/skills', workflowsDir: '.agents/workflows', configFile: null, bridgeFile: null, markerFile: '.agents' },
-    { name: 'Antigravity', value: 'antigravity', rulesDir: '.agent/rules', skillsDir: '.agent/skills', workflowsDir: '.agent/workflows', configFile: null, bridgeFile: null, markerFile: '.agent' },
+    // Antigravity (Google Deepmind): usa GEMINI.md (raíz) + .agent/skills/ + .agent/rules/
+    { name: 'Antigravity', value: 'antigravity', rulesDir: '.agent/rules', skillsDir: '.agent/skills', workflowsDir: '.agent/workflows', configFile: 'GEMINI.md', bridgeFile: null, markerFile: '.agent' },
     { name: 'Augment', value: 'augment', rulesDir: '.augment/rules', skillsDir: '.augment/skills', workflowsDir: '.augment/workflows', configFile: null, bridgeFile: null, markerFile: '.augment' },
-    { name: 'Gemini CLI', value: 'gemini', rulesDir: '.agents/rules', skillsDir: '.agents/skills', workflowsDir: '.agents/workflows', configFile: null, bridgeFile: null, markerFile: '.gemini' },
+    // Gemini CLI: usa GEMINI.md (raíz) + .gemini/skills/ (oficial) o .agents/skills/ (fallback)
+    { name: 'Gemini CLI', value: 'gemini', rulesDir: '.gemini/rules', skillsDir: '.gemini/skills', workflowsDir: '.gemini/workflows', configFile: 'GEMINI.md', bridgeFile: null, markerFile: '.gemini' },
     { name: 'OpenClaw / Envoid', value: 'openclaw', rulesDir: 'rules', skillsDir: 'skills', workflowsDir: 'workflows', configFile: 'openclaw.json', bridgeFile: null, markerFile: 'openclaw.json' },
     { name: 'CodeBuddy', value: 'codebuddy', rulesDir: '.codebuddy/rules', skillsDir: '.codebuddy/skills', workflowsDir: '.codebuddy/workflows', configFile: null, bridgeFile: null, markerFile: '.codebuddy', forceCopy: true },
     { name: 'Codex', value: 'codex', rulesDir: '.codex/rules', skillsDir: '.codex/skills', workflowsDir: '.codex/workflows', configFile: null, bridgeFile: null, markerFile: '.codex' },
@@ -161,7 +170,8 @@ function arePathsEqual(p1, p2) {
     return path.resolve(p1).toLowerCase() === path.resolve(p2).toLowerCase();
 }
 
-// Helper to deploy AGENTS.md and CLAUDE.md to project root
+// Helper to deploy AGENTS.md, CLAUDE.md y GEMINI.md to project root
+// Los archivos con versionTemplate:true tienen {{VERSION}} que se reemplaza dinámicamente
 async function deployCorePillars(options, projectRoot) {
     console.log(chalk.bold('\n🚀 Desplegando Pilares de Inteligencia (Contexto Root):'));
     for (const file of INIT_FILES) {
@@ -174,18 +184,22 @@ async function deployCorePillars(options, projectRoot) {
                 shouldCopy = true;
                 console.log(`  ${chalk.green('✔')} ${file.src} (Creado en la raíz)`);
             } else {
-                if (options.force) {
+                // Si ya existe pero tiene versión vieja, actualizar automáticamente
+                const existingContent = fs.readFileSync(destPath, 'utf8');
+                const hasOldVersion = existingContent.includes('{{VERSION}}') ||
+                    (file.versionTemplate && !existingContent.includes(`v${PKG_VERSION}`));
+
+                if (options.force || hasOldVersion) {
                     shouldCopy = true;
-                    console.log(`  ${chalk.yellow('✎')} ${file.src} (Sobrescribiendo por --force)`);
+                    const reason = hasOldVersion ? 'Actualizando versión' : 'Sobrescribiendo por --force';
+                    console.log(`  ${chalk.yellow('✎')} ${file.src} (${reason})`);
                 } else if (options.yes) {
-                    // En modo --yes, si ya existe, NO sobrescribimos para no borrar personalización del usuario
-                    // PERO informamos.
-                    console.log(`  ${chalk.blue('ℹ')} ${file.src} ya existe (Manteniendo versión local)`);
+                    console.log(`  ${chalk.blue('ℹ')} ${file.src} ya existe v${PKG_VERSION} (OK)`);
                 } else {
                     const answer = await inquirer.prompt([{
                         type: 'confirm',
                         name: 'overwrite',
-                        message: `⚠️  ${file.src} ya existe en la raíz. ¿Deseas actualizarlo/sobrescribirlo?`,
+                        message: `⚠️  ${file.src} ya existe. ¿Deseas actualizarlo?`,
                         default: false
                     }]);
                     shouldCopy = answer.overwrite;
@@ -194,7 +208,12 @@ async function deployCorePillars(options, projectRoot) {
             }
 
             if (shouldCopy) {
-                fs.copyFileSync(srcPath, destPath);
+                let content = fs.readFileSync(srcPath, 'utf8');
+                // Inyectar versión dinámica si el archivo usa template
+                if (file.versionTemplate) {
+                    content = content.replace(/\{\{VERSION\}\}/g, PKG_VERSION);
+                }
+                fs.writeFileSync(destPath, content, 'utf8');
             }
         }
     }
@@ -285,7 +304,11 @@ async function runInstall(options) {
                 (ide.value === 'windsurf' && fs.existsSync(path.join(userHome, '.windsurf'))) ||
                 (ide.value === 'trae' && fs.existsSync(path.join(userHome, '.trae'))) ||
                 (ide.value === 'cline' && fs.existsSync(path.join(userHome, '.cline'))) ||
-                (ide.value === 'roo' && fs.existsSync(path.join(userHome, '.roo')));
+                (ide.value === 'roo' && fs.existsSync(path.join(userHome, '.roo'))) ||
+                // Gemini CLI: instala en ~/.gemini/ (no en el proyecto)
+                (ide.value === 'gemini' && fs.existsSync(path.join(userHome, '.gemini'))) ||
+                // Antigravity: instala en ~/.gemini/antigravity/
+                (ide.value === 'antigravity' && fs.existsSync(path.join(userHome, '.gemini', 'antigravity')));
 
             return inProject || inHome;
         });
