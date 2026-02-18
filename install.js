@@ -359,25 +359,48 @@ async function runInstall(options) {
         console.log('');
 
         // 3. Auto-Detect IDEs
+        // Mapa de rutas de instalación global por agente (donde el IDE instala sus archivos en ~/)
+        const HOME_PATHS = {
+            'cursor': ['.cursor'],
+            'windsurf': ['.windsurf'],
+            'cline': ['.vscode/extensions', '.cline'],          // Cline es extensión de VSCode
+            'roo': ['.vscode/extensions', '.roo'],            // Roo Code es extensión de VSCode
+            'vscode': ['.vscode'],
+            'trae': ['.trae'],
+            'claude': ['.claude'],
+            'zed': ['.config/zed', '.zed'],
+            'antigravity': ['.gemini/antigravity'],
+            'gemini': ['.gemini'],
+            'augment': ['.augment'],
+            'continue': ['.continue'],
+            'codex': ['.codex'],
+            'goose': ['.config/goose', '.goose'],
+            'junie': ['.junie'],
+            'kilo': ['.kilocode'],
+            'kiro': ['.kiro'],
+            'opencode': ['.opencode'],
+            'openhands': ['.openhands'],
+            'amp': ['.agents'],
+            'zencoder': ['.zencoder'],
+            'codebuddy': ['.codebuddy'],
+            'crush': ['.crush'],
+            'droid': ['.factory'],
+            'mux': ['.mux'],
+            'qwen': ['.qwen'],
+        };
+
         const detectedIdes = IDE_CONFIGS.filter(ide => {
-            if (ide.value === 'custom') return false; // Custom is never auto-detected
+            if (ide.value === 'custom' || ide.value === 'generic') return false;
 
-            // Check Project Root
-            const inProject = (ide.rulesDir && fs.existsSync(path.join(projectRoot, ide.rulesDir.split('/')[0]))) ||
-                (ide.markerFile && fs.existsSync(path.join(projectRoot, ide.markerFile)));
+            // Check Project Root: usar markerFile primero (más preciso), luego rulesDir como fallback
+            const markerInProject = ide.markerFile && fs.existsSync(path.join(projectRoot, ide.markerFile));
+            const rulesDirInProject = ide.rulesDir && fs.existsSync(path.join(projectRoot, ide.rulesDir));
+            const skillsDirInProject = ide.skillsDir && fs.existsSync(path.join(projectRoot, ide.skillsDir));
+            const inProject = markerInProject || rulesDirInProject || skillsDirInProject;
 
-            // Check User Home (Heuristic for installed IDEs)
-            const inHome = (ide.markerFile && fs.existsSync(path.join(userHome, ide.markerFile))) ||
-                (ide.value === 'vscode' && fs.existsSync(path.join(userHome, '.vscode'))) ||
-                (ide.value === 'cursor' && fs.existsSync(path.join(userHome, '.cursor'))) ||
-                (ide.value === 'windsurf' && fs.existsSync(path.join(userHome, '.windsurf'))) ||
-                (ide.value === 'trae' && fs.existsSync(path.join(userHome, '.trae'))) ||
-                (ide.value === 'cline' && fs.existsSync(path.join(userHome, '.cline'))) ||
-                (ide.value === 'roo' && fs.existsSync(path.join(userHome, '.roo'))) ||
-                // Gemini CLI: instala en ~/.gemini/ (no en el proyecto)
-                (ide.value === 'gemini' && fs.existsSync(path.join(userHome, '.gemini'))) ||
-                // Antigravity: instala en ~/.gemini/antigravity/
-                (ide.value === 'antigravity' && fs.existsSync(path.join(userHome, '.gemini', 'antigravity')));
+            // Check User Home: usar mapa explícito de rutas de instalación global
+            const homePaths = HOME_PATHS[ide.value] || [];
+            const inHome = homePaths.some(p => fs.existsSync(path.join(userHome, p)));
 
             return inProject || inHome;
         });
