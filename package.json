@@ -3,7 +3,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "3.1.6",
+  "version": "3.1.7",
   "files": [
     "install.js",
     "README.md",
@@ -11,7 +11,8 @@
     "AGENTS.md",
     "CLAUDE.md",
     "CONTRIBUTING.md",
-    ".agents"
+    ".agents",
+    "scripts"
   ],
   "engines": {
     "node": ">=22.0.0"
@@ -74,7 +75,7 @@
   "author": "Leandro Martín Alvarez (QuBiit)",
   "license": "MIT",
   "dependencies": {
-    "@qubiit/lmagent": "file:qubiit-lmagent-3.1.5.tgz",
+    "@qubiit/lmagent": "file:qubiit-lmagent-3.1.6.tgz",
     "boxen": "^8.0.1",
     "chalk": "^4.1.2",
     "commander": "^13.1.0",
