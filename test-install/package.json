@@ -11,6 +11,6 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "@qubiit/lmagent": "file:../qubiit-lmagent-3.1.8.tgz"
+    "@qubiit/lmagent": "file:../qubiit-lmagent-3.1.9.tgz"
   }
 }

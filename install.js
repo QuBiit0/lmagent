@@ -1508,9 +1508,13 @@ function getAllItemsFlat(dir) {
 }
 
 
-// Execute CLI
-if (process.argv.length === 2) {
-    runInstall({});
-} else {
-    program.parse(process.argv);
+// Execute CLI only if run directly
+if (require.main === module) {
+    if (process.argv.length === 2) {
+        runInstall({});
+    } else {
+        program.parse(process.argv);
+    }
 }
+
+module.exports = { IDE_CONFIGS };

@@ -75,7 +75,7 @@ function analyze(options = {}) {
     const projectRoot = process.cwd();
 
     // Detectar qué agentes están instalados
-    const IDE_CONFIGS = require('../install.js'); // No disponible como export, usamos detección manual
+    // Detectar qué agentes están instalados
     const agentDirs = [
         { name: 'Cursor', rulesDir: '.cursor/rules', skillsDir: '.cursor/skills' },
         { name: 'Claude Code', rulesDir: '.claude/rules', skillsDir: '.claude/skills' },
