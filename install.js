@@ -61,19 +61,19 @@ const IDE_CONFIGS = [
     { name: 'Augment', value: 'augment', rulesDir: '.augment/rules', skillsDir: '.augment/skills', workflowsDir: '.augment/workflows', configFile: null, bridgeFile: null, markerFile: '.augment' },
     // Gemini CLI: usa GEMINI.md (raíz) + .gemini/skills/ (oficial) o .agents/skills/ (fallback)
     { name: 'Gemini CLI', value: 'gemini', rulesDir: '.gemini/rules', skillsDir: '.gemini/skills', workflowsDir: '.gemini/workflows', configFile: 'GEMINI.md', bridgeFile: null, markerFile: '.gemini' },
-    { name: 'OpenClaw / Envoid', value: 'openclaw', rulesDir: 'rules', skillsDir: 'skills', workflowsDir: 'workflows', configFile: 'openclaw.json', bridgeFile: null, markerFile: 'openclaw.json' },
+    { name: 'OpenClaw / Envoid', value: 'openclaw', rulesDir: 'rules', skillsDir: 'skills', workflowsDir: 'workflows', configFile: 'openclaw.json', configTemplate: 'openclaw.json', bridgeFile: null, markerFile: 'openclaw.json' },
     { name: 'CodeBuddy', value: 'codebuddy', rulesDir: '.codebuddy/rules', skillsDir: '.codebuddy/skills', workflowsDir: '.codebuddy/workflows', configFile: null, bridgeFile: null, markerFile: '.codebuddy', forceCopy: true },
     // Codex CLI (OpenAI): usa AGENTS.md en raíz + .codex/ como directorio de config
     { name: 'Codex', value: 'codex', rulesDir: '.codex', skillsDir: '.codex/skills', workflowsDir: '.codex/workflows', configFile: 'AGENTS.md', bridgeFile: null, markerFile: '.codex' },
     { name: 'Command Code', value: 'command-code', rulesDir: '.commandcode/rules', skillsDir: '.commandcode/skills', workflowsDir: '.commandcode/workflows', configFile: null, bridgeFile: null, markerFile: '.commandcode' },
     // Continue: soporta .continuerules (raíz) + .continue/rules/ (directorio)
-    { name: 'Continue', value: 'continue', rulesDir: '.continue/rules', skillsDir: '.continue/skills', workflowsDir: '.continue/workflows', configFile: '.continuerules', bridgeFile: '00-lmagent.md', markerFile: '.continue' },
+    { name: 'Continue', value: 'continue', rulesDir: '.continue/rules', skillsDir: '.continue/skills', workflowsDir: '.continue/workflows', configFile: '.continuerules', configTemplate: 'continuerules.md', bridgeFile: '00-lmagent.md', markerFile: '.continue' },
     { name: 'Crush', value: 'crush', rulesDir: '.crush/rules', skillsDir: '.crush/skills', workflowsDir: '.crush/workflows', configFile: null, bridgeFile: null, markerFile: '.crush' },
     { name: 'Droid', value: 'droid', rulesDir: '.factory/rules', skillsDir: '.factory/skills', workflowsDir: '.factory/workflows', configFile: null, bridgeFile: null, markerFile: '.factory' },
     // Goose (Block): usa .goosehints en raíz para instrucciones al agente
-    { name: 'Goose', value: 'goose', rulesDir: '.goose', skillsDir: '.goose/skills', workflowsDir: '.goose/workflows', configFile: '.goosehints', bridgeFile: null, markerFile: '.goose' },
+    { name: 'Goose', value: 'goose', rulesDir: '.goose', skillsDir: '.goose/skills', workflowsDir: '.goose/workflows', configFile: '.goosehints', configTemplate: 'goosehints.md', bridgeFile: null, markerFile: '.goose' },
     // Junie (JetBrains): usa .junie/guidelines.md como archivo de instrucciones
-    { name: 'Junie', value: 'junie', rulesDir: '.junie', skillsDir: '.junie/skills', workflowsDir: '.junie/workflows', configFile: '.junie/guidelines.md', bridgeFile: null, markerFile: '.junie' },
+    { name: 'Junie', value: 'junie', rulesDir: '.junie', skillsDir: '.junie/skills', workflowsDir: '.junie/workflows', configFile: '.junie/guidelines.md', configTemplate: 'junie-guidelines.md', bridgeFile: null, markerFile: '.junie' },
     { name: 'iFlow CLI', value: 'iflow', rulesDir: '.iflow/rules', skillsDir: '.iflow/skills', workflowsDir: '.iflow/workflows', configFile: null, bridgeFile: null, markerFile: '.iflow' },
     { name: 'Kilo Code', value: 'kilo', rulesDir: '.kilocode/rules', skillsDir: '.kilocode/skills', workflowsDir: '.kilocode/workflows', configFile: null, bridgeFile: null, markerFile: '.kilocode' },
     { name: 'Kiro CLI', value: 'kiro', rulesDir: '.kiro/rules', skillsDir: '.kiro/skills', workflowsDir: '.kiro/workflows', configFile: null, bridgeFile: null, markerFile: '.kiro' },
@@ -83,7 +83,7 @@ const IDE_CONFIGS = [
     { name: 'Mux', value: 'mux', rulesDir: '.mux/rules', skillsDir: '.mux/skills', workflowsDir: '.mux/workflows', configFile: null, bridgeFile: null, markerFile: '.mux' },
     { name: 'OpenCode', value: 'opencode', rulesDir: '.opencode/rules', skillsDir: '.opencode/skills', workflowsDir: '.opencode/workflows', configFile: null, bridgeFile: null, markerFile: '.opencode' },
     // OpenHands: usa .openhands/microagents/repo.md para instrucciones del repo
-    { name: 'OpenHands', value: 'openhands', rulesDir: '.openhands/microagents', skillsDir: '.openhands/skills', workflowsDir: '.openhands/workflows', configFile: '.openhands/microagents/repo.md', bridgeFile: null, markerFile: '.openhands' },
+    { name: 'OpenHands', value: 'openhands', rulesDir: '.openhands/microagents', skillsDir: '.openhands/skills', workflowsDir: '.openhands/workflows', configFile: '.openhands/microagents/repo.md', configTemplate: 'openhands-repo.md', bridgeFile: null, markerFile: '.openhands' },
     { name: 'Pi', value: 'pi', rulesDir: '.pi/rules', skillsDir: '.pi/skills', workflowsDir: '.pi/workflows', configFile: null, bridgeFile: null, markerFile: '.pi' },
     { name: 'Qoder', value: 'qoder', rulesDir: '.qoder/rules', skillsDir: '.qoder/skills', workflowsDir: '.qoder/workflows', configFile: null, bridgeFile: null, markerFile: '.qoder' },
     { name: 'Qwen Code', value: 'qwen', rulesDir: '.qwen/rules', skillsDir: '.qwen/skills', workflowsDir: '.qwen/workflows', configFile: null, bridgeFile: null, markerFile: '.qwen' },
@@ -360,15 +360,20 @@ async function runInstall(options) {
 
         // 3. Auto-Detect IDEs
         // Mapa de rutas de instalación global por agente (donde el IDE instala sus archivos en ~/)
+        // HOME_PATHS: rutas de instalación global de cada agente en el sistema del usuario
+        // Cubre los 37 agentes soportados. Se verifica si alguna de las rutas existe en ~/
         const HOME_PATHS = {
+            // IDEs principales
             'cursor': ['.cursor'],
             'windsurf': ['.windsurf'],
-            'cline': ['.vscode/extensions', '.cline'],          // Cline es extensión de VSCode
-            'roo': ['.vscode/extensions', '.roo'],            // Roo Code es extensión de VSCode
+            'cline': ['.vscode/extensions', '.cline'],
+            'roo': ['.vscode/extensions', '.roo'],
             'vscode': ['.vscode'],
             'trae': ['.trae'],
+            'trae-cn': ['.trae-cn', '.trae'],
             'claude': ['.claude'],
             'zed': ['.config/zed', '.zed'],
+            // Agentes CLI & autónomos
             'antigravity': ['.gemini/antigravity'],
             'gemini': ['.gemini'],
             'augment': ['.augment'],
@@ -387,6 +392,18 @@ async function runInstall(options) {
             'droid': ['.factory'],
             'mux': ['.mux'],
             'qwen': ['.qwen'],
+            // Agentes menores / nicho
+            'openclaw': ['.config/openclaw', '.openclaw'],
+            'command-code': ['.commandcode'],
+            'iflow': ['.iflow'],
+            'kode': ['.kode'],
+            'mcpjam': ['.mcpjam'],
+            'mistral': ['.vibe', '.mistral'],
+            'pi': ['.pi'],
+            'qoder': ['.qoder'],
+            'neovate': ['.neovate'],
+            'pochi': ['.pochi'],
+            'adal': ['.adal'],
         };
 
         const detectedIdes = IDE_CONFIGS.filter(ide => {
@@ -598,9 +615,26 @@ async function runInstall(options) {
                 const relativeCatalogPath = getRelLink(ide.configFile, 'AGENTS.md');
                 const relativeContextPath = getRelLink(ide.configFile, 'CLAUDE.md');
 
-                // console.log(chalk.bold(`\nConfiguring ${ide.name} auto-detect:`));
-                try {
-                    let content = `
+                // Usar template específico del agente si existe, si no usar contenido genérico
+                const AGENT_CONFIGS_TEMPLATE_DIR = path.join(__dirname, '.agents', 'templates', 'agent-configs');
+                const templateFile = ide.configTemplate
+                    ? path.join(AGENT_CONFIGS_TEMPLATE_DIR, ide.configTemplate)
+                    : path.join(AGENT_CONFIGS_TEMPLATE_DIR, '_generic.md');
+
+                let content;
+                if (fs.existsSync(templateFile) && !ide.configFile.endsWith('.json')) {
+                    // Usar template del archivo, inyectando VERSION
+                    content = fs.readFileSync(templateFile, 'utf8')
+                        .replace(/\{\{VERSION\}\}/g, PKG_VERSION)
+                        .replace(/\{\{MAJOR\}\}/g, PKG_VERSION.split('.')[0]);
+                } else if (ide.configFile.endsWith('.json') && fs.existsSync(templateFile)) {
+                    // JSON: usar template y reemplazar VERSION
+                    content = fs.readFileSync(templateFile, 'utf8')
+                        .replace(/\{\{VERSION\}\}/g, PKG_VERSION)
+                        .replace(/\{\{MAJOR\}\}/g, PKG_VERSION.split('.')[0]);
+                } else {
+                    // Fallback: contenido genérico dinámico
+                    content = `
 # 🤖 LMAgent Framework v${PKG_VERSION}
 > Contexto Activo: Este proyecto utiliza el estándar LMAgent V${PKG_VERSION.split('.')[0]}.
 
@@ -622,7 +656,9 @@ Use estos comandos para activar su rol. Para detalles, consulte \`AGENTS.md\`.
 
 !! SYSTEM NOTE: Read AGENTS.md to understand how to execute these roles. !!
 `;
-                    // If file exists, check if we need to append
+                }
+                // If file exists, check if we need to append
+                try {
                     if (fs.existsSync(configPath)) {
                         // Check if it's a directory (Edge case: Cline legacy folders)
                         if (fs.statSync(configPath).isDirectory()) {
@@ -654,10 +690,15 @@ Use estos comandos para activar su rol. Para detalles, consulte \`AGENTS.md\`.
             console.log(`  ${bootstrapStatus === 'CREATED' ? chalk.green('✔') : chalk.blue('ℹ')} ${ide.name} Bootstrap: ${bootstrapStatus}`);
         }
 
-        // 4.1 Generate Bridge Rule si el agente NO tiene configFile propio que ya apunte a AGENTS.md
-        // (evitar archivos redundantes cuando configFile ya cubre la auto-invocación)
-        const bridgeFile = ide.bridgeFile;
+        // 4.1 Generate Bridge Rule
+        // Si el agente NO tiene configFile, necesita un archivo puente en rulesDir para auto-invocarse.
+        // Si tampoco tiene bridgeFile definido, usamos '00-lmagent.md' como default genérico.
+        const bridgeFile = ide.bridgeFile || (ide.rulesDir && !ide.configFile ? '00-lmagent.md' : null);
         const needsBridge = bridgeFile && !ide.configFile;
+        // Garantizar que rulesDir existe siempre (para que el agente pueda detectar la instalación)
+        if (ide.rulesDir && !fs.existsSync(path.join(targetRoot, ide.rulesDir))) {
+            fs.mkdirSync(path.join(targetRoot, ide.rulesDir), { recursive: true });
+        }
         if (ide.rulesDir && needsBridge) {
             const bridgePath = path.join(targetRoot, ide.rulesDir, bridgeFile);
             const relativeBridgeToRoot = path.join(ide.rulesDir, bridgeFile);
