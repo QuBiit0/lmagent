@@ -227,11 +227,152 @@ program.command('skills')
         }
     });
 
+program.command('uninstall')
+    .description('Eliminar todos los archivos instalados por LMAgent del proyecto')
+    .option('-f, --force', 'No pedir confirmación, eliminar directamente')
+    .option('--all', 'También eliminar entry points raíz (CLAUDE.md, GEMINI.md, AGENTS.md)')
+    .action(async (options) => {
+        console.clear();
+        const branding = figlet.textSync('LMAGENT', { font: 'ANSI Shadow' });
+        console.log(gradient.pastel.multiline(branding));
+        console.log(gradient.cristal('                              Uninstall - Limpieza\n'));
+
+        const projectRoot = process.cwd();
+
+        // Detectar qué agentes están instalados en el proyecto
+        const installedIdes = IDE_CONFIGS.filter(ide => {
+            if (ide.value === 'custom' || ide.value === 'generic') return false;
+            const markerInProject = ide.markerFile && fs.existsSync(path.join(projectRoot, ide.markerFile));
+            const rulesDirInProject = ide.rulesDir && fs.existsSync(path.join(projectRoot, ide.rulesDir));
+            const skillsDirInProject = ide.skillsDir && fs.existsSync(path.join(projectRoot, ide.skillsDir));
+            return markerInProject || rulesDirInProject || skillsDirInProject;
+        });
+
+        if (installedIdes.length === 0) {
+            console.log(chalk.yellow('⚠️  No se detectó ningún agente instalado en este proyecto.'));
+            return;
+        }
+
+        console.log(chalk.bold('🔍 Agentes detectados en este proyecto:\n'));
+        for (const ide of installedIdes) {
+            const parts = [];
+            if (ide.rulesDir && fs.existsSync(path.join(projectRoot, ide.rulesDir))) parts.push(chalk.gray(ide.rulesDir));
+            if (ide.skillsDir && fs.existsSync(path.join(projectRoot, ide.skillsDir))) parts.push(chalk.gray(ide.skillsDir));
+            if (ide.configFile && fs.existsSync(path.join(projectRoot, ide.configFile))) parts.push(chalk.gray(ide.configFile));
+            console.log(`  ${chalk.cyan('•')} ${chalk.bold(ide.name)}: ${parts.join(', ')}`);
+        }
+
+        // Entry points raíz
+        const rootFiles = ['CLAUDE.md', 'GEMINI.md', 'AGENTS.md', '.cursorrules', '.windsurfrules', '.continuerules', '.goosehints'];
+        const existingRootFiles = rootFiles.filter(f => fs.existsSync(path.join(projectRoot, f)));
+
+        if (options.all && existingRootFiles.length > 0) {
+            console.log(chalk.bold('\n📄 Entry points raíz que también se eliminarán:'));
+            for (const f of existingRootFiles) {
+                console.log(`  ${chalk.red('•')} ${f}`);
+            }
+        }
+
+        console.log('');
+
+        if (!options.force) {
+            const { confirm } = await inquirer.prompt([{
+                type: 'confirm',
+                name: 'confirm',
+                message: chalk.red(`⚠️  ¿Eliminar todos los archivos de LMAgent de este proyecto? Esta acción no se puede deshacer.`),
+                default: false
+            }]);
+            if (!confirm) {
+                console.log(chalk.gray('Cancelado.'));
+                return;
+            }
+        }
+
+        console.log('');
+        let removed = 0;
+        let errors = 0;
+
+        // Eliminar directorios y archivos de cada agente
+        for (const ide of installedIdes) {
+            const toRemove = [];
+
+            // Directorios del agente (skills, rules, workflows) — solo si son específicos del agente
+            // No eliminar directorios genéricos como .github, rules/, skills/ que pueden tener otros usos
+            const agentSpecificDirs = [ide.skillsDir, ide.workflowsDir];
+            if (ide.rulesDir && !['rules', '.github/instructions'].includes(ide.rulesDir)) {
+                agentSpecificDirs.push(ide.rulesDir);
+            }
+
+            // Determinar el directorio raíz del agente (ej: .cursor, .windsurf, .claude)
+            const agentRootDir = ide.markerFile && !ide.markerFile.includes('.') ? null
+                : ide.rulesDir ? ide.rulesDir.split('/')[0] : null;
+            if (agentRootDir && agentRootDir.startsWith('.') && fs.existsSync(path.join(projectRoot, agentRootDir))) {
+                // Eliminar el directorio raíz completo del agente
+                toRemove.push({ path: path.join(projectRoot, agentRootDir), type: 'dir', label: agentRootDir + '/' });
+            } else {
+                // Eliminar subdirectorios individualmente
+                for (const dir of agentSpecificDirs) {
+                    if (dir && fs.existsSync(path.join(projectRoot, dir))) {
+                        toRemove.push({ path: path.join(projectRoot, dir), type: 'dir', label: dir + '/' });
+                    }
+                }
+            }
+
+            // Archivos de configuración específicos del agente (markerFile si es un archivo)
+            if (ide.markerFile && ide.markerFile.includes('.') && fs.existsSync(path.join(projectRoot, ide.markerFile))) {
+                const markerStat = fs.statSync(path.join(projectRoot, ide.markerFile));
+                if (markerStat.isFile()) {
+                    toRemove.push({ path: path.join(projectRoot, ide.markerFile), type: 'file', label: ide.markerFile });
+                }
+            }
+
+            for (const item of toRemove) {
+                try {
+                    if (item.type === 'dir') {
+                        fs.rmSync(item.path, { recursive: true, force: true });
+                    } else {
+                        fs.unlinkSync(item.path);
+                    }
+                    console.log(`  ${chalk.red('✘')} ${ide.name}: ${chalk.gray(item.label)} eliminado`);
+                    removed++;
+                } catch (e) {
+                    console.error(`  ${chalk.red('❌')} Error eliminando ${item.label}: ${e.message}`);
+                    errors++;
+                }
+            }
+        }
+
+        // Eliminar entry points raíz si --all
+        if (options.all) {
+            for (const f of existingRootFiles) {
+                try {
+                    fs.unlinkSync(path.join(projectRoot, f));
+                    console.log(`  ${chalk.red('✘')} ${chalk.gray(f)} eliminado`);
+                    removed++;
+                } catch (e) {
+                    console.error(`  ${chalk.red('❌')} Error eliminando ${f}: ${e.message}`);
+                    errors++;
+                }
+            }
+        }
+
+        console.log('');
+        if (errors === 0) {
+            console.log(gradient.pastel(`\n✨ Limpieza completada. ${removed} elemento(s) eliminado(s).\n`));
+            if (!options.all) {
+                console.log(chalk.dim('   💡 Usa `lmagent uninstall --all` para también eliminar CLAUDE.md, GEMINI.md y AGENTS.md.'));
+            }
+        } else {
+            console.log(chalk.yellow(`\n⚠️  ${removed} eliminado(s), ${errors} error(es).\n`));
+        }
+    });
+
 if (process.argv.length === 2) {
     runInstall({});
 } else {
     program.parse();
 }
+
 
 // Helper for Windows-proof path comparison
 function arePathsEqual(p1, p2) {
