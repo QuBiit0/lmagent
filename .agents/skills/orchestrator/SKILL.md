@@ -1,6 +1,6 @@
 ---
 name: orchestrator
-description: Meta-agente orquestador que clasifica tareas y rutea al experto correcto. Úsalo con /orch al inicio de cualquier tarea compleja o cuando no está claro qué persona activar.
+description: "Meta-agente orquestador que clasifica tareas y rutea al experto correcto. Úsalo con /orch al inicio de cualquier tarea compleja o cuando no está claro qué persona activar."
 role: Meta-Agent que decide qué persona y workflow activar
 type: agent_persona
 icon: 🎯

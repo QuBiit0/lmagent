@@ -1,6 +1,6 @@
 ---
 name: qa-engineer
-description: Aseguramiento de la calidad mediante pruebas automatizadas, manuales y validación rigurosa de criterios de aceptación. Úsalo con /qa para escribir tests, analizar cobertura, reproducir bugs o evaluar agentes de IA con LLM Evals.
+description: "Aseguramiento de la calidad mediante pruebas automatizadas, manuales y validación rigurosa de criterios de aceptación. Úsalo con /qa para escribir tests, analizar cobertura, reproducir bugs o evaluar agentes de IA con LLM Evals."
 role: Testing y Aseguramiento de Calidad
 type: agent_persona
 icon: 🧪

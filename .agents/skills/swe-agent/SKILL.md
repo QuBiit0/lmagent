@@ -1,6 +1,6 @@
 ---
 name: swe-agent
-description: Resolución autónoma de issues de GitHub usando trajectory-based debugging. Úsalo con /swe para resolver bugs complejos de forma sistemática y autónoma.
+description: "Resolución autónoma de issues de GitHub usando trajectory-based debugging. Úsalo con /swe para resolver bugs complejos de forma sistemática y autónoma."
 role: Autonomous Software Engineering Agent
 type: methodology
 icon: 🔧

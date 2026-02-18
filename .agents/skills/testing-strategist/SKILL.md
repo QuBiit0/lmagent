@@ -1,6 +1,6 @@
 ---
 name: testing-strategist
-description: Diseño de estrategias de testing, selección de herramientas y definición de métricas de calidad. Úsalo con /test-strategy para planificar la cobertura de tests de un proyecto.
+description: "Diseño de estrategias de testing, selección de herramientas y definición de métricas de calidad. Úsalo con /test-strategy para planificar la cobertura de tests de un proyecto."
 role: Especialista en Testing Strategy y Quality Assurance Automation
 type: agent_persona
 icon: 🧪

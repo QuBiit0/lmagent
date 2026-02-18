@@ -1,6 +1,6 @@
 ---
 name: browser-agent
-description: Automatización de navegadores web, scraping, testing E2E y verificación visual de UIs. Úsalo con /browser para interactuar con páginas web, extraer datos o verificar flujos de usuario.
+description: "Automatización de navegadores web, scraping, testing E2E y verificación visual de UIs. Úsalo con /browser para interactuar con páginas web, extraer datos o verificar flujos de usuario."
 role: Automatización de Navegador para Agentes IA
 type: agent_persona
 icon: 🌐

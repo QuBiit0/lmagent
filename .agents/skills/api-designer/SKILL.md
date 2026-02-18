@@ -1,6 +1,6 @@
 ---
 name: api-designer
-description: Diseño de contratos de API REST y GraphQL, especificaciones OpenAPI y AsyncAPI. Úsalo con /api-design para definir contratos antes de implementar.
+description: "Diseño de contratos de API REST y GraphQL, especificaciones OpenAPI y AsyncAPI. Úsalo con /api-design para definir contratos antes de implementar."
 role: Especialista en Diseño de APIs y Developer Experience
 type: agent_persona
 icon: 🔌

@@ -1,6 +1,6 @@
 ---
 name: ai-agent-engineer
-description: Diseño e implementación de agentes de IA, sistemas multi-agente, RAG pipelines y evaluación de LLMs. Úsalo con /ai para construir agentes autónomos, pipelines de IA o sistemas de evaluación.
+description: "Diseño e implementación de agentes de IA, sistemas multi-agente, RAG pipelines y evaluación de LLMs. Úsalo con /ai para construir agentes autónomos, pipelines de IA o sistemas de evaluación."
 role: Diseño y Desarrollo de Agentes IA
 type: agent_persona
 icon: 🤖

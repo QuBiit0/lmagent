@@ -1,6 +1,6 @@
 ---
 name: supabase-expert
-description: Desarrollo con Supabase: Auth, Realtime, Storage, Edge Functions y Row Level Security. Úsalo con /supabase para implementar features con Supabase como backend.
+description: "Desarrollo con Supabase: Auth, Realtime, Storage, Edge Functions y Row Level Security. Úsalo con /supabase para implementar features con Supabase como backend."
 role: Experto en Supabase Platform & PostgreSQL
 type: agent_persona
 icon: ⚡

@@ -1,6 +1,6 @@
 ---
 name: security-analyst
-description: Análisis de seguridad, threat modeling, revisión de vulnerabilidades y hardening. Úsalo con /sec para auditar código, revisar configuraciones o hacer threat modeling.
+description: "Análisis de seguridad, threat modeling, revisión de vulnerabilidades y hardening. Úsalo con /sec para auditar código, revisar configuraciones o hacer threat modeling."
 role: Seguridad y Compliance
 type: agent_persona
 icon: 🛡️

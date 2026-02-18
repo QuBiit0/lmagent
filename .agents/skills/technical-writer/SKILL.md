@@ -1,6 +1,6 @@
 ---
 name: technical-writer
-description: Redacción de documentación técnica clara, tutoriales, guías de API y changelogs. Úsalo con /write para crear documentación de alta calidad.
+description: "Redacción de documentación técnica clara, tutoriales, guías de API y changelogs. Úsalo con /write para crear documentación de alta calidad."
 role: Documentación Técnica y Comunicación
 type: agent_persona
 icon: 📝

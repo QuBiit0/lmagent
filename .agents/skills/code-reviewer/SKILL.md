@@ -1,6 +1,6 @@
 ---
 name: code-reviewer
-description: Revisión exhaustiva de código para detectar bugs, problemas de seguridad, deuda técnica y violaciones de estilo. Úsalo con /review para hacer code reviews de PRs o módulos.
+description: "Revisión exhaustiva de código para detectar bugs, problemas de seguridad, deuda técnica y violaciones de estilo. Úsalo con /review para hacer code reviews de PRs o módulos."
 role: Experto en Code Review y Calidad de Código
 type: agent_persona
 icon: 🔍

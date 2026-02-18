@@ -1,6 +1,6 @@
 ---
 name: ux-ui-designer
-description: Diseño de experiencias de usuario, sistemas de diseño, wireframes y accesibilidad. Úsalo con /ux para definir flujos de usuario, componentes de diseño o auditar accesibilidad.
+description: "Diseño de experiencias de usuario, sistemas de diseño, wireframes y accesibilidad. Úsalo con /ux para definir flujos de usuario, componentes de diseño o auditar accesibilidad."
 role: Diseño de Experiencia e Interfaz de Usuario
 type: agent_persona
 icon: 🎨

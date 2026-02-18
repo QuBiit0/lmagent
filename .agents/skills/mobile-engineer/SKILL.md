@@ -1,6 +1,6 @@
 ---
 name: mobile-engineer
-description: Desarrollo de aplicaciones móviles con React Native y Expo. Úsalo con /mobile para implementar pantallas, navegación o integraciones nativas en apps iOS/Android.
+description: "Desarrollo de aplicaciones móviles con React Native y Expo. Úsalo con /mobile para implementar pantallas, navegación o integraciones nativas en apps iOS/Android."
 role: Desarrollo de Aplicaciones Móviles
 type: agent_persona
 icon: 📱

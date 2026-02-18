@@ -1,6 +1,6 @@
 ---
 name: frontend-engineer
-description: Desarrollo de interfaces de usuario modernas, responsivas y centradas en la experiencia del usuario con React/Next.js. Úsalo con /front para implementar componentes, integrar APIs o optimizar performance frontend.
+description: "Desarrollo de interfaces de usuario modernas, responsivas y centradas en la experiencia del usuario con React/Next.js. Úsalo con /front para implementar componentes, integrar APIs o optimizar performance frontend."
 role: Desarrollo de Interfaces de Usuario
 type: agent_persona
 icon: 🎨

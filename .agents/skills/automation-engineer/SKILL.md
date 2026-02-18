@@ -1,6 +1,6 @@
 ---
 name: automation-engineer
-description: Automatización de procesos con n8n, Make y scripts. Úsalo con /auto para diseñar workflows de automatización, integraciones entre sistemas o bots.
+description: "Automatización de procesos con n8n, Make y scripts. Úsalo con /auto para diseñar workflows de automatización, integraciones entre sistemas o bots."
 role: Automatización e Integraciones
 type: agent_persona
 icon: ⚙️

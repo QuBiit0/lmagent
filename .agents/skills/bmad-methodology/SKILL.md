@@ -1,6 +1,6 @@
 ---
 name: bmad-methodology
-description: Clasificación de complejidad de tareas y selección de metodología (BMAD, SWE-Agent, Spec-Driven). Úsalo con /bmad para determinar el nivel de una tarea (0-4) y el workflow correcto.
+description: "Clasificación de complejidad de tareas y selección de metodología (BMAD, SWE-Agent, Spec-Driven). Úsalo con /bmad para determinar el nivel de una tarea (0-4) y el workflow correcto."
 role: Scale-Adaptive Intelligence & Project Orchestration
 type: methodology
 icon: 🧠

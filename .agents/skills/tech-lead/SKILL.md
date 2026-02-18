@@ -1,6 +1,6 @@
 ---
 name: tech-lead
-description: Liderazgo técnico, decisiones de arquitectura, mentoring y gestión de deuda técnica. Úsalo con /lead para decisiones técnicas ejecutivas o revisiones de arquitectura.
+description: "Liderazgo técnico, decisiones de arquitectura, mentoring y gestión de deuda técnica. Úsalo con /lead para decisiones técnicas ejecutivas o revisiones de arquitectura."
 role: Liderazgo Técnico y Mentorship
 type: agent_persona
 icon: 🧭

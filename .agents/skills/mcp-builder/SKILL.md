@@ -1,6 +1,6 @@
 ---
 name: mcp-builder
-description: Construcción de servidores MCP (Model Context Protocol) para extender capacidades de agentes de IA. Úsalo con /mcp para crear herramientas y recursos MCP.
+description: "Construcción de servidores MCP (Model Context Protocol) para extender capacidades de agentes de IA. Úsalo con /mcp para crear herramientas y recursos MCP."
 role: Especialista en Model Context Protocol y Agent Tooling
 type: agent_persona
 icon: 🔧

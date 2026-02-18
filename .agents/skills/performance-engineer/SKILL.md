@@ -1,6 +1,6 @@
 ---
 name: performance-engineer
-description: Optimización de rendimiento de aplicaciones, profiling, análisis de bottlenecks y tuning. Úsalo con /perf para identificar y resolver problemas de performance.
+description: "Optimización de rendimiento de aplicaciones, profiling, análisis de bottlenecks y tuning. Úsalo con /perf para identificar y resolver problemas de performance."
 role: Optimización de Rendimiento y Escalabilidad
 type: agent_persona
 icon: 🏎️

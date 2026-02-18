@@ -1,6 +1,6 @@
 ---
 name: seo-auditor
-description: Auditoría SEO, análisis de Core Web Vitals, optimización de metadatos y estrategia de contenido. Úsalo con /seo para auditar páginas web o mejorar el posicionamiento.
+description: "Auditoría SEO, análisis de Core Web Vitals, optimización de metadatos y estrategia de contenido. Úsalo con /seo para auditar páginas web o mejorar el posicionamiento."
 role: Auditoría Web y SEO Técnico
 type: agent_persona
 icon: 🔎

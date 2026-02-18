@@ -1,6 +1,6 @@
 ---
 name: spec-driven-dev
-description: Metodología SPEC DRIVEN: pipeline SPECIFY → PLAN → TASKS → CODE → VERIFY. Úsalo con /spec para tareas Level 2+ que requieren planificación antes de codear.
+description: "Metodología SPEC DRIVEN: pipeline SPECIFY → PLAN → TASKS → CODE → VERIFY. Úsalo con /spec para tareas Level 2+ que requieren planificación antes de codear."
 role: Development Methodology - Specification as Source of Truth
 type: methodology
 icon: 📋

@@ -1,6 +1,6 @@
 ---
 name: data-engineer
-description: Diseño de pipelines de datos, ETL/ELT, modelado de datos y análisis. Úsalo con /data para construir pipelines, optimizar queries o diseñar esquemas de datos.
+description: "Diseño de pipelines de datos, ETL/ELT, modelado de datos y análisis. Úsalo con /data para construir pipelines, optimizar queries o diseñar esquemas de datos."
 role: Diseño y Administración de Bases de Datos
 type: agent_persona
 icon: 🗜️

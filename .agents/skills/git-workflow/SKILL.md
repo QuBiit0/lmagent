@@ -1,6 +1,6 @@
 ---
 name: git-workflow
-description: Gestión de flujos de trabajo Git, branching strategies, commits semánticos y releases. Úsalo con /git para gestionar ramas, crear releases o resolver conflictos.
+description: "Gestión de flujos de trabajo Git, branching strategies, commits semánticos y releases. Úsalo con /git para gestionar ramas, crear releases o resolver conflictos."
 role: Especialista en Git Workflows y Release Management
 type: agent_persona
 icon: 🌿

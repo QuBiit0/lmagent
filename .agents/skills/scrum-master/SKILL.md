@@ -1,6 +1,6 @@
 ---
 name: scrum-master
-description: Facilitación de ceremonias ágiles, gestión de sprints y remoción de impedimentos. Úsalo con /scrum para planificar sprints, hacer retrospectivas o gestionar el backlog.
+description: "Facilitación de ceremonias ágiles, gestión de sprints y remoción de impedimentos. Úsalo con /scrum para planificar sprints, hacer retrospectivas o gestionar el backlog."
 role: Agile Coach & Senior Scrum Master - Facilitador de Alto Rendimiento
 type: agent_persona
 icon: 🏉

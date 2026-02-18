@@ -40,7 +40,7 @@ const INIT_DIRS = [
 const IDE_CONFIGS = [
     // --- IDEs Principales (Auto-Detectados) ---
     // Cursor: usa .cursor/rules/*.mdc (formato MDC con frontmatter)
-    { name: 'Cursor', value: 'cursor', rulesDir: '.cursor/rules', skillsDir: '.cursor/skills', workflowsDir: '.cursor/workflows', configFile: '.cursorrules', bridgeFile: 'lmagent.mdc', markerFile: '.cursorrules', forceCopy: true },
+    { name: 'Cursor', value: 'cursor', rulesDir: '.cursor/rules', skillsDir: '.cursor/rules/skills', workflowsDir: '.cursor/workflows', configFile: '.cursorrules', bridgeFile: 'lmagent.mdc', markerFile: '.cursorrules', forceCopy: true },
     // Windsurf Wave 8+: usa .windsurf/rules/*.md (directorio, NO .windsurfrules)
     { name: 'Windsurf', value: 'windsurf', rulesDir: '.windsurf/rules', skillsDir: '.windsurf/skills', workflowsDir: '.windsurf/workflows', configFile: null, bridgeFile: 'lmagent.md', markerFile: '.windsurf', forceCopy: true },
     // Cline: usa .clinerules/ (directorio con .md files)
@@ -902,12 +902,26 @@ Use estos comandos para activar su rol. Para detalles, consulte \`AGENTS.md\`.
 `;
             }
 
+            // CLEANUP: Legacy Cursor Skills Directory
+            // Since we moved skills to .cursor/rules/skills, we must remove .cursor/skills to avoid duplicates
+            if (ide.value === 'cursor') {
+                const legacySkillsDir = path.join(targetRoot, '.cursor/skills');
+                if (fs.existsSync(legacySkillsDir)) {
+                    try {
+                        fs.rmSync(legacySkillsDir, { recursive: true, force: true });
+                        console.log(`  ${chalk.yellow('🗑  Eliminado directorio obsoleto:')} .cursor / skills(Movido a.cursor / rules / skills)`);
+                    } catch (e) {
+                        console.error(chalk.red(`  ⚠️  No se pudo eliminar.cursor / skills: ${e.message} `));
+                    }
+                }
+            }
+
             try {
                 if (!fs.existsSync(path.dirname(bridgePath))) fs.mkdirSync(path.dirname(bridgePath), { recursive: true });
                 fs.writeFileSync(bridgePath, bridgeContent);
-                console.log(`  ${chalk.green('✔')} ${ide.name} Bridge Rule: ${bridgeFile}`);
+                console.log(`  ${chalk.green('✔')} ${ide.name} Bridge Rule: ${bridgeFile} `);
             } catch (e) {
-                console.error(chalk.red(`  ❌ Error creating bridge for ${ide.name}: ${e.message}`));
+                console.error(chalk.red(`  ❌ Error creating bridge for ${ide.name}: ${e.message} `));
             }
         }
         // 2. Install RULES (Files)
@@ -918,7 +932,7 @@ Use estos comandos para activar su rol. Para detalles, consulte \`AGENTS.md\`.
             if (arePathsEqual(targetDir, globalRulesDir)) {
                 console.log(chalk.blue(`  ℹ  ${ide.name}: Rules updated via Global Sync`));
             } else {
-                console.log(chalk.bold(`\nInstalling Rules to ${chalk.cyan(targetDir)}:`));
+                console.log(chalk.bold(`\nInstalling Rules to ${chalk.cyan(targetDir)}: `));
 
                 try {
                     if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
@@ -935,7 +949,7 @@ Use estos comandos para activar su rol. Para detalles, consulte \`AGENTS.md\`.
                         const legacyPath = path.join(targetDir, legacy);
                         if (fs.existsSync(legacyPath)) {
                             fs.unlinkSync(legacyPath);
-                            console.log(`  ${chalk.yellow('🗑  Eliminado regla obsoleta:')} ${legacy}`);
+                            console.log(`  ${chalk.yellow('🗑  Eliminado regla obsoleta:')} ${legacy} `);
                         }
                     }
 
@@ -945,11 +959,11 @@ Use estos comandos para activar su rol. Para detalles, consulte \`AGENTS.md\`.
 
                         if (fs.existsSync(srcVal)) {
                             await applyFile(srcVal, destVal, currentInstallMethod);
-                            console.log(`  ${chalk.blue('✔')} ${rule}`);
+                            console.log(`  ${chalk.blue('✔')} ${rule} `);
                         }
                     }
                 } catch (e) {
-                    console.error(chalk.red(`❌ Error installing rules for ${ide.name}: ${e.message}`));
+                    console.error(chalk.red(`❌ Error installing rules for ${ide.name}: ${e.message} `));
                 }
             }
         }
@@ -962,7 +976,7 @@ Use estos comandos para activar su rol. Para detalles, consulte \`AGENTS.md\`.
             if (arePathsEqual(targetDir, globalWorkflowsDir)) {
                 console.log(chalk.blue(`  ℹ  ${ide.name}: Workflows updated via Global Sync`));
             } else {
-                console.log(chalk.bold(`\nInstalling Workflows to ${chalk.cyan(targetDir)}:`));
+                console.log(chalk.bold(`\nInstalling Workflows to ${chalk.cyan(targetDir)}: `));
 
                 try {
                     if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
@@ -973,11 +987,11 @@ Use estos comandos para activar su rol. Para detalles, consulte \`AGENTS.md\`.
 
                         if (fs.existsSync(srcVal)) {
                             await applyFile(srcVal, destVal, currentInstallMethod);
-                            console.log(`  ${chalk.magenta('✔')} ${wf}`);
+                            console.log(`  ${chalk.magenta('✔')} ${wf} `);
                         }
                     }
                 } catch (e) {
-                    console.error(chalk.red(`❌ Error installing workflows for ${ide.name}: ${e.message}`));
+                    console.error(chalk.red(`❌ Error installing workflows for ${ide.name}: ${e.message} `));
                 }
             }
         }
@@ -992,16 +1006,16 @@ Use estos comandos para activar su rol. Para detalles, consulte \`AGENTS.md\`.
             const targetDir = path.join(targetRoot, parentDir, 'memory');
 
             if (arePathsEqual(targetDir, path.join(globalAgentDir, 'memory'))) {
-                // console.log(chalk.blue(`  ℹ  ${ide.name}: Memory updated via Global Sync`));
+                // console.log(chalk.blue(`  ℹ  ${ ide.name }: Memory updated via Global Sync`));
             } else {
-                // console.log(chalk.bold(`\nInstalling Memory to ${chalk.cyan(targetDir)}:`));
+                // console.log(chalk.bold(`\nInstalling Memory to ${ chalk.cyan(targetDir) }: `));
                 try {
                     if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
                     // Copy all contents of memory
                     copyRecursiveSync(SOURCE_MEMORY, targetDir, true); // Always copy/overwrite for now, or use applyFile for items if we want symlinks
-                    console.log(`  ${chalk.cyan('✔')} Memory (Context) optimized.`);
+                    console.log(`  ${chalk.cyan('✔')} Memory(Context) optimized.`);
                 } catch (e) {
-                    console.error(chalk.red(`❌ Error installing memory for ${ide.name}: ${e.message}`));
+                    console.error(chalk.red(`❌ Error installing memory for ${ide.name}: ${e.message} `));
                 }
             }
         }
@@ -1014,7 +1028,7 @@ Use estos comandos para activar su rol. Para detalles, consulte \`AGENTS.md\`.
 
     // Mensaje dinámico según agentes instalados
     const ideNames = targetIdes.map(i => i.name).join(', ');
-    console.log(chalk.cyan(`🤖  Agentes configurados: ${chalk.bold(ideNames)}`));
+    console.log(chalk.cyan(`🤖  Agentes configurados: ${chalk.bold(ideNames)} `));
     console.log('');
     console.log(chalk.white('    1. Abre tu agente en este proyecto — leerá el contexto automáticamente.'));
     console.log(chalk.white('    2. Usa los triggers para activar un rol específico:'));
@@ -1032,7 +1046,7 @@ async function applyFile(source, dest, method) {
 
     // Case-insensitive check for Windows compatibility
     if (srcPath.toLowerCase() === destPath.toLowerCase()) {
-        // console.log(chalk.gray(`    (Skipping self-install: ${path.basename(source)})`));
+        // console.log(chalk.gray(`    (Skipping self - install: ${ path.basename(source) })`));
         return;
     }
     if (fs.existsSync(dest) || (fs.existsSync(path.dirname(dest)) && fs.readdirSync(path.dirname(dest)).includes(path.basename(dest)))) {
@@ -1065,11 +1079,11 @@ async function applyFile(source, dest, method) {
                 }
                 const isWindows = os.platform() === 'win32';
                 const msg = isWindows && !isDir
-                    ? `(Symlink falló [Requiere Admin/DevMode en Win]. Copiado.)`
+                    ? `(Symlink falló[Requiere Admin / DevMode en Win].Copiado.)`
                     : `(Symlink falló, se usó copia)`;
-                console.log(chalk.yellow(`    ${msg}`));
+                console.log(chalk.yellow(`    ${msg} `));
             } catch (err) {
-                console.error(chalk.red(`    Error copiando ${path.basename(dest)}: ${err.message}`));
+                console.error(chalk.red(`    Error copiando ${path.basename(dest)}: ${err.message} `));
             }
         }
     } else {
@@ -1086,7 +1100,7 @@ function copyRecursiveSync(src, dest, overwrite) {
         try {
             fs.cpSync(src, dest, { recursive: true, force: overwrite, errorOnExist: false });
         } catch (e) {
-            console.error(chalk.red(`Error copying (cpSync) ${path.basename(src)}: ${e.message}`));
+            console.error(chalk.red(`Error copying(cpSync) ${path.basename(src)}: ${e.message} `));
             // Fallback manual implementation just in case
             if (fs.existsSync(src)) {
                 const stat = fs.statSync(src);
@@ -1145,7 +1159,7 @@ async function runInit(options) {
 
     const projectRoot = process.cwd();
     const targetRoot = projectRoot; // Fix for ReferenceError in runInit
-    console.log(chalk.cyan(`📦 Inicializando proyecto LMAgent en: ${chalk.bold(projectRoot)}\n`));
+    console.log(chalk.cyan(`📦 Inicializando proyecto LMAgent en: ${chalk.bold(projectRoot)} \n`));
 
     // Verificar si ya está inicializado
     const agentsExists = fs.existsSync(path.join(projectRoot, 'AGENTS.md'));
@@ -1176,7 +1190,7 @@ async function runInit(options) {
                 name: 'files',
                 message: 'Archivos de entry point a copiar:',
                 choices: INIT_FILES.map(f => ({
-                    name: `${f.src} - ${f.desc}`,
+                    name: `${f.src} - ${f.desc} `,
                     value: f.src,
                     checked: true
                 }))

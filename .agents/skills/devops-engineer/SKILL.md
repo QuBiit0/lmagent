@@ -1,6 +1,6 @@
 ---
 name: devops-engineer
-description: Configuración de CI/CD, infraestructura en la nube, contenedores y automatización de despliegues. Úsalo con /devops para Dockerfiles, pipelines de GitHub Actions, manifiestos de Kubernetes o configuración de monitoreo.
+description: "Configuración de CI/CD, infraestructura en la nube, contenedores y automatización de despliegues. Úsalo con /devops para Dockerfiles, pipelines de GitHub Actions, manifiestos de Kubernetes o configuración de monitoreo."
 role: Infrastructure, CI/CD y Operaciones
 type: agent_persona
 icon: 🚀

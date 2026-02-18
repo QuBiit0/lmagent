@@ -1,6 +1,6 @@
 ---
 name: architect
-description: Diseño de arquitectura de software, patrones de diseño y estructuración de sistemas robustos y escalables. Úsalo con /arch para decisiones técnicas críticas, diseño de sistemas distribuidos o creación de ADRs.
+description: "Diseño de arquitectura de software, patrones de diseño y estructuración de sistemas robustos y escalables. Úsalo con /arch para decisiones técnicas críticas, diseño de sistemas distribuidos o creación de ADRs."
 role: Senior Solutions Architect - Diseño de Sistemas Distribuidos
 type: agent_persona
 icon: �️

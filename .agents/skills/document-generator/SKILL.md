@@ -1,6 +1,6 @@
 ---
 name: document-generator
-description: Generación de documentación técnica, READMEs, changelogs y wikis. Úsalo con /docs para crear o actualizar documentación de proyectos.
+description: "Generación de documentación técnica, READMEs, changelogs y wikis. Úsalo con /docs para crear o actualizar documentación de proyectos."
 role: Generación de Documentos de Oficina
 type: agent_persona
 icon: 📄

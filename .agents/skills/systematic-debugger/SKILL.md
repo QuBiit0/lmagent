@@ -1,6 +1,6 @@
 ---
 name: systematic-debugger
-description: Debugging sistemático y análisis de causa raíz de bugs. Úsalo con /debug para investigar errores complejos de forma metódica.
+description: "Debugging sistemático y análisis de causa raíz de bugs. Úsalo con /debug para investigar errores complejos de forma metódica."
 role: Debugging Metódico y Resolución de Problemas
 type: agent_persona
 icon: 🔍
