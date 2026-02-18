@@ -1509,3 +1509,6 @@ function getAllItemsFlat(dir) {
     return results;
 }
 
+
+// Execute CLI
+program.parse(process.argv);
