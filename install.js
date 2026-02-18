@@ -47,7 +47,8 @@ const IDE_CONFIGS = [
     { name: 'Windsurf', value: 'windsurf', rulesDir: '.windsurf/rules', skillsDir: '.windsurf/skills', workflowsDir: '.windsurf/workflows', configFile: null, bridgeFile: 'lmagent.md', markerFile: '.windsurf', forceCopy: true },
     // Cline: usa .clinerules/ (directorio con .md files)
     { name: 'Cline', value: 'cline', rulesDir: '.clinerules', skillsDir: '.cline/skills', workflowsDir: '.cline/workflows', configFile: null, bridgeFile: '00-lmagent.md', markerFile: '.clinerules', forceCopy: true },
-    { name: 'Roo Code', value: 'roo', rulesDir: '.clinerules', skillsDir: '.roo/skills', workflowsDir: '.roo/workflows', configFile: null, bridgeFile: '00-lmagent.md', markerFile: '.roo', forceCopy: true },
+    // Roo Code: usa .roo/rules/ (NO .clinerules, que es de Cline)
+    { name: 'Roo Code', value: 'roo', rulesDir: '.roo/rules', skillsDir: '.roo/skills', workflowsDir: '.roo/workflows', configFile: null, bridgeFile: '00-lmagent.md', markerFile: '.roo', forceCopy: true },
     // GitHub Copilot: usa .github/copilot-instructions.md + .github/instructions/*.md
     { name: 'VSCode Copilot', value: 'vscode', rulesDir: '.github/instructions', skillsDir: '.github/skills', workflowsDir: '.github/workflows', configFile: '.github/copilot-instructions.md', bridgeFile: null, markerFile: '.vscode' },
     { name: 'Trae', value: 'trae', rulesDir: '.trae/rules', skillsDir: '.trae/skills', workflowsDir: '.trae/workflows', configFile: null, bridgeFile: 'lmagent.md', markerFile: '.trae', forceCopy: true },
@@ -64,13 +65,17 @@ const IDE_CONFIGS = [
     { name: 'Gemini CLI', value: 'gemini', rulesDir: '.gemini/rules', skillsDir: '.gemini/skills', workflowsDir: '.gemini/workflows', configFile: 'GEMINI.md', bridgeFile: null, markerFile: '.gemini' },
     { name: 'OpenClaw / Envoid', value: 'openclaw', rulesDir: 'rules', skillsDir: 'skills', workflowsDir: 'workflows', configFile: 'openclaw.json', bridgeFile: null, markerFile: 'openclaw.json' },
     { name: 'CodeBuddy', value: 'codebuddy', rulesDir: '.codebuddy/rules', skillsDir: '.codebuddy/skills', workflowsDir: '.codebuddy/workflows', configFile: null, bridgeFile: null, markerFile: '.codebuddy', forceCopy: true },
-    { name: 'Codex', value: 'codex', rulesDir: '.codex/rules', skillsDir: '.codex/skills', workflowsDir: '.codex/workflows', configFile: null, bridgeFile: null, markerFile: '.codex' },
+    // Codex CLI (OpenAI): usa AGENTS.md en raíz + .codex/ como directorio de config
+    { name: 'Codex', value: 'codex', rulesDir: '.codex', skillsDir: '.codex/skills', workflowsDir: '.codex/workflows', configFile: 'AGENTS.md', bridgeFile: null, markerFile: '.codex' },
     { name: 'Command Code', value: 'command-code', rulesDir: '.commandcode/rules', skillsDir: '.commandcode/skills', workflowsDir: '.commandcode/workflows', configFile: null, bridgeFile: null, markerFile: '.commandcode' },
-    { name: 'Continue', value: 'continue', rulesDir: '.continue/rules', skillsDir: '.continue/skills', workflowsDir: '.continue/workflows', configFile: null, bridgeFile: '00-lmagent.md', markerFile: '.continue' },
+    // Continue: soporta .continuerules (raíz) + .continue/rules/ (directorio)
+    { name: 'Continue', value: 'continue', rulesDir: '.continue/rules', skillsDir: '.continue/skills', workflowsDir: '.continue/workflows', configFile: '.continuerules', bridgeFile: '00-lmagent.md', markerFile: '.continue' },
     { name: 'Crush', value: 'crush', rulesDir: '.crush/rules', skillsDir: '.crush/skills', workflowsDir: '.crush/workflows', configFile: null, bridgeFile: null, markerFile: '.crush' },
     { name: 'Droid', value: 'droid', rulesDir: '.factory/rules', skillsDir: '.factory/skills', workflowsDir: '.factory/workflows', configFile: null, bridgeFile: null, markerFile: '.factory' },
-    { name: 'Goose', value: 'goose', rulesDir: '.goose/rules', skillsDir: '.goose/skills', workflowsDir: '.goose/workflows', configFile: null, bridgeFile: 'lmagent.md', markerFile: '.goose' },
-    { name: 'Junie', value: 'junie', rulesDir: '.junie/rules', skillsDir: '.junie/skills', workflowsDir: '.junie/workflows', configFile: null, bridgeFile: null, markerFile: '.junie' },
+    // Goose (Block): usa .goosehints en raíz para instrucciones al agente
+    { name: 'Goose', value: 'goose', rulesDir: '.goose', skillsDir: '.goose/skills', workflowsDir: '.goose/workflows', configFile: '.goosehints', bridgeFile: null, markerFile: '.goose' },
+    // Junie (JetBrains): usa .junie/guidelines.md como archivo de instrucciones
+    { name: 'Junie', value: 'junie', rulesDir: '.junie', skillsDir: '.junie/skills', workflowsDir: '.junie/workflows', configFile: '.junie/guidelines.md', bridgeFile: null, markerFile: '.junie' },
     { name: 'iFlow CLI', value: 'iflow', rulesDir: '.iflow/rules', skillsDir: '.iflow/skills', workflowsDir: '.iflow/workflows', configFile: null, bridgeFile: null, markerFile: '.iflow' },
     { name: 'Kilo Code', value: 'kilo', rulesDir: '.kilocode/rules', skillsDir: '.kilocode/skills', workflowsDir: '.kilocode/workflows', configFile: null, bridgeFile: null, markerFile: '.kilocode' },
     { name: 'Kiro CLI', value: 'kiro', rulesDir: '.kiro/rules', skillsDir: '.kiro/skills', workflowsDir: '.kiro/workflows', configFile: null, bridgeFile: null, markerFile: '.kiro' },
@@ -79,7 +84,8 @@ const IDE_CONFIGS = [
     { name: 'Mistral Vibe', value: 'mistral', rulesDir: '.vibe/rules', skillsDir: '.vibe/skills', workflowsDir: '.vibe/workflows', configFile: null, bridgeFile: null, markerFile: '.vibe' },
     { name: 'Mux', value: 'mux', rulesDir: '.mux/rules', skillsDir: '.mux/skills', workflowsDir: '.mux/workflows', configFile: null, bridgeFile: null, markerFile: '.mux' },
     { name: 'OpenCode', value: 'opencode', rulesDir: '.opencode/rules', skillsDir: '.opencode/skills', workflowsDir: '.opencode/workflows', configFile: null, bridgeFile: null, markerFile: '.opencode' },
-    { name: 'OpenHands', value: 'openhands', rulesDir: '.openhands/microagents', skillsDir: '.openhands/skills', workflowsDir: '.openhands/workflows', configFile: null, bridgeFile: 'repo.md', markerFile: '.openhands' },
+    // OpenHands: usa .openhands/microagents/repo.md para instrucciones del repo
+    { name: 'OpenHands', value: 'openhands', rulesDir: '.openhands/microagents', skillsDir: '.openhands/skills', workflowsDir: '.openhands/workflows', configFile: '.openhands/microagents/repo.md', bridgeFile: null, markerFile: '.openhands' },
     { name: 'Pi', value: 'pi', rulesDir: '.pi/rules', skillsDir: '.pi/skills', workflowsDir: '.pi/workflows', configFile: null, bridgeFile: null, markerFile: '.pi' },
     { name: 'Qoder', value: 'qoder', rulesDir: '.qoder/rules', skillsDir: '.qoder/skills', workflowsDir: '.qoder/workflows', configFile: null, bridgeFile: null, markerFile: '.qoder' },
     { name: 'Qwen Code', value: 'qwen', rulesDir: '.qwen/rules', skillsDir: '.qwen/skills', workflowsDir: '.qwen/workflows', configFile: null, bridgeFile: null, markerFile: '.qwen' },
