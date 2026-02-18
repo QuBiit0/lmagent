@@ -204,4 +204,4 @@ No marques una tarea como "Completada" hasta verificar:
 - [ ] **Estado**: ¿Actualizaste `task.md`?
 
 ---
-*LMAgent V3.1.1 - Complete Ecosystem Knowledge.*
+*LMAgent V3.1.3 - Complete Ecosystem Knowledge.*
