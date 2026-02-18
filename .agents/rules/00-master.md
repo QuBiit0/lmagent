@@ -1,6 +1,6 @@
 # 🚀 LMAgent Bootstrap — Instrucciones Iniciales
 
-> **Tipo**: `rule` | **Versión**: 3.1.7 | **Prioridad**: MÁXIMA
+> **Tipo**: `rule` | **Versión**: 3.1.8 | **Prioridad**: MÁXIMA
 > Esta regla se aplica **SIEMPRE** como primer paso antes de cualquier tarea.
 
 ---

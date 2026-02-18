@@ -373,8 +373,6 @@ if (process.argv.length === 2) {
     program.parse();
 }
 
-
-// Helper for Windows-proof path comparison
 function arePathsEqual(p1, p2) {
     if (!p1 || !p2) return false;
     return path.resolve(p1).toLowerCase() === path.resolve(p2).toLowerCase();
@@ -1511,4 +1509,8 @@ function getAllItemsFlat(dir) {
 
 
 // Execute CLI
-program.parse(process.argv);
+if (process.argv.length === 2) {
+    runInstall({});
+} else {
+    program.parse(process.argv);
+}
