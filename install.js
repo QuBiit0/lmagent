@@ -24,8 +24,6 @@ const PACKAGE_MEMORY_DIR = path.join(__dirname, '.agents', 'memory');
 // Archivos de proyecto que init copia a la raíz
 // Usan {{VERSION}} como placeholder; se reemplaza dinámicamente al instalar
 const INIT_FILES = [
-    { src: 'CLAUDE.md', desc: 'Instrucciones para Claude Code / Antigravity', versionTemplate: true },
-    { src: 'GEMINI.md', desc: 'Instrucciones para Gemini CLI / Antigravity', versionTemplate: true },
     { src: 'AGENTS.md', desc: 'Catálogo de capacidades LMAgent', versionTemplate: false },
 ];
 
@@ -40,39 +38,39 @@ const INIT_DIRS = [
 const IDE_CONFIGS = [
     // --- IDEs Principales (Auto-Detectados) ---
     // Cursor: usa .cursor/rules/*.mdc (formato MDC con frontmatter)
-    { name: 'Cursor', value: 'cursor', rulesDir: '.cursor/rules', skillsDir: '.cursor/rules/skills', workflowsDir: '.cursor/workflows', configFile: '.cursorrules', bridgeFile: 'lmagent.mdc', markerFile: '.cursorrules', forceCopy: true },
-    // Windsurf Wave 8+: usa .windsurf/rules/*.md (directorio, NO .windsurfrules)
+    { name: 'Cursor', value: 'cursor', rulesDir: '.cursor/rules', skillsDir: '.cursor/rules/skills', workflowsDir: '.cursor/workflows', configFile: null, bridgeFile: '00-lmagent.mdc', markerFile: '.cursorrules', forceCopy: true },
+    // Windsurf Wave 8+: usa .windsurf/rules/*.md
     { name: 'Windsurf', value: 'windsurf', rulesDir: '.windsurf/rules', skillsDir: '.windsurf/skills', workflowsDir: '.windsurf/workflows', configFile: null, bridgeFile: 'lmagent.md', markerFile: '.windsurf', forceCopy: true },
     // Cline: usa .clinerules/ (directorio con .md files)
     { name: 'Cline', value: 'cline', rulesDir: '.clinerules', skillsDir: '.cline/skills', workflowsDir: '.cline/workflows', configFile: null, bridgeFile: '00-lmagent.md', markerFile: '.clinerules', forceCopy: true },
-    // Roo Code: usa .roo/rules/ (NO .clinerules, que es de Cline)
+    // Roo Code: usa .roo/rules/
     { name: 'Roo Code', value: 'roo', rulesDir: '.roo/rules', skillsDir: '.roo/skills', workflowsDir: '.roo/workflows', configFile: null, bridgeFile: '00-lmagent.md', markerFile: '.roo', forceCopy: true },
     // GitHub Copilot: usa .github/copilot-instructions.md + .github/instructions/*.md
-    { name: 'VSCode Copilot', value: 'vscode', rulesDir: '.github/instructions', skillsDir: '.github/skills', workflowsDir: '.github/workflows', configFile: '.github/copilot-instructions.md', bridgeFile: null, markerFile: '.vscode' },
+    { name: 'VSCode Copilot', value: 'vscode', rulesDir: '.github/instructions', skillsDir: '.github/skills', workflowsDir: '.github/workflows', configFile: null, bridgeFile: null, markerFile: '.vscode' },
     { name: 'Trae', value: 'trae', rulesDir: '.trae/rules', skillsDir: '.trae/skills', workflowsDir: '.trae/workflows', configFile: null, bridgeFile: 'lmagent.md', markerFile: '.trae', forceCopy: true },
-    // Claude Code: usa CLAUDE.md (raíz) + .claude/rules/ + .claude/skills/
+    // Claude Code: usa .claude/
     { name: 'Claude Code', value: 'claude', rulesDir: '.claude/rules', skillsDir: '.claude/skills', workflowsDir: '.claude/workflows', configFile: 'CLAUDE.md', bridgeFile: null, markerFile: '.claude', forceCopy: true },
     { name: 'Zed', value: 'zed', rulesDir: '.rules', skillsDir: '.rules/skills', workflowsDir: '.rules/workflows', configFile: null, bridgeFile: 'lmagent.md', markerFile: '.zed' },
 
     // --- Agentes CLI & Autónomos ---
     { name: 'Amp / Kimi / Replit', value: 'amp', rulesDir: '.agents/rules', skillsDir: '.agents/skills', workflowsDir: '.agents/workflows', configFile: null, bridgeFile: null, markerFile: '.agents' },
-    // Antigravity (Google Deepmind): usa GEMINI.md (raíz) + .agent/skills/ + .agent/rules/
+    // Antigravity (Google Deepmind)
     { name: 'Antigravity', value: 'antigravity', rulesDir: '.agent/rules', skillsDir: '.agent/skills', workflowsDir: '.agent/workflows', configFile: 'GEMINI.md', bridgeFile: null, markerFile: '.agent' },
     { name: 'Augment', value: 'augment', rulesDir: '.augment/rules', skillsDir: '.augment/skills', workflowsDir: '.augment/workflows', configFile: null, bridgeFile: null, markerFile: '.augment' },
-    // Gemini CLI: usa GEMINI.md (raíz) + .gemini/skills/ (oficial) o .agents/skills/ (fallback)
+    // Gemini CLI
     { name: 'Gemini CLI', value: 'gemini', rulesDir: '.gemini/rules', skillsDir: '.gemini/skills', workflowsDir: '.gemini/workflows', configFile: 'GEMINI.md', bridgeFile: null, markerFile: '.gemini' },
     { name: 'OpenClaw / Envoid', value: 'openclaw', rulesDir: 'rules', skillsDir: 'skills', workflowsDir: 'workflows', configFile: 'openclaw.json', configTemplate: 'openclaw.json', bridgeFile: null, markerFile: 'openclaw.json' },
     { name: 'CodeBuddy', value: 'codebuddy', rulesDir: '.codebuddy/rules', skillsDir: '.codebuddy/skills', workflowsDir: '.codebuddy/workflows', configFile: null, bridgeFile: null, markerFile: '.codebuddy', forceCopy: true },
-    // Codex CLI (OpenAI): usa AGENTS.md en raíz + .codex/ como directorio de config
-    { name: 'Codex', value: 'codex', rulesDir: '.codex', skillsDir: '.codex/skills', workflowsDir: '.codex/workflows', configFile: 'AGENTS.md', bridgeFile: null, markerFile: '.codex' },
+    // Codex CLI (OpenAI)
+    { name: 'Codex', value: 'codex', rulesDir: '.codex', skillsDir: '.codex/skills', workflowsDir: '.codex/workflows', configFile: null, bridgeFile: null, markerFile: '.codex' },
     { name: 'Command Code', value: 'command-code', rulesDir: '.commandcode/rules', skillsDir: '.commandcode/skills', workflowsDir: '.commandcode/workflows', configFile: null, bridgeFile: null, markerFile: '.commandcode' },
-    // Continue: soporta .continuerules (raíz) + .continue/rules/ (directorio)
-    { name: 'Continue', value: 'continue', rulesDir: '.continue/rules', skillsDir: '.continue/skills', workflowsDir: '.continue/workflows', configFile: '.continuerules', configTemplate: 'continuerules.md', bridgeFile: '00-lmagent.md', markerFile: '.continue' },
+    // Continue
+    { name: 'Continue', value: 'continue', rulesDir: '.continue/rules', skillsDir: '.continue/skills', workflowsDir: '.continue/workflows', configFile: '.continue/continuerules', configTemplate: 'continuerules.md', bridgeFile: '00-lmagent.md', markerFile: '.continue' },
     { name: 'Crush', value: 'crush', rulesDir: '.crush/rules', skillsDir: '.crush/skills', workflowsDir: '.crush/workflows', configFile: null, bridgeFile: null, markerFile: '.crush' },
     { name: 'Droid', value: 'droid', rulesDir: '.factory/rules', skillsDir: '.factory/skills', workflowsDir: '.factory/workflows', configFile: null, bridgeFile: null, markerFile: '.factory' },
-    // Goose (Block): usa .goosehints en raíz para instrucciones al agente
-    { name: 'Goose', value: 'goose', rulesDir: '.goose', skillsDir: '.goose/skills', workflowsDir: '.goose/workflows', configFile: '.goosehints', configTemplate: 'goosehints.md', bridgeFile: null, markerFile: '.goose' },
-    // Junie (JetBrains): usa .junie/guidelines.md como archivo de instrucciones
+    // Goose (Block)
+    { name: 'Goose', value: 'goose', rulesDir: '.goose', skillsDir: '.goose/skills', workflowsDir: '.goose/workflows', configFile: '.goose/goosehints', configTemplate: 'goosehints.md', bridgeFile: null, markerFile: '.goose' },
+    // Junie (JetBrains)
     { name: 'Junie', value: 'junie', rulesDir: '.junie', skillsDir: '.junie/skills', workflowsDir: '.junie/workflows', configFile: '.junie/guidelines.md', configTemplate: 'junie-guidelines.md', bridgeFile: null, markerFile: '.junie' },
     { name: 'iFlow CLI', value: 'iflow', rulesDir: '.iflow/rules', skillsDir: '.iflow/skills', workflowsDir: '.iflow/workflows', configFile: null, bridgeFile: null, markerFile: '.iflow' },
     { name: 'Kilo Code', value: 'kilo', rulesDir: '.kilocode/rules', skillsDir: '.kilocode/skills', workflowsDir: '.kilocode/workflows', configFile: null, bridgeFile: null, markerFile: '.kilocode' },
@@ -82,7 +80,7 @@ const IDE_CONFIGS = [
     { name: 'Mistral Vibe', value: 'mistral', rulesDir: '.vibe/rules', skillsDir: '.vibe/skills', workflowsDir: '.vibe/workflows', configFile: null, bridgeFile: null, markerFile: '.vibe' },
     { name: 'Mux', value: 'mux', rulesDir: '.mux/rules', skillsDir: '.mux/skills', workflowsDir: '.mux/workflows', configFile: null, bridgeFile: null, markerFile: '.mux' },
     { name: 'OpenCode', value: 'opencode', rulesDir: '.opencode/rules', skillsDir: '.opencode/skills', workflowsDir: '.opencode/workflows', configFile: null, bridgeFile: null, markerFile: '.opencode' },
-    // OpenHands: usa .openhands/microagents/repo.md para instrucciones del repo
+    // OpenHands: usa .openhands/microagents/repo.md
     { name: 'OpenHands', value: 'openhands', rulesDir: '.openhands/microagents', skillsDir: '.openhands/skills', workflowsDir: '.openhands/workflows', configFile: '.openhands/microagents/repo.md', configTemplate: 'openhands-repo.md', bridgeFile: null, markerFile: '.openhands' },
     { name: 'Pi', value: 'pi', rulesDir: '.pi/rules', skillsDir: '.pi/skills', workflowsDir: '.pi/workflows', configFile: null, bridgeFile: null, markerFile: '.pi' },
     { name: 'Qoder', value: 'qoder', rulesDir: '.qoder/rules', skillsDir: '.qoder/skills', workflowsDir: '.qoder/workflows', configFile: null, bridgeFile: null, markerFile: '.qoder' },
@@ -94,7 +92,7 @@ const IDE_CONFIGS = [
     { name: 'AdaL', value: 'adal', rulesDir: '.adal/rules', skillsDir: '.adal/skills', workflowsDir: '.adal/workflows', configFile: null, bridgeFile: null, markerFile: '.adal' },
 
     // --- Opciones Especiales ---
-    { name: 'Generic/Other', value: 'generic', rulesDir: '.agents/rules', skillsDir: '.agents/skills', workflowsDir: '.agents/workflows', configFile: 'AGENTS.md', bridgeFile: null, markerFile: '.agents' },
+    { name: 'Generic/Other', value: 'generic', rulesDir: '.agents/rules', skillsDir: '.agents/skills', workflowsDir: '.agents/workflows', configFile: null, bridgeFile: null, markerFile: '.agents' },
     { name: 'Custom Path (Manual)', value: 'custom', rulesDir: '', skillsDir: '', workflowsDir: '', configFile: null, bridgeFile: null, markerFile: '' },
 ];
 
@@ -107,7 +105,6 @@ program.command('install')
     .description('Instalar skills, rules y workflows en el IDE del proyecto')
     .option('-f, --force', 'Forzar instalación')
     .option('-y, --yes', 'Instalar todo sin preguntar')
-    .option('-g, --global', 'También sincronizar al repositorio global (~/.agents/)')
     .action((options) => {
         runInstall(options);
     });
@@ -116,7 +113,6 @@ program.command('update')
     .description('Actualizar skills y reglas en el proyecto (alias de install)')
     .option('-f, --force', 'Forzar actualización')
     .option('-y, --yes', 'Instalar todo sin preguntar')
-    .option('-g, --global', 'También sincronizar al repositorio global (~/.agents/)')
     .action((options) => {
         console.log(chalk.blue('ℹ Iniciando actualización...'));
         runInstall(options);
@@ -435,25 +431,6 @@ async function runInstall(options) {
 
     const projectRoot = process.cwd();
     const userHome = os.homedir();
-    const globalAgentDir = path.join(userHome, '.agents');
-    const globalSkillsDir = path.join(globalAgentDir, 'skills');
-    const globalRulesDir = path.join(globalAgentDir, 'rules');
-    const globalWorkflowsDir = path.join(globalAgentDir, 'workflows');
-
-    // Sync global SOLO si se pasa --global explícitamente (evita doble lectura de contexto)
-    if (options.global) {
-        console.log(chalk.blue('🌐 Sincronizando al repositorio global (~/.agents/)...'));
-        try {
-            if (!fs.existsSync(globalAgentDir)) fs.mkdirSync(globalAgentDir, { recursive: true });
-            if (fs.existsSync(PACKAGE_SKILLS_DIR)) copyRecursiveSync(PACKAGE_SKILLS_DIR, globalSkillsDir, true);
-            if (fs.existsSync(PACKAGE_RULES_DIR)) copyRecursiveSync(PACKAGE_RULES_DIR, globalRulesDir, true);
-            if (fs.existsSync(PACKAGE_WORKFLOWS_DIR)) copyRecursiveSync(PACKAGE_WORKFLOWS_DIR, globalWorkflowsDir, true);
-            if (fs.existsSync(PACKAGE_MEMORY_DIR)) copyRecursiveSync(PACKAGE_MEMORY_DIR, path.join(globalAgentDir, 'memory'), true);
-            console.log(chalk.green('✔ Repositorio global sincronizado.'));
-        } catch (e) {
-            console.error(chalk.red(`❌ Error al sincronizar repositorio global: ${e.message}`));
-        }
-    }
 
     await deployCorePillars(options, projectRoot);
     const SOURCE_SKILLS = PACKAGE_SKILLS_DIR;
@@ -560,56 +537,17 @@ async function runInstall(options) {
 
             return inProject || inHome;
         });
-        // 4. Smart Prompt
-        let defaultChoice = detectedIdes.length > 0 ? detectedIdes.map(i => i.value) : ['cursor']; // Default to Cursor if nothing found
 
-        console.log(chalk.gray('--- Selección de Agentes ---'));
-        const ideAnswer = await inquirer.prompt([{
-            type: 'checkbox',
-            name: 'ides',
-            message: '¿Para qué Agentes instalar?',
-            choices: IDE_CONFIGS.map(ide => {
-                const isDetected = detectedIdes.some(d => d.value === ide.value);
-                return {
-                    name: ide.name + (isDetected ? chalk.green(' (Detectado)') : ''),
-                    value: ide.value,
-                    checked: isDetected
-                };
-            })
-        }]);
-
-        if (ideAnswer.ides.length === 0) {
-            console.log(chalk.yellow('⚠️  Ningún IDE seleccionado. Saliendo...'));
-            return;
-        }
-
-        targetIdes = [];
-        for (const ideValue of ideAnswer.ides) {
-            if (ideValue === 'custom') {
-                const customPath = await inquirer.prompt([{
-                    type: 'input',
-                    name: 'path',
-                    message: 'Ingresa la ruta de Rules:',
-                    validate: (input) => input.length > 0 ? true : 'Requerido'
-                }, {
-                    type: 'input',
-                    name: 'skillsPath',
-                    message: 'Ingresa la ruta de Skills (Opcional):'
-                }, {
-                    type: 'input',
-                    name: 'workflowsPath',
-                    message: 'Ingresa la ruta de Workflows (Opcional):'
-                }]);
-                targetIdes.push({
-                    name: 'Custom',
-                    value: 'custom',
-                    rulesDir: customPath.path,
-                    skillsDir: customPath.skillsPath || customPath.path,
-                    workflowsDir: customPath.workflowsPath || customPath.path // fallback to rules
-                });
-            } else {
-                targetIdes.push(IDE_CONFIGS.find(i => i.value === ideValue));
-            }
+        // 4. Smart Multi-Agent Auto-Detection Setup
+        if (detectedIdes.length === 0) {
+            console.log(chalk.yellow('⚠️  No se detectaron agentes instalados en este entorno.'));
+            console.log(chalk.blue('ℹ  Instalando estructura estándar para Cursor por defecto.'));
+            targetIdes = [IDE_CONFIGS.find(i => i.value === 'cursor')];
+        } else {
+            console.log(chalk.green(`\n🚀 ¡Agentes Detectados! (${detectedIdes.length})`));
+            const names = detectedIdes.map(i => i.name).join(', ');
+            console.log(chalk.cyan(`   → Se aplicará integración aislada para: ${chalk.bold(names)}\n`));
+            targetIdes = detectedIdes;
         }
 
         const availableSkills = getAllItems(SOURCE_SKILLS, true);
@@ -685,15 +623,7 @@ async function runInstall(options) {
             options.installMemory = memoryAnswer.memory;
         }
 
-        // Opción global: sincronizar también a ~/.agents/
-        console.log('');
-        const globalAnswer = await inquirer.prompt([{
-            type: 'confirm',
-            name: 'global',
-            message: '🌐 ¿También sincronizar al repositorio global (~/.agents/)? (Útil para Gemini CLI, Codex y agentes CLI)',
-            default: false
-        }]);
-        if (globalAnswer.global) options.global = true;
+
 
         console.log('');
         const { confirm } = await inquirer.prompt([{
@@ -703,6 +633,28 @@ async function runInstall(options) {
             default: true
         }]);
         if (!confirm) return;
+    }
+
+    // --- AGGRESSIVE ROOT CLEANUP ---
+    console.log(chalk.bold('\n🧹 Ejecutando limpieza de archivos root (Aislamiento de Agentes)...'));
+    const rootFilesToClean = [
+        '.cursorrules', '.windsurfrules', 'gemini.md', '.continuerules', '.goosehints'
+    ];
+    // Eliminar CLAUDE.md si "Claude Code" NO está en los targetIdes
+    if (!targetIdes.some(i => i.value === 'claude')) rootFilesToClean.push('CLAUDE.md');
+    // Eliminar GEMINI.md si "Gemini CLI" y "Antigravity" NO están en targetIdes
+    if (!targetIdes.some(i => i.value === 'gemini' || i.value === 'antigravity')) rootFilesToClean.push('GEMINI.md');
+
+    for (const file of rootFilesToClean) {
+        const filePath = path.join(targetRoot, file);
+        if (fs.existsSync(filePath)) {
+            try {
+                fs.unlinkSync(filePath);
+                console.log(`  ${chalk.green('✔')} Eliminado root config obsoleto o no seleccionado: ${chalk.cyan(file)}`);
+            } catch (e) {
+                console.error(`  ${chalk.red('❌')} Error al eliminar ${file}: ${e.message}`);
+            }
+        }
     }
 
     console.log('');
@@ -716,28 +668,22 @@ async function runInstall(options) {
 
         if (selectedSkills.length > 0 && ide.skillsDir) {
             const targetDir = path.join(targetRoot, ide.skillsDir);
+            console.log(chalk.bold(`\nInstalling Skills to ${chalk.cyan(targetDir)}:`));
 
-            // OPTIMIZATION: If target is Global Repo, we entered "Global Sync" mode
-            if (arePathsEqual(targetDir, globalSkillsDir)) {
-                console.log(chalk.blue(`\n  ℹ  ${ide.name}: Skills updated via Global Sync`));
-            } else {
-                console.log(chalk.bold(`\nInstalling Skills to ${chalk.cyan(targetDir)}:`));
+            try {
+                if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
 
-                try {
-                    if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
+                for (const skill of selectedSkills) {
+                    const srcFolder = path.join(SOURCE_SKILLS, skill);
+                    const destFolder = path.join(targetDir, skill);
 
-                    for (const skill of selectedSkills) {
-                        const srcFolder = path.join(SOURCE_SKILLS, skill);
-                        const destFolder = path.join(targetDir, skill);
-
-                        if (fs.existsSync(srcFolder)) {
-                            await applyFile(srcFolder, destFolder, currentInstallMethod);
-                            console.log(`  ${chalk.green('✔')} ${skill}/`);
-                        }
+                    if (fs.existsSync(srcFolder)) {
+                        await applyFile(srcFolder, destFolder, currentInstallMethod);
+                        console.log(`  ${chalk.green('✔')} ${skill}/`);
                     }
-                } catch (e) {
-                    console.error(chalk.red(`❌ Error installing skills for ${ide.name}: ${e.message}`));
                 }
+            } catch (e) {
+                console.error(chalk.red(`❌ Error installing skills for ${ide.name}: ${e.message}`));
             }
         }
 
@@ -925,96 +871,73 @@ Use estos comandos para activar su rol. Para detalles, consulte \`AGENTS.md\`.
         // 2. Install RULES (Files)
         if (selectedRules.length > 0 && ide.rulesDir) {
             const targetDir = path.join(targetRoot, ide.rulesDir);
+            console.log(chalk.bold(`\nInstalling Rules to ${chalk.cyan(targetDir)}: `));
 
-            // OPTIMIZATION: If target is Global Repo, skip redundant copy
-            if (arePathsEqual(targetDir, globalRulesDir)) {
-                console.log(chalk.blue(`  ℹ  ${ide.name}: Rules updated via Global Sync`));
-            } else {
-                console.log(chalk.bold(`\nInstalling Rules to ${chalk.cyan(targetDir)}: `));
+            try {
+                if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
 
-                try {
-                    if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
-
-
-                    // CLEANUP: Remove legacy rules (V2)
-                    // CLEANUP: Remove legacy rules (V2 & Duplicates)
-                    const legacyRules = [
-                        '_bootstrap.md', '_bootstrap.mdc', '00-bootstrap.md',
-                        'agents-ia.md', 'stack.md', 'testing.md', 'security.md', 'code-style.md', 'documentation.md',
-                        'workflow.md', 'api-design.md', 'automations-n8n.md', 'frontend.md', 'backend.md'
-                    ];
-                    for (const legacy of legacyRules) {
-                        const legacyPath = path.join(targetDir, legacy);
-                        if (fs.existsSync(legacyPath)) {
-                            fs.unlinkSync(legacyPath);
-                            console.log(`  ${chalk.yellow('🗑  Eliminado regla obsoleta:')} ${legacy} `);
-                        }
+                // CLEANUP: Remove legacy rules (V2 & Duplicates)
+                const legacyRules = [
+                    '_bootstrap.md', '_bootstrap.mdc', '00-bootstrap.md',
+                    'agents-ia.md', 'stack.md', 'testing.md', 'security.md', 'code-style.md', 'documentation.md',
+                    'workflow.md', 'api-design.md', 'automations-n8n.md', 'frontend.md', 'backend.md'
+                ];
+                for (const legacy of legacyRules) {
+                    const legacyPath = path.join(targetDir, legacy);
+                    if (fs.existsSync(legacyPath)) {
+                        fs.unlinkSync(legacyPath);
+                        console.log(`  ${chalk.yellow('🗑  Eliminado regla obsoleta:')} ${legacy} `);
                     }
-
-                    for (const rule of selectedRules) {
-                        const srcVal = path.join(SOURCE_RULES, rule);
-                        const destVal = path.join(targetDir, rule);
-
-                        if (fs.existsSync(srcVal)) {
-                            await applyFile(srcVal, destVal, currentInstallMethod);
-                            console.log(`  ${chalk.blue('✔')} ${rule} `);
-                        }
-                    }
-                } catch (e) {
-                    console.error(chalk.red(`❌ Error installing rules for ${ide.name}: ${e.message} `));
                 }
+
+                for (const rule of selectedRules) {
+                    const srcVal = path.join(SOURCE_RULES, rule);
+                    const destVal = path.join(targetDir, rule);
+
+                    if (fs.existsSync(srcVal)) {
+                        await applyFile(srcVal, destVal, currentInstallMethod);
+                        console.log(`  ${chalk.blue('✔')} ${rule} `);
+                    }
+                }
+            } catch (e) {
+                console.error(chalk.red(`❌ Error installing rules for ${ide.name}: ${e.message} `));
             }
         }
 
         // 3. Install WORKFLOWS (Files)
         if (selectedWorkflows.length > 0 && ide.workflowsDir) {
             const targetDir = path.join(targetRoot, ide.workflowsDir);
+            console.log(chalk.bold(`\nInstalling Workflows to ${chalk.cyan(targetDir)}: `));
 
-            // OPTIMIZATION: If target is Global Repo, skip redundant copy
-            if (arePathsEqual(targetDir, globalWorkflowsDir)) {
-                console.log(chalk.blue(`  ℹ  ${ide.name}: Workflows updated via Global Sync`));
-            } else {
-                console.log(chalk.bold(`\nInstalling Workflows to ${chalk.cyan(targetDir)}: `));
+            try {
+                if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
 
-                try {
-                    if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
+                for (const wf of selectedWorkflows) {
+                    const srcVal = path.join(SOURCE_WORKFLOWS, wf);
+                    const destVal = path.join(targetDir, wf);
 
-                    for (const wf of selectedWorkflows) {
-                        const srcVal = path.join(SOURCE_WORKFLOWS, wf);
-                        const destVal = path.join(targetDir, wf);
-
-                        if (fs.existsSync(srcVal)) {
-                            await applyFile(srcVal, destVal, currentInstallMethod);
-                            console.log(`  ${chalk.magenta('✔')} ${wf} `);
-                        }
+                    if (fs.existsSync(srcVal)) {
+                        await applyFile(srcVal, destVal, currentInstallMethod);
+                        console.log(`  ${chalk.magenta('✔')} ${wf} `);
                     }
-                } catch (e) {
-                    console.error(chalk.red(`❌ Error installing workflows for ${ide.name}: ${e.message} `));
                 }
+            } catch (e) {
+                console.error(chalk.red(`❌ Error installing workflows for ${ide.name}: ${e.message} `));
             }
         }
 
 
 
         if (SOURCE_MEMORY && ide.skillsDir) {
-            // We use skillsDir parent or a specific memory dir if we had one in config.
-            // For now, let's put it alongside skills/rules/workflows.
-            // Ideally IDE_CONFIGS should have memoryDir, but we'll default to parent of skillsDir + /memory
             const parentDir = path.dirname(ide.skillsDir);
             const targetDir = path.join(targetRoot, parentDir, 'memory');
 
-            if (arePathsEqual(targetDir, path.join(globalAgentDir, 'memory'))) {
-                // console.log(chalk.blue(`  ℹ  ${ ide.name }: Memory updated via Global Sync`));
-            } else {
-                // console.log(chalk.bold(`\nInstalling Memory to ${ chalk.cyan(targetDir) }: `));
-                try {
-                    if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
-                    // Copy all contents of memory
-                    copyRecursiveSync(SOURCE_MEMORY, targetDir, true); // Always copy/overwrite for now, or use applyFile for items if we want symlinks
-                    console.log(`  ${chalk.cyan('✔')} Memory(Context) optimized.`);
-                } catch (e) {
-                    console.error(chalk.red(`❌ Error installing memory for ${ide.name}: ${e.message} `));
-                }
+            try {
+                if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
+                copyRecursiveSync(SOURCE_MEMORY, targetDir, true);
+                console.log(`  ${chalk.cyan('✔')} Memory(Context) optimized.`);
+            } catch (e) {
+                console.error(chalk.red(`❌ Error installing memory for ${ide.name}: ${e.message} `));
             }
         }
     }
@@ -1047,16 +970,21 @@ async function applyFile(source, dest, method) {
         // console.log(chalk.gray(`    (Skipping self - install: ${ path.basename(source) })`));
         return;
     }
-    if (fs.existsSync(dest) || (fs.existsSync(path.dirname(dest)) && fs.readdirSync(path.dirname(dest)).includes(path.basename(dest)))) {
-        try {
-            const stat = fs.statSync(dest);
-            if (stat.isDirectory()) {
-                fs.rmSync(dest, { recursive: true, force: true });
+
+    try {
+        if (fs.existsSync(dest) || (fs.existsSync(path.dirname(dest)) && fs.readdirSync(path.dirname(dest)).includes(path.basename(dest)))) {
+            const lstat = fs.lstatSync(dest);
+            if (lstat.isSymbolicLink()) {
+                fs.unlinkSync(dest); // Safe to remove old symlink
+            } else if (lstat.isDirectory()) {
+                // AUGMENTATION: No borramos el directorio real para no perder archivos del usuario.
+                // Si el usuario pidió symlink pero hay un directorio real, forzamos merge por copia.
+                if (method === 'symlink') method = 'copy';
             } else {
-                fs.unlinkSync(dest);
+                fs.unlinkSync(dest); // It is a file, overwrite it
             }
-        } catch (e) { }
-    }
+        }
+    } catch (e) { }
 
     const destDir = path.dirname(dest);
     if (!fs.existsSync(destDir)) fs.mkdirSync(destDir, { recursive: true });
