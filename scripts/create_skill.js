@@ -92,7 +92,7 @@ name: ${data.name}
 description: ${data.description}
 role: ${data.role}
 type: ${data.type}
-version: 3.0.0
+version: "3.2.0"
 icon: ${data.icon}
 expertise:
 ${expertise}
@@ -206,7 +206,7 @@ Antes de considerar una tarea terminada, verifica TODO:
 
 ---
 
-*Skill version: 2.7 | LMAgent Framework*
+*Skill version: 3.2.0 | LMAgent Framework*
 `;
 }
 

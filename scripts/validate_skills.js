@@ -24,12 +24,12 @@ import chalk from 'chalk';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const ROOT = resolve(__dirname, '..');
-const SKILLS_DIR = join(ROOT, 'skills');
+const SKILLS_DIR = join(ROOT, '.agents', 'skills');
 
 // ─── Configuración ────────────────────────────────────────────
 const REQUIRED_FIELDS = ['name', 'description', 'role', 'type', 'version', 'icon', 'expertise', 'activates_on', 'triggers'];
 const VALID_TYPES = ['agent_persona', 'methodology'];
-const CURRENT_VERSION = '3.0.13';
+const CURRENT_VERSION = '3.2.0';
 const OPTIONAL_DIRS = ['scripts', 'references', 'assets'];
 
 // ─── Colores (sin dependencias) ───────────────────────────────
@@ -65,7 +65,7 @@ function parseFrontmatter(content) {
         }
 
         // Key-value: "key: value"
-        const kvMatch = line.match(/^(\w[\w_]*)\s*:\s*(.*)/);
+        const kvMatch = line.match(/^\s*(\w[\w_]*)\s*:\s*(.*)/);
         if (kvMatch) {
             currentKey = kvMatch[1];
             const rawValue = kvMatch[2].trim();
