@@ -1,10 +1,15 @@
 # 🤖 LMAgent Framework Entry Point
 
-Este proyecto utiliza **LMAgent v3.0.0**.
+Este proyecto utiliza **LMAgent v3.2.0**.
 
 ## 🚨 SOURCE OF TRUTH (CEREBRO)
-**TU CONTEXTO Y REGLAS VIVEN AQUÍ 👉 [AGENTS.md](../../AGENTS.md)**
+**TU CONTEXTO Y REGLAS VIVEN AQUÍ 👉 [AGENTS.md](../AGENTS.md)**
 *Lee este archivo INMEDIATAMENTE para obtener tu identidad, skills y reglas operativas.*
+
+## 📁 RUTAS DE ENTORNO
+- **Tus Skills**: `.cline/skills`
+- **Tus Rules**: `.clinerules`
+- **Tus Workflows**: `.cline/workflows`
 
 ## ⚡ QUICK START TRIGGERS (Menu Rápido)
 Use estos comandos para activar su rol. Para detalles, consulte `AGENTS.md`.

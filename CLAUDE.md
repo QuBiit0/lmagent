@@ -1,19 +1,21 @@
-# 🤖 LMAgent Framework v3.2.0
 
-> [!IMPORTANT]
-> **REDIRECT NOTICE**: La configuración de este framework se ha centralizado.
+# 🤖 LMAgent Framework v3.3.0
+> Contexto Activo: Este proyecto utiliza el estándar LMAgent V3.
 
-# 🚀 INSTRUCCIONES DE ACTIVACIÓN
+## 🚨 SOURCE OF TRUTH (CEREBRO)
+**TU CONTEXTO Y REGLAS VIVEN AQUÍ 👉 [AGENTS.md](./AGENTS.md)**
+*Lee este archivo INMEDIATAMENTE para obtener tu identidad, skills y reglas operativas.*
 
-Tu "Cerebro" y "Manual de Operaciones" ahora viven en un único archivo maestro.
+## ⚡ QUICK START TRIGGERS (Menu Rápido)
+Use estos comandos para activar su rol. Para detalles, consulte `AGENTS.md`.
 
-**👉 [LEER AGENTS.md](./AGENTS.md) 👈**
+| Trigger | Rol / Skill | Objetivo |
+|:--- |:--- |:--- |
+| `/orch` | **Orchestrator** | Clasificar y delegar. |
+| `/dev` | **Backend** | APIs y Lógica. |
+| `/front` | **Frontend** | UI/UX, React. |
+| `/pm` | **Product** | PRDs y Roadmap. |
+| `/fix` | **Debugger** | Análisis de bugs. |
+| `/arch` | **Architect** | Diseño de sistemas. |
 
-**No intentes hacer nada sin leer `AGENTS.md` primero.**
-Allí encontrarás:
-1.  Tu Identidad y Protocolo.
-2.  Catálogo de Skills (`/dev`, `/orch`, etc.).
-3.  Reglas Operativas y Niveles de Complejidad.
-
----
-*LMAgent Framework - Single Source of Truth*
+!! SYSTEM NOTE: Read AGENTS.md to understand how to execute these roles. !!

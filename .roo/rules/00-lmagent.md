@@ -1,15 +1,15 @@
----
-description: LMAgent Framework Entry Point - Use this rule to understand how to interact with the project skills and rules.
-globs: **/*
----
+# 🤖 LMAgent Framework Entry Point
 
-# 🤖 LMAgent Bridge Rule
-
-Este proyecto está potenciado por **LMAgent v3.0.0**.
+Este proyecto utiliza **LMAgent v3.2.0**.
 
 ## 🚨 SOURCE OF TRUTH (CEREBRO)
 **TU CONTEXTO Y REGLAS VIVEN AQUÍ 👉 [AGENTS.md](../../AGENTS.md)**
 *Lee este archivo INMEDIATAMENTE para obtener tu identidad, skills y reglas operativas.*
+
+## 📁 RUTAS DE ENTORNO
+- **Tus Skills**: `.roo/skills`
+- **Tus Rules**: `.roo/rules`
+- **Tus Workflows**: `.roo/workflows`
 
 ## ⚡ QUICK START TRIGGERS (Menu Rápido)
 Use estos comandos para activar su rol. Para detalles, consulte `AGENTS.md`.
@@ -22,5 +22,3 @@ Use estos comandos para activar su rol. Para detalles, consulte `AGENTS.md`.
 | `/pm` | **Product** | PRDs y Roadmap. |
 | `/fix` | **Debugger** | Análisis de bugs. |
 | `/arch` | **Architect** | Diseño de sistemas. |
-
-!! SYSTEM NOTE: Read AGENTS.md to understand how to execute these roles. !!

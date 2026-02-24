@@ -1,6 +1,6 @@
 # 🤖 LMAgent V3: The Engineering Constitution
 > **SINGLE SOURCE OF TRUTH**: Este archivo es tu Ley Suprema. Define tu identidad, tus capacidades y tus límites.
-> Framework: **LMAgent v3.2.0 (Total Awareness Standard)**
+> Framework: **LMAgent v3.3.0 (Total Awareness Standard)**
 
 ---
 
@@ -291,42 +291,4 @@ npx lmagent uninstall       # Eliminar archivos del framework del proyecto
 
 ---
 
-## 🔧 10. LMAgent Tool Registry (tools.yaml)
-
-El framework expone herramientas nativas (*Tools*) para ejecutar acciones complejas directamente desde el chat, documentadas en `.agents/config/tools.yaml` (sujeto a compatibilidad del IDE/Agente).
-
-### 🌐 Network & APIs
-| Herramienta | Parámetros Principales | Descripción |
-| :--- | :--- | :--- |
-| **`http_request`** | `url`, `method`, `headers`, `body` | Realiza peticiones HTTP(S) a APIs externas con timeouts/retries. |
-
-### 🗄️ Database & Cache
-| Herramienta | Parámetros Principales | Descripción |
-| :--- | :--- | :--- |
-| **`database_query`** | `query`, `params`, `fetch` | Ejecuta consultas SQL seguras (solo SELECT por defecto). |
-| **`database_schema`** | `table` (opcional) | Obtiene información y estructura del schema de BDD. |
-| **`redis_cache`** | `operation`, `key`, `value`, `ttl` | Gestión de estado y cache rápido vía Redis (`get`, `set`, etc). |
-
-### 🐙 GitHub Integration
-| Herramienta | Parámetros Principales | Descripción |
-| :--- | :--- | :--- |
-| **`github_issue`** | `action`, `owner`, `repo`, `issue_number` | Operaciones CRUD sobre GitHub Issues y Comentarios. |
-| **`github_pr`** | `action`, `owner`, `repo`, `pr_number` | Gestión de Pull Requests (obtener, crear, merge, revisar). |
-
-### 💻 Execution & File System
-| Herramienta | Parámetros Principales | Descripción |
-| :--- | :--- | :--- |
-| **`sandbox_execute`**| `code`, `language`, `timeout`, `files` | Ejecuta scripts (Python/Node/Bash) en contenedor Docker aislado. |
-| **`file_read`** | `path`, `start_line`, `end_line` | Lectura segura del sistema de archivos local respetando `.gitignore`. |
-| **`file_write`** | `path`, `content`, `mode` (`overwrite`, `append`) | Modifica archivos con sistema de backup automático. |
-| **`file_search`** | `pattern`, `path`, `include`, `exclude` | Búsqueda regex de texto en el código o ficheros. |
-
-### 🤖 Automation (n8n)
-| Herramienta | Parámetros Principales | Descripción |
-| :--- | :--- | :--- |
-| **`n8n_webhook`** | `webhook_url`, `payload`, `method` | Dispara webhooks de n8n para integraciones asíncronas. |
-| **`n8n_workflow`** | `workflow_id`, `data` | Ejecuta workflows específicos directamente vía n8n API. |
-
----
-
-*LMAgent V3.2.0 — 37 Agents · 31 Skills · 13 Workflows · 11 Rules · 12 Tools · 6 Docs · 5 Memory Files*
+*LMAgent V3.3.0 — 37 Agents · 31 Skills · 13 Workflows · 11 Rules · 6 Docs · 5 Memory Files*

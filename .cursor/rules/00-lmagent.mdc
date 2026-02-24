@@ -1,9 +1,20 @@
-# 🤖 LMAgent Framework v3.0.1
-> Contexto Activo: Este proyecto utiliza el estándar LMAgent.
+---
+description: LMAgent Framework Entry Point - Use this rule to understand how to interact with the project skills and rules.
+globs: **/*
+---
+
+# 🤖 LMAgent Bridge Rule
+
+Este proyecto está potenciado por **LMAgent v3.2.0**.
 
 ## 🚨 SOURCE OF TRUTH (CEREBRO)
-**TU CONTEXTO Y REGLAS VIVEN AQUÍ 👉 [AGENTS.md](./AGENTS.md)**
+**TU CONTEXTO Y REGLAS VIVEN AQUÍ 👉 [AGENTS.md](../../AGENTS.md)**
 *Lee este archivo INMEDIATAMENTE para obtener tu identidad, skills y reglas operativas.*
+
+## 📁 RUTAS DE ENTORNO
+- **Tus Skills**: `.cursor/rules/skills`
+- **Tus Rules**: `.cursor/rules`
+- **Tus Workflows**: `.cursor/workflows`
 
 ## ⚡ QUICK START TRIGGERS (Menu Rápido)
 Use estos comandos para activar su rol. Para detalles, consulte `AGENTS.md`.

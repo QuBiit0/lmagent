@@ -235,17 +235,21 @@ program.command('uninstall')
 
         const projectRoot = process.cwd();
 
-        // Detectar qué agentes están instalados en el proyecto
+        // Detectar qué agentes están instalados o dejaron rastro en el proyecto
+        // Al desinstalar, también incluimos 'generic' para volar .agents/
         const installedIdes = IDE_CONFIGS.filter(ide => {
-            if (ide.value === 'custom' || ide.value === 'generic') return false;
+            if (ide.value === 'custom') return false;
             const markerInProject = ide.markerFile && fs.existsSync(path.join(projectRoot, ide.markerFile));
             const rulesDirInProject = ide.rulesDir && fs.existsSync(path.join(projectRoot, ide.rulesDir));
             const skillsDirInProject = ide.skillsDir && fs.existsSync(path.join(projectRoot, ide.skillsDir));
-            return markerInProject || rulesDirInProject || skillsDirInProject;
+            return markerInProject || rulesDirInProject || skillsDirInProject || ide.value === 'generic';
         });
 
-        if (installedIdes.length === 0) {
-            console.log(chalk.yellow('⚠️  No se detectó ningún agente instalado en este proyecto.'));
+        const rootFiles = ['CLAUDE.md', 'GEMINI.md', 'AGENTS.md', '.cursorrules', '.windsurfrules', '.continuerules', '.goosehints', 'openclaw.json'];
+        const existingRootFiles = rootFiles.filter(f => fs.existsSync(path.join(projectRoot, f)));
+
+        if (installedIdes.length === 0 && existingRootFiles.length === 0) {
+            console.log(chalk.yellow('⚠️  No se detectó ningún rastro del framework en este proyecto.'));
             return;
         }
 
@@ -297,6 +301,9 @@ program.command('uninstall')
             const agentSpecificDirs = [ide.skillsDir, ide.workflowsDir];
             if (ide.rulesDir && !['rules', '.github/instructions'].includes(ide.rulesDir)) {
                 agentSpecificDirs.push(ide.rulesDir);
+            }
+            if (ide.value === 'generic') {
+                agentSpecificDirs.push('.agents');
             }
 
             // Determinar el directorio raíz del agente (ej: .cursor, .windsurf, .claude)
@@ -475,63 +482,27 @@ async function runInstall(options) {
         console.log('');
 
         // 3. Auto-Detect IDEs
-        // Mapa de rutas de instalación global por agente (donde el IDE instala sus archivos en ~/)
-        // HOME_PATHS: rutas de instalación global de cada agente en el sistema del usuario
-        // Cubre los 37 agentes soportados. Se verifica si alguna de las rutas existe en ~/
+        // Mapa de rutas de instalación global por agente en el sistema del usuario (SOLO PARA DETECCIÓN, NO INSTALACIÓN)
+        const userHome = os.homedir();
         const HOME_PATHS = {
-            // IDEs principales
-            'cursor': ['.cursor'],
-            'windsurf': ['.windsurf'],
-            'cline': ['.vscode/extensions', '.cline'],
-            'roo': ['.vscode/extensions', '.roo'],
-            'vscode': ['.vscode'],
-            'trae': ['.trae'],
-            'trae-cn': ['.trae-cn', '.trae'],
-            'claude': ['.claude'],
-            'zed': ['.config/zed', '.zed'],
-            // Agentes CLI & autónomos
-            'antigravity': ['.gemini/antigravity'],
-            'gemini': ['.gemini'],
-            'augment': ['.augment'],
-            'continue': ['.continue'],
-            'codex': ['.codex'],
-            'goose': ['.config/goose', '.goose'],
-            'junie': ['.junie'],
-            'kilo': ['.kilocode'],
-            'kiro': ['.kiro'],
-            'opencode': ['.opencode'],
-            'openhands': ['.openhands'],
-            'amp': ['.agents'],
-            'zencoder': ['.zencoder'],
-            'codebuddy': ['.codebuddy'],
-            'crush': ['.crush'],
-            'droid': ['.factory'],
-            'mux': ['.mux'],
-            'qwen': ['.qwen'],
-            // Agentes menores / nicho
-            'openclaw': ['.config/openclaw', '.openclaw'],
-            'command-code': ['.commandcode'],
-            'iflow': ['.iflow'],
-            'kode': ['.kode'],
-            'mcpjam': ['.mcpjam'],
-            'mistral': ['.vibe', '.mistral'],
-            'pi': ['.pi'],
-            'qoder': ['.qoder'],
-            'neovate': ['.neovate'],
-            'pochi': ['.pochi'],
-            'adal': ['.adal'],
+            'cursor': ['.cursor'], 'windsurf': ['.windsurf'], 'cline': ['.vscode/extensions', '.cline'], 'roo': ['.vscode/extensions', '.roo'],
+            'vscode': ['.vscode'], 'trae': ['.trae'], 'trae-cn': ['.trae-cn', '.trae'], 'claude': ['.claude'], 'zed': ['.config/zed', '.zed'],
+            'antigravity': ['.gemini/antigravity'], 'gemini': ['.gemini'], 'augment': ['.augment'], 'continue': ['.continue'], 'codex': ['.codex'],
+            'goose': ['.config/goose', '.goose'], 'junie': ['.junie'], 'kilo': ['.kilocode'], 'kiro': ['.kiro'], 'opencode': ['.opencode'],
+            'openhands': ['.openhands'], 'amp': ['.agents'], 'zencoder': ['.zencoder'], 'codebuddy': ['.codebuddy'], 'crush': ['.crush'],
+            'droid': ['.factory'], 'mux': ['.mux'], 'qwen': ['.qwen'], 'openclaw': ['.config/openclaw', '.openclaw'], 'command-code': ['.commandcode'],
+            'iflow': ['.iflow'], 'kode': ['.kode'], 'mcpjam': ['.mcpjam'], 'mistral': ['.vibe', '.mistral'], 'pi': ['.pi'], 'qoder': ['.qoder'],
+            'neovate': ['.neovate'], 'pochi': ['.pochi'], 'adal': ['.adal'],
         };
 
         const detectedIdes = IDE_CONFIGS.filter(ide => {
             if (ide.value === 'custom' || ide.value === 'generic') return false;
 
-            // Check Project Root: usar markerFile primero (más preciso), luego rulesDir como fallback
             const markerInProject = ide.markerFile && fs.existsSync(path.join(projectRoot, ide.markerFile));
             const rulesDirInProject = ide.rulesDir && fs.existsSync(path.join(projectRoot, ide.rulesDir));
             const skillsDirInProject = ide.skillsDir && fs.existsSync(path.join(projectRoot, ide.skillsDir));
             const inProject = markerInProject || rulesDirInProject || skillsDirInProject;
 
-            // Check User Home: usar mapa explícito de rutas de instalación global
             const homePaths = HOME_PATHS[ide.value] || [];
             const inHome = homePaths.some(p => fs.existsSync(path.join(userHome, p)));
 
@@ -637,22 +608,38 @@ async function runInstall(options) {
 
     // --- AGGRESSIVE ROOT CLEANUP ---
     console.log(chalk.bold('\n🧹 Ejecutando limpieza de archivos root (Aislamiento de Agentes)...'));
-    const rootFilesToClean = [
-        '.cursorrules', '.windsurfrules', 'gemini.md', '.continuerules', '.goosehints'
+    // Definimos TODOS los posibles entry points
+    const allRootFiles = [
+        '.cursorrules', '.windsurfrules', '.continuerules', '.goosehints',
+        'CLAUDE.md', 'GEMINI.md', 'openclaw.json'
     ];
-    // Eliminar CLAUDE.md si "Claude Code" NO está en los targetIdes
-    if (!targetIdes.some(i => i.value === 'claude')) rootFilesToClean.push('CLAUDE.md');
-    // Eliminar GEMINI.md si "Gemini CLI" y "Antigravity" NO están en targetIdes
-    if (!targetIdes.some(i => i.value === 'gemini' || i.value === 'antigravity')) rootFilesToClean.push('GEMINI.md');
 
-    for (const file of rootFilesToClean) {
-        const filePath = path.join(targetRoot, file);
-        if (fs.existsSync(filePath)) {
-            try {
-                fs.unlinkSync(filePath);
-                console.log(`  ${chalk.green('✔')} Eliminado root config obsoleto o no seleccionado: ${chalk.cyan(file)}`);
-            } catch (e) {
-                console.error(`  ${chalk.red('❌')} Error al eliminar ${file}: ${e.message}`);
+    // Y determinamos cuáles SÍ deben existir según los agentes seleccionados
+    const requiredRootFiles = new Set();
+
+    // AGENTS.md es siempre intocable
+    requiredRootFiles.add('AGENTS.md');
+
+    for (const ide of targetIdes) {
+        if (ide.configFile && !ide.configFile.includes('/')) {
+            requiredRootFiles.add(ide.configFile);
+        }
+        if (ide.markerFile && !ide.markerFile.includes('/')) {
+            requiredRootFiles.add(ide.markerFile);
+        }
+    }
+
+    // Eliminamos todo lo que NO fue requerido
+    for (const file of allRootFiles) {
+        if (!requiredRootFiles.has(file)) {
+            const filePath = path.join(targetRoot, file);
+            if (fs.existsSync(filePath)) {
+                try {
+                    fs.unlinkSync(filePath);
+                    console.log(`  ${chalk.green('✔')} Eliminado root config obsoleto o conflictivo: ${chalk.cyan(file)}`);
+                } catch (e) {
+                    console.error(`  ${chalk.red('❌')} Error al eliminar ${file}: ${e.message}`);
+                }
             }
         }
     }
@@ -711,12 +698,18 @@ async function runInstall(options) {
                     // Usar template del archivo, inyectando VERSION
                     content = fs.readFileSync(templateFile, 'utf8')
                         .replace(/\{\{VERSION\}\}/g, PKG_VERSION)
-                        .replace(/\{\{MAJOR\}\}/g, PKG_VERSION.split('.')[0]);
+                        .replace(/\{\{MAJOR\}\}/g, PKG_VERSION.split('.')[0])
+                        .replace(/\{\{SKILLS_DIR\}\}/g, ide.skillsDir || '.agents/skills')
+                        .replace(/\{\{RULES_DIR\}\}/g, ide.rulesDir || '.agents/rules')
+                        .replace(/\{\{WORKFLOWS_DIR\}\}/g, ide.workflowsDir || '.agents/workflows');
                 } else if (ide.configFile.endsWith('.json') && fs.existsSync(templateFile)) {
                     // JSON: usar template y reemplazar VERSION
                     content = fs.readFileSync(templateFile, 'utf8')
                         .replace(/\{\{VERSION\}\}/g, PKG_VERSION)
-                        .replace(/\{\{MAJOR\}\}/g, PKG_VERSION.split('.')[0]);
+                        .replace(/\{\{MAJOR\}\}/g, PKG_VERSION.split('.')[0])
+                        .replace(/\{\{SKILLS_DIR\}\}/g, ide.skillsDir || '.agents/skills')
+                        .replace(/\{\{RULES_DIR\}\}/g, ide.rulesDir || '.agents/rules')
+                        .replace(/\{\{WORKFLOWS_DIR\}\}/g, ide.workflowsDir || '.agents/workflows');
                 } else {
                     // Fallback: contenido genérico dinámico
                     content = `
@@ -808,6 +801,11 @@ Este proyecto está potenciado por **LMAgent v${PKG_VERSION}**.
 **TU CONTEXTO Y REGLAS VIVEN AQUÍ 👉 [AGENTS.md](${relCatalog})**
 *Lee este archivo INMEDIATAMENTE para obtener tu identidad, skills y reglas operativas.*
 
+## 📁 RUTAS DE ENTORNO
+- **Tus Skills**: \`${ide.skillsDir || '.agents/skills'}\`
+- **Tus Rules**: \`${ide.rulesDir || '.agents/rules'}\`
+- **Tus Workflows**: \`${ide.workflowsDir || '.agents/workflows'}\`
+
 ## ⚡ QUICK START TRIGGERS (Menu Rápido)
 Use estos comandos para activar su rol. Para detalles, consulte \`AGENTS.md\`.
 
@@ -831,6 +829,11 @@ Este proyecto utiliza **LMAgent v${PKG_VERSION}**.
 ## 🚨 SOURCE OF TRUTH (CEREBRO)
 **TU CONTEXTO Y REGLAS VIVEN AQUÍ 👉 [AGENTS.md](${relCatalog})**
 *Lee este archivo INMEDIATAMENTE para obtener tu identidad, skills y reglas operativas.*
+
+## 📁 RUTAS DE ENTORNO
+- **Tus Skills**: \`${ide.skillsDir || '.agents/skills'}\`
+- **Tus Rules**: \`${ide.rulesDir || '.agents/rules'}\`
+- **Tus Workflows**: \`${ide.workflowsDir || '.agents/workflows'}\`
 
 ## ⚡ QUICK START TRIGGERS (Menu Rápido)
 Use estos comandos para activar su rol. Para detalles, consulte \`AGENTS.md\`.
@@ -931,13 +934,19 @@ Use estos comandos para activar su rol. Para detalles, consulte \`AGENTS.md\`.
         if (SOURCE_MEMORY && ide.skillsDir) {
             const parentDir = path.dirname(ide.skillsDir);
             const targetDir = path.join(targetRoot, parentDir, 'memory');
+            const targetDirLower = targetDir.toLowerCase();
+            const sourceMemoryLower = SOURCE_MEMORY.toLowerCase();
 
-            try {
-                if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
-                copyRecursiveSync(SOURCE_MEMORY, targetDir, true);
-                console.log(`  ${chalk.cyan('✔')} Memory(Context) optimized.`);
-            } catch (e) {
-                console.error(chalk.red(`❌ Error installing memory for ${ide.name}: ${e.message} `));
+            if (targetDirLower !== sourceMemoryLower) {
+                try {
+                    if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
+                    copyRecursiveSync(SOURCE_MEMORY, targetDir, true);
+                    console.log(`  ${chalk.cyan('✔')} Memory(Context) optimized.`);
+                } catch (e) {
+                    console.error(chalk.red(`❌ Error installing memory for ${ide.name}: ${e.message} `));
+                }
+            } else {
+                console.log(`  ${chalk.cyan('ℹ')} Memory(Context) already in origin path.`);
             }
         }
     }

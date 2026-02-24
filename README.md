@@ -10,7 +10,7 @@
                                                   by QuBit
 ```
 
-![Version](https://img.shields.io/badge/version-3.2.0-blue.svg) ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge) ![Agents](https://img.shields.io/badge/Agents-37_Supported-cyan?style=for-the-badge) ![Skills](https://img.shields.io/badge/Skills-31_Available-purple?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-3.3.0-blue.svg) ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge) ![Agents](https://img.shields.io/badge/Agents-37_Supported-cyan?style=for-the-badge) ![Skills](https://img.shields.io/badge/Skills-31_Available-purple?style=for-the-badge)
 
 > **"Separate the reasoning from the execution."**
 > LMAgent is the foundational runtime that empowers your AI Agents with standardized **Skills**, **Rules**, and **Workflows** across **37 supported agents** (Cursor, Claude Code, Windsurf, Gemini CLI, Cline, Roo, Copilot, and many more).
@@ -26,10 +26,10 @@ npx @qubiit/lmagent@latest
 That's it. No global install required. LMAgent will:
 1. **Auto-detect** which AI agents you have installed on your system
 2. **Pre-select** the detected agents for installation
-3. **Deploy** skills, rules, and workflows to each agent's directory
+3. **Deploy** skills, rules, and workflows **strictly to your project directory** (Universal Brain: `.agents/`)
 4. **Generate** the entry point file so each agent auto-invokes the framework
 
-> **Requires Node.js ≥ 22**. Works on macOS, Linux, and Windows.
+> **Requires Node.js ≥ 22**. Works on macOS, Linux, and Windows. **V3.3.0 features strict project isolation to prevent global conflicts.**
 
 ---
 
