@@ -477,16 +477,39 @@ async function runInstall(options) {
         console.log(`🔧 Método:  ${chalk.green(isWindows ? 'Copy (Windows Safe)' : 'Symlink (Live Updates)')}`);
         console.log('');
 
-        // 3. Auto-Detect IDEs — SOLO en el PROYECTO (no en HOME, para evitar falsos positivos)
+        // 3. Auto-Detect IDEs — Detección DUAL: Proyecto + Sistema
+        // Primero busca en el PROYECTO actual, luego en HOME del usuario.
+        // HOME_PATHS se usa SOLO para detectar agentes instalados en el sistema (pre-selección).
+        // La instalación siempre va al PROYECTO actual, nunca a HOME.
+        const userHome = os.homedir();
+        const HOME_PATHS = {
+            'cursor': ['.cursor'], 'windsurf': ['.windsurf', '.codeium/windsurf'],
+            'cline': ['.cline'], 'roo': ['.roo'],
+            'vscode': ['.vscode'], 'trae': ['.trae'], 'trae-cn': ['.trae-cn'],
+            'claude': ['.claude'], 'zed': ['.config/zed', '.zed'],
+            'antigravity': ['.gemini'], 'gemini': ['.gemini'],
+            'augment': ['.augment'], 'continue': ['.continue'], 'codex': ['.codex'],
+            'goose': ['.config/goose', '.goose'], 'junie': ['.junie'],
+            'kilo': ['.kilocode'], 'kiro': ['.kiro'], 'opencode': ['.opencode'],
+            'openhands': ['.openhands'], 'amp': ['.config/amp'],
+            'zencoder': ['.zencoder'], 'codebuddy': ['.codebuddy'],
+        };
+
         const detectedIdes = IDE_CONFIGS.filter(ide => {
             if (ide.value === 'custom' || ide.value === 'generic') return false;
 
+            // 1) Buscar en el PROYECTO actual
             const markerInProject = ide.markerFile && fs.existsSync(path.join(projectRoot, ide.markerFile));
             const rulesDirInProject = ide.rulesDir && fs.existsSync(path.join(projectRoot, ide.rulesDir));
             const skillsDirInProject = ide.skillsDir && fs.existsSync(path.join(projectRoot, ide.skillsDir));
-            // Detectar también por configFile existente en el proyecto
             const configInProject = ide.configFile && fs.existsSync(path.join(projectRoot, ide.configFile));
-            return markerInProject || rulesDirInProject || skillsDirInProject || configInProject;
+            const inProject = markerInProject || rulesDirInProject || skillsDirInProject || configInProject;
+
+            // 2) Buscar en HOME del usuario (detectar agente instalado en el sistema)
+            const homePaths = HOME_PATHS[ide.value] || [];
+            const inSystem = homePaths.some(p => fs.existsSync(path.join(userHome, p)));
+
+            return inProject || inSystem;
         });
 
         // 4. Smart Multi-Agent Auto-Detection Setup
