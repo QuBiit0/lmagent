@@ -142,6 +142,8 @@ skills_overview.txt
 # Build artifacts
 *.min.js
 *.min.css
+*.tgz
+test-install/
 
 # Lock files (uncomment if you want to track them)
 # package-lock.json
