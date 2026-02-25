@@ -24,7 +24,9 @@ const PACKAGE_MEMORY_DIR = path.join(__dirname, '.agents', 'memory');
 // Archivos de proyecto que init copia a la raíz
 // Usan {{VERSION}} como placeholder; se reemplaza dinámicamente al instalar
 const INIT_FILES = [
-    { src: 'AGENTS.md', desc: 'Catálogo de capacidades LMAgent', versionTemplate: false },
+    { src: 'AGENTS.md', desc: 'Catálogo de capacidades LMAgent (Entry Point Universal)', versionTemplate: false },
+    // CLAUDE.md y GEMINI.md NO van aquí — se despliegan solo cuando su agente está detectado/seleccionado,
+    // para evitar conflictos de contexto duplicado en agentes como Cursor y Zed que leen múltiples .md del raíz.
 ];
 
 const INIT_DIRS = [
@@ -46,7 +48,7 @@ const IDE_CONFIGS = [
     // Roo Code: usa .roo/rules/
     { name: 'Roo Code', value: 'roo', rulesDir: '.roo/rules', skillsDir: '.roo/skills', workflowsDir: '.roo/workflows', configFile: null, bridgeFile: '00-lmagent.md', markerFile: '.roo', forceCopy: true },
     // GitHub Copilot: usa .github/copilot-instructions.md + .github/instructions/*.md
-    { name: 'VSCode Copilot', value: 'vscode', rulesDir: '.github/instructions', skillsDir: '.github/skills', workflowsDir: '.github/workflows', configFile: null, bridgeFile: null, markerFile: '.vscode' },
+    { name: 'VSCode Copilot', value: 'vscode', rulesDir: '.github/instructions', skillsDir: '.github/skills', workflowsDir: '.github/copilot-workflows', configFile: '.github/copilot-instructions.md', bridgeFile: null, markerFile: '.vscode' },
     { name: 'Trae', value: 'trae', rulesDir: '.trae/rules', skillsDir: '.trae/skills', workflowsDir: '.trae/workflows', configFile: null, bridgeFile: 'lmagent.md', markerFile: '.trae', forceCopy: true },
     // Claude Code: usa .claude/
     { name: 'Claude Code', value: 'claude', rulesDir: '.claude/rules', skillsDir: '.claude/skills', workflowsDir: '.claude/workflows', configFile: 'CLAUDE.md', bridgeFile: null, markerFile: '.claude', forceCopy: true },
@@ -62,14 +64,15 @@ const IDE_CONFIGS = [
     { name: 'OpenClaw / Envoid', value: 'openclaw', rulesDir: 'rules', skillsDir: 'skills', workflowsDir: 'workflows', configFile: 'openclaw.json', configTemplate: 'openclaw.json', bridgeFile: null, markerFile: 'openclaw.json' },
     { name: 'CodeBuddy', value: 'codebuddy', rulesDir: '.codebuddy/rules', skillsDir: '.codebuddy/skills', workflowsDir: '.codebuddy/workflows', configFile: null, bridgeFile: null, markerFile: '.codebuddy', forceCopy: true },
     // Codex CLI (OpenAI)
-    { name: 'Codex', value: 'codex', rulesDir: '.codex', skillsDir: '.codex/skills', workflowsDir: '.codex/workflows', configFile: null, bridgeFile: null, markerFile: '.codex' },
+    { name: 'Codex', value: 'codex', rulesDir: '.codex', skillsDir: '.codex/skills', workflowsDir: '.codex/workflows', configFile: 'AGENTS.md', bridgeFile: null, markerFile: '.codex' },
     { name: 'Command Code', value: 'command-code', rulesDir: '.commandcode/rules', skillsDir: '.commandcode/skills', workflowsDir: '.commandcode/workflows', configFile: null, bridgeFile: null, markerFile: '.commandcode' },
     // Continue
     { name: 'Continue', value: 'continue', rulesDir: '.continue/rules', skillsDir: '.continue/skills', workflowsDir: '.continue/workflows', configFile: '.continue/continuerules', configTemplate: 'continuerules.md', bridgeFile: '00-lmagent.md', markerFile: '.continue' },
     { name: 'Crush', value: 'crush', rulesDir: '.crush/rules', skillsDir: '.crush/skills', workflowsDir: '.crush/workflows', configFile: null, bridgeFile: null, markerFile: '.crush' },
     { name: 'Droid', value: 'droid', rulesDir: '.factory/rules', skillsDir: '.factory/skills', workflowsDir: '.factory/workflows', configFile: null, bridgeFile: null, markerFile: '.factory' },
     // Goose (Block)
-    { name: 'Goose', value: 'goose', rulesDir: '.goose', skillsDir: '.goose/skills', workflowsDir: '.goose/workflows', configFile: '.goose/goosehints', configTemplate: 'goosehints.md', bridgeFile: null, markerFile: '.goose' },
+    // Goose: .goosehints va en la RAÍZ del proyecto (no en .goose/), según docs oficiales
+    { name: 'Goose', value: 'goose', rulesDir: '.goose', skillsDir: '.goose/skills', workflowsDir: '.goose/workflows', configFile: '.goosehints', configTemplate: 'goosehints.md', bridgeFile: null, markerFile: '.goose' },
     // Junie (JetBrains)
     { name: 'Junie', value: 'junie', rulesDir: '.junie', skillsDir: '.junie/skills', workflowsDir: '.junie/workflows', configFile: '.junie/guidelines.md', configTemplate: 'junie-guidelines.md', bridgeFile: null, markerFile: '.junie' },
     { name: 'iFlow CLI', value: 'iflow', rulesDir: '.iflow/rules', skillsDir: '.iflow/skills', workflowsDir: '.iflow/workflows', configFile: null, bridgeFile: null, markerFile: '.iflow' },
@@ -119,7 +122,7 @@ program.command('update')
     });
 
 program.command('init')
-    .description('Inicializar proyecto con LMAgent (copia CLAUDE.md, AGENTS.md, config, etc.)')
+    .description('Inicializar proyecto con LMAgent (copia AGENTS.md y estructura base)')
     .option('-f, --force', 'Sobrescribir archivos existentes')
     .option('-y, --yes', 'No preguntar, instalar todo')
     .action((options) => {
@@ -245,8 +248,8 @@ program.command('uninstall')
             return markerInProject || rulesDirInProject || skillsDirInProject || ide.value === 'generic';
         });
 
-        const rootFiles = ['CLAUDE.md', 'GEMINI.md', 'AGENTS.md', '.cursorrules', '.windsurfrules', '.continuerules', '.goosehints', 'openclaw.json'];
-        const existingRootFiles = rootFiles.filter(f => fs.existsSync(path.join(projectRoot, f)));
+        const rootEntryFiles = ['CLAUDE.md', 'GEMINI.md', 'AGENTS.md', '.cursorrules', '.windsurfrules', '.windsurfrules.md', '.continuerules', '.goosehints', 'openclaw.json'];
+        const existingRootFiles = rootEntryFiles.filter(f => fs.existsSync(path.join(projectRoot, f)));
 
         if (installedIdes.length === 0 && existingRootFiles.length === 0) {
             console.log(chalk.yellow('⚠️  No se detectó ningún rastro del framework en este proyecto.'));
@@ -262,9 +265,7 @@ program.command('uninstall')
             console.log(`  ${chalk.cyan('•')} ${chalk.bold(ide.name)}: ${parts.join(', ')}`);
         }
 
-        // Entry points raíz
-        const rootFiles = ['CLAUDE.md', 'GEMINI.md', 'AGENTS.md', '.cursorrules', '.windsurfrules', '.continuerules', '.goosehints'];
-        const existingRootFiles = rootFiles.filter(f => fs.existsSync(path.join(projectRoot, f)));
+        // Entry points raíz (ya calculados arriba como rootEntryFiles)
 
         if (options.all && existingRootFiles.length > 0) {
             console.log(chalk.bold('\n📄 Entry points raíz que también se eliminarán:'));
@@ -370,11 +371,7 @@ program.command('uninstall')
         }
     });
 
-if (process.argv.length === 2) {
-    runInstall({});
-} else {
-    program.parse();
-}
+// CLI entry point is handled at the bottom of the file (require.main === module)
 
 function arePathsEqual(p1, p2) {
     if (!p1 || !p2) return false;
@@ -437,7 +434,6 @@ async function runInstall(options) {
     console.log(gradient.cristal('                                      by QuBit\n'));
 
     const projectRoot = process.cwd();
-    const userHome = os.homedir();
 
     await deployCorePillars(options, projectRoot);
     const SOURCE_SKILLS = PACKAGE_SKILLS_DIR;
@@ -481,32 +477,16 @@ async function runInstall(options) {
         console.log(`🔧 Método:  ${chalk.green(isWindows ? 'Copy (Windows Safe)' : 'Symlink (Live Updates)')}`);
         console.log('');
 
-        // 3. Auto-Detect IDEs
-        // Mapa de rutas de instalación global por agente en el sistema del usuario (SOLO PARA DETECCIÓN, NO INSTALACIÓN)
-        const userHome = os.homedir();
-        const HOME_PATHS = {
-            'cursor': ['.cursor'], 'windsurf': ['.windsurf'], 'cline': ['.vscode/extensions', '.cline'], 'roo': ['.vscode/extensions', '.roo'],
-            'vscode': ['.vscode'], 'trae': ['.trae'], 'trae-cn': ['.trae-cn', '.trae'], 'claude': ['.claude'], 'zed': ['.config/zed', '.zed'],
-            'antigravity': ['.gemini/antigravity'], 'gemini': ['.gemini'], 'augment': ['.augment'], 'continue': ['.continue'], 'codex': ['.codex'],
-            'goose': ['.config/goose', '.goose'], 'junie': ['.junie'], 'kilo': ['.kilocode'], 'kiro': ['.kiro'], 'opencode': ['.opencode'],
-            'openhands': ['.openhands'], 'amp': ['.agents'], 'zencoder': ['.zencoder'], 'codebuddy': ['.codebuddy'], 'crush': ['.crush'],
-            'droid': ['.factory'], 'mux': ['.mux'], 'qwen': ['.qwen'], 'openclaw': ['.config/openclaw', '.openclaw'], 'command-code': ['.commandcode'],
-            'iflow': ['.iflow'], 'kode': ['.kode'], 'mcpjam': ['.mcpjam'], 'mistral': ['.vibe', '.mistral'], 'pi': ['.pi'], 'qoder': ['.qoder'],
-            'neovate': ['.neovate'], 'pochi': ['.pochi'], 'adal': ['.adal'],
-        };
-
+        // 3. Auto-Detect IDEs — SOLO en el PROYECTO (no en HOME, para evitar falsos positivos)
         const detectedIdes = IDE_CONFIGS.filter(ide => {
             if (ide.value === 'custom' || ide.value === 'generic') return false;
 
             const markerInProject = ide.markerFile && fs.existsSync(path.join(projectRoot, ide.markerFile));
             const rulesDirInProject = ide.rulesDir && fs.existsSync(path.join(projectRoot, ide.rulesDir));
             const skillsDirInProject = ide.skillsDir && fs.existsSync(path.join(projectRoot, ide.skillsDir));
-            const inProject = markerInProject || rulesDirInProject || skillsDirInProject;
-
-            const homePaths = HOME_PATHS[ide.value] || [];
-            const inHome = homePaths.some(p => fs.existsSync(path.join(userHome, p)));
-
-            return inProject || inHome;
+            // Detectar también por configFile existente en el proyecto
+            const configInProject = ide.configFile && fs.existsSync(path.join(projectRoot, ide.configFile));
+            return markerInProject || rulesDirInProject || skillsDirInProject || configInProject;
         });
 
         // 4. Smart Multi-Agent Auto-Detection Setup
@@ -610,7 +590,8 @@ async function runInstall(options) {
     console.log(chalk.bold('\n🧹 Ejecutando limpieza de archivos root (Aislamiento de Agentes)...'));
     // Definimos TODOS los posibles entry points
     const allRootFiles = [
-        '.cursorrules', '.windsurfrules', '.continuerules', '.goosehints',
+        '.cursorrules', '.windsurfrules', '.windsurfrules.md', '.continuerules',
+        '.goosehints', '.roorules',
         'CLAUDE.md', 'GEMINI.md', 'openclaw.json'
     ];
 
@@ -720,8 +701,21 @@ async function runInstall(options) {
 **TU CONTEXTO Y REGLAS VIVEN AQUÍ 👉 [AGENTS.md](${relativeCatalogPath})**
 *Lee este archivo INMEDIATAMENTE para obtener tu identidad, skills y reglas operativas.*
 
+## 🔄 ARRANQUE AUTOMÁTICO (Haz esto al iniciar cada sesión)
+1. Lee [AGENTS.md](${relativeCatalogPath}) — Tu catálogo completo de capacidades
+2. Lee \`.agents/rules/00-master.md\` — Reglas y protocolo de trabajo
+3. Si existe \`.agents/memory/04-active-context.md\` — Recupera contexto previo
+4. Clasifica la tarea (Nivel 0-4) y activa el skill apropiado
+
+## 📁 RUTAS DE ENTORNO
+- **Skills**: \`${ide.skillsDir || '.agents/skills'}\` (31 skills disponibles)
+- **Rules**: \`${ide.rulesDir || '.agents/rules'}\` (11 reglas)
+- **Workflows**: \`${ide.workflowsDir || '.agents/workflows'}\` (13 SOPs)
+- **Memory**: \`.agents/memory/\`
+- **Config**: \`.agents/config/\`
+
 ## ⚡ QUICK START TRIGGERS (Menu Rápido)
-Use estos comandos para activar su rol. Para detalles, consulte \`AGENTS.md\`.
+Usa estos comandos para activar un rol. Para el catálogo completo de 31 skills, consulta \`AGENTS.md\`.
 
 | Trigger | Rol / Skill | Objetivo |
 |:--- |:--- |:--- |
@@ -732,7 +726,9 @@ Use estos comandos para activar su rol. Para detalles, consulte \`AGENTS.md\`.
 | \`/fix\` | **Debugger** | Análisis de bugs. |
 | \`/arch\` | **Architect** | Diseño de sistemas. |
 
-!! SYSTEM NOTE: Read AGENTS.md to understand how to execute these roles. !!
+> **IMPORTANTE**: Para activar un skill, lee su \`SKILL.md\` completo en \`${ide.skillsDir || '.agents/skills'}/[nombre]/SKILL.md\`.
+
+!! SYSTEM NOTE: You MUST read AGENTS.md at startup to understand the full framework. !!
 `;
                 }
                 // If file exists, check if we need to append
@@ -780,9 +776,12 @@ Use estos comandos para activar su rol. Para detalles, consulte \`AGENTS.md\`.
         if (ide.rulesDir && needsBridge) {
             const bridgePath = path.join(targetRoot, ide.rulesDir, bridgeFile);
             const relativeBridgeToRoot = path.join(ide.rulesDir, bridgeFile);
-            const relContext = getRelLink(relativeBridgeToRoot, 'CLAUDE.md');
+            // Usar entry point universal (AGENTS.md) en vez de hardcodear CLAUDE.md
+            const agentEntryPoint = ide.configFile || 'AGENTS.md';
+            const relContext = getRelLink(relativeBridgeToRoot, agentEntryPoint);
             const relCatalog = getRelLink(relativeBridgeToRoot, 'AGENTS.md');
             const relRules = getRelLink(relativeBridgeToRoot, '.agents/rules/00-master.md');
+            const relMemory = getRelLink(relativeBridgeToRoot, '.agents/memory/04-active-context.md');
 
             let bridgeContent = '';
 
@@ -801,13 +800,21 @@ Este proyecto está potenciado por **LMAgent v${PKG_VERSION}**.
 **TU CONTEXTO Y REGLAS VIVEN AQUÍ 👉 [AGENTS.md](${relCatalog})**
 *Lee este archivo INMEDIATAMENTE para obtener tu identidad, skills y reglas operativas.*
 
+## 🔄 ARRANQUE AUTOMÁTICO (Haz esto al iniciar)
+1. Lee [AGENTS.md](${relCatalog}) — Tu catálogo completo de capacidades
+2. Lee [00-master.md](${relRules}) — Reglas y protocolo de trabajo
+3. Si existe [04-active-context.md](${relMemory}) — Léelo para recuperar contexto de la sesión anterior
+4. Clasifica la tarea (Nivel 0-4) y activa el skill apropiado
+
 ## 📁 RUTAS DE ENTORNO
-- **Tus Skills**: \`${ide.skillsDir || '.agents/skills'}\`
-- **Tus Rules**: \`${ide.rulesDir || '.agents/rules'}\`
-- **Tus Workflows**: \`${ide.workflowsDir || '.agents/workflows'}\`
+- **Tus Skills**: \`${ide.skillsDir || '.agents/skills'}\` (31 skills disponibles)
+- **Tus Rules**: \`${ide.rulesDir || '.agents/rules'}\` (11 reglas)
+- **Tus Workflows**: \`${ide.workflowsDir || '.agents/workflows'}\` (13 SOPs)
+- **Memory**: \`${ide.skillsDir ? ide.skillsDir.replace(/\/[^/]+$/, '/memory') : '.agents/memory'}\`
+- **Config**: \`${ide.skillsDir ? ide.skillsDir.replace(/\/[^/]+$/, '/config') : '.agents/config'}\`
 
 ## ⚡ QUICK START TRIGGERS (Menu Rápido)
-Use estos comandos para activar su rol. Para detalles, consulte \`AGENTS.md\`.
+Usa estos comandos para activar un rol. Para el catálogo completo de 31 skills, consulta \`AGENTS.md\`.
 
 | Trigger | Rol / Skill | Objetivo |
 |:--- |:--- |:--- |
@@ -818,7 +825,9 @@ Use estos comandos para activar su rol. Para detalles, consulte \`AGENTS.md\`.
 | \`/fix\` | **Debugger** | Análisis de bugs. |
 | \`/arch\` | **Architect** | Diseño de sistemas. |
 
-!! SYSTEM NOTE: Read AGENTS.md to understand how to execute these roles. !!
+> **IMPORTANTE**: Para activar un skill, lee su \`SKILL.md\` completo en \`${ide.skillsDir || '.agents/skills'}/[nombre]/SKILL.md\`.
+
+!! SYSTEM NOTE: You MUST read AGENTS.md at startup to understand the full framework. !!
 `;
             } else {
                 // Standard Markdown (Universal & Cline/Windsurf)
@@ -830,13 +839,21 @@ Este proyecto utiliza **LMAgent v${PKG_VERSION}**.
 **TU CONTEXTO Y REGLAS VIVEN AQUÍ 👉 [AGENTS.md](${relCatalog})**
 *Lee este archivo INMEDIATAMENTE para obtener tu identidad, skills y reglas operativas.*
 
+## 🔄 ARRANQUE AUTOMÁTICO (Haz esto al iniciar)
+1. Lee [AGENTS.md](${relCatalog}) — Tu catálogo completo de capacidades
+2. Lee [00-master.md](${relRules}) — Reglas y protocolo de trabajo
+3. Si existe [04-active-context.md](${relMemory}) — Léelo para recuperar contexto de la sesión anterior
+4. Clasifica la tarea (Nivel 0-4) y activa el skill apropiado
+
 ## 📁 RUTAS DE ENTORNO
-- **Tus Skills**: \`${ide.skillsDir || '.agents/skills'}\`
-- **Tus Rules**: \`${ide.rulesDir || '.agents/rules'}\`
-- **Tus Workflows**: \`${ide.workflowsDir || '.agents/workflows'}\`
+- **Tus Skills**: \`${ide.skillsDir || '.agents/skills'}\` (31 skills disponibles)
+- **Tus Rules**: \`${ide.rulesDir || '.agents/rules'}\` (11 reglas)
+- **Tus Workflows**: \`${ide.workflowsDir || '.agents/workflows'}\` (13 SOPs)
+- **Memory**: \`${ide.skillsDir ? ide.skillsDir.replace(/\/[^/]+$/, '/memory') : '.agents/memory'}\`
+- **Config**: \`${ide.skillsDir ? ide.skillsDir.replace(/\/[^/]+$/, '/config') : '.agents/config'}\`
 
 ## ⚡ QUICK START TRIGGERS (Menu Rápido)
-Use estos comandos para activar su rol. Para detalles, consulte \`AGENTS.md\`.
+Usa estos comandos para activar un rol. Para el catálogo completo de 31 skills, consulta \`AGENTS.md\`.
 
 | Trigger | Rol / Skill | Objetivo |
 |:--- |:--- |:--- |
@@ -846,6 +863,8 @@ Use estos comandos para activar su rol. Para detalles, consulte \`AGENTS.md\`.
 | \`/pm\` | **Product** | PRDs y Roadmap. |
 | \`/fix\` | **Debugger** | Análisis de bugs. |
 | \`/arch\` | **Architect** | Diseño de sistemas. |
+
+> **IMPORTANTE**: Para activar un skill, lee su \`SKILL.md\` completo en \`${ide.skillsDir || '.agents/skills'}/[nombre]/SKILL.md\`.
 `;
             }
 

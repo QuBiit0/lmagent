@@ -1,6 +1,6 @@
 # 🚀 LMAgent Bootstrap — Instrucciones Iniciales
 
-> **Tipo**: `rule` | **Versión**: 3.1.9 | **Prioridad**: MÁXIMA
+> **Tipo**: `rule` | **Versión**: 3.3.0 | **Prioridad**: MÁXIMA
 > Esta regla se aplica **SIEMPRE** como primer paso antes de cualquier tarea.
 
 ---
@@ -15,7 +15,7 @@
 
 ## 🧠 Framework
 
-Este archivo define la identidad, propósito y reglas fundamentales de **LMAgent v3.1.6**. Antes de implementar cualquier cambio:
+Este archivo define la identidad, propósito y reglas fundamentales de **LMAgent v3.3.0**. Antes de implementar cualquier cambio:
 
 1. **Lee `AGENTS.md`** — Catálogo completo de skills, rules y workflows
 2. **Clasifica la tarea** — Nivel 0-4 según complejidad (ver `.agents/rules/01-workflow.md`)

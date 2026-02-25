@@ -216,48 +216,67 @@ Ubicación Universal: `.agents/skills/[nombre_skill]/SKILL.md`
 ## 🌐 7. Mapa de Agentes Soportados (37 Agentes)
 La lista completa de dónde busca instrucciones CADA agente soportado por LMAgent.
 
+### 🔄 Auto-Invocación
+
+Cuando un agente abre un proyecto con LMAgent instalado, el flujo es:
+
+1. **El agente lee su `configFile`** (ej: `CLAUDE.md`, `GEMINI.md`) o su **`bridgeFile`** en `rulesDir`
+2. **Ese archivo le dice que lea `AGENTS.md`** → El catálogo completo de capacidades
+3. **`AGENTS.md` lo dirige a `00-master.md`** → Las reglas operativas y tabla de skills
+4. **El agente carga el `SKILL.md` apropiado** según la tarea del usuario
+5. **Si existe `04-active-context.md`** → Recupera contexto de la sesión anterior
+
+> **Resultado**: El agente conoce TODO el framework automáticamente, sin que el usuario tenga que invocarlo manualmente.
+
+### 📊 Tabla de Configuración por Agente
+
 | Agente | Rules Directory | Skills Directory | Entry Point (configFile) |
 | :--- | :--- | :--- | :--- |
-| **Cursor** | `.cursor/rules/` | `.cursor/skills/` | `.cursorrules` |
-| **Windsurf** | `.windsurf/rules/` | `.windsurf/skills/` | `.windsurf/rules/lmagent.md` |
-| **Cline** | `.clinerules/` | `.cline/skills/` | `.clinerules/00-lmagent.md` |
-| **Roo Code** | `.roo/rules/` | `.roo/skills/` | `.roo/rules/00-lmagent.md` |
+| **Cursor** | `.cursor/rules/` | `.cursor/rules/skills/` | `AGENTS.md` (nativo) + bridge `.cursor/rules/00-lmagent.mdc` |
+| **Windsurf** | `.windsurf/rules/` | `.windsurf/skills/` | `.windsurf/rules/lmagent.md` (bridge) |
+| **Cline** | `.clinerules/` | `.cline/skills/` | `.clinerules/00-lmagent.md` (bridge) |
+| **Roo Code** | `.roo/rules/` | `.roo/skills/` | `AGENTS.md` (nativo) + bridge `.roo/rules/00-lmagent.md` |
 | **VSCode Copilot** | `.github/instructions/` | `.github/skills/` | `.github/copilot-instructions.md` |
-| **Trae** | `.trae/rules/` | `.trae/skills/` | `.trae/rules/lmagent.md` |
-| **Trae CN** | `.trae-cn/rules/` | `.trae-cn/skills/` | `.trae-cn/rules/lmagent.md` |
+| **Trae** | `.trae/rules/` | `.trae/skills/` | `.trae/rules/lmagent.md` (bridge) |
+| **Trae CN** | `.trae-cn/rules/` | `.trae-cn/skills/` | `.trae-cn/rules/lmagent.md` (bridge) |
 | **Claude Code** | `.claude/rules/` | `.claude/skills/` | `CLAUDE.md` |
-| **Zed** | `.rules/` | `.rules/skills/` | `.rules/lmagent.md` |
-| **Amp / Kimi / Replit** | `.agents/rules/` | `.agents/skills/` | `.agents/rules/00-lmagent.md` |
+| **Zed** | `.rules/` | `.rules/skills/` | `AGENTS.md` (nativo) + bridge `.rules/lmagent.md` |
+| **Amp / Kimi / Replit** | `.agents/rules/` | `.agents/skills/` | `AGENTS.md` (nativo) |
 | **Antigravity** | `.agent/rules/` | `.agent/skills/` | `GEMINI.md` |
-| **Augment** | `.augment/rules/` | `.augment/skills/` | `.augment/rules/00-lmagent.md` |
+| **Augment** | `.augment/rules/` | `.augment/skills/` | `.augment/rules/00-lmagent.md` (bridge) |
 | **Gemini CLI** | `.gemini/rules/` | `.gemini/skills/` | `GEMINI.md` |
 | **OpenClaw / Envoid** | `rules/` | `skills/` | `openclaw.json` |
-| **CodeBuddy** | `.codebuddy/rules/` | `.codebuddy/skills/` | `.codebuddy/rules/00-lmagent.md` |
+| **CodeBuddy** | `.codebuddy/rules/` | `.codebuddy/skills/` | `.codebuddy/rules/00-lmagent.md` (bridge) |
 | **Codex CLI** | `.codex/` | `.codex/skills/` | `AGENTS.md` |
-| **Command Code** | `.commandcode/rules/` | `.commandcode/skills/` | `.commandcode/rules/00-lmagent.md` |
-| **Continue** | `.continue/rules/` | `.continue/skills/` | `.continuerules` |
-| **Crush** | `.crush/rules/` | `.crush/skills/` | `.crush/rules/00-lmagent.md` |
-| **Droid** | `.factory/rules/` | `.factory/skills/` | `.factory/rules/00-lmagent.md` |
-| **Goose** | `.goose/` | `.goose/skills/` | `.goosehints` |
+| **Command Code** | `.commandcode/rules/` | `.commandcode/skills/` | `.commandcode/rules/00-lmagent.md` (bridge) |
+| **Continue** | `.continue/rules/` | `.continue/skills/` | `.continue/continuerules` |
+| **Crush** | `.crush/rules/` | `.crush/skills/` | `.crush/rules/00-lmagent.md` (bridge) |
+| **Droid** | `.factory/rules/` | `.factory/skills/` | `.factory/rules/00-lmagent.md` (bridge) |
+| **Goose** | `.goose/` | `.goose/skills/` | `.goosehints` (en raíz del proyecto) |
 | **Junie** | `.junie/` | `.junie/skills/` | `.junie/guidelines.md` |
-| **iFlow CLI** | `.iflow/rules/` | `.iflow/skills/` | `.iflow/rules/00-lmagent.md` |
-| **Kilo Code** | `.kilocode/rules/` | `.kilocode/skills/` | `.kilocode/rules/00-lmagent.md` |
-| **Kiro CLI** | `.kiro/rules/` | `.kiro/skills/` | `.kiro/rules/00-lmagent.md` |
-| **Kode** | `.kode/rules/` | `.kode/skills/` | `.kode/rules/00-lmagent.md` |
-| **MCPJam** | `.mcpjam/rules/` | `.mcpjam/skills/` | `.mcpjam/rules/00-lmagent.md` |
-| **Mistral Vibe** | `.vibe/rules/` | `.vibe/skills/` | `.vibe/rules/00-lmagent.md` |
-| **Mux** | `.mux/rules/` | `.mux/skills/` | `.mux/rules/00-lmagent.md` |
-| **OpenCode** | `.opencode/rules/` | `.opencode/skills/` | `.opencode/rules/00-lmagent.md` |
+| **iFlow CLI** | `.iflow/rules/` | `.iflow/skills/` | `.iflow/rules/00-lmagent.md` (bridge) |
+| **Kilo Code** | `.kilocode/rules/` | `.kilocode/skills/` | `.kilocode/rules/00-lmagent.md` (bridge) |
+| **Kiro CLI** | `.kiro/rules/` | `.kiro/skills/` | `.kiro/rules/00-lmagent.md` (bridge) |
+| **Kode** | `.kode/rules/` | `.kode/skills/` | `.kode/rules/00-lmagent.md` (bridge) |
+| **MCPJam** | `.mcpjam/rules/` | `.mcpjam/skills/` | `.mcpjam/rules/00-lmagent.md` (bridge) |
+| **Mistral Vibe** | `.vibe/rules/` | `.vibe/skills/` | `.vibe/rules/00-lmagent.md` (bridge) |
+| **Mux** | `.mux/rules/` | `.mux/skills/` | `.mux/rules/00-lmagent.md` (bridge) |
+| **OpenCode** | `.opencode/rules/` | `.opencode/skills/` | `.opencode/rules/00-lmagent.md` (bridge) |
 | **OpenHands** | `.openhands/microagents/` | `.openhands/skills/` | `.openhands/microagents/repo.md` |
-| **Pi** | `.pi/rules/` | `.pi/skills/` | `.pi/rules/00-lmagent.md` |
-| **Qoder** | `.qoder/rules/` | `.qoder/skills/` | `.qoder/rules/00-lmagent.md` |
-| **Qwen Code** | `.qwen/rules/` | `.qwen/skills/` | `.qwen/rules/00-lmagent.md` |
-| **Zencoder** | `.zencoder/rules/` | `.zencoder/skills/` | `.zencoder/rules/00-lmagent.md` |
-| **Neovate** | `.neovate/rules/` | `.neovate/skills/` | `.neovate/rules/00-lmagent.md` |
-| **Pochi** | `.pochi/rules/` | `.pochi/skills/` | `.pochi/rules/00-lmagent.md` |
-| **AdaL** | `.adal/rules/` | `.adal/skills/` | `.adal/rules/00-lmagent.md` |
+| **Pi** | `.pi/rules/` | `.pi/skills/` | `.pi/rules/00-lmagent.md` (bridge) |
+| **Qoder** | `.qoder/rules/` | `.qoder/skills/` | `.qoder/rules/00-lmagent.md` (bridge) |
+| **Qwen Code** | `.qwen/rules/` | `.qwen/skills/` | `.qwen/rules/00-lmagent.md` (bridge) |
+| **Zencoder** | `.zencoder/rules/` | `.zencoder/skills/` | `.zencoder/rules/00-lmagent.md` (bridge) |
+| **Neovate** | `.neovate/rules/` | `.neovate/skills/` | `.neovate/rules/00-lmagent.md` (bridge) |
+| **Pochi** | `.pochi/rules/` | `.pochi/skills/` | `.pochi/rules/00-lmagent.md` (bridge) |
+| **AdaL** | `.adal/rules/` | `.adal/skills/` | `.adal/rules/00-lmagent.md` (bridge) |
 
-> **Nota**: Los agentes sin `configFile` propio usan `00-lmagent.md` en su `rulesDir` como bridge de auto-invocación. Este archivo apunta a `AGENTS.md` y activa el framework automáticamente.
+> **Tipos de Entry Point**:
+> - **`(nativo)`**: El agente lee `AGENTS.md` automáticamente del raíz del proyecto sin configuración extra (Cursor, Zed, Roo Code, Codex)
+> - **`configFile`** directo: El agente lee este archivo específico al iniciar (ej: `CLAUDE.md`, `GEMINI.md`). Solo se despliega si el agente está detectado.
+> - **`bridge`**: Archivo intermedio en el `rulesDir` que apunta a `AGENTS.md`. Se genera durante la instalación.
+>
+> ⚠️ **Importante**: `CLAUDE.md` y `GEMINI.md` solo se crean cuando su agente correspondiente está detectado. Esto evita conflictos de contexto duplicado en agentes como Cursor y Zed que leen múltiples `.md` del raíz.
 
 ---
 

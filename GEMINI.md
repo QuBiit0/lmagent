@@ -1,14 +1,25 @@
 
-# 🤖 LMAgent Framework v3.3.0
-> Contexto Activo: Este proyecto utiliza el estándar LMAgent V3.
+# 🤖 LMAgent Framework v{{VERSION}}
+> Contexto Activo: Este proyecto utiliza el estándar LMAgent V{{MAJOR}}.
 
 ## 🚨 SOURCE OF TRUTH (CEREBRO)
 **TU CONTEXTO Y REGLAS VIVEN AQUÍ 👉 [AGENTS.md](./AGENTS.md)**
 *Lee este archivo INMEDIATAMENTE para obtener tu identidad, skills y reglas operativas.*
 
-## ⚡ QUICK START TRIGGERS (Menu Rápido)
-Use estos comandos para activar su rol. Para detalles, consulte `AGENTS.md`.
+## 🔄 ARRANQUE AUTOMÁTICO (Haz esto al iniciar cada sesión)
+1. **Lee [AGENTS.md](./AGENTS.md)** — Tu catálogo completo (31 skills, 11 rules, 13 workflows)
+2. **Lee `.agents/rules/00-master.md`** — Reglas, protocolo de trabajo y triggers
+3. **Si existe `.agents/memory/04-active-context.md`** — Recupera contexto previo
+4. **Clasifica la tarea** (Nivel 0-4) y activa el skill apropiado
 
+## 📁 RUTAS DE ENTORNO
+- **Skills**: `.gemini/skills/` o `.agents/skills/`
+- **Rules**: `.gemini/rules/` o `.agents/rules/`
+- **Workflows**: `.gemini/workflows/` o `.agents/workflows/`
+- **Memory**: `.agents/memory/`
+- **Config**: `.agents/config/`
+
+## ⚡ QUICK START TRIGGERS (Menú Rápido)
 | Trigger | Rol / Skill | Objetivo |
 |:--- |:--- |:--- |
 | `/orch` | **Orchestrator** | Clasificar y delegar. |
@@ -18,4 +29,6 @@ Use estos comandos para activar su rol. Para detalles, consulte `AGENTS.md`.
 | `/fix` | **Debugger** | Análisis de bugs. |
 | `/arch` | **Architect** | Diseño de sistemas. |
 
-!! SYSTEM NOTE: Read AGENTS.md to understand how to execute these roles. !!
+> **IMPORTANTE**: Para activar un skill, lee su `SKILL.md` completo en `skills/[nombre]/SKILL.md`.
+
+!! SYSTEM NOTE: You MUST read AGENTS.md at startup to understand the full framework. !!

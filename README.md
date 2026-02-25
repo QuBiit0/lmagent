@@ -39,7 +39,7 @@ That's it. No global install required. LMAgent will:
 ```bash
 npx @qubiit/lmagent@latest init
 ```
-Copies `AGENTS.md`, `CLAUDE.md`, and `GEMINI.md` to your project root. These are the entry points that agents read automatically when they start.
+Copies `AGENTS.md` to your project root. This is the **single entry point** that all agents read automatically. Agent-specific files (`CLAUDE.md`, `GEMINI.md`) are deployed only when their agent is detected during install.
 
 ### Step 2 — Install the framework
 ```bash
@@ -76,9 +76,9 @@ Your Project/
 │   ├── config/                 # Framework settings
 │   └── docs/                   # Extended documentation
 │
-├── AGENTS.md                   # ← PILLAR 1: Capability catalog (read by all agents)
-├── CLAUDE.md                   # ← PILLAR 2: Entry point for Claude Code / Antigravity
-├── GEMINI.md                   # ← PILLAR 3: Entry point for Gemini CLI / Antigravity
+├── AGENTS.md                   # ← UNIVERSAL ENTRY POINT (read by all agents)
+├── CLAUDE.md                   # ← Only if Claude Code is detected
+├── GEMINI.md                   # ← Only if Gemini CLI / Antigravity is detected
 │
 ├── .cursor/rules/              # ← Cursor-specific rules & skills
 ├── .windsurf/rules/            # ← Windsurf-specific rules & skills
@@ -92,18 +92,19 @@ Each agent reads a specific file when it starts. LMAgent generates that file aut
 
 | Agent | Entry Point Generated |
 |:---|:---|
-| Cursor | `.cursorrules` |
+| Cursor | `AGENTS.md` (native) + `.cursor/rules/00-lmagent.mdc` |
 | Claude Code | `CLAUDE.md` |
 | Gemini CLI / Antigravity | `GEMINI.md` |
 | Windsurf | `.windsurf/rules/lmagent.md` |
 | Cline | `.clinerules/00-lmagent.md` |
-| Roo Code | `.roo/rules/00-lmagent.md` |
+| Roo Code | `AGENTS.md` (native) + `.roo/rules/00-lmagent.md` |
 | VSCode Copilot | `.github/copilot-instructions.md` |
+| Zed | `AGENTS.md` (native) + `.rules/lmagent.md` |
 | Goose | `.goosehints` |
-| Continue | `.continuerules` |
+| Continue | `.continue/continuerules` |
 | Junie | `.junie/guidelines.md` |
 | OpenHands | `.openhands/microagents/repo.md` |
-| Codex CLI | `AGENTS.md` |
+| Codex CLI | `AGENTS.md` (native) |
 | All others | `00-lmagent.md` in their `rulesDir` |
 
 All entry points point to `AGENTS.md` — the single source of truth.
@@ -167,7 +168,7 @@ Activate any skill by typing its trigger in the chat:
 
 | Agent | Config Path | Entry Point |
 |:---|:---|:---|
-| **Cursor** | `.cursor/` | `.cursorrules` |
+| **Cursor** | `.cursor/` | `AGENTS.md` (native) + `.cursor/rules/00-lmagent.mdc` |
 | **Windsurf** | `.windsurf/` | `.windsurf/rules/lmagent.md` |
 | **Cline** | `.clinerules/` | `.clinerules/00-lmagent.md` |
 | **Roo Code** | `.roo/` | `.roo/rules/00-lmagent.md` |
@@ -175,8 +176,8 @@ Activate any skill by typing its trigger in the chat:
 | **Trae** | `.trae/` | `.trae/rules/lmagent.md` |
 | **Trae CN** | `.trae-cn/` | `.trae-cn/rules/lmagent.md` |
 | **Claude Code** | `.claude/` | `CLAUDE.md` |
-| **Zed** | `.rules/` | `.rules/lmagent.md` |
-| **Amp / Kimi / Replit** | `.agents/` | `.agents/rules/00-lmagent.md` |
+| **Zed** | `.rules/` | `AGENTS.md` (native) + `.rules/lmagent.md` |
+| **Amp / Kimi / Replit** | `.agents/` | `AGENTS.md` (native) |
 | **Antigravity** | `.agent/` | `GEMINI.md` |
 | **Augment** | `.augment/` | `.augment/rules/00-lmagent.md` |
 | **Gemini CLI** | `.gemini/` | `GEMINI.md` |
@@ -184,7 +185,7 @@ Activate any skill by typing its trigger in the chat:
 | **CodeBuddy** | `.codebuddy/` | `.codebuddy/rules/00-lmagent.md` |
 | **Codex CLI** | `.codex/` | `AGENTS.md` |
 | **Command Code** | `.commandcode/` | `.commandcode/rules/00-lmagent.md` |
-| **Continue** | `.continue/` | `.continuerules` |
+| **Continue** | `.continue/` | `.continue/continuerules` |
 | **Crush** | `.crush/` | `.crush/rules/00-lmagent.md` |
 | **Droid** | `.factory/` | `.factory/rules/00-lmagent.md` |
 | **Goose** | `.goose/` | `.goosehints` |
@@ -213,7 +214,7 @@ Activate any skill by typing its trigger in the chat:
 ```bash
 # Core
 npx @qubiit/lmagent@latest              # Interactive install (auto-detects agents)
-npx @qubiit/lmagent@latest init         # Initialize project (copies AGENTS.md, CLAUDE.md, GEMINI.md)
+npx @qubiit/lmagent@latest init         # Initialize project (copies AGENTS.md)
 npx @qubiit/lmagent@latest install      # Install/update framework in current project
 npx @qubiit/lmagent@latest update       # Alias for install
 npx @qubiit/lmagent@latest uninstall    # Remove all LMAgent files from project
