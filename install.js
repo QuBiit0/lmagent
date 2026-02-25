@@ -969,6 +969,10 @@ Usa estos comandos para activar un rol. Para el catálogo completo de 31 skills,
             }
         }
     }
+
+    // 🔄 Sincronizar Catálogo de Skills en AGENTS.md y 00-master.md
+    await syncSkillCatalog(targetRoot);
+
     console.log(gradient.pastel.multiline('\n✨ Instalación Finalizada ✨'));
 
     console.log(chalk.gray('================================================================'));
@@ -987,6 +991,99 @@ Usa estos comandos para activar un rol. Para el catálogo completo de 31 skills,
     console.log(chalk.dim('    💡 Ejecuta `lmagent doctor` para verificar la instalación.'));
     console.log(chalk.dim('    💡 Ejecuta `lmagent tokens` para ver el consumo de tokens del framework.'));
     console.log(chalk.gray('================================================================'));
+}
+
+// ─── Sincronización Dinámica del Catálogo de Skills ───────────────────────────
+// Escanea .agents/skills/*/SKILL.md, extrae frontmatter y regenera las tablas
+// entre <!-- SKILLS_CATALOG_START --> y <!-- SKILLS_CATALOG_END --> en:
+//   - AGENTS.md (tabla de skills con trigger, nombre y directorio)
+//   - .agents/rules/00-master.md (tabla de skills con trigger y descripción)
+async function syncSkillCatalog(projectRoot) {
+    const skillsDir = path.join(projectRoot, '.agents', 'skills');
+    if (!fs.existsSync(skillsDir)) return;
+
+    // 1. Escanear todos los SKILL.md y extraer frontmatter
+    const skills = [];
+    const skillDirs = fs.readdirSync(skillsDir).filter(d => {
+        const p = path.join(skillsDir, d);
+        return fs.statSync(p).isDirectory() && fs.existsSync(path.join(p, 'SKILL.md'));
+    });
+
+    for (const dir of skillDirs) {
+        const skillMdPath = path.join(skillsDir, dir, 'SKILL.md');
+        try {
+            const content = fs.readFileSync(skillMdPath, 'utf8');
+            const fmMatch = content.match(/^---\s*\n([\s\S]*?)\n---/);
+            if (!fmMatch) continue;
+
+            const fm = fmMatch[1];
+            const name = (fm.match(/^name:\s*(.+)$/m) || [])[1]?.trim() || dir;
+            const description = (fm.match(/^description:\s*(.+)$/m) || [])[1]?.trim() || '';
+
+            // Extract triggers array from YAML
+            const triggersMatch = fm.match(/triggers:\s*\n((?:\s+-\s*.+\n?)+)/);
+            let triggers = [];
+            if (triggersMatch) {
+                triggers = triggersMatch[1].match(/\s+-\s*(.+)/g)?.map(t => t.replace(/^\s+-\s*/, '').trim().replace(/["']/g, '')) || [];
+            }
+
+            skills.push({ slug: dir, name, description, triggers });
+        } catch (e) {
+            // Silently skip malformed skills
+        }
+    }
+
+    if (skills.length === 0) return;
+
+    console.log(chalk.bold(`\n📚 Sincronizando Catálogo de Skills (${skills.length} skills detectados)...`));
+
+    // 2. Generar tabla para AGENTS.md (formato: Trigger | Skill | Directorio)
+    const agentsTableLines = skills.map(s => {
+        const trigger = s.triggers.length > 0 ? `\`${s.triggers[0]}\`` : `\`/${s.slug.split('-')[0]}\``;
+        return `| ${trigger} | **${s.slug}** | \`.agents/skills/${s.slug}/\` |`;
+    });
+
+    const agentsTableContent = `| Trigger | Skill | Directorio |
+|:---|:---|:---|
+${agentsTableLines.join('\n')}`;
+
+    // 3. Generar tabla para 00-master.md (formato: Skill | Triggers | Descripción)
+    const masterTableLines = skills.map(s => {
+        const triggerStr = s.triggers.length > 0
+            ? s.triggers.map(t => `\`${t}\``).join(', ')
+            : `\`/${s.slug.split('-')[0]}\``;
+        return `| **${s.slug}** | ${triggerStr} | ${s.description} |`;
+    });
+
+    const masterTableContent = `| Skill | Triggers | Descripción |
+|-------|----------|-------------|
+${masterTableLines.join('\n')}`;
+
+    // 4. Inyectar en AGENTS.md
+    const agentsPath = path.join(projectRoot, 'AGENTS.md');
+    if (fs.existsSync(agentsPath)) {
+        let agentsContent = fs.readFileSync(agentsPath, 'utf8');
+        const agentsRegex = /<!-- SKILLS_CATALOG_START -->[\s\S]*?<!-- SKILLS_CATALOG_END -->/;
+        if (agentsRegex.test(agentsContent)) {
+            const newSection = `<!-- SKILLS_CATALOG_START -->\n${agentsTableContent}\n<!-- SKILLS_CATALOG_END -->`;
+            agentsContent = agentsContent.replace(agentsRegex, newSection);
+            fs.writeFileSync(agentsPath, agentsContent, 'utf8');
+            console.log(`  ${chalk.green('✔')} AGENTS.md — Catálogo actualizado (${skills.length} skills)`);
+        }
+    }
+
+    // 5. Inyectar en 00-master.md (buscar en project's .agents/rules/)
+    const masterPath = path.join(projectRoot, '.agents', 'rules', '00-master.md');
+    if (fs.existsSync(masterPath)) {
+        let masterContent = fs.readFileSync(masterPath, 'utf8');
+        const masterRegex = /<!-- SKILLS_CATALOG_START -->[\s\S]*?<!-- SKILLS_CATALOG_END -->/;
+        if (masterRegex.test(masterContent)) {
+            const newSection = `<!-- SKILLS_CATALOG_START -->\n${masterTableContent}\n<!-- SKILLS_CATALOG_END -->`;
+            masterContent = masterContent.replace(masterRegex, newSection);
+            fs.writeFileSync(masterPath, masterContent, 'utf8');
+            console.log(`  ${chalk.green('✔')} 00-master.md — Catálogo actualizado (${skills.length} skills)`);
+        }
+    }
 }
 
 async function applyFile(source, dest, method) {

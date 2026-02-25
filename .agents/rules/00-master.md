@@ -42,10 +42,11 @@ Este archivo define la identidad, propósito y reglas fundamentales de **LMAgent
 
 ---
 
-## 🎯 Skills Disponibles (31)
+## 🎯 Skills Disponibles
 
 Activa el skill apropiado según la tarea. Cada skill tiene `SKILL.md` con instrucciones detalladas, y opcionalmente `scripts/`, `references/` y `assets/`.
 
+<!-- SKILLS_CATALOG_START -->
 ### Meta-Skill
 | Skill | Triggers | Descripción |
 |-------|----------|-------------|
@@ -104,6 +105,7 @@ Activa el skill apropiado según la tarea. Cada skill tiene `SKILL.md` con instr
 | **bmad-methodology** | `/bmad` | Scale-Adaptive Intelligence, niveles 0-4 |
 | **swe-agent** | `/swe`, `/issue-solve`, `/trajectory` | Resolución autónoma de issues |
 | **spec-driven-dev** | `/spec-dev`, `/sdd-skill`, `/spec-method` | Pipeline: Specify→Plan→Tasks→Implement→Verify |
+<!-- SKILLS_CATALOG_END -->
 
 ---
 

@@ -147,12 +147,14 @@ Clasifica tu tarea actual para decidir tu nivel de autonomía:
 
 ---
 
-## 🏗️ 5. Skills Catalog (31 Skills Disponibles)
+## 🏗️ 5. Skills Catalog
 Ubicación Universal: `.agents/skills/[nombre_skill]/SKILL.md`
 
 > **Cómo activar un skill**: Escribe el trigger en el chat. El agente cargará el `SKILL.md` correspondiente.
 > **Cómo funciona**: Cada skill define un rol especializado con sus propias instrucciones, herramientas y criterios de éxito.
+> **Nota**: Esta sección se actualiza automáticamente con `lmagent install` al detectar skills nuevos.
 
+<!-- SKILLS_CATALOG_START -->
 ### 🎯 Management & Architecture
 | Trigger | Skill | Directorio |
 |:---|:---|:---|
@@ -199,6 +201,7 @@ Ubicación Universal: `.agents/skills/[nombre_skill]/SKILL.md`
 | `/sdd` | **spec-driven-dev** | `.agents/skills/spec-driven-dev/` |
 | `/swe` | **swe-agent** | `.agents/skills/swe-agent/` |
 | `/test-s` | **testing-strategist** | `.agents/skills/testing-strategist/` |
+<!-- SKILLS_CATALOG_END -->
 
 ---
 
