@@ -10,7 +10,7 @@
                                                   by QuBit
 ```
 
-![Version](https://img.shields.io/badge/version-3.3.0-blue.svg) ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge) ![Agents](https://img.shields.io/badge/Agents-37_Supported-cyan?style=for-the-badge) ![Skills](https://img.shields.io/badge/Skills-31_Available-purple?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-3.4.0-blue.svg) ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge) ![Agents](https://img.shields.io/badge/Agents-37_Supported-cyan?style=for-the-badge) ![Skills](https://img.shields.io/badge/Skills-31_Available-purple?style=for-the-badge)
 
 > **"Separate the reasoning from the execution."**
 > LMAgent is the foundational runtime that empowers your AI Agents with standardized **Skills**, **Rules**, and **Workflows** across **37 supported agents** (Cursor, Claude Code, Windsurf, Gemini CLI, Cline, Roo, Copilot, and many more).
@@ -29,33 +29,28 @@ That's it. No global install required. LMAgent will:
 3. **Deploy** skills, rules, and workflows **strictly to your project directory** (Universal Brain: `.agents/`)
 4. **Generate** the entry point file so each agent auto-invokes the framework
 
-> **Requires Node.js ≥ 22**. Works on macOS, Linux, and Windows. **V3.3.0 features strict project isolation to prevent global conflicts.**
+> **Requires Node.js ≥ 22**. Works on macOS, Linux, and Windows. **V3.4.0 features a unified install command and centralized `.agents/` architecture.**
 
 ---
 
 ## 🚀 Full Setup Guide
 
-### Step 1 — Initialize your project (first time only)
+### One Command — Install Everything
 ```bash
-npx @qubiit/lmagent@latest init
+npx @qubiit/lmagent@latest
 ```
-Copies `AGENTS.md` to your project root. This is the **single entry point** that all agents read automatically. Agent-specific files (`CLAUDE.md`, `GEMINI.md`) are deployed only when their agent is detected during install.
+This single command:
+1. Deploys `AGENTS.md` to your project root (the universal entry point)
+2. Auto-detects which AI agents you have in the project
+3. Installs all skills, rules, workflows, memory, config, and docs to `.agents/`
+4. Generates lightweight bridge files for each detected agent
+5. Deploys agent-specific config files (CLAUDE.md, GEMINI.md) only when needed
 
-### Step 2 — Install the framework
-```bash
-npx @qubiit/lmagent@latest install
-```
-Deploys skills, rules, and workflows to all detected agents. Generates agent-specific config files.
+> `lmagent init`, `lmagent install`, and `lmagent update` all run the same unified flow.
 
-### Step 3 — Verify
+### Verify
 ```bash
 npx @qubiit/lmagent@latest doctor
-```
-Checks that everything is correctly configured.
-
-### Update (when new versions are released)
-```bash
-npx @qubiit/lmagent@latest update
 ```
 
 ---
@@ -72,7 +67,6 @@ Your Project/
 │   ├── workflows/              # 13 SOPs (Standard Operating Procedures)
 │   ├── memory/                 # 5 persistent context files
 │   ├── templates/              # Project scaffolds & agent config templates
-│   ├── scripts/                # Utility scripts
 │   ├── config/                 # Framework settings
 │   └── docs/                   # Extended documentation
 │
@@ -80,10 +74,9 @@ Your Project/
 ├── CLAUDE.md                   # ← Only if Claude Code is detected
 ├── GEMINI.md                   # ← Only if Gemini CLI / Antigravity is detected
 │
-├── .cursor/rules/              # ← Cursor-specific rules & skills
-├── .windsurf/rules/            # ← Windsurf-specific rules & skills
-├── .claude/rules/              # ← Claude Code-specific rules & skills
-└── ...                         # (one directory per installed agent)
+├── .cursor/rules/00-lmagent.mdc  # ← Lightweight bridge (points to AGENTS.md)
+├── .windsurf/rules/lmagent.md    # ← Lightweight bridge (points to AGENTS.md)
+└── ...                           # (one bridge file per installed agent)
 ```
 
 ### How auto-invocation works
@@ -212,10 +205,10 @@ Activate any skill by typing its trigger in the chat:
 ## 🛠️ CLI Reference
 
 ```bash
-# Core
+# Core (all three run the same unified flow)
 npx @qubiit/lmagent@latest              # Interactive install (auto-detects agents)
-npx @qubiit/lmagent@latest init         # Initialize project (copies AGENTS.md)
-npx @qubiit/lmagent@latest install      # Install/update framework in current project
+npx @qubiit/lmagent@latest install      # Same as above
+npx @qubiit/lmagent@latest init         # Alias for install
 npx @qubiit/lmagent@latest update       # Alias for install
 npx @qubiit/lmagent@latest uninstall    # Remove all LMAgent files from project
 npx @qubiit/lmagent@latest uninstall --all  # Also remove root entry points (CLAUDE.md, etc.)

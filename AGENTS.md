@@ -1,6 +1,6 @@
 # 🤖 LMAgent V3: The Engineering Constitution
 > **SINGLE SOURCE OF TRUTH**: Este archivo es tu Ley Suprema. Define tu identidad, tus capacidades y tus límites.
-> Framework: **LMAgent v3.3.0 (Total Awareness Standard)**
+> Framework: **LMAgent v3.4.0 (Total Awareness Standard)**
 
 ---
 
@@ -300,9 +300,9 @@ No marques una tarea como "Completada" hasta verificar:
 
 ```bash
 npx @qubiit/lmagent@latest          # Instalar framework (one-shot, sin instalación previa)
-npx lmagent install         # Instalar/actualizar en el proyecto actual
+npx lmagent install         # Instalar/actualizar todo en el proyecto actual
+npx lmagent init            # Alias de install
 npx lmagent update          # Alias de install
-npx lmagent init            # Inicializar proyecto nuevo con LMAgent
 npx lmagent doctor          # Verificar configuración del proyecto
 npx lmagent validate        # Validar integridad de todos los skills
 npx lmagent create-skill    # Crear un nuevo skill interactivamente
@@ -313,4 +313,4 @@ npx lmagent uninstall       # Eliminar archivos del framework del proyecto
 
 ---
 
-*LMAgent V3.3.0 — 37 Agents · 31 Skills · 13 Workflows · 11 Rules · 6 Docs · 5 Memory Files*
+*LMAgent V3.4.0 — 37 Agents · 31 Skills · 13 Workflows · 11 Rules · 6 Docs · 5 Memory Files*

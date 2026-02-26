@@ -29,12 +29,56 @@ const INIT_FILES = [
     // para evitar conflictos de contexto duplicado en agentes como Cursor y Zed que leen múltiples .md del raíz.
 ];
 
-const INIT_DIRS = [
-    { src: 'config', desc: 'Configuración del framework' },
-    { src: 'templates', desc: 'Templates de proyecto' },
-    { src: 'docs', desc: 'Documentación extendida' },
+// Directorios core a verificar en .agents/ (usado por doctor)
+const CORE_DIRS = [
+    { src: 'skills', desc: 'Skills especializados' },
+    { src: 'rules', desc: 'Reglas de comportamiento' },
     { src: 'workflows', desc: 'SOPs y Procedimientos' },
+    { src: 'config', desc: 'Configuración del framework' },
+    { src: 'docs', desc: 'Documentación extendida' },
+    { src: 'memory', desc: 'Contexto persistente' },
 ];
+
+// HOME_PATHS: Rutas globales de configuración de cada agente en el HOME del usuario
+// Se usan SOLO para DETECCIÓN (saber si el agente está instalado en el sistema)
+// La instalación del framework siempre va al directorio del proyecto
+const HOME_PATHS = {
+    'cursor': ['.cursor'],
+    'windsurf': ['.windsurf', '.codeium/windsurf'],
+    'claude': ['.claude'],
+    'cline': ['.cline'],
+    'roo': ['.roo'],
+    'vscode': ['.vscode'],
+    'trae': ['.trae'],
+    'zed': ['.config/zed'],
+    'augment': ['.augment'],
+    'gemini': ['.gemini'],
+    'codex': ['.codex'],
+    'continue': ['.continue'],
+    'goose': ['.config/goose'],
+    'junie': ['.junie'],
+    'opencode': ['.opencode'],
+    'openhands': ['.openhands'],
+    'antigravity': ['.agent'],
+};
+
+// Helper: Detectar agentes instalados GLOBALMENTE en el HOME del usuario
+function detectGlobalAgents() {
+    const homeDir = os.homedir();
+    const globallyDetected = new Set();
+
+    for (const [agentValue, paths] of Object.entries(HOME_PATHS)) {
+        for (const p of paths) {
+            const fullPath = path.join(homeDir, p);
+            if (fs.existsSync(fullPath)) {
+                globallyDetected.add(agentValue);
+                break;
+            }
+        }
+    }
+    return globallyDetected;
+}
+
 
 // IDE_CONFIGS: Lista ÚNICA y DEDUPLICADA de todos los agentes soportados
 const IDE_CONFIGS = [
@@ -122,11 +166,12 @@ program.command('update')
     });
 
 program.command('init')
-    .description('Inicializar proyecto con LMAgent (copia AGENTS.md y estructura base)')
+    .description('Inicializar proyecto con LMAgent (alias de install)')
     .option('-f, --force', 'Sobrescribir archivos existentes')
     .option('-y, --yes', 'No preguntar, instalar todo')
     .action((options) => {
-        runInit(options);
+        console.log(chalk.blue('ℹ `init` es ahora alias de `install`. Ejecutando instalación unificada...'));
+        runInstall(options);
     });
 
 program.command('doctor')
@@ -435,106 +480,62 @@ async function runInstall(options) {
 
     const projectRoot = process.cwd();
 
+    // ── PASO 1: Desplegar Pilares (AGENTS.md) ──
     await deployCorePillars(options, projectRoot);
-    const SOURCE_SKILLS = PACKAGE_SKILLS_DIR;
-    const SOURCE_RULES = PACKAGE_RULES_DIR;
-    const SOURCE_WORKFLOWS = PACKAGE_WORKFLOWS_DIR;
-    const SOURCE_MEMORY = PACKAGE_MEMORY_DIR;
+
+    // ── PASO 2: Detección Automática de Agentes (Global + Proyecto) ──
+    // Detección global: busca agentes instalados en el HOME del usuario
+    const globalAgents = detectGlobalAgents();
+    // Detección en proyecto: busca marcadores en el directorio del proyecto
+    const detectedIdes = IDE_CONFIGS.filter(ide => {
+        if (ide.value === 'custom' || ide.value === 'generic') return false;
+        const markerInProject = ide.markerFile && fs.existsSync(path.join(projectRoot, ide.markerFile));
+        const rulesDirRoot = ide.rulesDir && fs.existsSync(path.join(projectRoot, ide.rulesDir.split('/')[0]));
+        const installedGlobally = globalAgents.has(ide.value);
+        return markerInProject || rulesDirRoot || installedGlobally;
+    });
 
     let targetIdes = [];
     let selectedSkills = [];
     let selectedRules = [];
-    let selectedWorkflows = []; // New
-    let installMethod = 'symlink';
-    let installTarget = 'project';
-    let targetRoot = projectRoot;
+    let selectedWorkflows = [];
+    let installDirs = { config: true, templates: true, docs: true, memory: true };
 
     if (options.yes) {
+        // ── Modo No Interactivo ──
         console.log(chalk.yellow('⚡ Modo: No interactivo'));
-        targetIdes = IDE_CONFIGS.filter(ide =>
-            ide.value !== 'custom' && (fs.existsSync(path.join(projectRoot, ide.rulesDir ? ide.rulesDir.split('/')[0] : '')) || (ide.markerFile && fs.existsSync(path.join(projectRoot, ide.markerFile))))
-        );
-        if (targetIdes.length === 0 && options.force) {
-            targetIdes = [IDE_CONFIGS.find(i => i.value === 'cursor')];
-        }
-        selectedSkills = getAllItems(SOURCE_SKILLS, true);
-        selectedRules = getAllItems(SOURCE_RULES, false);
-        selectedWorkflows = getAllItems(SOURCE_WORKFLOWS, false);
+        targetIdes = detectedIdes.length > 0 ? detectedIdes : [IDE_CONFIGS.find(i => i.value === 'cursor')];
+        selectedSkills = getAllItems(PACKAGE_SKILLS_DIR, true);
+        selectedRules = getAllItems(PACKAGE_RULES_DIR, false);
+        selectedWorkflows = getAllItems(PACKAGE_WORKFLOWS_DIR, false);
     } else {
+        // ── Modo Interactivo ──
         console.log(chalk.gray('================================================================'));
-        console.log(chalk.cyan('🔹 Configuración de Instalación'));
+        console.log(chalk.cyan('🔹 Instalación Unificada LMAgent'));
         console.log(chalk.gray('================================================================'));
-
-        // UX OPTIMIZATION: "Project First" & Windows Compat
-        // 1. Detect Environment
-        const isWindows = os.platform() === 'win32';
-        installMethod = isWindows ? 'copy' : 'symlink';
-        installTarget = 'project';
-        targetRoot = projectRoot;
-
-        // 2. Banner simplified
-        console.log(`📍 Destino: ${chalk.green('Proyecto Actual')}`);
-        console.log(`🔧 Método:  ${chalk.green(isWindows ? 'Copy (Windows Safe)' : 'Symlink (Live Updates)')}`);
+        console.log(`📍 Destino: ${chalk.green(projectRoot)}`);
+        console.log(`🔧 Core:    ${chalk.green('.agents/ (centralizado)')}`);
         console.log('');
 
-        // 3. Auto-Detect IDEs — Detección DUAL: Proyecto + Sistema
-        // Primero busca en el PROYECTO actual, luego en HOME del usuario.
-        // HOME_PATHS se usa SOLO para detectar agentes instalados en el sistema (pre-selección).
-        // La instalación siempre va al PROYECTO actual, nunca a HOME.
-        const userHome = os.homedir();
-        const HOME_PATHS = {
-            'cursor': ['.cursor'], 'windsurf': ['.windsurf', '.codeium/windsurf'],
-            'cline': ['.cline'], 'roo': ['.roo'],
-            'vscode': ['.vscode'], 'trae': ['.trae'], 'trae-cn': ['.trae-cn'],
-            'claude': ['.claude'], 'zed': ['.config/zed', '.zed'],
-            'antigravity': ['.gemini'], 'gemini': ['.gemini'],
-            'augment': ['.augment'], 'continue': ['.continue'], 'codex': ['.codex'],
-            'goose': ['.config/goose', '.goose'], 'junie': ['.junie'],
-            'kilo': ['.kilocode'], 'kiro': ['.kiro'], 'opencode': ['.opencode'],
-            'openhands': ['.openhands'], 'amp': ['.config/amp'],
-            'zencoder': ['.zencoder'], 'codebuddy': ['.codebuddy'],
-        };
-
-        const detectedIdes = IDE_CONFIGS.filter(ide => {
-            if (ide.value === 'custom' || ide.value === 'generic') return false;
-
-            // 1) Buscar en el PROYECTO actual
-            const markerInProject = ide.markerFile && fs.existsSync(path.join(projectRoot, ide.markerFile));
-            const rulesDirInProject = ide.rulesDir && fs.existsSync(path.join(projectRoot, ide.rulesDir));
-            const skillsDirInProject = ide.skillsDir && fs.existsSync(path.join(projectRoot, ide.skillsDir));
-            const configInProject = ide.configFile && fs.existsSync(path.join(projectRoot, ide.configFile));
-            const inProject = markerInProject || rulesDirInProject || skillsDirInProject || configInProject;
-
-            // 2) Buscar en HOME del usuario (detectar agente instalado en el sistema)
-            const homePaths = HOME_PATHS[ide.value] || [];
-            const inSystem = homePaths.some(p => fs.existsSync(path.join(userHome, p)));
-
-            return inProject || inSystem;
-        });
-
-        // 4. Smart Multi-Agent Auto-Detection Setup
+        // Auto-Detect IDEs
         if (detectedIdes.length === 0) {
-            console.log(chalk.yellow('⚠️  No se detectaron agentes instalados en este entorno.'));
-            console.log(chalk.blue('ℹ  Instalando estructura estándar para Cursor por defecto.'));
+            console.log(chalk.yellow('⚠️  No se detectaron agentes en este proyecto.'));
+            console.log(chalk.blue('ℹ  Se creará estructura base + Cursor por defecto.\n'));
             targetIdes = [IDE_CONFIGS.find(i => i.value === 'cursor')];
         } else {
-            console.log(chalk.green(`\n🚀 ¡Agentes Detectados! (${detectedIdes.length})`));
             const names = detectedIdes.map(i => i.name).join(', ');
-            console.log(chalk.cyan(`   → Se aplicará integración aislada para: ${chalk.bold(names)}\n`));
+            console.log(chalk.green(`🚀 Agentes Detectados: ${chalk.bold(names)}\n`));
             targetIdes = detectedIdes;
         }
 
-        const availableSkills = getAllItems(SOURCE_SKILLS, true);
-        const availableRules = getAllItems(SOURCE_RULES, false);
-        const availableWorkflows = getAllItems(SOURCE_WORKFLOWS, false);
-        // Memory logic: usually just a directory, not individual items to select, but we can check if it exists
-        const hasMemory = fs.existsSync(path.join(SOURCE_SKILLS, '../memory')); // Hacky relative check or use defined constant if available in scope
+        const availableSkills = getAllItems(PACKAGE_SKILLS_DIR, true);
+        const availableRules = getAllItems(PACKAGE_RULES_DIR, false);
+        const availableWorkflows = getAllItems(PACKAGE_WORKFLOWS_DIR, false);
 
-        console.log('');
         const quickInstall = await inquirer.prompt([{
             type: 'confirm',
             name: 'all',
-            message: '⚡ Instalación Rápida: ¿Instalar TODO (Skills, Rules, Workflows, Memory)?',
+            message: '⚡ ¿Instalar TODO (Skills, Rules, Workflows, Memory, Config, Docs)?',
             default: true
         }]);
 
@@ -542,478 +543,317 @@ async function runInstall(options) {
             selectedSkills = availableSkills;
             selectedRules = availableRules;
             selectedWorkflows = availableWorkflows;
-            options.installMemory = true; // Flag to install memory
         } else {
-            // Manual selection...
-            // Seleccionar Skills
-            console.log(chalk.bold('\n🔹 Skills Disponibles:'));
-            const skillsAnswer = await inquirer.prompt([
-                {
-                    type: 'checkbox',
-                    name: 'skills',
-                    message: 'Selecciona (Espacio para elegir, Enter para confirmar):',
-                    choices: availableSkills.map(s => ({ name: s, checked: true })),
-                    pageSize: 15
-                }
-            ]);
+            // Selección manual de componentes
+            const skillsAnswer = await inquirer.prompt([{
+                type: 'checkbox', name: 'skills',
+                message: '🧩 Skills:', pageSize: 15,
+                choices: availableSkills.map(s => ({ name: s, checked: true }))
+            }]);
             selectedSkills = skillsAnswer.skills;
 
-            // Seleccionar Rules
-            console.log(chalk.bold('\n🔹 Reglas Disponibles:'));
-            const rulesAnswer = await inquirer.prompt([
-                {
-                    type: 'checkbox',
-                    name: 'rules',
-                    message: 'Selecciona (Espacio para elegir, Enter para confirmar):',
-                    choices: availableRules.map(r => ({ name: r, checked: true })),
-                    pageSize: 15
-                }
-            ]);
+            const rulesAnswer = await inquirer.prompt([{
+                type: 'checkbox', name: 'rules',
+                message: '📜 Rules:', pageSize: 15,
+                choices: availableRules.map(r => ({ name: r, checked: true }))
+            }]);
             selectedRules = rulesAnswer.rules;
 
-            // Seleccionar Workflows
-            console.log(chalk.bold('\n🔹 Workflows Disponibles:'));
-            const workflowsAnswer = await inquirer.prompt([
-                {
-                    type: 'checkbox',
-                    name: 'workflows',
-                    message: 'Selecciona (Espacio para elegir, Enter para confirmar):',
-                    choices: availableWorkflows.map(w => ({ name: w, checked: true })),
-                    pageSize: 15
-                }
-            ]);
+            const workflowsAnswer = await inquirer.prompt([{
+                type: 'checkbox', name: 'workflows',
+                message: '🔄 Workflows:', pageSize: 15,
+                choices: availableWorkflows.map(w => ({ name: w, checked: true }))
+            }]);
             selectedWorkflows = workflowsAnswer.workflows;
 
-            // Seleccionar Memory
-            console.log(chalk.bold('\n🔹 Memoria (Contexto):'));
-            const memoryAnswer = await inquirer.prompt([
-                {
-                    type: 'confirm',
-                    name: 'memory',
-                    message: '¿Instalar estructura de Memoria (.agents/memory)?',
-                    default: true
-                }
-            ]);
-            options.installMemory = memoryAnswer.memory;
+            const dirsAnswer = await inquirer.prompt([{
+                type: 'checkbox', name: 'dirs',
+                message: '📁 Directorios adicionales:',
+                choices: [
+                    { name: 'config/ - Configuración del framework', value: 'config', checked: true },
+                    { name: 'templates/ - Plantillas de proyecto', value: 'templates', checked: true },
+                    { name: 'docs/ - Documentación', value: 'docs', checked: true },
+                    { name: 'memory/ - Contexto persistente', value: 'memory', checked: true },
+                ]
+            }]);
+            installDirs = {
+                config: dirsAnswer.dirs.includes('config'),
+                templates: dirsAnswer.dirs.includes('templates'),
+                docs: dirsAnswer.dirs.includes('docs'),
+                memory: dirsAnswer.dirs.includes('memory'),
+            };
         }
 
-
-
-        console.log('');
         const { confirm } = await inquirer.prompt([{
-            type: 'confirm',
-            name: 'confirm',
-            message: '¿Proceder con la instalación?',
-            default: true
+            type: 'confirm', name: 'confirm',
+            message: '¿Proceder con la instalación?', default: true
         }]);
         if (!confirm) return;
     }
 
-    // --- AGGRESSIVE ROOT CLEANUP ---
-    console.log(chalk.bold('\n🧹 Ejecutando limpieza de archivos root (Aislamiento de Agentes)...'));
-    // Definimos TODOS los posibles entry points
-    const allRootFiles = [
-        '.cursorrules', '.windsurfrules', '.windsurfrules.md', '.continuerules',
-        '.goosehints', '.roorules',
-        'CLAUDE.md', 'GEMINI.md', 'openclaw.json'
-    ];
+    // ── PASO 3: Instalar CORE en .agents/ (ÚNICA ubicación) ──
+    const coreDir = path.join(projectRoot, '.agents');
+    if (!fs.existsSync(coreDir)) fs.mkdirSync(coreDir, { recursive: true });
 
-    // Y determinamos cuáles SÍ deben existir según los agentes seleccionados
-    const requiredRootFiles = new Set();
+    console.log(chalk.bold('\n📦 Instalando Core en .agents/ (centralizado):'));
 
-    // AGENTS.md es siempre intocable
-    requiredRootFiles.add('AGENTS.md');
-
-    for (const ide of targetIdes) {
-        if (ide.configFile && !ide.configFile.includes('/')) {
-            requiredRootFiles.add(ide.configFile);
+    // Skills
+    if (selectedSkills.length > 0) {
+        const targetDir = path.join(coreDir, 'skills');
+        if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
+        for (const skill of selectedSkills) {
+            const src = path.join(PACKAGE_SKILLS_DIR, skill);
+            const dest = path.join(targetDir, skill);
+            if (fs.existsSync(src)) {
+                copyRecursiveSync(src, dest, true);
+            }
         }
-        if (ide.markerFile && !ide.markerFile.includes('/')) {
-            requiredRootFiles.add(ide.markerFile);
+        console.log(`  ${chalk.green('✔')} Skills: ${selectedSkills.length} instalados en .agents/skills/`);
+    }
+
+    // Rules
+    if (selectedRules.length > 0) {
+        const targetDir = path.join(coreDir, 'rules');
+        if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
+        for (const rule of selectedRules) {
+            const src = path.join(PACKAGE_RULES_DIR, rule);
+            const dest = path.join(targetDir, rule);
+            if (fs.existsSync(src)) fs.copyFileSync(src, dest);
+        }
+        console.log(`  ${chalk.green('✔')} Rules: ${selectedRules.length} instaladas en .agents/rules/`);
+    }
+
+    // Workflows
+    if (selectedWorkflows.length > 0) {
+        const targetDir = path.join(coreDir, 'workflows');
+        if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
+        for (const wf of selectedWorkflows) {
+            const src = path.join(PACKAGE_WORKFLOWS_DIR, wf);
+            const dest = path.join(targetDir, wf);
+            if (fs.existsSync(src)) fs.copyFileSync(src, dest);
+        }
+        console.log(`  ${chalk.green('✔')} Workflows: ${selectedWorkflows.length} instalados en .agents/workflows/`);
+    }
+
+    // Directorios adicionales (config, templates, docs, memory)
+    if (installDirs.config && fs.existsSync(PACKAGE_CONFIG_DIR)) {
+        copyRecursiveSync(PACKAGE_CONFIG_DIR, path.join(coreDir, 'config'), true);
+        console.log(`  ${chalk.green('✔')} Config copiado a .agents/config/`);
+    }
+    if (installDirs.templates && fs.existsSync(PACKAGE_TEMPLATES_DIR)) {
+        copyRecursiveSync(PACKAGE_TEMPLATES_DIR, path.join(coreDir, 'templates'), true);
+        console.log(`  ${chalk.green('✔')} Templates copiado a .agents/templates/`);
+    }
+    if (installDirs.docs && fs.existsSync(PACKAGE_DOCS_DIR)) {
+        copyRecursiveSync(PACKAGE_DOCS_DIR, path.join(coreDir, 'docs'), true);
+        console.log(`  ${chalk.green('✔')} Docs copiado a .agents/docs/`);
+    }
+    if (installDirs.memory && fs.existsSync(PACKAGE_MEMORY_DIR)) {
+        const memTarget = path.join(coreDir, 'memory');
+        if (!fs.existsSync(memTarget)) {
+            copyRecursiveSync(PACKAGE_MEMORY_DIR, memTarget, true);
+            console.log(`  ${chalk.green('✔')} Memory copiado a .agents/memory/`);
+        } else {
+            // Solo copiar archivos que no existan (no sobrescribir contexto del usuario)
+            const memFiles = fs.readdirSync(PACKAGE_MEMORY_DIR);
+            let newCount = 0;
+            for (const mf of memFiles) {
+                const dest = path.join(memTarget, mf);
+                if (!fs.existsSync(dest)) {
+                    fs.copyFileSync(path.join(PACKAGE_MEMORY_DIR, mf), dest);
+                    newCount++;
+                }
+            }
+            console.log(`  ${chalk.cyan('ℹ')} Memory: ${newCount} nuevos (existentes preservados)`);
         }
     }
 
-    // Eliminamos todo lo que NO fue requerido
+    // ── PASO 4: Limpieza de Root ──
+    console.log(chalk.bold('\n🧹 Limpieza de archivos root:'));
+    const allRootFiles = [
+        '.cursorrules', '.windsurfrules', '.windsurfrules.md', '.continuerules',
+        '.goosehints', '.roorules'
+    ];
+    const requiredRootFiles = new Set(['AGENTS.md']);
+    for (const ide of targetIdes) {
+        if (ide.configFile && !ide.configFile.includes('/')) requiredRootFiles.add(ide.configFile);
+    }
     for (const file of allRootFiles) {
         if (!requiredRootFiles.has(file)) {
-            const filePath = path.join(targetRoot, file);
+            const filePath = path.join(projectRoot, file);
             if (fs.existsSync(filePath)) {
                 try {
                     fs.unlinkSync(filePath);
-                    console.log(`  ${chalk.green('✔')} Eliminado root config obsoleto o conflictivo: ${chalk.cyan(file)}`);
+                    console.log(`  ${chalk.green('✔')} Eliminado: ${chalk.cyan(file)}`);
                 } catch (e) {
-                    console.error(`  ${chalk.red('❌')} Error al eliminar ${file}: ${e.message}`);
+                    console.error(`  ${chalk.red('❌')} Error eliminando ${file}: ${e.message}`);
                 }
             }
         }
     }
 
-    console.log('');
+    // ── PASO 5: Desplegar Bridge Files y ConfigFiles por Agente ──
+    console.log(chalk.bold('\n🔗 Configurando Agentes Detectados:'));
+    const skillCount = selectedSkills.length;
+    const ruleCount = selectedRules.length;
+    const wfCount = selectedWorkflows.length;
+
     for (const ide of targetIdes) {
-        let currentInstallMethod = installMethod;
-        if (ide.forceCopy && currentInstallMethod === 'symlink') {
-            console.log(chalk.yellow(`⚠️  ${ide.name} detectado: Forzando método 'copy' (Mejor compatibilidad)`));
-            currentInstallMethod = 'copy';
-        }
-
-
-        if (selectedSkills.length > 0 && ide.skillsDir) {
-            const targetDir = path.join(targetRoot, ide.skillsDir);
-            console.log(chalk.bold(`\nInstalling Skills to ${chalk.cyan(targetDir)}:`));
-
-            try {
-                if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
-
-                for (const skill of selectedSkills) {
-                    const srcFolder = path.join(SOURCE_SKILLS, skill);
-                    const destFolder = path.join(targetDir, skill);
-
-                    if (fs.existsSync(srcFolder)) {
-                        await applyFile(srcFolder, destFolder, currentInstallMethod);
-                        console.log(`  ${chalk.green('✔')} ${skill}/`);
-                    }
+        // 5a. Limpiar skills/rules/workflows legacy copiados en carpetas de agente
+        if (ide.value !== 'generic' && ide.value !== 'amp') {
+            const legacyDirs = [ide.skillsDir, ide.workflowsDir].filter(d => d && !arePathsEqual(path.join(projectRoot, d), path.join(coreDir, 'skills')) && !arePathsEqual(path.join(projectRoot, d), path.join(coreDir, 'workflows')));
+            for (const ld of legacyDirs) {
+                const legacyPath = path.join(projectRoot, ld);
+                if (fs.existsSync(legacyPath)) {
+                    try {
+                        fs.rmSync(legacyPath, { recursive: true, force: true });
+                        console.log(`  ${chalk.yellow('🗑')} ${ide.name}: Eliminado ${ld}/ (legacy, ahora en .agents/)`);
+                    } catch (e) { }
                 }
-            } catch (e) {
-                console.error(chalk.red(`❌ Error installing skills for ${ide.name}: ${e.message}`));
             }
         }
 
-        // 4. Generate/Update Global Config File (Bootstrap)
-        let bootstrapStatus = 'SKIP';
+        // 5b. ConfigFile (CLAUDE.md, GEMINI.md, etc.)
         if (ide.configFile) {
-            // Safety: Don't inject Markdown into JSON/YAML
             if (ide.configFile.endsWith('.json') || ide.configFile.endsWith('.yaml') || ide.configFile.endsWith('.yml')) {
-                // console.log(chalk.gray(`  ℹ Skipping bootstrap for ${ide.name} (Structured Config)`));
-                bootstrapStatus = 'SKIP';
+                // Structured configs: use template if exists
+                const AGENT_CONFIGS_TEMPLATE_DIR = path.join(__dirname, '.agents', 'templates', 'agent-configs');
+                const templateFile = ide.configTemplate ? path.join(AGENT_CONFIGS_TEMPLATE_DIR, ide.configTemplate) : null;
+                if (templateFile && fs.existsSync(templateFile)) {
+                    const configPath = path.join(projectRoot, ide.configFile);
+                    if (!fs.existsSync(configPath) || options.force) {
+                        const content = fs.readFileSync(templateFile, 'utf8')
+                            .replace(/\{\{VERSION\}\}/g, PKG_VERSION)
+                            .replace(/\{\{MAJOR\}\}/g, PKG_VERSION.split('.')[0]);
+                        if (!fs.existsSync(path.dirname(configPath))) fs.mkdirSync(path.dirname(configPath), { recursive: true });
+                        fs.writeFileSync(configPath, content);
+                        console.log(`  ${chalk.green('✔')} ${ide.name}: ${ide.configFile} (config)`);
+                    }
+                }
             } else {
-                const configPath = path.join(targetRoot, ide.configFile);
-                const relativeRulesPath = getRelLink(ide.configFile, '.agents/rules/00-master.md');
-                const relativeCatalogPath = getRelLink(ide.configFile, 'AGENTS.md');
-                const relativeContextPath = getRelLink(ide.configFile, 'CLAUDE.md');
-
-                // Usar template específico del agente si existe, si no usar contenido genérico
+                // Markdown configs (CLAUDE.md, GEMINI.md, copilot-instructions, etc.)
+                const configPath = path.join(projectRoot, ide.configFile);
                 const AGENT_CONFIGS_TEMPLATE_DIR = path.join(__dirname, '.agents', 'templates', 'agent-configs');
                 const templateFile = ide.configTemplate
                     ? path.join(AGENT_CONFIGS_TEMPLATE_DIR, ide.configTemplate)
                     : path.join(AGENT_CONFIGS_TEMPLATE_DIR, '_generic.md');
 
                 let content;
-                if (fs.existsSync(templateFile) && !ide.configFile.endsWith('.json')) {
-                    // Usar template del archivo, inyectando VERSION
+                if (fs.existsSync(templateFile)) {
                     content = fs.readFileSync(templateFile, 'utf8')
                         .replace(/\{\{VERSION\}\}/g, PKG_VERSION)
                         .replace(/\{\{MAJOR\}\}/g, PKG_VERSION.split('.')[0])
-                        .replace(/\{\{SKILLS_DIR\}\}/g, ide.skillsDir || '.agents/skills')
-                        .replace(/\{\{RULES_DIR\}\}/g, ide.rulesDir || '.agents/rules')
-                        .replace(/\{\{WORKFLOWS_DIR\}\}/g, ide.workflowsDir || '.agents/workflows');
-                } else if (ide.configFile.endsWith('.json') && fs.existsSync(templateFile)) {
-                    // JSON: usar template y reemplazar VERSION
-                    content = fs.readFileSync(templateFile, 'utf8')
-                        .replace(/\{\{VERSION\}\}/g, PKG_VERSION)
-                        .replace(/\{\{MAJOR\}\}/g, PKG_VERSION.split('.')[0])
-                        .replace(/\{\{SKILLS_DIR\}\}/g, ide.skillsDir || '.agents/skills')
-                        .replace(/\{\{RULES_DIR\}\}/g, ide.rulesDir || '.agents/rules')
-                        .replace(/\{\{WORKFLOWS_DIR\}\}/g, ide.workflowsDir || '.agents/workflows');
+                        .replace(/\{\{SKILLS_DIR\}\}/g, '.agents/skills')
+                        .replace(/\{\{RULES_DIR\}\}/g, '.agents/rules')
+                        .replace(/\{\{WORKFLOWS_DIR\}\}/g, '.agents/workflows');
                 } else {
-                    // Fallback: contenido genérico dinámico
-                    content = `
-# 🤖 LMAgent Framework v${PKG_VERSION}
-> Contexto Activo: Este proyecto utiliza el estándar LMAgent V${PKG_VERSION.split('.')[0]}.
-
-## 🚨 SOURCE OF TRUTH (CEREBRO)
-**TU CONTEXTO Y REGLAS VIVEN AQUÍ 👉 [AGENTS.md](${relativeCatalogPath})**
-*Lee este archivo INMEDIATAMENTE para obtener tu identidad, skills y reglas operativas.*
-
-## 🔄 ARRANQUE AUTOMÁTICO (Haz esto al iniciar cada sesión)
-1. Lee [AGENTS.md](${relativeCatalogPath}) — Tu catálogo completo de capacidades
-2. Lee \`.agents/rules/00-master.md\` — Reglas y protocolo de trabajo
-3. Si existe \`.agents/memory/04-active-context.md\` — Recupera contexto previo
-4. Clasifica la tarea (Nivel 0-4) y activa el skill apropiado
-
-## 📁 RUTAS DE ENTORNO
-- **Skills**: \`${ide.skillsDir || '.agents/skills'}\` (31 skills disponibles)
-- **Rules**: \`${ide.rulesDir || '.agents/rules'}\` (11 reglas)
-- **Workflows**: \`${ide.workflowsDir || '.agents/workflows'}\` (13 SOPs)
-- **Memory**: \`.agents/memory/\`
-- **Config**: \`.agents/config/\`
-
-## ⚡ QUICK START TRIGGERS (Menu Rápido)
-Usa estos comandos para activar un rol. Para el catálogo completo de 31 skills, consulta \`AGENTS.md\`.
-
-| Trigger | Rol / Skill | Objetivo |
-|:--- |:--- |:--- |
-| \`/orch\` | **Orchestrator** | Clasificar y delegar. |
-| \`/dev\` | **Backend** | APIs y Lógica. |
-| \`/front\` | **Frontend** | UI/UX, React. |
-| \`/pm\` | **Product** | PRDs y Roadmap. |
-| \`/fix\` | **Debugger** | Análisis de bugs. |
-| \`/arch\` | **Architect** | Diseño de sistemas. |
-
-> **IMPORTANTE**: Para activar un skill, lee su \`SKILL.md\` completo en \`${ide.skillsDir || '.agents/skills'}/[nombre]/SKILL.md\`.
-
-!! SYSTEM NOTE: You MUST read AGENTS.md at startup to understand the full framework. !!
-`;
+                    content = generateMinimalConfig(ide, PKG_VERSION);
                 }
-                // If file exists, check if we need to append
+
+                // Si es un archivo raíz (CLAUDE.md, GEMINI.md), usar contenido del paquete
+                if (!ide.configFile.includes('/')) {
+                    const srcFile = path.join(__dirname, ide.configFile);
+                    if (fs.existsSync(srcFile)) {
+                        content = fs.readFileSync(srcFile, 'utf8')
+                            .replace(/\{\{VERSION\}\}/g, PKG_VERSION)
+                            .replace(/\{\{MAJOR\}\}/g, PKG_VERSION.split('.')[0]);
+                    }
+                }
+
                 try {
-                    if (fs.existsSync(configPath)) {
-                        // Check if it's a directory (Edge case: Cline legacy folders)
-                        if (fs.statSync(configPath).isDirectory()) {
-                            console.error(chalk.red(`  ❌ Cannot bootstrap ${ide.configFile}: Is a directory.`));
-                            bootstrapStatus = 'ERROR';
-                        } else {
-                            const existingContent = fs.readFileSync(configPath, 'utf8');
-                            if (!existingContent.includes('QUICK START TRIGGERS')) {
-                                fs.appendFileSync(configPath, '\n' + content);
-                                bootstrapStatus = 'UPDATED';
-                            } else {
-                                bootstrapStatus = 'OK';
-                            }
-                        }
-                    } else {
-                        // Create parent dir if needed (for .github/copilot... etc)
-                        if (!fs.existsSync(path.dirname(configPath))) fs.mkdirSync(path.dirname(configPath), { recursive: true });
+                    if (!fs.existsSync(path.dirname(configPath))) fs.mkdirSync(path.dirname(configPath), { recursive: true });
+                    if (!fs.existsSync(configPath) || options.force) {
                         fs.writeFileSync(configPath, content);
-                        bootstrapStatus = 'CREATED';
+                        console.log(`  ${chalk.green('✔')} ${ide.name}: ${ide.configFile}`);
+                    } else {
+                        const existingContent = fs.readFileSync(configPath, 'utf8');
+                        if (!existingContent.includes('AGENTS.md')) {
+                            fs.appendFileSync(configPath, '\n' + content);
+                            console.log(`  ${chalk.blue('ℹ')} ${ide.name}: ${ide.configFile} (actualizado)`);
+                        } else {
+                            console.log(`  ${chalk.cyan('✔')} ${ide.name}: ${ide.configFile} (OK)`);
+                        }
                     }
                 } catch (e) {
-                    console.error(chalk.red(`  ❌ Error bootstrapping ${ide.name}: ${e.message}`));
-                    bootstrapStatus = 'ERROR';
+                    console.error(chalk.red(`  ❌ Error con ${ide.configFile}: ${e.message}`));
                 }
             }
         }
 
-        if (bootstrapStatus !== 'SKIP' && bootstrapStatus !== 'OK') {
-            console.log(`  ${bootstrapStatus === 'CREATED' ? chalk.green('✔') : chalk.blue('ℹ')} ${ide.name} Bootstrap: ${bootstrapStatus}`);
-        }
-
-        // 4.1 Generate Bridge Rule
-        // Si el agente NO tiene configFile, necesita un archivo puente en rulesDir para auto-invocarse.
-        // Si tampoco tiene bridgeFile definido, usamos '00-lmagent.md' como default genérico.
+        // 5c. Bridge File (ligero, solo para agentes sin configFile)
         const bridgeFile = ide.bridgeFile || (ide.rulesDir && !ide.configFile ? '00-lmagent.md' : null);
-        const needsBridge = bridgeFile && !ide.configFile;
-        // Garantizar que rulesDir existe siempre (para que el agente pueda detectar la instalación)
-        if (ide.rulesDir && !fs.existsSync(path.join(targetRoot, ide.rulesDir))) {
-            fs.mkdirSync(path.join(targetRoot, ide.rulesDir), { recursive: true });
-        }
-        if (ide.rulesDir && needsBridge) {
-            const bridgePath = path.join(targetRoot, ide.rulesDir, bridgeFile);
-            const relativeBridgeToRoot = path.join(ide.rulesDir, bridgeFile);
-            // Usar entry point universal (AGENTS.md) en vez de hardcodear CLAUDE.md
-            const agentEntryPoint = ide.configFile || 'AGENTS.md';
-            const relContext = getRelLink(relativeBridgeToRoot, agentEntryPoint);
-            const relCatalog = getRelLink(relativeBridgeToRoot, 'AGENTS.md');
-            const relRules = getRelLink(relativeBridgeToRoot, '.agents/rules/00-master.md');
-            const relMemory = getRelLink(relativeBridgeToRoot, '.agents/memory/04-active-context.md');
+        if (bridgeFile && !ide.configFile) {
+            if (ide.rulesDir && !fs.existsSync(path.join(projectRoot, ide.rulesDir))) {
+                fs.mkdirSync(path.join(projectRoot, ide.rulesDir), { recursive: true });
+            }
+            const bridgePath = path.join(projectRoot, ide.rulesDir, bridgeFile);
+            const relCatalog = getRelLink(path.join(ide.rulesDir, bridgeFile), 'AGENTS.md');
 
-            let bridgeContent = '';
-
+            let bridgeContent;
             if (bridgeFile.endsWith('.mdc')) {
-                // Cursor MDC Format
                 bridgeContent = `---
-description: LMAgent Framework Entry Point - Use this rule to understand how to interact with the project skills and rules.
+description: LMAgent Framework Entry Point - Read AGENTS.md for full context
 globs: **/*
 ---
 
-# 🤖 LMAgent Bridge Rule
+# 🤖 LMAgent v${PKG_VERSION}
+> **LEE [AGENTS.md](${relCatalog})** para obtener tu contexto completo.
 
-Este proyecto está potenciado por **LMAgent v${PKG_VERSION}**.
+## Rutas del Framework
+- **Skills**: \`.agents/skills/\` (${skillCount} skills)
+- **Rules**: \`.agents/rules/\` (${ruleCount} reglas)
+- **Workflows**: \`.agents/workflows/\` (${wfCount} workflows)
+- **Memory**: \`.agents/memory/\`
 
-## 🚨 SOURCE OF TRUTH (CEREBRO)
-**TU CONTEXTO Y REGLAS VIVEN AQUÍ 👉 [AGENTS.md](${relCatalog})**
-*Lee este archivo INMEDIATAMENTE para obtener tu identidad, skills y reglas operativas.*
-
-## 🔄 ARRANQUE AUTOMÁTICO (Haz esto al iniciar)
-1. Lee [AGENTS.md](${relCatalog}) — Tu catálogo completo de capacidades
-2. Lee [00-master.md](${relRules}) — Reglas y protocolo de trabajo
-3. Si existe [04-active-context.md](${relMemory}) — Léelo para recuperar contexto de la sesión anterior
-4. Clasifica la tarea (Nivel 0-4) y activa el skill apropiado
-
-## 📁 RUTAS DE ENTORNO
-- **Tus Skills**: \`${ide.skillsDir || '.agents/skills'}\` (31 skills disponibles)
-- **Tus Rules**: \`${ide.rulesDir || '.agents/rules'}\` (11 reglas)
-- **Tus Workflows**: \`${ide.workflowsDir || '.agents/workflows'}\` (13 SOPs)
-- **Memory**: \`${ide.skillsDir ? ide.skillsDir.replace(/\/[^/]+$/, '/memory') : '.agents/memory'}\`
-- **Config**: \`${ide.skillsDir ? ide.skillsDir.replace(/\/[^/]+$/, '/config') : '.agents/config'}\`
-
-## ⚡ QUICK START TRIGGERS (Menu Rápido)
-Usa estos comandos para activar un rol. Para el catálogo completo de 31 skills, consulta \`AGENTS.md\`.
-
-| Trigger | Rol / Skill | Objetivo |
-|:--- |:--- |:--- |
-| \`/orch\` | **Orchestrator** | Clasificar y delegar. |
-| \`/dev\` | **Backend** | APIs y Lógica. |
-| \`/front\` | **Frontend** | UI/UX, React. |
-| \`/pm\` | **Product** | PRDs y Roadmap. |
-| \`/fix\` | **Debugger** | Análisis de bugs. |
-| \`/arch\` | **Architect** | Diseño de sistemas. |
-
-> **IMPORTANTE**: Para activar un skill, lee su \`SKILL.md\` completo en \`${ide.skillsDir || '.agents/skills'}/[nombre]/SKILL.md\`.
-
-!! SYSTEM NOTE: You MUST read AGENTS.md at startup to understand the full framework. !!
+!! SYSTEM NOTE: You MUST read AGENTS.md at startup. !!
 `;
             } else {
-                // Standard Markdown (Universal & Cline/Windsurf)
-                bridgeContent = `# 🤖 LMAgent Framework Entry Point
+                bridgeContent = `# 🤖 LMAgent v${PKG_VERSION}
+> **LEE [AGENTS.md](${relCatalog})** para obtener tu contexto completo.
 
-Este proyecto utiliza **LMAgent v${PKG_VERSION}**.
-
-## 🚨 SOURCE OF TRUTH (CEREBRO)
-**TU CONTEXTO Y REGLAS VIVEN AQUÍ 👉 [AGENTS.md](${relCatalog})**
-*Lee este archivo INMEDIATAMENTE para obtener tu identidad, skills y reglas operativas.*
-
-## 🔄 ARRANQUE AUTOMÁTICO (Haz esto al iniciar)
-1. Lee [AGENTS.md](${relCatalog}) — Tu catálogo completo de capacidades
-2. Lee [00-master.md](${relRules}) — Reglas y protocolo de trabajo
-3. Si existe [04-active-context.md](${relMemory}) — Léelo para recuperar contexto de la sesión anterior
-4. Clasifica la tarea (Nivel 0-4) y activa el skill apropiado
-
-## 📁 RUTAS DE ENTORNO
-- **Tus Skills**: \`${ide.skillsDir || '.agents/skills'}\` (31 skills disponibles)
-- **Tus Rules**: \`${ide.rulesDir || '.agents/rules'}\` (11 reglas)
-- **Tus Workflows**: \`${ide.workflowsDir || '.agents/workflows'}\` (13 SOPs)
-- **Memory**: \`${ide.skillsDir ? ide.skillsDir.replace(/\/[^/]+$/, '/memory') : '.agents/memory'}\`
-- **Config**: \`${ide.skillsDir ? ide.skillsDir.replace(/\/[^/]+$/, '/config') : '.agents/config'}\`
-
-## ⚡ QUICK START TRIGGERS (Menu Rápido)
-Usa estos comandos para activar un rol. Para el catálogo completo de 31 skills, consulta \`AGENTS.md\`.
-
-| Trigger | Rol / Skill | Objetivo |
-|:--- |:--- |:--- |
-| \`/orch\` | **Orchestrator** | Clasificar y delegar. |
-| \`/dev\` | **Backend** | APIs y Lógica. |
-| \`/front\` | **Frontend** | UI/UX, React. |
-| \`/pm\` | **Product** | PRDs y Roadmap. |
-| \`/fix\` | **Debugger** | Análisis de bugs. |
-| \`/arch\` | **Architect** | Diseño de sistemas. |
-
-> **IMPORTANTE**: Para activar un skill, lee su \`SKILL.md\` completo en \`${ide.skillsDir || '.agents/skills'}/[nombre]/SKILL.md\`.
+## Rutas del Framework
+- **Skills**: \`.agents/skills/\` (${skillCount} skills)
+- **Rules**: \`.agents/rules/\` (${ruleCount} reglas)
+- **Workflows**: \`.agents/workflows/\` (${wfCount} workflows)
+- **Memory**: \`.agents/memory/\`
 `;
-            }
-
-            // CLEANUP: Legacy Cursor Skills Directory
-            // Since we moved skills to .cursor/rules/skills, we must remove .cursor/skills to avoid duplicates
-            if (ide.value === 'cursor') {
-                const legacySkillsDir = path.join(targetRoot, '.cursor/skills');
-                if (fs.existsSync(legacySkillsDir)) {
-                    try {
-                        fs.rmSync(legacySkillsDir, { recursive: true, force: true });
-                        console.log(`  ${chalk.yellow('🗑  Eliminado directorio obsoleto:')} .cursor / skills(Movido a.cursor / rules / skills)`);
-                    } catch (e) {
-                        console.error(chalk.red(`  ⚠️  No se pudo eliminar.cursor / skills: ${e.message} `));
-                    }
-                }
             }
 
             try {
                 if (!fs.existsSync(path.dirname(bridgePath))) fs.mkdirSync(path.dirname(bridgePath), { recursive: true });
                 fs.writeFileSync(bridgePath, bridgeContent);
-                console.log(`  ${chalk.green('✔')} ${ide.name} Bridge Rule: ${bridgeFile} `);
+                console.log(`  ${chalk.green('✔')} ${ide.name}: ${bridgeFile} (bridge)`);
             } catch (e) {
-                console.error(chalk.red(`  ❌ Error creating bridge for ${ide.name}: ${e.message} `));
-            }
-        }
-        // 2. Install RULES (Files)
-        if (selectedRules.length > 0 && ide.rulesDir) {
-            const targetDir = path.join(targetRoot, ide.rulesDir);
-            console.log(chalk.bold(`\nInstalling Rules to ${chalk.cyan(targetDir)}: `));
-
-            try {
-                if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
-
-                // CLEANUP: Remove legacy rules (V2 & Duplicates)
-                const legacyRules = [
-                    '_bootstrap.md', '_bootstrap.mdc', '00-bootstrap.md',
-                    'agents-ia.md', 'stack.md', 'testing.md', 'security.md', 'code-style.md', 'documentation.md',
-                    'workflow.md', 'api-design.md', 'automations-n8n.md', 'frontend.md', 'backend.md'
-                ];
-                for (const legacy of legacyRules) {
-                    const legacyPath = path.join(targetDir, legacy);
-                    if (fs.existsSync(legacyPath)) {
-                        fs.unlinkSync(legacyPath);
-                        console.log(`  ${chalk.yellow('🗑  Eliminado regla obsoleta:')} ${legacy} `);
-                    }
-                }
-
-                for (const rule of selectedRules) {
-                    const srcVal = path.join(SOURCE_RULES, rule);
-                    const destVal = path.join(targetDir, rule);
-
-                    if (fs.existsSync(srcVal)) {
-                        await applyFile(srcVal, destVal, currentInstallMethod);
-                        console.log(`  ${chalk.blue('✔')} ${rule} `);
-                    }
-                }
-            } catch (e) {
-                console.error(chalk.red(`❌ Error installing rules for ${ide.name}: ${e.message} `));
-            }
-        }
-
-        // 3. Install WORKFLOWS (Files)
-        if (selectedWorkflows.length > 0 && ide.workflowsDir) {
-            const targetDir = path.join(targetRoot, ide.workflowsDir);
-            console.log(chalk.bold(`\nInstalling Workflows to ${chalk.cyan(targetDir)}: `));
-
-            try {
-                if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
-
-                for (const wf of selectedWorkflows) {
-                    const srcVal = path.join(SOURCE_WORKFLOWS, wf);
-                    const destVal = path.join(targetDir, wf);
-
-                    if (fs.existsSync(srcVal)) {
-                        await applyFile(srcVal, destVal, currentInstallMethod);
-                        console.log(`  ${chalk.magenta('✔')} ${wf} `);
-                    }
-                }
-            } catch (e) {
-                console.error(chalk.red(`❌ Error installing workflows for ${ide.name}: ${e.message} `));
-            }
-        }
-
-
-
-        if (SOURCE_MEMORY && ide.skillsDir) {
-            const parentDir = path.dirname(ide.skillsDir);
-            const targetDir = path.join(targetRoot, parentDir, 'memory');
-            const targetDirLower = targetDir.toLowerCase();
-            const sourceMemoryLower = SOURCE_MEMORY.toLowerCase();
-
-            if (targetDirLower !== sourceMemoryLower) {
-                try {
-                    if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
-                    copyRecursiveSync(SOURCE_MEMORY, targetDir, true);
-                    console.log(`  ${chalk.cyan('✔')} Memory(Context) optimized.`);
-                } catch (e) {
-                    console.error(chalk.red(`❌ Error installing memory for ${ide.name}: ${e.message} `));
-                }
-            } else {
-                console.log(`  ${chalk.cyan('ℹ')} Memory(Context) already in origin path.`);
+                console.error(chalk.red(`  ❌ Error bridge ${ide.name}: ${e.message}`));
             }
         }
     }
 
-    // 🔄 Sincronizar Catálogo de Skills en AGENTS.md y 00-master.md
-    await syncSkillCatalog(targetRoot);
+    // ── PASO 6: Sincronizar Catálogo ──
+    await syncSkillCatalog(projectRoot);
 
+    // ── Resumen Final ──
     console.log(gradient.pastel.multiline('\n✨ Instalación Finalizada ✨'));
-
     console.log(chalk.gray('================================================================'));
-    console.log(chalk.bold.green('🎉 ¡Todo listo! Aquí tienes cómo usar tus nuevos superpoderes:'));
+    console.log(chalk.bold.green('🎉 ¡Todo listo!'));
     console.log('');
-
-    // Mensaje dinámico según agentes instalados
     const ideNames = targetIdes.map(i => i.name).join(', ');
-    console.log(chalk.cyan(`🤖  Agentes configurados: ${chalk.bold(ideNames)} `));
+    console.log(chalk.cyan(`🤖  Agentes: ${chalk.bold(ideNames)}`));
+    console.log(chalk.cyan(`📦  Core:    ${chalk.bold('.agents/')} (${skillCount} skills, ${ruleCount} rules, ${wfCount} workflows)`));
     console.log('');
-    console.log(chalk.white('    1. Abre tu agente en este proyecto — leerá el contexto automáticamente.'));
-    console.log(chalk.white('    2. Usa los triggers para activar un rol específico:'));
-    console.log(chalk.gray('       /dev → Backend  |  /front → Frontend  |  /arch → Arquitecto'));
-    console.log(chalk.gray('       /fix → Debugger  |  /pm → Product  |  /orch → Orchestrator'));
+    console.log(chalk.white('    1. Abre tu agente — leerá el contexto automáticamente.'));
+    console.log(chalk.white('    2. Usa triggers: /dev /front /arch /fix /pm /orch'));
     console.log('');
-    console.log(chalk.dim('    💡 Ejecuta `lmagent doctor` para verificar la instalación.'));
-    console.log(chalk.dim('    💡 Ejecuta `lmagent tokens` para ver el consumo de tokens del framework.'));
+    console.log(chalk.dim('    💡 `lmagent doctor` para verificar | `lmagent tokens` para ver consumo'));
     console.log(chalk.gray('================================================================'));
+}
+
+// Helper: Genera config mínimo si no hay template
+function generateMinimalConfig(ide, version) {
+    return `# 🤖 LMAgent Framework v${version}
+> LEE [AGENTS.md](./AGENTS.md) para obtener tu contexto completo.
+> Skills: \`.agents/skills/\` | Rules: \`.agents/rules/\` | Workflows: \`.agents/workflows/\`
+`;
 }
 
 // ─── Sincronización Dinámica del Catálogo de Skills ───────────────────────────
@@ -1109,65 +949,7 @@ ${masterTableLines.join('\n')}`;
     }
 }
 
-async function applyFile(source, dest, method) {
-    const srcPath = path.resolve(source);
-    const destPath = path.resolve(dest);
 
-    // Case-insensitive check for Windows compatibility
-    if (srcPath.toLowerCase() === destPath.toLowerCase()) {
-        // console.log(chalk.gray(`    (Skipping self - install: ${ path.basename(source) })`));
-        return;
-    }
-
-    try {
-        if (fs.existsSync(dest) || (fs.existsSync(path.dirname(dest)) && fs.readdirSync(path.dirname(dest)).includes(path.basename(dest)))) {
-            const lstat = fs.lstatSync(dest);
-            if (lstat.isSymbolicLink()) {
-                fs.unlinkSync(dest); // Safe to remove old symlink
-            } else if (lstat.isDirectory()) {
-                // AUGMENTATION: No borramos el directorio real para no perder archivos del usuario.
-                // Si el usuario pidió symlink pero hay un directorio real, forzamos merge por copia.
-                if (method === 'symlink') method = 'copy';
-            } else {
-                fs.unlinkSync(dest); // It is a file, overwrite it
-            }
-        }
-    } catch (e) { }
-
-    const destDir = path.dirname(dest);
-    if (!fs.existsSync(destDir)) fs.mkdirSync(destDir, { recursive: true });
-
-    const srcStat = fs.statSync(source);
-    const isDir = srcStat.isDirectory();
-
-    if (method === 'symlink') {
-        try {
-            const type = isDir ? 'junction' : 'file';
-            fs.symlinkSync(source, dest, type);
-        } catch (e) {
-            try {
-                if (isDir) {
-                    copyRecursiveSync(source, dest, true);
-                } else {
-                    fs.copyFileSync(source, dest);
-                }
-                const isWindows = os.platform() === 'win32';
-                const msg = isWindows && !isDir
-                    ? `(Symlink falló[Requiere Admin / DevMode en Win].Copiado.)`
-                    : `(Symlink falló, se usó copia)`;
-                console.log(chalk.yellow(`    ${msg} `));
-            } catch (err) {
-                console.error(chalk.red(`    Error copiando ${path.basename(dest)}: ${err.message} `));
-            }
-        }
-    } else {
-        if (isDir) {
-            copyRecursiveSync(source, dest, true);
-        } else {
-            fs.copyFileSync(source, dest);
-        }
-    }
-}
 
 function copyRecursiveSync(src, dest, overwrite) {
     if (fs.cpSync) {
@@ -1220,224 +1002,15 @@ function getAllItems(dir, isNested) {
     }
 }
 
-// ============================================
-// INIT: Inicializar proyecto con LMAgent
-// ============================================
+// runInit() eliminada en v3.4.0 — unificada en runInstall()
+// El comando `init` ahora es alias de `install`
 
-async function runInit(options) {
-    let targetIdes = []; // Initialize targetIdes
-    console.clear();
-    const branding = figlet.textSync('LMAGENT', { font: 'ANSI Shadow' });
-    console.log(gradient.pastel.multiline(branding));
-    console.log(gradient.cristal('                                      by QuBit\n'));
 
-    const projectRoot = process.cwd();
-    const targetRoot = projectRoot; // Fix for ReferenceError in runInit
-    console.log(chalk.cyan(`📦 Inicializando proyecto LMAgent en: ${chalk.bold(projectRoot)} \n`));
 
-    // Verificar si ya está inicializado
-    const agentsExists = fs.existsSync(path.join(projectRoot, 'AGENTS.md'));
-    if (agentsExists && !options.force) {
-        console.log(chalk.yellow('⚠️  Este proyecto ya tiene AGENTS.md'));
-        if (!options.yes) {
-            const { overwrite } = await inquirer.prompt([{
-                type: 'confirm',
-                name: 'overwrite',
-                message: '¿Sobrescribir archivos existentes?',
-                default: false
-            }]);
-            if (!overwrite) {
-                console.log(chalk.yellow('Cancelado. Usa --force para forzar.'));
-                return;
-            }
-        }
-    }
 
-    let filesToCopy = [...INIT_FILES];
-    let dirsToCopy = [...INIT_DIRS];
 
-    // Modo interactivo: preguntar qué copiar
-    if (!options.yes) {
-        const answers = await inquirer.prompt([
-            {
-                type: 'checkbox',
-                name: 'files',
-                message: 'Archivos de entry point a copiar:',
-                choices: INIT_FILES.map(f => ({
-                    name: `${f.src} - ${f.desc} `,
-                    value: f.src,
-                    checked: true
-                }))
-            },
-            {
-                type: 'checkbox',
-                name: 'dirs',
-                message: 'Directorios a copiar:',
-                choices: INIT_DIRS.map(d => ({
-                    name: `${d.src}/ - ${d.desc}`,
-                    value: d.src,
-                    checked: true
-                }))
-            }
-        ]);
-        dirsToCopy = INIT_DIRS.filter(d => answers.dirs.includes(d.src));
 
-        // Seleccionar IDE para destino de archivos
-        console.log('');
-        const ideAnswer = await inquirer.prompt([
-            {
-                type: 'checkbox',
-                name: 'ides',
-                message: 'Selecciona tu IDE principal (para ubicar las carpetas):',
-                choices: IDE_CONFIGS.filter(i => i.value !== 'custom').map(i => ({
-                    name: i.name,
-                    value: i.value,
-                    checked: i.value === 'cursor'
-                }))
-            }
-        ]);
-        targetIdes = IDE_CONFIGS.filter(i => ideAnswer.ides.includes(i.value));
-    } else {
-        // Defaults for non-interactive
-        targetIdes = [IDE_CONFIGS.find(i => i.value === 'cursor')];
-    }
 
-    // Copiar archivos del framework a la carpeta del Agente (Clean Root)
-    console.log(chalk.bold('\n📦 Instalando framework en directorios de Agente:'));
-
-    for (const ide of targetIdes) {
-        if (!ide.skillsDir) continue; // Skip custom/manual if no dir defined
-
-        // Determinar "Agent Root" (ej: .cursor/ o .github/)
-        // Asume que skillsDir es "root/skills", así que dirname obtiene "root"
-        const agentRootDir = path.join(targetRoot, path.dirname(ide.skillsDir));
-
-        console.log(chalk.dim(`   Destino: ${agentRootDir}`));
-
-        // Crear directorio root si no existe
-        if (!fs.existsSync(agentRootDir)) fs.mkdirSync(agentRootDir, { recursive: true });
-
-        // 5. Install Root Configs (CLAUDE.md, AGENTS.md) with Prompt
-        console.log(chalk.bold('\nChecking Root Configurations:'));
-        for (const file of INIT_FILES) {
-            const srcPath = path.join(__dirname, file.src);
-            const destPath = path.join(targetRoot, file.src);
-
-            if (fs.existsSync(srcPath)) {
-                if (!fs.existsSync(destPath)) {
-                    let content = fs.readFileSync(srcPath, 'utf8');
-                    if (file.versionTemplate) content = content.replace(/\{\{VERSION\}\}/g, PKG_VERSION);
-                    fs.writeFileSync(destPath, content, 'utf8');
-                    console.log(`  ${chalk.green('✔')} ${file.src} (Created)`);
-                } else {
-                    // Exists: Ask to overwrite (unless force/yes)
-                    let shouldOverwrite = false;
-                    if (options.force) {
-                        shouldOverwrite = true;
-                    } else if (!options.yes) {
-                        const answer = await inquirer.prompt([{
-                            type: 'confirm',
-                            name: 'overwrite',
-                            message: `⚠️  ${file.src} ya existe. ¿Sobrescribir?`,
-                            default: false
-                        }]);
-                        shouldOverwrite = answer.overwrite;
-                    }
-
-                    if (shouldOverwrite) {
-                        let content = fs.readFileSync(srcPath, 'utf8');
-                        if (file.versionTemplate) content = content.replace(/\{\{VERSION\}\}/g, PKG_VERSION);
-                        fs.writeFileSync(destPath, content, 'utf8');
-                        console.log(`  ${chalk.yellow('✎')} ${file.src} (Overwritten)`);
-                    } else {
-                        console.log(`  ${chalk.gray('SKIP')} ${file.src} (Kept existing)`);
-                    }
-                }
-            }
-        }
-
-        // Copiar Directorios (docs, config, templates)
-        for (const dir of dirsToCopy) {
-            const src = path.join(__dirname, dir.src);
-            const dest = path.join(agentRootDir, dir.src);
-            if (fs.existsSync(src)) {
-                copyRecursiveSync(src, dest, true); // Force overwrite
-                console.log(`   ${chalk.green('✔')} ${dir.src}/ -> ${path.dirname(ide.skillsDir)}/${dir.src}/`);
-
-                // CLEANUP: If docs, remove assets (legacy logo, etc.)
-                if (dir.src === 'docs') {
-                    const assetsDir = path.join(dest, 'assets');
-                    if (fs.existsSync(assetsDir)) {
-                        try {
-                            fs.rmSync(assetsDir, { recursive: true, force: true });
-                            console.log(`   ${chalk.yellow('🗑  Eliminado assets heredados (logo, etc.)')}`);
-                        } catch (e) { }
-                    }
-                }
-            }
-        }
-    }
-
-    // Crear .env.example si no existe
-    const envExampleDest = path.join(projectRoot, '.env.example');
-    if (!fs.existsSync(envExampleDest)) {
-        const envContent = `# ============================================
-# LMAgent Project - Environment Variables
-# ============================================
-# Copiar este archivo a .env y completar los valores
-
-# Database
-DATABASE_URL=postgresql://user:password@localhost:5432/dbname
-
-# Redis
-REDIS_URL=redis://localhost:6379
-
-# Security
-JWT_SECRET=change-this-to-a-strong-secret-minimum-32-characters
-
-# LLM API Keys
-OPENAI_API_KEY=sk-...
-ANTHROPIC_API_KEY=sk-ant-...
-GOOGLE_API_KEY=...
-
-# n8n (si aplica)
-N8N_WEBHOOK_URL=https://n8n.yourserver.com/webhook
-
-# Environment
-ENVIRONMENT=development
-DEBUG=true
-`;
-        fs.writeFileSync(envExampleDest, envContent);
-        console.log(`  ${chalk.green('✔')} .env.example ${chalk.green('(nuevo)')}`);
-    } else {
-        console.log(`  ${chalk.blue('ℹ')} .env.example ya existe, no se sobrescribe`);
-    }
-
-    // Resumen
-    console.log(gradient.pastel.multiline(`\n✨ Proyecto inicializado con LMAgent v${PKG_VERSION} ✨`));
-    console.log('');
-    console.log(chalk.cyan('Próximos pasos:'));
-    console.log(`  1. ${chalk.bold('lmagent install')} - Instalar skills/rules/workflows en tu IDE`);
-    console.log(`  2. Editar ${chalk.bold('.env.example')} → ${chalk.bold('.env')} con tus credenciales`);
-    console.log(`  3. Leer ${chalk.bold('AGENTS.md')} para conocer las capacidades disponibles`);
-    console.log('');
-
-    // Preguntar si quiere ejecutar install también
-    if (!options.yes) {
-        const { runInstallNow } = await inquirer.prompt([{
-            type: 'confirm',
-            name: 'runInstallNow',
-            message: '¿Ejecutar lmagent install ahora para conectar al IDE?',
-            default: true
-        }]);
-        if (runInstallNow) {
-            console.log('');
-            await runInstall(options);
-        }
-    } else {
-        console.log(chalk.cyan('💡 Ejecuta `lmagent install` para conectar al IDE.\n'));
-    }
-}
 
 // ============================================
 // DOCTOR: Verificar configuración del proyecto
@@ -1463,91 +1036,93 @@ async function runDoctor() {
             console.log(`  ${chalk.green('✔')} ${file.src}`);
             ok++;
         } else {
-            console.log(`  ${chalk.red('✘')} ${file.src} - ${chalk.red('FALTANTE')} → ejecuta ${chalk.bold('lmagent init')}`);
+            console.log(`  ${chalk.red('✘')} ${file.src} - ${chalk.red('FALTANTE')} → ejecuta ${chalk.bold('lmagent install')}`);
             issues++;
         }
     }
 
-    // 2. Directorios de configuración
-    console.log(chalk.bold('\n📁 Configuración:'));
-    for (const dir of INIT_DIRS) {
-        const exists = fs.existsSync(path.join(projectRoot, dir.src));
-        if (exists) {
-            console.log(`  ${chalk.green('✔')} ${dir.src}/`);
-            ok++;
-        } else {
-            console.log(`  ${chalk.yellow('⚠')} ${dir.src}/ - Opcional, ejecuta ${chalk.bold('lmagent init')} para copiar`);
-        }
-    }
+    // 2. Core centralizado en .agents/
+    console.log(chalk.bold('\n📦 Core (.agents/):'));
+    const coreDir = path.join(projectRoot, '.agents');
+    if (fs.existsSync(coreDir)) {
+        console.log(`  ${chalk.green('✔')} .agents/ existe`);
+        ok++;
 
-    // 3. Detectar IDEs configurados
-    console.log(chalk.bold('\n🔧 IDEs detectados:'));
-    let ideFound = false;
-    for (const ide of IDE_CONFIGS) {
-        if (ide.value === 'custom') continue;
-        const rulesExist = ide.rulesDir && fs.existsSync(path.join(projectRoot, ide.rulesDir));
-        const skillsExist = ide.skillsDir && fs.existsSync(path.join(projectRoot, ide.skillsDir));
-        const markerExist = ide.markerFile && fs.existsSync(path.join(projectRoot, ide.markerFile));
-
-        if (rulesExist || skillsExist || markerExist) {
-            ideFound = true;
-            const parts = [];
-            if (rulesExist) parts.push('rules');
-            if (skillsExist) parts.push('skills');
-            console.log(`  ${chalk.green('✔')} ${ide.name} (${parts.join(', ')})`);
-            ok++;
-
-            // Verificar que tiene los skills correctos
-            if (skillsExist) {
-                const installedSkills = fs.readdirSync(path.join(projectRoot, ide.skillsDir))
-                    .filter(item => fs.statSync(path.join(projectRoot, ide.skillsDir, item)).isDirectory());
-
-                // Calcular skills esperados dinámicamente
-                const expectedSkillsCount = getAllItems(PACKAGE_SKILLS_DIR, true).length;
-                const skillCount = installedSkills.length;
-
-                if (skillCount < expectedSkillsCount) {
-                    console.log(`    ${chalk.yellow('⚠')} Solo ${skillCount}/${expectedSkillsCount} skills instalados → ejecuta ${chalk.bold('lmagent install')}`);
-                } else {
-                    console.log(`    ${chalk.green('✔')} ${skillCount} skills instalados`);
-                }
+        for (const dir of CORE_DIRS) {
+            const dirPath = path.join(coreDir, dir.src);
+            if (fs.existsSync(dirPath)) {
+                let count = 0;
+                try {
+                    const items = fs.readdirSync(dirPath);
+                    count = items.filter(i => !i.startsWith('.')).length;
+                } catch (e) { }
+                console.log(`  ${chalk.green('✔')} ${dir.src}/ (${count} elementos)`);
+                ok++;
+            } else {
+                console.log(`  ${chalk.yellow('⚠')} ${dir.src}/ - No encontrado → ejecuta ${chalk.bold('lmagent install')}`);
             }
         }
-    }
-    if (!ideFound) {
-        console.log(`  ${chalk.red('✘')} Ningún IDE detectado → ejecuta ${chalk.bold('lmagent install')}`);
+
+        // Verificar conteo de skills
+        const skillsDir = path.join(coreDir, 'skills');
+        if (fs.existsSync(skillsDir)) {
+            const installedSkills = fs.readdirSync(skillsDir)
+                .filter(item => fs.statSync(path.join(skillsDir, item)).isDirectory());
+            const expectedSkillsCount = getAllItems(PACKAGE_SKILLS_DIR, true).length;
+
+            if (installedSkills.length < expectedSkillsCount) {
+                console.log(`    ${chalk.yellow('⚠')} Solo ${installedSkills.length}/${expectedSkillsCount} skills → ejecuta ${chalk.bold('lmagent install')}`);
+            } else {
+                console.log(`    ${chalk.green('✔')} ${installedSkills.length}/${expectedSkillsCount} skills completos`);
+            }
+        }
+    } else {
+        console.log(`  ${chalk.red('✘')} .agents/ NO existe → ejecuta ${chalk.bold('lmagent install')}`);
         issues++;
     }
 
-    // 4. Verificar .env
+    // 3. Detectar agentes (Global + Proyecto)
+    console.log(chalk.bold('\n🔧 Agentes detectados:'));
+    const globalAgents = detectGlobalAgents();
+    let ideFound = false;
+    for (const ide of IDE_CONFIGS) {
+        if (ide.value === 'custom' || ide.value === 'generic') continue;
+        const markerExist = ide.markerFile && fs.existsSync(path.join(projectRoot, ide.markerFile));
+        const rulesExist = ide.rulesDir && fs.existsSync(path.join(projectRoot, ide.rulesDir));
+        const isGlobal = globalAgents.has(ide.value);
+        const bridgeExists = ide.bridgeFile && ide.rulesDir && fs.existsSync(path.join(projectRoot, ide.rulesDir, ide.bridgeFile));
+        const configExists = ide.configFile && fs.existsSync(path.join(projectRoot, ide.configFile));
+
+        if (markerExist || rulesExist || isGlobal) {
+            ideFound = true;
+            const parts = [];
+            if (isGlobal && !markerExist && !rulesExist) parts.push(chalk.blue('global'));
+            if (bridgeExists) parts.push(chalk.green('bridge ✔'));
+            else if (configExists) parts.push(chalk.green('config ✔'));
+            else parts.push(chalk.yellow('sin bridge'));
+
+            console.log(`  ${chalk.green('✔')} ${ide.name} (${parts.join(', ')})`);
+            ok++;
+        }
+    }
+    if (!ideFound) {
+        console.log(`  ${chalk.red('✘')} Ningún agente detectado → ejecuta ${chalk.bold('lmagent install')}`);
+        issues++;
+    }
+
+    // 4. Verificar .gitignore
     console.log(chalk.bold('\n🔒 Seguridad:'));
-    const envExists = fs.existsSync(path.join(projectRoot, '.env'));
-    const envExampleExists = fs.existsSync(path.join(projectRoot, '.env.example'));
     const gitignoreExists = fs.existsSync(path.join(projectRoot, '.gitignore'));
-
-    if (envExampleExists) {
-        console.log(`  ${chalk.green('✔')} .env.example existe`);
-        ok++;
-    } else {
-        console.log(`  ${chalk.yellow('⚠')} .env.example no encontrado`);
-    }
-
-    if (envExists) {
-        console.log(`  ${chalk.green('✔')} .env existe`);
-        ok++;
-    } else {
-        console.log(`  ${chalk.yellow('⚠')} .env no encontrado (necesario para ejecutar)`);
-    }
-
     if (gitignoreExists) {
         const gitignore = fs.readFileSync(path.join(projectRoot, '.gitignore'), 'utf-8');
         if (gitignore.includes('.env')) {
             console.log(`  ${chalk.green('✔')} .env está en .gitignore`);
             ok++;
         } else {
-            console.log(`  ${chalk.red('✘')} .env NO está en .gitignore → ${chalk.red('RIESGO DE SEGURIDAD')}`);
-            issues++;
+            console.log(`  ${chalk.yellow('⚠')} .env no está en .gitignore`);
         }
+    } else {
+        console.log(`  ${chalk.yellow('⚠')} .gitignore no encontrado`);
     }
 
     // Resumen

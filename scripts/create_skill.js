@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * LMAgent Skill Generator — v3.3.0
+ * LMAgent Skill Generator — v3.4.0
  * 
  * Genera la estructura completa de un nuevo skill interactivamente.
  * 
@@ -18,7 +18,7 @@ import { createInterface } from 'readline';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const ROOT = resolve(__dirname, '..');
-const SKILLS_DIR = join(ROOT, 'skills');
+const SKILLS_DIR = join(ROOT, '.agents', 'skills');
 
 // ─── Colores ──────────────────────────────────────────────────
 const c = {
@@ -92,7 +92,7 @@ name: ${data.name}
 description: ${data.description}
 role: ${data.role}
 type: ${data.type}
-version: "3.3.0"
+version: "3.4.0"
 icon: ${data.icon}
 expertise:
 ${expertise}
@@ -206,13 +206,13 @@ Antes de considerar una tarea terminada, verifica TODO:
 
 ---
 
-*Skill version: 3.3.0 | LMAgent Framework*
+*Skill version: 3.4.0 | LMAgent Framework*
 `;
 }
 
 // ─── Main ─────────────────────────────────────────────────────
 async function main() {
-    console.log(c.bold('\n🛠️  LMAgent Skill Generator v3.3.0\n'));
+    console.log(c.bold('\n🛠️  LMAgent Skill Generator v3.4.0\n'));
 
     const prompt = createPrompt();
 

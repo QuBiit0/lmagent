@@ -1,34 +1,32 @@
 # 📟 CLI Commands Reference
-> **Versión**: 3.1.3 | **Paquete**: `@qubiit/lmagent`
+> **Paquete**: `@qubiit/lmagent`
 
 ## ⚡ Comando Principal
 
 ```bash
 npx @qubiit/lmagent@latest
 ```
-Ejecuta el instalador interactivo. Detecta automáticamente los agentes instalados en tu sistema y los pre-selecciona.
+Ejecuta el instalador interactivo. Detecta automáticamente los agentes en tu proyecto y los configura.
 
 ---
 
 ## 🎯 Comandos Core
 
-### `lmagent install` / `lmagent update`
-Instala o actualiza el framework en el proyecto actual.
-- Detecta agentes instalados (Cursor, Claude Code, Windsurf, etc.)
-- Copia skills, rules y workflows a cada agente
-- Genera el entry point de auto-invocación por agente
+### `lmagent install`
+Comando unificado que instala y configura el framework en el proyecto actual.
+- Detecta agentes en el proyecto (Cursor, Claude Code, Windsurf, etc.)
+- Instala el core del framework en `.agents/` (skills, rules, workflows, memory, config, docs)
+- Genera bridge files ligeros para cada agente detectado
+- Despliega configFiles específicos (CLAUDE.md, GEMINI.md, etc.) solo cuando corresponde
 - **Opciones**:
   - `-f, --force`: Sobrescribe archivos sin preguntar
   - `-y, --yes`: Modo no interactivo (acepta todo)
-  - `-g, --global`: También sincroniza a `~/.agents/`
+
+### `lmagent update`
+Alias de `install`. Actualiza skills y reglas en el proyecto.
 
 ### `lmagent init`
-Inicializa un proyecto nuevo con LMAgent.
-- Copia `AGENTS.md`, `CLAUDE.md`, `GEMINI.md` a la raíz
-- Copia `config/`, `templates/`, `docs/`, `workflows/`
-- **Opciones**:
-  - `-f, --force`: Sobrescribe archivos existentes
-  - `-y, --yes`: Sin confirmaciones
+Alias de `install`. Inicializa un proyecto nuevo con LMAgent.
 
 ### `lmagent uninstall`
 Elimina todos los archivos instalados por LMAgent del proyecto.
@@ -36,12 +34,13 @@ Elimina todos los archivos instalados por LMAgent del proyecto.
 - Pide confirmación antes de proceder
 - **Opciones**:
   - `-f, --force`: Sin confirmación
-  - `--all`: También elimina entry points raíz (CLAUDE.md, GEMINI.md, AGENTS.md, .cursorrules, etc.)
+  - `--all`: También elimina entry points raíz (CLAUDE.md, GEMINI.md, AGENTS.md)
 
 ### `lmagent doctor`
 Verifica que el proyecto esté correctamente configurado.
-- Comprueba archivos críticos (`AGENTS.md`, `CLAUDE.md`, `GEMINI.md`)
-- Verifica directorios de agentes instalados y sus `configFile`
+- Comprueba archivos críticos (`AGENTS.md`)
+- Verifica core en `.agents/` (skills, rules, workflows)
+- Detecta agentes configurados
 - Revisa `.gitignore`
 
 ### `lmagent validate [skill]`
@@ -56,7 +55,6 @@ Genera la estructura estándar y el `SKILL.md` con frontmatter correcto.
 ### `lmagent tokens`
 Analiza el consumo de tokens del framework instalado en el proyecto.
 - Muestra breakdown por categoría (rules, skills, workflows, etc.)
-- Destaca el overhead real de sesión (~2,200 tokens) vs. total del framework
 - **Opciones**:
   - `--json`: Salida en formato JSON
   - `--report`: Genera reporte en `.agents/token-report.md`

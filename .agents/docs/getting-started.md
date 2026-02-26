@@ -1,6 +1,6 @@
 # 🚀 Getting Started with LMAgent
 
-Bienvenido a **LMAgent v3.1.3** — el framework que transforma cualquier agente de IA en una agencia de desarrollo de software completa.
+Bienvenido a **LMAgent v3.4.0** — el framework que transforma cualquier agente de IA en una agencia de desarrollo de software completa.
 
 ## Requisitos Previos
 - **Node.js**: v22+ (requerido para el CLI)
@@ -14,29 +14,16 @@ Bienvenido a **LMAgent v3.1.3** — el framework que transforma cualquier agente
 npx @qubiit/lmagent@latest
 ```
 
-Eso es todo. El instalador:
-1. Detecta automáticamente qué agentes tenés instalados en tu sistema
-2. Pre-selecciona los detectados para instalación
-3. Despliega skills, rules y workflows a cada agente
-4. Genera el entry point de auto-invocación
+Un solo comando. El instalador:
+1. Despliega `AGENTS.md` a la raíz del proyecto (entry point universal)
+2. Detecta automáticamente qué agentes tenés en el proyecto
+3. Instala skills, rules, workflows, memory, config y docs en `.agents/` (centralizado)
+4. Genera bridge files ligeros para cada agente detectado
+5. Despliega config files específicos (CLAUDE.md, GEMINI.md) solo cuando corresponde
 
----
+> `lmagent init`, `lmagent install` y `lmagent update` ejecutan el mismo flujo unificado.
 
-## Setup Paso a Paso (Primera Vez)
-
-### Paso 1 — Inicializar el proyecto
-```bash
-npx @qubiit/lmagent@latest init
-```
-Copia `AGENTS.md`, `CLAUDE.md` y `GEMINI.md` a la raíz de tu proyecto. Estos son los archivos que los agentes leen automáticamente al arrancar.
-
-### Paso 2 — Instalar el framework
-```bash
-npx @qubiit/lmagent@latest install
-```
-Seleccioná los agentes que usás y el instalador configura todo.
-
-### Paso 3 — Verificar
+### Verificar
 ```bash
 npx @qubiit/lmagent@latest doctor
 ```
@@ -64,7 +51,7 @@ El agente detectará `/pm`, cargará el skill **product-manager** y actuará en 
 
 ```bash
 npx @qubiit/lmagent@latest doctor       # Verificar configuración
-npx @qubiit/lmagent@latest update       # Actualizar a la última versión
+npx @qubiit/lmagent@latest update       # Actualizar (alias de install)
 npx @qubiit/lmagent@latest validate     # Validar integridad de skills
 npx @qubiit/lmagent@latest tokens       # Ver consumo de tokens del framework
 npx @qubiit/lmagent@latest uninstall    # Limpiar archivos del framework

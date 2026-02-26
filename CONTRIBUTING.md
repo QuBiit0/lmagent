@@ -62,7 +62,7 @@ lmagent/
 │   └── scripts/                # Scripts de utilidad del framework
 │
 ├── AGENTS.md                   # Cerebro del framework (leer primero)
-├── CLAUDE.md                   # Entry point para Claude Code / Antigravity
+├── CLAUDE.md                   # Entry point para Claude Code
 ├── GEMINI.md                   # Entry point para Gemini CLI / Antigravity
 ├── README.md                   # Documentación principal
 └── package.json                # Paquete npm: @qubiit/lmagent
@@ -87,14 +87,9 @@ lmagent/
 }
 ```
 
-2. Agregá la ruta de instalación global en `HOME_PATHS`:
-```js
-'valor-unico': ['.agente', '.config/agente'],
-```
+2. Actualizá la tabla de agentes en `AGENTS.md` y `README.md`
 
-3. Actualizá la tabla de agentes en `AGENTS.md` y `README.md`
-
-4. Si el agente tiene un formato de configFile especial, creá el template en `.agents/templates/agent-configs/`
+3. Si el agente tiene un formato de configFile especial, creá el template en `.agents/templates/agent-configs/`
 
 ---
 
