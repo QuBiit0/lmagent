@@ -26,10 +26,12 @@ const __dirname = dirname(__filename);
 const ROOT = resolve(__dirname, '..');
 const SKILLS_DIR = join(ROOT, '.agents', 'skills');
 
+const pkgContent = readFileSync(join(ROOT, 'package.json'), 'utf-8');
+const CURRENT_VERSION = JSON.parse(pkgContent).version;
+
 // ─── Configuración ────────────────────────────────────────────
 const REQUIRED_FIELDS = ['name', 'description', 'role', 'type', 'version', 'icon', 'expertise', 'activates_on', 'triggers'];
 const VALID_TYPES = ['agent_persona', 'methodology'];
-const CURRENT_VERSION = '3.4.0';
 const OPTIONAL_DIRS = ['scripts', 'references', 'assets'];
 
 // ─── Colores (sin dependencias) ───────────────────────────────
@@ -197,7 +199,7 @@ function main() {
 
     const c = chalk;
 
-    console.log(c.bold('\n🔍 LMAgent Skill Validator v3.4.0\n'));
+    console.log(c.bold(`\n🔍 LMAgent Skill Validator v${CURRENT_VERSION}\n`));
     console.log(chalk.dim(`   Directorio: ${SKILLS_DIR}`));
     console.log(chalk.dim(`   Campos obligatorios: ${REQUIRED_FIELDS.length}`));
     console.log('');

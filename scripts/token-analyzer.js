@@ -75,32 +75,36 @@ function analyze(options = {}) {
     const projectRoot = process.cwd();
 
     // Detectar qué agentes están instalados
-    // Detectar qué agentes están instalados
-    const agentDirs = [
-        { name: 'Cursor', rulesDir: '.cursor/rules', skillsDir: '.cursor/skills' },
-        { name: 'Claude Code', rulesDir: '.claude/rules', skillsDir: '.claude/skills' },
-        { name: 'Antigravity', rulesDir: '.agent/rules', skillsDir: '.agent/skills' },
-        { name: 'Gemini CLI', rulesDir: '.gemini/rules', skillsDir: '.gemini/skills' },
-        { name: 'Windsurf', rulesDir: '.windsurf/rules', skillsDir: '.windsurf/skills' },
-        { name: 'Cline', rulesDir: '.clinerules', skillsDir: '.cline/skills' },
-        { name: 'Roo Code', rulesDir: '.roo/rules', skillsDir: '.roo/skills' },
-        { name: 'VSCode Copilot', rulesDir: '.github/instructions', skillsDir: '.github/skills' },
-        { name: 'Augment', rulesDir: '.augment/rules', skillsDir: '.augment/skills' },
-        { name: 'Continue', rulesDir: '.continue/rules', skillsDir: '.continue/skills' },
-        { name: 'Codex', rulesDir: '.codex', skillsDir: '.codex/skills' },
-        { name: 'OpenHands', rulesDir: '.openhands/microagents', skillsDir: '.openhands/skills' },
-        { name: 'Junie', rulesDir: '.junie', skillsDir: '.junie/skills' },
-        { name: 'Goose', rulesDir: '.goose', skillsDir: '.goose/skills' },
+    // Detectar qué agentes están instalados (simplificado revisando marcadores/directorios comunes)
+    const IDE_CONFIGS = [
+        { name: 'Cursor', rulesDir: '.cursor/rules', markerFile: '.cursorrules' },
+        { name: 'Windsurf', rulesDir: '.windsurf/rules', markerFile: '.windsurf' },
+        { name: 'Cline', rulesDir: '.clinerules', markerFile: '.clinerules' },
+        { name: 'Roo Code', rulesDir: '.roo/rules', markerFile: '.roo' },
+        { name: 'VSCode Copilot', rulesDir: '.github/instructions', markerFile: '.vscode' },
+        { name: 'Trae', rulesDir: '.trae/rules', markerFile: '.trae' },
+        { name: 'Claude Code', rulesDir: '.claude/rules', markerFile: '.claude' },
+        { name: 'Zed', rulesDir: '.rules', markerFile: '.zed' },
+        { name: 'Amp / Kimi / Replit', rulesDir: '.agents/rules', markerFile: '.agents' },
+        { name: 'Antigravity', rulesDir: '.agent/rules', markerFile: '.agent' },
+        { name: 'Augment', rulesDir: '.augment/rules', markerFile: '.augment' },
+        { name: 'Gemini CLI', rulesDir: '.gemini/rules', markerFile: '.gemini' },
+        { name: 'OpenClaw', rulesDir: 'rules', markerFile: 'openclaw.json' },
+        { name: 'CodeBuddy', rulesDir: '.codebuddy/rules', markerFile: '.codebuddy' },
+        { name: 'Codex', rulesDir: '.codex', markerFile: '.codex' },
+        { name: 'Continue', rulesDir: '.continue/rules', markerFile: '.continue' },
+        { name: 'Goose', rulesDir: '.goose', markerFile: '.goose' },
+        { name: 'OpenHands', rulesDir: '.openhands/microagents', markerFile: '.openhands' }
     ];
 
-    const installedAgents = agentDirs.filter(a =>
-        fs.existsSync(path.join(projectRoot, a.rulesDir)) ||
-        fs.existsSync(path.join(projectRoot, a.skillsDir))
-    );
+    const installedAgents = IDE_CONFIGS.filter(ide => {
+        const markerInProject = ide.markerFile && fs.existsSync(path.join(projectRoot, ide.markerFile));
+        const rulesDirRoot = ide.rulesDir && fs.existsSync(path.join(projectRoot, ide.rulesDir.split('/')[0]));
+        return markerInProject || rulesDirRoot;
+    });
 
     // ── Entry Points (archivos raíz que el agente lee al arrancar) ──
-    const entryFiles = ['AGENTS.md', 'CLAUDE.md', 'GEMINI.md', '.cursorrules', '.continuerules', '.goosehints',
-        '.openhands/microagents/repo.md', '.junie/guidelines.md', '.github/copilot-instructions.md'];
+    const entryFiles = ['AGENTS.md', 'CLAUDE.md', 'GEMINI.md', '.cursorrules', '.windsurfrules', '.windsurfrules.md', '.continuerules', '.goosehints', 'openclaw.json'];
     const entryItems = entryFiles
         .map(f => path.join(projectRoot, f))
         .filter(f => fs.existsSync(f))
@@ -110,47 +114,16 @@ function analyze(options = {}) {
         });
 
     // ── Skills ──
-    const skillsItems = [];
-    for (const agent of installedAgents) {
-        const dir = path.join(projectRoot, agent.skillsDir);
-        skillsItems.push(...scanDir(dir));
-    }
-    // Deduplicar por contenido (mismo archivo copiado a múltiples agentes)
-    const skillsSeen = new Set();
-    const skillsUniq = skillsItems.filter(i => {
-        const key = path.basename(path.dirname(i.file)) + '/' + path.basename(i.file);
-        if (skillsSeen.has(key)) return false;
-        skillsSeen.add(key);
-        return true;
-    });
+    const skillsItems = scanDir(path.join(projectRoot, '.agents', 'skills'));
+    const skillsUniq = skillsItems;
 
     // ── Rules ──
-    const rulesItems = [];
-    for (const agent of installedAgents) {
-        const dir = path.join(projectRoot, agent.rulesDir);
-        rulesItems.push(...scanDir(dir));
-    }
-    const rulesSeen = new Set();
-    const rulesUniq = rulesItems.filter(i => {
-        const key = path.basename(i.file);
-        if (rulesSeen.has(key)) return false;
-        rulesSeen.add(key);
-        return true;
-    });
+    const rulesItems = scanDir(path.join(projectRoot, '.agents', 'rules'));
+    const rulesUniq = rulesItems;
 
     // ── Workflows ──
-    const workflowsItems = [];
-    const workflowDirs = installedAgents.map(a => a.skillsDir.replace('/skills', '/workflows'));
-    for (const dir of workflowDirs) {
-        workflowsItems.push(...scanDir(path.join(projectRoot, dir)));
-    }
-    const wfSeen = new Set();
-    const workflowsUniq = workflowsItems.filter(i => {
-        const key = path.basename(i.file);
-        if (wfSeen.has(key)) return false;
-        wfSeen.add(key);
-        return true;
-    });
+    const workflowsItems = scanDir(path.join(projectRoot, '.agents', 'workflows'));
+    const workflowsUniq = workflowsItems;
 
     // ── Totales ──
     const totalTokens = sumTokens(entryItems) + sumTokens(skillsUniq) + sumTokens(rulesUniq) + sumTokens(workflowsUniq);

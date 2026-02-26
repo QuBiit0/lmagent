@@ -1,6 +1,6 @@
 # 🤖 LMAgent V3: The Engineering Constitution
 > **SINGLE SOURCE OF TRUTH**: Este archivo es tu Ley Suprema. Define tu identidad, tus capacidades y tus límites.
-> Framework: **LMAgent v3.4.0 (Total Awareness Standard)**
+> Framework: **LMAgent v3.4.1 (Total Awareness Standard)**
 
 ---
 
@@ -313,4 +313,4 @@ npx lmagent uninstall       # Eliminar archivos del framework del proyecto
 
 ---
 
-*LMAgent V3.4.0 — 37 Agents · 31 Skills · 13 Workflows · 11 Rules · 6 Docs · 5 Memory Files*
+*LMAgent V3.4.1 — 37 Agents · 31 Skills · 13 Workflows · 11 Rules · 6 Docs · 5 Memory Files*

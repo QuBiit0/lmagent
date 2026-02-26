@@ -14,11 +14,15 @@ import { mkdirSync, writeFileSync, existsSync } from 'fs';
 import { join, resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { createInterface } from 'readline';
+import { readFileSync } from 'fs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const ROOT = resolve(__dirname, '..');
 const SKILLS_DIR = join(ROOT, '.agents', 'skills');
+
+const pkgContent = readFileSync(join(ROOT, 'package.json'), 'utf-8');
+const CURRENT_VERSION = JSON.parse(pkgContent).version;
 
 // ─── Colores ──────────────────────────────────────────────────
 const c = {
@@ -92,7 +96,7 @@ name: ${data.name}
 description: ${data.description}
 role: ${data.role}
 type: ${data.type}
-version: "3.4.0"
+version: "${CURRENT_VERSION}"
 icon: ${data.icon}
 expertise:
 ${expertise}
@@ -206,13 +210,13 @@ Antes de considerar una tarea terminada, verifica TODO:
 
 ---
 
-*Skill version: 3.4.0 | LMAgent Framework*
+*Skill version: ${CURRENT_VERSION} | LMAgent Framework*
 `;
 }
 
 // ─── Main ─────────────────────────────────────────────────────
 async function main() {
-    console.log(c.bold('\n🛠️  LMAgent Skill Generator v3.4.0\n'));
+    console.log(c.bold(`\n🛠️  LMAgent Skill Generator v${CURRENT_VERSION}\n`));
 
     const prompt = createPrompt();
 
