@@ -2,7 +2,7 @@
 description: Workflow para crear o mejorar un agente de IA
 level: 2-3
 personas: [ai-agent-engineer, backend-engineer]
-version: 3.0.0
+version: 3.4.1
 type: workflow
 ---
 

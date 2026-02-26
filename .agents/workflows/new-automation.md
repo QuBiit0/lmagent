@@ -2,7 +2,7 @@
 description: Workflow para crear una nueva automatización que involucra backend + n8n + opcionalmente agentes IA
 level: 2-3
 personas: [automation-engineer, backend-engineer, ai-agent-engineer]
-version: 3.0.0
+version: 3.4.1
 type: workflow
 ---
 

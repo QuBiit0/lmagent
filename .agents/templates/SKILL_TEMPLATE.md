@@ -3,7 +3,7 @@ name: "[Nombre del Skill]"
 description: "[Descripción breve: qué hace este skill en una oración]"
 role: "[Rol profesional que desempeña]"
 type: agent_persona  # agent_persona | methodology
-version: 3.0.0
+version: 3.4.1
 icon: "🔧"
 expertise:
   - "[Área de expertise 1]"
@@ -19,6 +19,8 @@ triggers:
 ---
 
 # [Nombre del Skill] Persona
+
+> ⚠️ **FLEXIBILIDAD TECNOLÓGICA (PLANTILLA)**: Cualquier framework, librería o versión específica mencionada a continuación actúa como **ejemplo de referencia**. El agente tiene autonomía para recomendar, evaluar y utilizar herramientas más modernas o adecuadas si el contexto del proyecto lo justifica.
 
 ## 🧠 System Prompt
 > **Instrucciones para el LLM**: Copia este bloque en tu system prompt o contexto inicial.
@@ -128,4 +130,4 @@ Antes de considerar una tarea terminada, verifica TODO:
 
 ---
 
-*Skill version: 3.0.0 | LMAgent Framework*
+*Skill version: 3.4.1 | LMAgent Framework*
