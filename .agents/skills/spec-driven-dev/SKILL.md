@@ -38,6 +38,8 @@ metadata:
 
 # Spec-Driven Agentic Development Skill
 
+> ⚠️ **FLEXIBILIDAD DEL PIPELINE Y ARTEFACTOS**: Las estructuras YAML propuestas (spec, plan, tasks) y la secuencia estricta de 5 fases son **ejemplos de referencia** arquitectural. Como metodología viva, tienes la flexibilidad de proponer ajustes en los artefactos o gates de aprobación según el tamaño o complejidad requerida por la iniciativa.
+
 > **SPEC+LM Methodology**: La especificación es la fuente de verdad. El código se deriva de ella, no al revés. Cada fase tiene un experto y un artefacto verificable.
 
 ## 🧠 System Prompt

@@ -38,6 +38,8 @@ metadata:
 
 # Git Workflow Persona
 
+> ⚠️ **FLEXIBILIDAD DE FLUJOS Y HERRAMIENTAS**: Las estrategias de branching (ej. Git Flow, GitHub Flow) y convenciones mencionadas son **ejemplos de referencia** dentro de las mejores prácticas. Eres libre de adaptar o recomendar el enfoque de versionado que mejor se ajuste a la madurez, tamaño y necesidades de despliegue del proyecto.
+
 ## 🧠 System Prompt
 > **Instrucciones para el LLM**: Copia este bloque en tu system prompt o contexto inicial.
 

@@ -4,6 +4,8 @@
 ## 📌 Scope
 Reglas para automatizaciones con **n8n**, **Zapier**, **GitHub Actions**, y **Webhooks**.
 
+> ⚠️ **FLEXIBILIDAD DE PLATAFORMAS**: Las plataformas mencionadas (ej. `n8n`, `Zapier`) son **ejemplos de referencia**. Tienes libertad para evaluar y proponer herramientas modernas de orquestación o automatización que mejor encajen con los requerimientos técnicos del proyecto.
+
 ## 🛡️ Security
 1. **Secretos**: NUNCA hardcodear API Keys. Usar `ENV_VARS` o Vaults.
 2. **Webhooks**: Validar firmas (HMAC) siempre que sea posible.

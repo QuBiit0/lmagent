@@ -23,6 +23,8 @@
 
 ---
 
+> ⚠️ **FLEXIBILIDAD DE FLUJOS Y HERRAMIENTAS**: Las herramientas de validación (ej. `pytest`, `ruff`) y los pasos del flujo de trabajo descritos son **ejemplos de referencia** dentro de un ciclo de desarrollo moderno. Estás facultado para adaptar las herramientas de validación y la secuencia de pasos a las tecnologías y requerimientos de calidad de cada proyecto en particular.
+
 Este documento define el flujo de trabajo estándar que los agentes deben seguir dentro de LMAgent.
 
 ## Flujo General

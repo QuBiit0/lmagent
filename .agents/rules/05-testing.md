@@ -26,6 +26,8 @@
 
 Este documento define las reglas y estándares de testing del framework.
 
+> ⚠️ **FLEXIBILIDAD DE HERRAMIENTAS**: Los test runners, librerías de assertions y frameworks de mocking (ej. `pytest`, `jest`, `respx`) son **ejemplos de referencia**. Eres libre de proponer e implementar las herramientas de testing más modernas, eficientes y adecuadas para el ecosistema del proyecto.
+
 ## 📊 Objetivos de Cobertura
 
 | Tipo de Código | Cobertura Mínima |

@@ -20,6 +20,8 @@
 
 Este documento define las reglas y mejores prácticas de seguridad del framework.
 
+> ⚠️ **FLEXIBILIDAD DE LIBRERÍAS**: Las librerías y algoritmos de seguridad expuestos (ej. `passlib`, `slowapi`, RS256) actúan como **ejemplos de referencia**. Tienes total libertad y responsabilidad para evaluar y utilizar los estándares más robustos, seguros y modernos disponibles en el momento de la implementación.
+
 ## 🔐 Principios Generales
 
 1. **Defense in Depth**: Múltiples capas de seguridad

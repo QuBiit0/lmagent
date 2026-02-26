@@ -185,6 +185,7 @@ Ubicación Universal: `.agents/skills/[nombre_skill]/SKILL.md`
 ### ⚡ Specialized & AI
 | Trigger | Skill | Directorio |
 |:---|:---|:---|
+| `/cursor` | **cursor-expert** | `.agents/skills/cursor-expert/` |
 | `/fix` | **systematic-debugger** | `.agents/skills/systematic-debugger/` |
 | `/perf` | **performance-engineer** | `.agents/skills/performance-engineer/` |
 | `/ux` | **ux-ui-designer** | `.agents/skills/ux-ui-designer/` |
@@ -313,4 +314,4 @@ npx lmagent uninstall       # Eliminar archivos del framework del proyecto
 
 ---
 
-*LMAgent V3.4.1 — 37 Agents · 31 Skills · 13 Workflows · 11 Rules · 6 Docs · 5 Memory Files*
+*LMAgent V3.4.1 — 37 Agents · 32 Skills · 13 Workflows · 11 Rules · 6 Docs · 5 Memory Files*

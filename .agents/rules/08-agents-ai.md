@@ -2,6 +2,8 @@
 > **Tipo**: `rule` | **Versión**: 3.0.0 | **Referencia**: `ai-agent-engineer`
 
 ## 📌 Core Principles
+
+> ⚠️ **FLEXIBILIDAD DE HERRAMIENTAS**: Frameworks y patrones listados (ej. MCP, RAG, Evals) son **ejemplos de referencia** conceptuales. Tienes la libertad y el deber de sugerir e implementar los protocolos y arquitecturas de agentes más modernos y eficientes del estado del arte.
 1. **Tool-First Mindset**: Los agentes no adivinan, usan herramientas.
 2. **Determinismo**: `temperature=0` para llamadas a funciones (Function Calling).
 3. **Traza de Ejecución**: Todo paso del agente debe ser logueado (Thinking Process).

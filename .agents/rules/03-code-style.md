@@ -20,6 +20,8 @@
 
 Este documento define las convenciones de estilo para Python y TypeScript.
 
+> ⚠️ **FLEXIBILIDAD DE HERRAMIENTAS**: Las utilidades específicas de linting, formateo o checking mencionadas a continuación (ej. `ruff`, `eslint`, `mypy`) actúan como **ejemplos representativos** de buenas prácticas obligatorias. Puedes usar o sugerir linter/formatters equivalentes o más modernos si el ecosistema actual lo requiere, siempre y cuando se mantenga el mismo nivel de exigencia y rigor.
+
 ## Python
 
 ### Herramientas

@@ -2,6 +2,8 @@
 > **Tipo**: `rule` | **Versión**: 3.0.0 | **Referencia**: `git-workflow`
 
 ## 🌿 Branching Strategy
+
+> ⚠️ **FLEXIBILIDAD DE WORKFLOWS**: Las estrategias aquí detalladas (ej. Git Flow tradicional) son **ejemplos de referencia**. El agente puede recomendar y aplicar estrategias más modernas (ej. Trunk-based development) si la agilidad del equipo o del proyecto lo justifican.
 - **main**: Producción (Stable). Tags `vX.Y.Z`.
 - **dev**: Integración (Beta). Deploy a Staging.
 - **feat/nombre-feature**: Desarrollo de features.

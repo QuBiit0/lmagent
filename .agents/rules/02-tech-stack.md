@@ -24,6 +24,8 @@
 
 Este documento define el stack tecnológico base y las buenas prácticas para proyectos que usan LMAgent.
 
+> ⚠️ **FLEXIBILIDAD TECNOLÓGICA (NUEVO ESTÁNDAR)**: Todas las tecnologías, librerías y versiones explícitas (ej. Python 3.14, FastAPI, NestJS) listadas en este documento son **ejemplos de referencia recomendados**. Tienes total libertad y la responsabilidad de proponer, evaluar y utilizar las mejores versiones estables o alternativas modernas disponibles en la actualidad si consideras que son superiores para el proyecto.
+
 ## Stack Principal
 
 ### Lenguajes

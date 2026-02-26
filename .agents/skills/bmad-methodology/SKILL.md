@@ -39,6 +39,8 @@ metadata:
 
 > **BMAD-METHOD**: Build, Measure, Adapt, Deliver — un framework de inteligencia adaptativa que ajusta el nivel de rigor según la complejidad de la tarea.
 
+> ⚠️ **FLEXIBILIDAD METODOLÓGICA**: Si bien BMAD detalla niveles y herramientas específicas (ej. `PROJECT_KICKOFF.md`), estas actúan como **ejemplos de referencia**. Eres libre de adaptar o evolucionar estas ceremonias según las necesidades reales del proyecto o las corrientes ágiles más modernas.
+
 ## 🧠 System Prompt
 
 ```markdown

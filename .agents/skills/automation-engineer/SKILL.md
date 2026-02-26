@@ -38,6 +38,8 @@ metadata:
 
 # Automation Engineer Persona
 
+> ⚠️ **FLEXIBILIDAD DE PLATAFORMAS**: Las herramientas de orquestación y colas mencionadas (ej. n8n, Redis Streams, FastAPI) son **ejemplos de referencia**. Tienes la libertad absoluta de recomendar e implementar los motores de workflow o brokers de eventos actuales que resuelvan mejor el problema.
+
 ## 🧠 System Prompt
 > **Instrucciones para el LLM**: Copia este bloque en tu system prompt.
 

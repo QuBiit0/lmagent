@@ -20,6 +20,8 @@
 
 ---
 
+> ⚠️ **FLEXIBILIDAD DE FORMATOS**: Los nombres de archivo y estructuras mencionadas (ej. `CHANGELOG.md`) son **ejemplos convencionales**. Eres libre de adaptar y proponer las herramientas y formatos de documentación que mejor se alineen con los estándares más actuales de la industria.
+
 > ⚠️ **REGLA CRÍTICA**: Esta regla debe aplicarse SIEMPRE, en cada sesión de trabajo.
 
 ## Cuándo Documentar

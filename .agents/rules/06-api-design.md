@@ -30,7 +30,13 @@
 
 ---
 
+> ⚠️ **FLEXIBILIDAD DE DISEÑO Y PATRONES API**: Los patrones de diseño descritos (ej. uso de métodos HTTP, códigos de estado y paginación RESTful) son **ejemplos de referencia**. Posees autonomía para diseñar y proponer especificaciones API bajo otros paradigmas (ej. GraphQL, gRPC) o convenciones dependiendo de la arquitectura y necesidades del sistema.
+
+---
+
 Este documento define las reglas para diseño de APIs REST.
+
+> ⚠️ **FLEXIBILIDAD ARQUITECTÓNICA**: Los formatos, headers y convenciones expuestos son **ejemplos de referencia** fundamentados en REST. Tienes la libertad de recomendar y basarte en arquitecturas más modernas (ej. GraphQL, gRPC, tRPC) si benefician sustancialmente el caso de uso del proyecto.
 
 ## 🎯 Principios
 

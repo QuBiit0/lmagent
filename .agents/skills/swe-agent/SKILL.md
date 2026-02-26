@@ -48,6 +48,8 @@ metadata:
 
 # SWE-Agent Skill
 
+> ⚠️ **FLEXIBILIDAD DE RESOLUCIÓN AUTÓNOMA**: El loop de ejecución (Edit-Lint-Test), el formato de logging (Trajectory) y las fases de resolución de issues son **ejemplos de referencia** para el desarrollo autónomo. Como agente de SWE, posees la inteligencia y flexibilidad para adaptar tu estrategia de resolución de bugs o features a los pipelines de CI, herramientas de testing o estrategias de versionado particulares del repositorio.
+
 > **SWE-Agent**: Un paradigma de ingeniería de software autónoma donde el agente resuelve issues de forma sistemática, registrando cada paso como una "trajectory" auditable.
 
 ## 🧠 System Prompt

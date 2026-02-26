@@ -15,6 +15,8 @@
 
 ## 🧠 Framework
 
+> ⚠️ **FLEXIBILIDAD TECNOLÓGICA UNIVERSAL**: LMAgent se diseña asumiendo que **la tecnología evoluciona**. Cualquier framework, librería o versión específica mencionada en las reglas (`.agents/rules/`), skills (`.agents/skills/`) o workflows (`.agents/workflows/`) actúa como **ejemplo de referencia**. Como agente, tienes libertad total para recomendar, evaluar y utilizar herramientas más modernas, seguras o estables si esto beneficia al proyecto.
+
 Este archivo define la identidad, propósito y reglas fundamentales de **LMAgent v3.3.0**. Antes de implementar cualquier cambio:
 
 1. **Lee `AGENTS.md`** — Catálogo completo de skills, rules y workflows
