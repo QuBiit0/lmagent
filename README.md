@@ -11,7 +11,7 @@
                                                 01/03/2026
 ```
 
-![Version](https://img.shields.io/badge/version-3.4.1-blue.svg) ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge) ![Agents](https://img.shields.io/badge/Agents-37_Supported-cyan?style=for-the-badge) ![Skills](https://img.shields.io/badge/Skills-31_Available-purple?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-3.5.0-blue.svg) ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge) ![Agents](https://img.shields.io/badge/Agents-37_Supported-cyan?style=for-the-badge) ![Skills](https://img.shields.io/badge/Skills-38_Available-purple?style=for-the-badge)
 
 > **"Separate the reasoning from the execution."**
 > LMAgent is the foundational runtime that empowers your AI Agents with standardized **Skills**, **Rules**, and **Workflows** across **37 supported agents** (Cursor, Claude Code, Windsurf, Gemini CLI, Cline, Roo, Copilot, and many more).
@@ -37,7 +37,7 @@ That's it. LMAgent will:
 3. **Deploy** skills, rules, and workflows **strictly to your project directory** (Universal Brain: `.agents/`)
 4. **Generate** the entry point file so each agent auto-invokes the framework
 
-> **Requires Node.js ≥ 22**. Works on macOS, Linux, and Windows. **V3.4.0 features a unified install command and centralized `.agents/` architecture.**
+> **Requires Node.js ≥ 22**. Works on macOS, Linux, and Windows. **V3.5.0 features sparse-checkout GitHub downloads, centralized `.agents/` memory architecture, and a unified init command.**
 
 ---
 
