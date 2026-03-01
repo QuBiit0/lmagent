@@ -8,7 +8,6 @@
 ███████╗██║ ╚═╝ ██║██║  ██║╚██████╔╝███████╗██║ ╚████║   ██║
 ╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═══╝   ╚═╝
                                                   by QuBit
-                                                01/03/2026
 ```
 
 ![Version](https://img.shields.io/badge/version-3.5.0-blue.svg) ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge) ![Agents](https://img.shields.io/badge/Agents-37_Supported-cyan?style=for-the-badge) ![Skills](https://img.shields.io/badge/Skills-38_Available-purple?style=for-the-badge)
@@ -241,9 +240,14 @@ Skills follow the standard structure:
 
 ---
 
-## 👨‍💻 Developer Setup (For Contributors)
+## 🤝 Contributing
 
-If you are contributing to the core LMAgent framework:
+We welcome contributions to expand the **Universal Agent Brain**. 
+You can submit Pull Requests directly via GitHub to add new Skills, Rules, or IDE support. Check out `CONTRIBUTING.md` for guidelines.
+
+### Core CLI Development
+
+If you are contributing to the underlying Node.js runtime (`install.js` and `/scripts`), you will need a local development environment:
 
 ```bash
 git clone https://github.com/QuBiit0/lmagent.git
@@ -258,13 +262,6 @@ npm link
 # Test local changes globally
 lmagent doctor
 ```
-
----
-
-## 🤝 Contributing
-
-We welcome contributions to expand the **Universal Agent Brain**.
-Check out `CONTRIBUTING.md` to add new Skills, Rules, or IDE support.
 
 ---
 
