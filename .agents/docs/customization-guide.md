@@ -34,4 +34,4 @@ Los workflows en `.agents/workflows/` son "recetas" paso a paso.
 El Orchestrator los usa para guiar procesos complejos.
 
 ## 4. Extendiendo el CLI
-Si quieres lógica imperativa (comandos), puedes modificar `install.js` o agregar scripts en `.agents/scripts/` y llamarlos con `npx lmagent run tu-script`.
+Si quieres lógica imperativa (comandos), puedes modificar `install.js` o agregar scripts en `.agents/scripts/` y llamarlos con `lmagent run tu-script`.

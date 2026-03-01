@@ -35,8 +35,7 @@ Este proyecto se rige por un Código de Conducta estándar. Al participar, se es
 #### Checklist para PRs
 - [ ] ¿Actualizaste la documentación relevante?
 - [ ] ¿Actualizaste `AGENTS.md` si agregaste un nuevo agente o skill?
-- [ ] ¿Cumple con las reglas en `.agents/rules/`?
-- [ ] ¿Probaste los cambios con `npx @qubiit/lmagent doctor`?
+- [ ] ¿Probaste los cambios con `lmagent doctor`?
 
 ---
 
@@ -96,7 +95,7 @@ lmagent/
 ## Agregar un Nuevo Skill
 
 ```bash
-npx @qubiit/lmagent@latest create-skill
+lmagent create-skill
 ```
 
 O manualmente:
@@ -110,7 +109,7 @@ description: Descripción del skill
 version: 1.0.0
 ---
 ```
-3. Validá con `npx @qubiit/lmagent@latest validate mi-skill`
+3. Validá con `lmagent validate mi-skill`
 4. Actualizá el catálogo en `AGENTS.md` — Sección 5
 
 ---

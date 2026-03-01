@@ -316,16 +316,16 @@ iwr https://raw.githubusercontent.com/QuBiit0/lmagent/main/scripts/install.ps1 -
 
 # Comandos Nativos NPM
 npx @qubiit/lmagent@latest          # Alternativa a curl/iwr
-npx lmagent init                    # Inicializar proyecto e instalar framework (reemplaza a install/update)
-npx lmagent doctor                  # Verificar configuración del proyecto
-npx lmagent validate                # Validar integridad de todos los skills
-npx lmagent create-skill            # Crear un nuevo skill interactivamente
-npx lmagent tokens                  # Analizar consumo de tokens del framework
-npx lmagent uninstall               # Eliminar archivos del framework del proyecto
+lmagent init                        # Inicializar proyecto e instalar framework (reemplaza a install/update)
+lmagent doctor                      # Verificar configuración del proyecto
+lmagent validate                    # Validar integridad de todos los skills
+lmagent create-skill                # Crear un nuevo skill interactivamente
+lmagent tokens                      # Analizar consumo de tokens del framework
+lmagent uninstall                   # Eliminar archivos del framework del proyecto
 
 # Extensión de Skills (Ecosistema Gentleman-Skills / Comunidad)
-npx lmagent skills add Gentleman-Programming/Gentleman-Skills/tree/main/curated/react-19  # Instalar skill de React 19
-npx lmagent skills add owner/repo  # Instalar cualquier skill externo desde GitHub
+lmagent skills add Gentleman-Programming/Gentleman-Skills/tree/main/curated/react-19  # Instalar skill de React 19
+lmagent skills add owner/repo       # Instalar cualquier skill externo desde GitHub
 ```
 
 ---

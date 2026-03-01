@@ -25,7 +25,7 @@ Un solo comando. El instalador:
 
 ### Verificar
 ```bash
-npx @qubiit/lmagent@latest doctor
+lmagent doctor
 ```
 
 ---
@@ -50,11 +50,11 @@ El agente detectará `/pm`, cargará el skill **product-manager** y actuará en 
 ## Comandos Útiles
 
 ```bash
-npx @qubiit/lmagent@latest doctor       # Verificar configuración
-npx @qubiit/lmagent@latest update       # Actualizar (alias de install)
-npx @qubiit/lmagent@latest validate     # Validar integridad de skills
-npx @qubiit/lmagent@latest tokens       # Ver consumo de tokens del framework
-npx @qubiit/lmagent@latest uninstall    # Limpiar archivos del framework
+lmagent doctor       # Verificar configuración
+lmagent update       # Actualizar (alias de install)
+lmagent validate     # Validar integridad de skills
+lmagent tokens       # Ver consumo de tokens del framework
+lmagent uninstall    # Limpiar archivos del framework
 ```
 
 ---

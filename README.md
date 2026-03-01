@@ -67,7 +67,7 @@ This single command:
 
 ### Verify
 ```bash
-npx @qubiit/lmagent@latest doctor
+lmagent doctor
 ```
 
 ---
@@ -223,21 +223,20 @@ Activate any skill by typing its trigger in the chat:
 
 ```bash
 # Core (all three run the same unified flow)
-npx @qubiit/lmagent@latest              # Interactive install (auto-detects agents)
-npx @qubiit/lmagent@latest install      # Same as above
-npx @qubiit/lmagent@latest init         # Alias for install
-npx @qubiit/lmagent@latest update       # Alias for install
-npx @qubiit/lmagent@latest uninstall    # Remove all LMAgent files from project
-npx @qubiit/lmagent@latest uninstall --all  # Also remove root entry points (CLAUDE.md, etc.)
+lmagent init         # Inicializar proyecto e instalar framework
+lmagent install      # Alias for init
+lmagent update       # Alias for init
+lmagent uninstall    # Remove all LMAgent files from project
+lmagent uninstall --all  # Also remove root entry points (CLAUDE.md, etc.)
 
 # Diagnostics
-npx @qubiit/lmagent@latest doctor       # Verify project configuration
-npx @qubiit/lmagent@latest validate     # Validate integrity of all skills
-npx @qubiit/lmagent@latest tokens       # Analyze framework token consumption
+lmagent doctor       # Verify project configuration
+lmagent validate     # Validate integrity of all skills
+lmagent tokens       # Analyze framework token consumption
 
 # Skills Management
-npx @qubiit/lmagent@latest create-skill             # Create a new skill interactively
-npx @qubiit/lmagent@latest skills add owner/repo    # Install external skill from GitHub
+lmagent create-skill             # Create a new skill interactively
+lmagent skills add owner/repo    # Install external skill from GitHub
 ```
 
 ---
@@ -246,13 +245,13 @@ npx @qubiit/lmagent@latest skills add owner/repo    # Install external skill fro
 
 ```bash
 # Create a new skill interactively
-npx @qubiit/lmagent@latest create-skill
+lmagent create-skill
 
 # Install an external skill from GitHub
-npx @qubiit/lmagent@latest skills add owner/repo-name
+lmagent skills add owner/repo-name
 
 # Validate all skills
-npx @qubiit/lmagent@latest validate
+lmagent validate
 ```
 
 Skills follow the standard structure:
