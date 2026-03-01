@@ -29,6 +29,7 @@ curl -fsSL https://raw.githubusercontent.com/QuBiit0/lmagent/main/scripts/instal
 ```powershell
 iwr https://raw.githubusercontent.com/QuBiit0/lmagent/main/scripts/install.ps1 -useb | iex
 ```
+> **Nota:** Si Windows bloquea la instalación por políticas de seguridad (ExecutionPolicy), ejecuta primero: `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser`
 
 That's it. LMAgent will:
 1. **Auto-detect** which AI agents you have installed on your system
@@ -53,6 +54,7 @@ curl -fsSL https://raw.githubusercontent.com/QuBiit0/lmagent/main/scripts/instal
 ```powershell
 iwr https://raw.githubusercontent.com/QuBiit0/lmagent/main/scripts/install.ps1 -useb | iex
 ```
+> **Nota:** Si Windows bloquea la instalación por políticas de seguridad (ExecutionPolicy), ejecuta primero: `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser`
 
 This single command:
 1. Deploys `AGENTS.md` to your project root (the universal entry point)
