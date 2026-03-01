@@ -121,7 +121,7 @@ All entry points point to `AGENTS.md` — the single source of truth.
 
 ---
 
-## 🧩 Skills Catalog (31 Skills)
+## 🧩 Skills Catalog (38 Skills)
 
 Activate any skill by typing its trigger in the chat:
 
@@ -141,13 +141,17 @@ Activate any skill by typing its trigger in the chat:
 | `/dev` | **backend-engineer** | APIs, database schema, authentication |
 | `/front` | **frontend-engineer** | React, Next.js, Tailwind, state management |
 | `/mobile` | **mobile-engineer** | React Native, Expo, iOS/Android pipelines |
+| `/native` | **native-mobile-expert** | Native architectures, Swift, Kotlin, OS integrations |
 | `/data` | **data-engineer** | ETL pipelines, SQL optimization, data warehousing |
 | `/devops` | **devops-engineer** | CI/CD, Docker, Kubernetes, Terraform |
+| `/cloud` | **cloud-architect** | IaC (AWS/GCP/Azure) design and infrastructure |
 | `/sec` | **security-analyst** | Vulnerability scanning, OWASP, code auditing |
+| `/hack` | **pentester** | Offensive security auditing, Red Teaming, DevSecOps |
 | `/test` | **qa-engineer** | E2E testing (Playwright), unit tests, QA strategy |
 | `/review` | **code-reviewer** | Static analysis, logic verification, clean code |
 | `/api` | **api-designer** | REST/GraphQL contracts, OpenAPI standards |
 | `/supa` | **supabase-expert** | Supabase architecture, RLS, Edge Functions |
+| `/web3` | **blockchain-engineer** | Smart Contracts, Web3, Solidity, dApps architecture |
 | `/git` | **git-workflow** | Branch management, conventional commits, releases |
 | `/web` | **browser-agent** | Web automation, scraping, UI testing |
 | `/seo` | **seo-auditor** | Technical SEO, Core Web Vitals, accessibility |
@@ -155,14 +159,17 @@ Activate any skill by typing its trigger in the chat:
 ### ⚡ Specialized & AI
 | Trigger | Skill | Description |
 |:---|:---|:---|
+| `/cursor` | **cursor-expert** | Cursor IDE specialization, `.mdc` project rules, configs |
 | `/fix` | **systematic-debugger** | Methodical 4-phase debugging (RCA) |
 | `/perf` | **performance-engineer** | Profiling, load testing, optimization |
 | `/ux` | **ux-ui-designer** | Design systems, user flow, prototyping |
 | `/agent` | **ai-agent-engineer** | Building LLM-based systems & MCP servers |
+| `/ml` | **machine-learning-engineer** | Deep Learning, model training, PyTorch, TF, datasets |
 | `/auto` | **automation-engineer** | n8n workflows, Zapier, scripting |
 | `/prompt` | **prompt-engineer** | Optimizing system prompts and LLM interactions |
 | `/mcp` | **mcp-builder** | Build MCP servers, tools, and resources |
 | `/pdf` | **document-generator** | Programmatic PDF/DOCX/XLSX generation |
+| `/game` | **game-developer** | Video game logic in Unity, Unreal, Godot or web |
 
 ### 🧠 Methodologies
 | Trigger | Skill | Description |
