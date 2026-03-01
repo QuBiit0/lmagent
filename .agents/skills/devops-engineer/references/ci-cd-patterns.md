@@ -39,7 +39,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: "3.5.0"
           cache: "pip"
       - run: pip install ruff mypy
       - run: ruff check .
@@ -66,7 +66,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: "3.5.0"
           cache: "pip"
       - run: pip install -r requirements-dev.txt
       - run: pytest --cov --cov-report=xml

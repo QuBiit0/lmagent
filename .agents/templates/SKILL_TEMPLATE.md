@@ -3,7 +3,7 @@ name: "[Nombre del Skill]"
 description: "[Descripción breve: qué hace este skill en una oración]"
 role: "[Rol profesional que desempeña]"
 type: agent_persona  # agent_persona | methodology
-version: 3.4.1
+version: "3.5.0"
 icon: "🔧"
 expertise:
   - "[Área de expertise 1]"
@@ -130,4 +130,4 @@ Antes de considerar una tarea terminada, verifica TODO:
 
 ---
 
-*Skill version: 3.4.1 | LMAgent Framework*
+*Skill version: "3.5.0" | LMAgent Framework*
