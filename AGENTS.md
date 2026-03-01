@@ -1,6 +1,6 @@
 # 🤖 LMAgent V3: The Engineering Constitution
 > **SINGLE SOURCE OF TRUTH**: Este archivo es tu Ley Suprema. Define tu identidad, tus capacidades y tus límites.
-> Framework: **LMAgent v3.4.1 (Total Awareness Standard)**
+> Framework: **LMAgent v3.4.1 (01/03/2026 - Total Awareness Standard)**
 
 ---
 
@@ -300,16 +300,27 @@ No marques una tarea como "Completada" hasta verificar:
 ## 🚀 9. CLI Reference (Comandos Disponibles)
 
 ```bash
-npx @qubiit/lmagent@latest          # Instalar framework (one-shot, sin instalación previa)
-npx lmagent install         # Instalar/actualizar todo en el proyecto actual
-npx lmagent init            # Alias de install
-npx lmagent update          # Alias de install
-npx lmagent doctor          # Verificar configuración del proyecto
-npx lmagent validate        # Validar integridad de todos los skills
-npx lmagent create-skill    # Crear un nuevo skill interactivamente
-npx lmagent tokens          # Analizar consumo de tokens del framework
-npx lmagent skills add owner/repo  # Instalar skill externo desde GitHub
-npx lmagent uninstall       # Eliminar archivos del framework del proyecto
+# Instaladores Zero-Friction (Recomendados)
+# Unix / macOS / Linux
+curl -fsSL https://raw.githubusercontent.com/QuBiit0/lmagent/main/scripts/install.sh | bash
+
+# Windows (PowerShell)
+iwr https://raw.githubusercontent.com/QuBiit0/lmagent/main/scripts/install.ps1 -useb | iex
+
+# Comandos Nativos NPM
+npx @qubiit/lmagent@latest          # Alternativa a curl/iwr
+npx lmagent install                 # Instalar/actualizar todo en el proyecto actual
+npx lmagent init                    # Alias de install
+npx lmagent update                  # Alias de install
+npx lmagent doctor                  # Verificar configuración del proyecto
+npx lmagent validate                # Validar integridad de todos los skills
+npx lmagent create-skill            # Crear un nuevo skill interactivamente
+npx lmagent tokens                  # Analizar consumo de tokens del framework
+npx lmagent uninstall               # Eliminar archivos del framework del proyecto
+
+# Extensión de Skills (Ecosistema Gentleman-Skills / Comunidad)
+npx lmagent skills add Gentleman-Programming/Gentleman-Skills/tree/main/curated/react-19  # Instalar skill de React 19
+npx lmagent skills add owner/repo  # Instalar cualquier skill externo desde GitHub
 ```
 
 ---

@@ -49,21 +49,27 @@ triggers:
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
+## 📊 Overview del Flujo de Delegación
+
 ```mermaid
-graph LR
-    A[📝 SPECIFY<br>/pm] -->|spec.yaml| B[🏗️ PLAN<br>/arch]
-    B -->|plan.yaml| C[📋 TASKS<br>/dev]
-    C -->|tasks.yaml| D[💻 IMPLEMENT<br>/dev]
-    D --> E[✅ VERIFY<br>/qa]
-    E -->|Pass| F[🚀 DONE]
-    E -->|Fail| D
+graph TD
+    User["Usuario"] -->|/sdd-new| Explore["1. Explorar"]
+    Explore -->|Pase a...| Propose["2. Proponer"]
+    Propose -->|User Approval| Spec["3. Especificar"]
+    Propose -->|User Approval| Design["4. Diseñar"]
+    Spec -->|Pase a...| Tasks["5. Tareas"]
+    Design -->|Pase a...| Tasks
+    Tasks -->|User Approval| Apply["6. Implementar"]
+    Apply -->|Pase a...| Verify["7. Verificar"]
+    Verify -->|Pase a...| Archive["8. Archivar"]
     
-    style A fill:#4CAF50,color:white
-    style B fill:#2196F3,color:white
-    style C fill:#FF9800,color:white
-    style D fill:#9C27B0,color:white
-    style E fill:#009688,color:white
-    style F fill:#4CAF50,color:white
+    style User fill:#4CAF50,color:white
+    style Explore fill:#2196F3,color:white
+    style Propose fill:#FF9800,color:white
+    style Spec fill:#9C27B0,color:white
+    style Design fill:#009688,color:white
+    style Tasks fill:#4CAF50,color:white
+    style Apply fill:#2196F3,color:white
 ```
 
 ---
@@ -448,15 +454,20 @@ metadata:
 
 ---
 
-## 🔧 Comandos Rápidos
+## 🔧 Comandos Rápidos SDD
 
-| Comando | Acción |
-|---------|--------|
-| `/spec new [name]` | Crear nueva spec |
-| `/spec plan [name]` | Crear plan desde spec |
-| `/spec tasks [name]` | Crear tasks desde plan |
-| `/spec status [name]` | Ver estado del feature |
-| `/spec validate [name]` | Validar implementación |
+| Comando | Meta / Sub-Agente a invocar |
+|---------|----------------------------|
+| `/sdd-init` | Detectar stack del proyecto y crear estructura inicial. |
+| `/sdd-explore <topic>` | Iniciar **Explorador**: Lee código, compara enfoques. No escribe código. |
+| `/sdd-new <name>` | Iniciar **Propositor**: Escribe `proposal.md` con la intención. |
+| `/sdd-ff <name>` | Fast-Forward: Encadena propuesta → spec → diseño → tasks |
+| `/sdd-spec` | Iniciar **Especificador**: Escribe historias de usuario y criterios de aceptación. |
+| `/sdd-design` | Iniciar **Diseñador**: Define la arquitectura (ADRs) requerida. |
+| `/sdd-tasks` | Iniciar **Planner**: Rompe la especificación en tareas atómicas (`tasks.yaml`). |
+| `/sdd-apply` | Iniciar **Implementador**: Toma las tasks y escribe el código fuente en lotes. |
+| `/sdd-verify` | Iniciar **Verificador**: Revisa el código contra los criterios de aceptación. |
+| `/sdd-archive` | Iniciar **Archivador**: Cierra el pipeline (commit final, documentación). |
 
 ---
 

@@ -8,6 +8,7 @@
 ███████╗██║ ╚═╝ ██║██║  ██║╚██████╔╝███████╗██║ ╚████║   ██║
 ╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═══╝   ╚═╝
                                                   by QuBit
+                                                01/03/2026
 ```
 
 ![Version](https://img.shields.io/badge/version-3.4.1-blue.svg) ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge) ![Agents](https://img.shields.io/badge/Agents-37_Supported-cyan?style=for-the-badge) ![Skills](https://img.shields.io/badge/Skills-31_Available-purple?style=for-the-badge)
@@ -19,11 +20,17 @@
 
 ## ⚡ One Command. Any Agent.
 
+**Unix / macOS / Linux:**
 ```bash
-npx @qubiit/lmagent@latest
+curl -fsSL https://raw.githubusercontent.com/QuBiit0/lmagent/main/scripts/install.sh | bash
 ```
 
-That's it. No global install required. LMAgent will:
+**Windows (PowerShell):**
+```powershell
+iwr https://raw.githubusercontent.com/QuBiit0/lmagent/main/scripts/install.ps1 -useb | iex
+```
+
+That's it. LMAgent will:
 1. **Auto-detect** which AI agents you have installed on your system
 2. **Pre-select** the detected agents for installation
 3. **Deploy** skills, rules, and workflows **strictly to your project directory** (Universal Brain: `.agents/`)
@@ -36,9 +43,17 @@ That's it. No global install required. LMAgent will:
 ## 🚀 Full Setup Guide
 
 ### One Command — Install Everything
+
+**Unix / macOS / Linux:**
 ```bash
-npx @qubiit/lmagent@latest
+curl -fsSL https://raw.githubusercontent.com/QuBiit0/lmagent/main/scripts/install.sh | bash
 ```
+
+**Windows (PowerShell):**
+```powershell
+iwr https://raw.githubusercontent.com/QuBiit0/lmagent/main/scripts/install.ps1 -useb | iex
+```
+
 This single command:
 1. Deploys `AGENTS.md` to your project root (the universal entry point)
 2. Auto-detects which AI agents you have in the project

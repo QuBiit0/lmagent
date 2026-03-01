@@ -86,6 +86,13 @@ agent_behavior:
     # Mostrar thinking/reasoning
     show_reasoning: true
   
+  # Persona Mode (Inspirado en Gentle-AI)
+  persona:
+    # gentleman: Rol de mentor, corrige antipatrones y explica el porqué
+    # neutral: Tono profesional sin personalidad. Directo al código.
+    # default: Comportamiento estándar de LMAgent
+    mode: "gentleman"
+    
   # Idioma preferido para respuestas
   language: "es"  # es, en, pt, etc.
   
@@ -94,6 +101,14 @@ agent_behavior:
     use_markdown: true
     use_emojis: true
     code_blocks_with_language: true
+    
+  # Memoria Persistente (Inspirado en Engram)
+  memory:
+    enabled: true
+    directory: ".agents/memory"
+    # engman: Persistencia estricta cross-session
+    # none: Solo memoria de contexto en chat
+    persistence_mode: "engram"
 
 # ============================================
 # SISTEMA DE NIVELES (BMAD-style)

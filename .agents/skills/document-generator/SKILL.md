@@ -34,7 +34,7 @@ allowed-tools:
   - list_dir
 metadata:
   author: QuBiit
-  version: "3.1.3"
+  version: "3.4.1"
   license: MIT
   framework: LMAgent
 ---
