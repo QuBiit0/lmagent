@@ -18,7 +18,7 @@
 
 ---
 
-## ⚡ One Command. Any Agent.
+## ⚡ Quick Start: One Command. Any Agent.
 
 **Unix / macOS / Linux:**
 ```bash
@@ -29,50 +29,44 @@ curl -fsSL https://raw.githubusercontent.com/QuBiit0/lmagent/main/scripts/instal
 ```powershell
 iwr https://raw.githubusercontent.com/QuBiit0/lmagent/main/scripts/install.ps1 -useb | iex
 ```
-> **Nota:** Si Windows bloquea la instalación por políticas de seguridad (ExecutionPolicy), ejecuta primero: `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser`
+> **Nota:** Si Windows bloquea la instalación por políticas de seguridad, ejecuta: `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser`
 
-That's it. LMAgent will:
-1. **Auto-detect** which AI agents you have installed on your system
-2. **Pre-select** the detected agents for installation
-3. **Deploy** skills, rules, and workflows **strictly to your project directory** (Universal Brain: `.agents/`)
-4. **Generate** the entry point file so each agent auto-invokes the framework
+This single command performs the entire setup:
+1. **Auto-detects** which AI agents you have installed (Cursor, Windsurf, Claude Code, etc.)
+2. **Deploys** all 38 skills, 11 rules, and 13 workflows strictly to `.agents/`
+3. **Generates** the correct entry point (like `CLAUDE.md`, `GEMINI.md`, or bridge files)
+4. **Links** everything to the Universal Brain (`AGENTS.md`)
 
-> **Requires Node.js ≥ 22**. Works on macOS, Linux, and Windows. **V3.5.0 features sparse-checkout GitHub downloads, centralized `.agents/` memory architecture, and a unified init command.**
+> **Requires Node.js ≥ 22**. Works on macOS, Linux, and Windows. 
+> V3.5.0 features sparse-checkout GitHub downloads, centralized `.agents/` memory architecture, and a unified init command.
 
 ---
 
-## 🚀 Full Setup Guide
+## �️ CLI Reference
 
-### One Command — Install Everything
+LMAgent installs a **global executable command** (`lmagent`). You do not need `npx` or local `npm` scripts to interact with the framework.
 
-**Unix / macOS / Linux:**
 ```bash
-curl -fsSL https://raw.githubusercontent.com/QuBiit0/lmagent/main/scripts/install.sh | bash
-```
+# Core Operations
+lmagent init         # Initialize project and install framework (auto-detects agents)
+lmagent install      # Alias for init
+lmagent update       # Alias for init
+lmagent uninstall    # Remove all LMAgent files from project
+lmagent uninstall --all  # Also remove root entry points (CLAUDE.md, etc.)
 
-**Windows (PowerShell):**
-```powershell
-iwr https://raw.githubusercontent.com/QuBiit0/lmagent/main/scripts/install.ps1 -useb | iex
-```
-> **Nota:** Si Windows bloquea la instalación por políticas de seguridad (ExecutionPolicy), ejecuta primero: `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser`
+# Diagnostics
+lmagent doctor       # Verify project configuration and check agent health
+lmagent validate     # Validate integrity of all skills (frontmatter parsing)
+lmagent tokens       # Analyze framework token consumption
 
-This single command:
-1. Deploys `AGENTS.md` to your project root (the universal entry point)
-2. Auto-detects which AI agents you have in the project
-3. Installs all skills, rules, workflows, memory, config, and docs to `.agents/`
-4. Generates lightweight bridge files for each detected agent
-5. Deploys agent-specific config files (CLAUDE.md, GEMINI.md) only when needed
-
-> `lmagent init`, `lmagent install`, and `lmagent update` all run the same unified flow.
-
-### Verify
-```bash
-lmagent doctor
+# Skills Management
+lmagent create-skill             # Create a new skill interactively
+lmagent skills add owner/repo    # Install external skill from GitHub (LMAgent format required)
 ```
 
 ---
 
-## 🏛️ Architecture
+## 🏛️ Architecture & Auto-Invocation
 
 LMAgent uses a **Hub & Spoke** model: one universal brain (`.agents/`) that feeds all agents.
 
@@ -87,9 +81,9 @@ Your Project/
 │   ├── config/                 # Framework settings
 │   └── docs/                   # Extended documentation
 │
-├── AGENTS.md                   # ← UNIVERSAL ENTRY POINT (read by all agents)
-├── CLAUDE.md                   # ← Only if Claude Code is detected
-├── GEMINI.md                   # ← Only if Gemini CLI / Antigravity is detected
+├── AGENTS.md                   # ← UNIVERSAL ENTRY POINT (read by all agents via bridging)
+├── CLAUDE.md                   # ← Target auto-generated if Claude Code is detected
+├── GEMINI.md                   # ← Target auto-generated if Gemini CLI / Antigravity is detected
 │
 ├── .cursor/rules/00-lmagent.mdc  # ← Lightweight bridge (points to AGENTS.md)
 ├── .windsurf/rules/lmagent.md    # ← Lightweight bridge (points to AGENTS.md)
@@ -97,8 +91,7 @@ Your Project/
 ```
 
 ### How auto-invocation works
-
-Each agent reads a specific file when it starts. LMAgent generates that file automatically:
+Each agent natively reads a specific file when it starts. LMAgent generates that file dynamically during `lmagent init`:
 
 | Agent | Entry Point Generated |
 |:---|:---|
@@ -115,15 +108,15 @@ Each agent reads a specific file when it starts. LMAgent generates that file aut
 | Junie | `.junie/guidelines.md` |
 | OpenHands | `.openhands/microagents/repo.md` |
 | Codex CLI | `AGENTS.md` (native) |
-| All others | `00-lmagent.md` in their `rulesDir` |
+| *24 additional agents* | `00-lmagent.md` bridge in their specific `rulesDir` |
 
-All entry points point to `AGENTS.md` — the single source of truth.
+**All entry points strictly point back to `AGENTS.md` — creating a single source of truth across your entire ecosystem.**
 
 ---
 
 ## 🧩 Skills Catalog (38 Skills)
 
-Activate any skill by typing its trigger in the chat:
+Activate any skill by simply typing its trigger in the chat:
 
 ### 🎯 Management & Architecture
 | Trigger | Skill | Description |
@@ -226,28 +219,6 @@ Activate any skill by typing its trigger in the chat:
 
 ---
 
-## 🛠️ CLI Reference
-
-```bash
-# Core (all three run the same unified flow)
-lmagent init         # Inicializar proyecto e instalar framework
-lmagent install      # Alias for init
-lmagent update       # Alias for init
-lmagent uninstall    # Remove all LMAgent files from project
-lmagent uninstall --all  # Also remove root entry points (CLAUDE.md, etc.)
-
-# Diagnostics
-lmagent doctor       # Verify project configuration
-lmagent validate     # Validate integrity of all skills
-lmagent tokens       # Analyze framework token consumption
-
-# Skills Management
-lmagent create-skill             # Create a new skill interactively
-lmagent skills add owner/repo    # Install external skill from GitHub
-```
-
----
-
 ## 🛠️ Creating Custom Skills
 
 ```bash
@@ -270,15 +241,21 @@ Skills follow the standard structure:
 
 ---
 
-## 👨‍💻 Developer Setup
+## 👨‍💻 Developer Setup (For Contributors)
 
-If you are contributing to the framework:
+If you are contributing to the core LMAgent framework:
 
 ```bash
 git clone https://github.com/QuBiit0/lmagent.git
 cd lmagent
+
+# Standard Node.js install
 npm install
+
+# Link the global executable to your local dev folder
 npm link
+
+# Test local changes globally
 lmagent doctor
 ```
 
