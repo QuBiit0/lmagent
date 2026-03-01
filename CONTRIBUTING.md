@@ -51,7 +51,7 @@ lmagent/
 │
 ├── .agents/
 │   ├── rules/                  # 11 reglas de comportamiento (.md)
-│   ├── skills/                 # 31 skills especializados (SKILL.md)
+│   ├── skills/                 # 38 skills especializados (SKILL.md)
 │   ├── workflows/              # 13 SOPs (.md)
 │   ├── memory/                 # 5 archivos de contexto persistente
 │   ├── templates/

@@ -80,7 +80,7 @@ LMAgent uses a **Hub & Spoke** model: one universal brain (`.agents/`) that feed
 Your Project/
 ├── .agents/                    # ← UNIVERSAL BRAIN (source of truth)
 │   ├── rules/                  # 11 behavioral rules
-│   ├── skills/                 # 31 specialized roles
+│   ├── skills/                 # 38 specialized roles
 │   ├── workflows/              # 13 SOPs (Standard Operating Procedures)
 │   ├── memory/                 # 5 persistent context files
 │   ├── templates/              # Project scaffolds & agent config templates
