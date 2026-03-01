@@ -15,7 +15,7 @@ function walkDir(dir, callback) {
 }
 
 function updateFileContent(filepath) {
-    if (!filepath.endsWith('.md') && !filepath.endsWith('.yaml') && !filepath.endsWith('.yml')) return;
+    if (!filepath.endsWith('.md') && !filepath.endsWith('.yaml') && !filepath.endsWith('.yml') && !filepath.endsWith('.sh') && !filepath.endsWith('.ps1')) return;
 
     let content = fs.readFileSync(filepath, 'utf8');
     let originalContent = content;
@@ -35,8 +35,8 @@ function updateFileContent(filepath) {
         modified = true;
     }
 
-    // LMAgent v3.X references en texto markdown
-    const lmagentRefRegex = /LMAgent v3\.\d+\.\d+/gi;
+    // LMAgent [vV]3.X references en texto markdown / scripts
+    const lmagentRefRegex = /LMAgent\s+[vV]\d+\.\d+(?:\.\d+)?\+?/gi;
     if (lmagentRefRegex.test(content)) {
         content = content.replace(lmagentRefRegex, `LMAgent v${NEW_VERSION}`);
         modified = true;

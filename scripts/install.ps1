@@ -5,6 +5,7 @@
     Instala de forma global el paquete @qubiit/lmagent y prepara el entorno actual para su uso.
     Compatible con ejecución remota vía Invoke-WebRequest (iwr).
 #>
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
 $ErrorActionPreference = "Stop"
 
@@ -88,6 +89,6 @@ if ($response -match "^n$|^no$") {
 # ==========================================
 # Cierre
 # ==========================================
-Write-Host "`n🎉 LMAgent V3.4+ está listo para trabajar!" -ForegroundColor Cyan
+Write-Host "`n🎉 LMAgent v3.5.0 está listo para trabajar!" -ForegroundColor Cyan
 Write-Host "Abre cualquier agente soportado en este proyecto para comenzar a delegar."
 Write-Host "Para ver la ayuda, escribe: lmagent --help`n"

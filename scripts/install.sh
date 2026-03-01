@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# LMAgent v3.4+ Universal Installer para MacOS / Linux / Git Bash
+# LMAgent v3.5.0 Universal Installer para MacOS / Linux / Git Bash
 
 set -e
 
@@ -72,18 +72,23 @@ echo -e "\n${CYAN}[3/3] Inicializando entorno en el directorio actual...${NC}"
 
 # Preguntamos si quiere inicializar el repo actual
 echo -e "${YELLOW}¿Deseas inicializar LMAgent en el directorio actual ($(pwd))? [Y/n]${NC} \c"
-read -r response
-if [[ "$response" =~ ^([nN][oO]|[nN])$ ]]; then
-    echo -e "${CYAN}Saltando inicialización. Puedes hacerlo luego ejecutando: ${BOLD}lmagent init${NC}"
+if read -r response </dev/tty; then
+    if [[ "$response" =~ ^([nN][oO]|[nN])$ ]]; then
+        echo -e "${CYAN}Saltando inicialización. Puedes hacerlo luego ejecutando: ${BOLD}lmagent init${NC}"
+    else
+        echo -e "${BLUE}Ejecutando lmagent init...${NC}"
+        lmagent init
+        echo -e "${GREEN}✓ Proyecto inicializado exitosamente.${NC}"
+    fi
 else
-    echo -e "${BLUE}Ejecutando lmagent init...${NC}"
-    lmagent init
-    echo -e "${GREEN}✓ Proyecto inicializado exitosamente.${NC}"
+    # Fallback silencioso si no hay tty disponible
+    echo -e "\n${CYAN}Terminal no interactivo detectado. Saltando inicialización automatica."
+    echo -e "Puedes hacerlo luego ejecutando: ${BOLD}lmagent init${NC}"
 fi
 
 # ==========================================
 # Cierre
 # ==========================================
-echo -e "\n${CYAN}${BOLD}🎉 ¡LMAgent V3.4+ está listo para trabajar!${NC}"
+echo -e "\n${CYAN}${BOLD}🎉 ¡LMAgent v3.5.0 está listo para trabajar!${NC}"
 echo -e "Abre cualquier agente soportado (Cursor, Claude, Windsurf, Roo, etc) en este proyecto."
 echo -e "Para ver los comandos disponibles, escribe: ${BOLD}lmagent --help${NC}\n"

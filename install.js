@@ -386,6 +386,12 @@ program.command('uninstall')
 
         const projectRoot = process.cwd();
 
+        // Safety check crucial: evitar que el framework se auto-elimine si se corre en su propio repo fuente
+        if (projectRoot === __dirname) {
+            console.log(chalk.red('❌ Advertencia de Seguridad: Estás intentando ejecutar uninstall dentro del repositorio fuente de LMAgent. Esta acción destruiría el código fuente. Desinstalación bloqueada.'));
+            return;
+        }
+
         // Detectar qué agentes están instalados o dejaron rastro en el proyecto
         // Al desinstalar, también incluimos 'generic' para volar .agents/
         const installedIdes = IDE_CONFIGS.filter(ide => {
@@ -470,11 +476,29 @@ program.command('uninstall')
                 }
             }
 
-            // Archivos de configuración específicos del agente (markerFile si es un archivo)
+            // Archivos de configuración específicos del agente (markerFile y configFile)
             if (ide.markerFile && ide.markerFile.includes('.') && fs.existsSync(path.join(projectRoot, ide.markerFile))) {
                 const markerStat = fs.statSync(path.join(projectRoot, ide.markerFile));
                 if (markerStat.isFile()) {
                     toRemove.push({ path: path.join(projectRoot, ide.markerFile), type: 'file', label: ide.markerFile });
+                }
+            }
+
+            if (ide.configFile && fs.existsSync(path.join(projectRoot, ide.configFile))) {
+                const configStat = fs.statSync(path.join(projectRoot, ide.configFile));
+                if (configStat.isFile()) {
+                    toRemove.push({ path: path.join(projectRoot, ide.configFile), type: 'file', label: ide.configFile });
+
+                    // Cleanup dir si el archivo estaba dentro de una carpeta y quedó vacía (ej. .github)
+                    const configDir = path.dirname(path.join(projectRoot, ide.configFile));
+                    if (configDir !== projectRoot && fs.existsSync(configDir)) {
+                        try {
+                            const dirContent = fs.readdirSync(configDir);
+                            if (dirContent.length === 1 && dirContent[0] === path.basename(ide.configFile)) {
+                                toRemove.push({ path: configDir, type: 'dir', label: path.dirname(ide.configFile) + '/' });
+                            }
+                        } catch (e) { }
+                    }
                 }
             }
 
