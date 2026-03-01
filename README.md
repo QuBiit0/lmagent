@@ -245,23 +245,7 @@ Skills follow the standard structure:
 We welcome contributions to expand the **Universal Agent Brain**. 
 You can submit Pull Requests directly via GitHub to add new Skills, Rules, or IDE support. Check out `CONTRIBUTING.md` for guidelines.
 
-### Core CLI Development
 
-If you are contributing to the underlying Node.js runtime (`install.js` and `/scripts`), you will need a local development environment:
-
-```bash
-git clone https://github.com/QuBiit0/lmagent.git
-cd lmagent
-
-# Standard Node.js install
-npm install
-
-# Link the global executable to your local dev folder
-npm link
-
-# Test local changes globally
-lmagent doctor
-```
 
 ---
 
