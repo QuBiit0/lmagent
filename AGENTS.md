@@ -53,6 +53,7 @@ Ubicación: `.agents/rules/`
 Ubicación: `.agents/docs/`
 | Archivo | Propósito |
 |:---|:---|
+| `architecture-reference.md` | **Architecture Guide**. Explicación detallada de todos los módulos y comportamiento del Framework. |
 | `commands.md` | **CLI Reference**. Lista completa de comandos `lmagent`. |
 | `getting-started.md` | Guía de inicio rápido para nuevos proyectos. |
 | `how-to-start.md` | Tutorial paso a paso para activar el framework. |
@@ -89,10 +90,10 @@ Ubicación: `.agents/memory/`
 
 | Archivo | Propósito |
 |:---|:---|
-| `01-project.md` | Descripción del proyecto, objetivos y alcance. |
-| `02-tech-updates.md` | Registro de cambios tecnológicos y decisiones técnicas. |
-| `03-learnings.md` | Lecciones aprendidas y errores a evitar. |
-| `04-active-context.md` | **Contexto activo actual**. ¿En qué estamos trabajando? |
+| `01-global.md` | Descripción del proyecto, objetivos y alcance general. |
+| `02-active-context.md` | **Contexto activo actual**. ¿En qué estamos trabajando? |
+| `03-tech-stack.md` | Registro de cambios tecnológicos, dependencias y stack. |
+| `04-decision-log.md` | Lecciones aprendidas, errores a evitar y ADRs (Decision Records). |
 | `05-product-state.md` | Estado actual del producto. Features completadas y pendientes. |
 
 ### 🛠️ 3.6 Scripts (Herramientas de Utilidad)
@@ -171,13 +172,17 @@ Ubicación Universal: `.agents/skills/[nombre_skill]/SKILL.md`
 | `/dev` | **backend-engineer** | `.agents/skills/backend-engineer/` |
 | `/front` | **frontend-engineer** | `.agents/skills/frontend-engineer/` |
 | `/mobile` | **mobile-engineer** | `.agents/skills/mobile-engineer/` |
+| `/native` | **native-mobile-expert** | `.agents/skills/native-mobile-expert/` |
 | `/data` | **data-engineer** | `.agents/skills/data-engineer/` |
 | `/devops` | **devops-engineer** | `.agents/skills/devops-engineer/` |
+| `/cloud` | **cloud-architect** | `.agents/skills/cloud-architect/` |
 | `/sec` | **security-analyst** | `.agents/skills/security-analyst/` |
+| `/hack` | **pentester** | `.agents/skills/pentester/` |
 | `/test` | **qa-engineer** | `.agents/skills/qa-engineer/` |
 | `/review` | **code-reviewer** | `.agents/skills/code-reviewer/` |
 | `/api` | **api-designer** | `.agents/skills/api-designer/` |
 | `/supa` | **supabase-expert** | `.agents/skills/supabase-expert/` |
+| `/web3` | **blockchain-engineer** | `.agents/skills/blockchain-engineer/` |
 | `/git` | **git-workflow** | `.agents/skills/git-workflow/` |
 | `/web` | **browser-agent** | `.agents/skills/browser-agent/` |
 | `/seo` | **seo-auditor** | `.agents/skills/seo-auditor/` |
@@ -190,10 +195,12 @@ Ubicación Universal: `.agents/skills/[nombre_skill]/SKILL.md`
 | `/perf` | **performance-engineer** | `.agents/skills/performance-engineer/` |
 | `/ux` | **ux-ui-designer** | `.agents/skills/ux-ui-designer/` |
 | `/agent` | **ai-agent-engineer** | `.agents/skills/ai-agent-engineer/` |
+| `/ml` | **machine-learning-engineer** | `.agents/skills/machine-learning-engineer/` |
 | `/auto` | **automation-engineer** | `.agents/skills/automation-engineer/` |
 | `/prompt` | **prompt-engineer** | `.agents/skills/prompt-engineer/` |
 | `/mcp` | **mcp-builder** | `.agents/skills/mcp-builder/` |
 | `/pdf` | **document-generator** | `.agents/skills/document-generator/` |
+| `/game` | **game-developer** | `.agents/skills/game-developer/` |
 
 ### 🧠 Methodologies
 | Trigger | Skill | Directorio |
@@ -309,9 +316,7 @@ iwr https://raw.githubusercontent.com/QuBiit0/lmagent/main/scripts/install.ps1 -
 
 # Comandos Nativos NPM
 npx @qubiit/lmagent@latest          # Alternativa a curl/iwr
-npx lmagent install                 # Instalar/actualizar todo en el proyecto actual
-npx lmagent init                    # Alias de install
-npx lmagent update                  # Alias de install
+npx lmagent init                    # Inicializar proyecto e instalar framework (reemplaza a install/update)
 npx lmagent doctor                  # Verificar configuración del proyecto
 npx lmagent validate                # Validar integridad de todos los skills
 npx lmagent create-skill            # Crear un nuevo skill interactivamente

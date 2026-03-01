@@ -8,6 +8,7 @@
 
 ## 📚 Documentation (Manuals)
 - [Getting Started](getting-started.md)
+- [Architecture & Modules Reference](architecture-reference.md)
 - [Commands Reference](commands.md)
 - [Usage Guide](usage-guide.md)
 - [Customization](customization-guide.md)
