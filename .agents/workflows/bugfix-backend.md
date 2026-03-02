@@ -230,6 +230,8 @@ pytest --cov=app --cov-fail-under=80
 # Verificar que no hay regresiones
 ```
 
+> **🔄 REGLA DE SELF-HEALING (Rule 01)**: Si la ejecución de `pytest` o el linting (`ruff`) arrojan errores, el LLM **DEBE iterar localmente** leyendo los tracebacks y corrigiendo el código fuente. No debe detener la ejecución ni pedir asistencia humana inmediatamente. Debe intentar arreglar los errores colaterales producto de su Fix hasta lograr el Green State.
+
 ---
 
 ## Paso 6: Verificar Fix

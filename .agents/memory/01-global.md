@@ -6,8 +6,9 @@ Construir y mantener el estándar definitivo para orquestación e interacción u
 
 ## 📦 Core Value Proposition
 - Framework "Zero-Friction" que permite a cualquier subagente o IDE (Cursor, Windsurf, Claude, Gemini, CLI) adoptar el mismo catálogo de reglas y skills instantáneamente.
-- Eliminar la fragmentación de prompts y reglas diseminadas entre múltiples IDEs unificando el "Source of Truth" en `.agents/`.
+- Eliminar la fragmentación de prompts y reglas diseminadas unificando el "Source of Truth" en `.agents/`.
 - Potenciar automatizaciones, MCPs y workflows declarativos modulares (BMAD/Spec-Driven).
+- **Long-Term Memory Escalable**: El sistema obliga a los agentes a auto-comprimir su contexto (`sliding windows`) en `.agents/memory/` para evadir los límites de tokens, sentando la base estructurada para un futuro *Graph RAG* nativo.
 
 ## 👥 Key Stakeholders / Users
 - **Primary:** Ingenieros de Software y Tech Leads que utilizan múltiples IAs (ej: Cursor + Claude + Terminal) sobre un mismo repositorio.

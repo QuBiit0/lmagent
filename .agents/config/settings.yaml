@@ -361,7 +361,7 @@ security:
     - ".git/**"
     - "*.pyc"
   
-  # Validación de código antes de ejecutar
+  # Validación de código antes de ejecutar (Anti Prompt-Injection & RCE)
   code_validation:
     enabled: true
     block_dangerous_patterns:
@@ -369,6 +369,9 @@ security:
       - "DROP DATABASE"
       - "eval("
       - "exec("
+      - "os.system("
+    # Sandbox explícito para herramientas complejas
+    enforce_readonly_tools_in_prod: true
   
   # Rate limiting
   rate_limiting:

@@ -236,14 +236,17 @@ parallel_execution:
 cp templates/tasks.yaml specs/[feature-name]/tasks.yaml
 ```
 
-### Reglas para Tasks
+### Reglas para Tasks (Chain of Thought Obligatoria)
 
 | Regla | Descripción |
 |-------|-------------|
 | **Atómica** | Una task = una acción completa |
 | **Estimable** | Máximo 4 horas por task |
-| **Testeable** | Cada task tiene criterio de aceptación |
+| **Testeable** | Cada task tiene criterio de aceptación estricto |
 | **Independiente** | Mínimas dependencias posibles |
+| **Self-Healing** | La task debe definir comandos exactos de validación. |
+
+> **🧠 ReAct / Plan-and-Solve (Rule 08)**: Al quebrar la especificación en tareas, el agente `orchestrator` debe escribir explícitamente un 'Thinking Process' o 'Reasoning' de por qué dividió la tarea de tal manera antes de emitir el YAML.
 
 ### Estructura de Task
 
