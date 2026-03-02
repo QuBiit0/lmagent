@@ -99,6 +99,17 @@ Este documento define el flujo de trabajo estándar que los agentes deben seguir
 
 ---
 
+## 🔄 Dinámica Multi-Agente y Self-Healing
+
+1. **Traspaso de Contexto**: Al cambiar de fase (ej. de Planificación `orchestrator` a Implementación `backend-engineer`, y luego a `qa-engineer`), el agente DEBE documentar su progreso en `task.md` y leer los artefactos producidos (ej. `implementation_plan.md`) en el paso anterior. Ningún agente parte "en blanco".
+2. **Self-Healing Pipelines**: Si una prueba o comando (ej. `pytest`, `eslint`, o un test suite) falla en la fase de validación, el agente debe:
+   - Leer el Output/Log del error en consola.
+   - Formular una corrección local.
+   - Aplicar el fix de forma autónoma (volver al Paso 4) sin detenerse a preguntar al humano cada vez que ocurra un error de tipeo o linting, a menos que afecte arquitectura core.
+   - Repetir hasta obtener luz verde de las herramientas (Green State).
+
+---
+
 ## Paso 1: ENTENDER
 
 ### Siempre leer primero:

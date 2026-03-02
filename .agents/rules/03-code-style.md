@@ -520,7 +520,20 @@ function errorHandler(
 
 ---
 
-## Reglas Comunes
+## Reglas Comunes y Arquitectónicas
+
+### 🏛️ Clean Architecture (Ports & Adapters)
+- **Separación de Responsabilidades**: Aísla la capa de dominio (entidades puras y casos de uso) de los frameworks (FastAPI/Express) y del almacenamiento (SQLModel/Prisma).
+- **Inyección de Dependencias**: No instancies servicios concretos dentro de controladores o routers. Pasa las dependencias (por ej., repositorios, clientes HTTP) a través de constructores para facilitar el Mocking y Testing aisaldo.
+- **Interfaces Primero**: Toda comunicación con servicios externos (APIs, pasarelas de pago, correos) o con la base de datos, debe hacerse utilizando contratos explícitos (Interfaces o Clases Abstractas) y nunca dependencias en duro.
+
+### 🧠 Gestión de Memoria (IA & Data-Intensive Apps)
+Especialmente vital para aplicaciones construidas que procesan logs inmensos, RAG, o invocan LLMs locales:
+- **Streaming**: Tratar streams o WebSockets (Server-Sent Events) en lugar de cargar payloads textuales masivos íntegramente a memoria.
+- **Garbage Collection Explicitable**: En Python/Node, libera memorias ancladas (listas gigantes de vectores o context windows) explícitamente (`del obj`, o limpiando arrays temporales pre-asignados) al término del request HTTP.
+- **Asincronía Estricta**: Nunca uses I/O síncrono (`requests.get`, `fs.readFileSync`) dentro del event loop principal. Bloquean a otros workers provocando timeout cascades en aplicaciones Cloud Run/Lambdas.
+
+---
 
 ### Comentarios
 

@@ -8,14 +8,22 @@
 2. **Determinismo**: `temperature=0` para llamadas a funciones (Function Calling).
 3. **Traza de Ejecución**: Todo paso del agente debe ser logueado (Thinking Process).
 
+### 🧠 Arquitecturas Cognitivas Recomendadas
+- **ReAct (Reason + Act)**: Bucle de pensar, elegir herramienta, observar resultado original, iterar.
+- **Plan-and-Solve**: Para tareas complejas en LMAgent (Level 3+), divide en sub-tareas secuenciales `[ ]` en un archivo Markdown antes de ejecutar.
+- **Reflection / Self-Healing**: El agente debe autoevaluar su resultado (ej. con un linter) antes de entregarlo al usuario.
+
 ## 🛠️ Tool Definition Standards (MCP)
 - **JSON Schema**: Usar esquemas estrictos (`strict: true`).
 - **Descripciones**: Deben ser exhaustivas. El LLM "lee" la descripción para saber cuándo usar la tool.
 - **Error Handling**: Las tools nunca deben crashear el proceso. Deben retornar errores legibles para que el agente se corrija.
 
 ## 🧠 Memory patterns
-- **Short-term**: Context window (Chat history).
-- **Long-term**: Vector DB (RAG) o Archivos Markdown (`.agents/memory/`).
+- **Short-term**: Context window (Chat history). Implementar sliding windows o resúmenes periódicos para no romper el límite de tokens.
+- **Long-term**: 
+  - *Vector Search (RAG)* para similitud semántica.
+  - *Graph RAG* para relaciones complejas entre entidades de un repositorio o base de conocimiento.
+  - Generación de *Resúmenes / Artefactos Markdown* locales (usados nativamente por LMAgent en `.agents/memory/`).
 
 ## 🧪 Evaluation (Evals)
 Todo agente debe tener al menos 1 test de evaluación:

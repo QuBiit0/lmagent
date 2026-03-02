@@ -36,11 +36,11 @@ Este archivo define la identidad, propósito y reglas fundamentales de **LMAgent
 | **Claude Code** | Lectura de `SKILL.md` | El agente accede al directorio `skills/` |
 | **Otros IDEs** | Según configuración del IDE | Ver documentación del IDE |
 
-> **En Antigravity**: Los triggers como `/dev` o `/pm` **no son comandos ejecutables**. Son convenciones para que el agente identifique qué skill activar. El agente debe:
-> 1. Detectar la naturaleza de la tarea (ej: "crear endpoint" → backend)
-> 2. Leer el `SKILL.md` completo del skill relevante
-> 3. Adoptar el rol, principios y patrones descritos
-> 4. Seguir la "Definition of Done" del skill
+> **En Agentes Autónomos (Antigravity/OpenHands/Cline)**: Los triggers como `/dev` o `/pm` **no son comandos ejecutables**. Son convenciones para trazar semántica. El agente es inherentemente proactivo y debe autogestionarse:
+> 1. Leer siempre `AGENTS.md` como paso fundacional.
+> 2. Detectar y clasificar autónomamente la tarea y su Nivel (0-4).
+> 3. Cargar el contexto del `SKILL.md` en memoria y asumir estrictamente el rol técnico, arquitectónico o de producto sugerido.
+> 4. Operar persiguiendo la "Definition of Done" y resolver errores menores de forma autónoma (self-healing) sin requerir micro-management humano.
 
 ---
 

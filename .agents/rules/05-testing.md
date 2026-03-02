@@ -235,6 +235,19 @@ async def test_async_function():
 
 ---
 
+## 🌐 End-to-End (E2E) & UI Testing (Playwright)
+Para flujos críticos de frontend, se requiere estricta validación visual interactiva:
+- **Playwright > Selenium/Cypress**: Usa Playwright para soporte multi-browser y aserción de estados de red nativa.
+- **Evita XPath/CSS frágiles**: Basa tus localizadores en accesibilidad (`getByRole`, `getByText`, `getByTestId`).
+- **Estado Inicial Crítico**: Los tests E2E deben ser idempotentes. Usa API requests (no la UI) para sembrar la base de datos (seeding) localmente antes de iniciar el test visual.
+
+## 🤝 Contract Testing (Microservicios)
+Si diseñas APIs consumidas por otros servicios o clientes externos:
+- Utiliza **Pact** u OpenAPI Schema Validators para asegurar que un campo no mute inadvertidamente (Breaking Changes).
+- Los "Consumer-Driven Contracts" aseguran que el backend no cambie un esquema JSON sin que el Frontend se entere.
+
+---
+
 ## Testing Exceptions
 
 ```python

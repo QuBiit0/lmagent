@@ -160,6 +160,12 @@ import DOMPurify from 'dompurify';
 <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(html) }} />
 ```
 
+### 🤖 LLM & Prompt Injection Prevention (OWASP Top 10 para LLMs)
+Cuando construyas integraciones con LLMs, **NUNCA** confíes en el input del usuario:
+1. **Delimitación Transparente**: Usa delimitadores robustos (`"""`, `xml tags`) para separar las instrucciones del usuario del System Prompt.
+2. **Post-Prompting**: Coloca las restricciones más críticas al *final* del prompt, ya que los LLMs prestan más atención (Recency bias) al final.
+3. **Sandboxing de Tools**: Si un agente tiene una herramienta de `run_bash_command` o `execute_sql`, la conexión DEBE operar bajo un rol de Read-Only o en un contenedor Docker aislado.
+
 ---
 
 ## Secrets Management
