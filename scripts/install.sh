@@ -29,7 +29,7 @@ echo ""
 # ==========================================
 # Validaciones
 # ==========================================
-echo -e "${CYAN}[1/3] Verificando dependencias locales...${NC}"
+echo -e "${CYAN}[1/4] Verificando dependencias locales...${NC}"
 
 if ! command -v node &> /dev/null; then
     echo -e "${RED}❌ Node.js no está instalado.${NC}"
@@ -37,9 +37,9 @@ if ! command -v node &> /dev/null; then
     exit 1
 fi
 
-if [ ! -f "install.js" ]; then
-    echo -e "${RED}❌ Error: No se encuentra 'install.js' en la raíz.${NC}"
-    echo -e "${YELLOW}Asegúrate de ejecutar este script desde la carpeta del proyecto: ./scripts/install.sh${NC}"
+if ! command -v git &> /dev/null; then
+    echo -e "${RED}❌ Git no está instalado.${NC}"
+    echo -e "${YELLOW}Por favor instala Git desde https://git-scm.com/ y vuelve a intentar.${NC}"
     exit 1
 fi
 
@@ -47,9 +47,27 @@ NODE_VERSION=$(node -v | cut -d 'v' -f 2)
 echo -e "${GREEN}✓ Node.js detectado (v${NODE_VERSION})${NC}"
 
 # ==========================================
+# Obtener LMAgent
+# ==========================================
+INSTALL_DIR="$HOME/.lmagent"
+ORIGINAL_PWD="$(pwd)"
+
+echo -e "\n${CYAN}[2/4] Obteniendo LMAgent desde GitHub ($INSTALL_DIR)...${NC}"
+
+if [ -d "$INSTALL_DIR" ]; then
+    echo -e "Directorio encontrado. Actualizando repositorio..."
+    cd "$INSTALL_DIR"
+    git pull origin main --quiet
+    cd "$ORIGINAL_PWD"
+else
+    echo -e "Clonando repositorio..."
+    git clone https://github.com/QuBiit0/lmagent.git "$INSTALL_DIR" --depth 1 --quiet
+fi
+
+# ==========================================
 # Vinculación del Framework (Symlink Local)
 # ==========================================
-echo -e "\n${CYAN}[2/2] Vinculando LMAgent globalmente (Symlink)...${NC}"
+echo -e "\n${CYAN}[3/4] Vinculando LMAgent globalmente (Symlink)...${NC}"
 
 TARGET_DIR="/usr/local/bin"
 if [ ! -d "$TARGET_DIR" ] || [ ! -w "$TARGET_DIR" ]; then
@@ -57,7 +75,7 @@ if [ ! -d "$TARGET_DIR" ] || [ ! -w "$TARGET_DIR" ]; then
     mkdir -p "$TARGET_DIR"
 fi
 
-INSTALL_JS_PATH="$(pwd)/install.js"
+INSTALL_JS_PATH="$INSTALL_DIR/install.js"
 
 # Crear wrapper dinámico
 WRAPPER_PATH="$TARGET_DIR/lmagent"
@@ -78,17 +96,16 @@ echo -e "${GREEN}✓ LMAgent instalado con éxito.${NC}"
 # ==========================================
 # Inicialización de Proyecto Actual
 # ==========================================
-echo -e "\n${CYAN}[3/3] Inicializando entorno en el directorio actual...${NC}"
+echo -e "\n${CYAN}[4/4] Inicializando entorno en el directorio actual...${NC}"
 
 # Preguntamos si quiere inicializar el repo actual
-echo -e "${YELLOW}¿Deseas inicializar LMAgent en el directorio actual ($(pwd))? [Y/n]${NC} \c"
+echo -e "${YELLOW}¿Deseas inicializar LMAgent en el directorio actual ($ORIGINAL_PWD)? [Y/n]${NC} \c"
 if read -r response </dev/tty; then
     if [[ "$response" =~ ^([nN][oO]|[nN])$ ]]; then
         echo -e "${CYAN}Saltando inicialización. Puedes hacerlo luego ejecutando: ${BOLD}lmagent init${NC}"
     else
         echo -e "${BLUE}Ejecutando lmagent init...${NC}"
-        lmagent init
-        echo -e "${GREEN}✓ Proyecto inicializado exitosamente.${NC}"
+        "$WRAPPER_PATH" init
     fi
 else
     # Fallback silencioso si no hay tty disponible
@@ -100,5 +117,5 @@ fi
 # Cierre
 # ==========================================
 echo -e "\n${CYAN}${BOLD}🎉 ¡LMAgent v3.6.0 está listo para trabajar!${NC}"
-echo -e "Abre cualquier agente soportado (Cursor, Claude, Windsurf, Roo, etc) en este proyecto."
+echo -e "Abre cualquier agente soportado para comenzar a delegar."
 echo -e "Para ver los comandos disponibles, escribe: ${BOLD}lmagent --help${NC}\n"
