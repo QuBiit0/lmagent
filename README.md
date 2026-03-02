@@ -24,6 +24,13 @@ LMAgent installs a **global executable command** (`lmagent`). You do not need `n
 Choose your operating system:
 
 ### 🍏🍎 Unix / macOS / Linux (Bash)
+
+**Direct Installation (Recommended):**
+```bash
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/QuBiit0/lmagent/main/scripts/install.sh)"
+```
+
+**Alternative (Manual Clone):**
 ```bash
 git clone https://github.com/QuBiit0/lmagent.git
 cd lmagent
@@ -31,6 +38,13 @@ cd lmagent
 ```
 
 ### 🪟 Windows (PowerShell)
+
+**Direct Installation (Recommended):**
+```powershell
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/QuBiit0/lmagent/main/scripts/install.ps1" -OutFile "$env:TEMP\install.ps1"; & "$env:TEMP\install.ps1"
+```
+
+**Alternative (Manual Clone):**
 ```powershell
 git clone https://github.com/QuBiit0/lmagent.git
 cd lmagent
