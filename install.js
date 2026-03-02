@@ -59,7 +59,7 @@ const HOME_PATHS = {
     'junie': ['.junie'],
     'opencode': ['.opencode'],
     'openhands': ['.openhands'],
-    'antigravity': ['.agent'],
+    'antigravity': ['.gemini/antigravity', '.agent'],
 };
 
 // Helper: Detectar agentes instalados GLOBALMENTE en el HOME del usuario
