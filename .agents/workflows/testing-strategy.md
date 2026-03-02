@@ -145,7 +145,8 @@ class TestUserRepository:
 
 ## E2E Tests & UI Testing
 
-> **📢 STRICT RULE (Rule 05)**: Para pruebas de extremo-a-extremo visuales, es de carácter obligatorio utilizar **Playwright**. Selenium y Cypress se consideran alternativas legadas a menos que el cliente indique explícitamente lo contrario.
+> [!CAUTION]
+> **STRICT RULE (Rule 05)**: Para pruebas de extremo-a-extremo visuales, es de carácter obligatorio utilizar **Playwright**. Selenium y Cypress se consideran alternativas legadas a menos que el cliente indique explícitamente lo contrario.
 
 ### Qué testear
 - User flows críticos (Checkout, Login, Alta de entidades core).
@@ -264,7 +265,8 @@ npm test -- --coverage
 ## Test Data
 
 ### Contract Testing (APIs Restrictas)
-> **📢 STRICT RULE (Rule 05)**: Todo microservicio u API orientada a consumo público/federado debe ser cubierta por un esquema estricto (OpenAPI/Pact). Cualquier cambio que altere el contrato JSON (Breaking Change) causará el fallo inminente del Pull Request pre-commit.
+> [!IMPORTANT]
+> **STRICT RULE (Rule 05)**: Todo microservicio u API orientada a consumo público/federado debe ser cubierta por un esquema estricto (OpenAPI/Pact). Cualquier cambio que altere el contrato JSON (Breaking Change) causará el fallo inminente del Pull Request pre-commit.
 
 ### Fixtures (pytest)
 

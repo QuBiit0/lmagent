@@ -361,16 +361,17 @@ security:
     - ".git/**"
     - "*.pyc"
   
-  # Validación de código antes de ejecutar (Anti Prompt-Injection & RCE)
+  # Validación de código antes de ejecutar (Rule 04: Zero Trust & Anti Prompt-Injection)
   code_validation:
     enabled: true
     block_dangerous_patterns:
-      - "rm -rf /"
+      - "rm -rf "
       - "DROP DATABASE"
       - "eval("
       - "exec("
       - "os.system("
-    # Sandbox explícito para herramientas complejas
+      - "subprocess.Popen"
+    # Sandbox explícito para herramientas complejas (Rule 04)
     enforce_readonly_tools_in_prod: true
   
   # Rate limiting

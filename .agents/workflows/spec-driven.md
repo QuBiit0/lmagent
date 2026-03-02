@@ -246,6 +246,7 @@ cp templates/tasks.yaml specs/[feature-name]/tasks.yaml
 | **Independiente** | Mínimas dependencias posibles |
 | **Self-Healing** | La task debe definir comandos exactos de validación. |
 
+> [!IMPORTANT]
 > **🧠 ReAct / Plan-and-Solve (Rule 08)**: Al quebrar la especificación en tareas, el agente `orchestrator` debe escribir explícitamente un 'Thinking Process' o 'Reasoning' de por qué dividió la tarea de tal manera antes de emitir el YAML.
 
 ### Estructura de Task

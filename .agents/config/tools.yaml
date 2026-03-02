@@ -2,7 +2,7 @@
 # Configuración declarativa de herramientas disponibles para agentes
 # Inspirado en SWE-agent tool system
 
-version: "1.0"
+version: "3.6.0"
 
 # Configuración global de tools
 settings:
