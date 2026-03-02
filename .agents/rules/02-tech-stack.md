@@ -333,7 +333,7 @@ CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
 
 ### docker-compose.yml
 ```yaml
-version: "3.5.0"
+version: "3.6.0"
 
 services:
   backend:

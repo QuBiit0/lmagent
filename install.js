@@ -101,7 +101,7 @@ const IDE_CONFIGS = [
     // --- Agentes CLI & Autónomos ---
     { name: 'Amp / Kimi / Replit', value: 'amp', rulesDir: '.agents/rules', skillsDir: '.agents/skills', workflowsDir: '.agents/workflows', configFile: null, bridgeFile: null, markerFile: '.agents' },
     // Antigravity (Google Deepmind)
-    { name: 'Antigravity', value: 'antigravity', rulesDir: '.agent/rules', skillsDir: '.agent/skills', workflowsDir: '.agent/workflows', configFile: 'GEMINI.md', bridgeFile: null, markerFile: '.agent' },
+    { name: 'Antigravity', value: 'antigravity', rulesDir: '.agents/rules', skillsDir: '.agents/skills', workflowsDir: '.agents/workflows', configFile: 'GEMINI.md', bridgeFile: null, markerFile: '.agent' },
     { name: 'Augment', value: 'augment', rulesDir: '.augment/rules', skillsDir: '.augment/skills', workflowsDir: '.augment/workflows', configFile: null, bridgeFile: null, markerFile: '.augment' },
     // Gemini CLI
     { name: 'Gemini CLI', value: 'gemini', rulesDir: '.gemini/rules', skillsDir: '.gemini/skills', workflowsDir: '.gemini/workflows', configFile: 'GEMINI.md', bridgeFile: null, markerFile: '.gemini' },
@@ -461,18 +461,11 @@ program.command('uninstall')
                 agentSpecificDirs.push('.agents');
             }
 
-            // Determinar el directorio raíz del agente (ej: .cursor, .windsurf, .claude)
-            const agentRootDir = ide.markerFile && !ide.markerFile.includes('.') ? null
-                : ide.rulesDir ? ide.rulesDir.split('/')[0] : null;
-            if (agentRootDir && agentRootDir.startsWith('.') && fs.existsSync(path.join(projectRoot, agentRootDir))) {
-                // Eliminar el directorio raíz completo del agente
-                toRemove.push({ path: path.join(projectRoot, agentRootDir), type: 'dir', label: agentRootDir + '/' });
-            } else {
-                // Eliminar subdirectorios individualmente
-                for (const dir of agentSpecificDirs) {
-                    if (dir && fs.existsSync(path.join(projectRoot, dir))) {
-                        toRemove.push({ path: path.join(projectRoot, dir), type: 'dir', label: dir + '/' });
-                    }
+            // En lugar de borrar la carpeta padre (ej. .continue o .github) donde puede haber config ajena
+            // borramos SOLO las carpetas hijas inyectadas (rules, skills, workflows).
+            for (const dir of agentSpecificDirs) {
+                if (dir && fs.existsSync(path.join(projectRoot, dir))) {
+                    toRemove.push({ path: path.join(projectRoot, dir), type: 'dir', label: dir + '/' });
                 }
             }
 

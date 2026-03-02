@@ -15,14 +15,10 @@
  *   1 = Errores encontrados
  */
 
-import { readFileSync, readdirSync, existsSync, statSync } from 'fs';
-import { join, resolve, dirname } from 'path';
-import { fileURLToPath } from 'url';
-import gradient from 'gradient-string';
-import chalk from 'chalk';
+const { readFileSync, readdirSync, existsSync, statSync } = require('fs');
+const { join, resolve, dirname } = require('path');
+const chalk = require('chalk');
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 const ROOT = resolve(__dirname, '..');
 const SKILLS_DIR = join(ROOT, '.agents', 'skills');
 

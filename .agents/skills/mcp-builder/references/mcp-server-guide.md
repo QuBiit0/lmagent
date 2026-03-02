@@ -13,7 +13,7 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 
 const server = new Server({
   name: "example-server",
-  version: "1.0.0",
+  version: "3.6.0",
 }, {
   capabilities: {
     resources: {},

@@ -2,7 +2,7 @@
 description: Workflow completo de desarrollo SPEC DRIVEN (spec→plan→tasks→implement)
 level: 2-4
 personas: [pm, arch, dev, qa]
-version: "3.5.0"
+version: "3.6.0"
 type: workflow_spec
 triggers:
   - /spec
@@ -12,7 +12,7 @@ triggers:
 
 # SPEC DRIVEN Development Workflow
 
-> **LMAgent v3.0 - SPEC+LM Methodology**
+> **LMAgent v3.6.0 - SPEC+LM Methodology**
 > 
 > Este workflow implementa desarrollo guiado por especificaciones, donde la spec es la fuente de verdad y el código es derivado de ella.
 
@@ -483,5 +483,5 @@ metadata:
 
 ---
 
-*Workflow version: "3.5.0" (SPEC+LM)*
+*Workflow version: "3.6.0" (SPEC+LM)*
 *Compatible con: BMAD-METHOD + SWE-agent*

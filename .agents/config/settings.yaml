@@ -1,7 +1,7 @@
 # LMAgent Global Settings
 # Configuración global personalizable del framework
 
-version: "3.5.0"
+version: "3.6.0"
 
 # ============================================
 # PERSONALIZACIÓN DEL FRAMEWORK
@@ -12,7 +12,7 @@ project:
   name: "Mi Proyecto"
   description: "Descripción del proyecto"
   team: "Nombre del equipo"
-  version: "0.1.0"
+  version: "3.6.0"
 
 # ============================================
 # CONFIGURACIÓN DE IDEs AGÉNTICOS

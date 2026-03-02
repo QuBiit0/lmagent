@@ -5,7 +5,7 @@
 name: "my_agent"
 display_name: "My Agent"
 description: "Descripción de lo que hace el agente"
-version: "0.1.0"
+version: "3.6.0"
 
 # Configuración de LLM
 llm:

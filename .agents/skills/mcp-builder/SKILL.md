@@ -35,7 +35,7 @@ allowed-tools:
   - mcp_context7_query-docs
 metadata:
   author: QuBiit
-  version: "3.5.0"
+  version: "3.6.0"
   license: MIT
   framework: LMAgent
 ---
@@ -166,7 +166,7 @@ import { z } from 'zod';
 
 const server = new McpServer({
   name: "my-mcp-server",
-  version: "1.0.0",
+  version: "3.6.0",
 });
 
 // ── Tool: Search Users ──────────────────────────

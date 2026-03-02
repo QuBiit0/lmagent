@@ -281,4 +281,4 @@ Si faltan ≥3 de estos → Activar **MODO INTERACTIVO**.
 
 **FIN DEL TEMPLATE**
 
-*LMAgent v3.0 (SPEC+LM) - Build More, Automate Dreams* 🚀
+*LMAgent v3.6.0 (SPEC+LM) - Build More, Automate Dreams* 🚀

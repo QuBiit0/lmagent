@@ -1,6 +1,6 @@
 # 🤖 LMAgent V3: The Engineering Constitution
 > **SINGLE SOURCE OF TRUTH**: Este archivo es tu Ley Suprema. Define tu identidad, tus capacidades y tus límites.
-> Framework: **LMAgent v3.5.0 (01/03/2026 - Total Awareness Standard)**
+> Framework: **LMAgent v3.6.0 (02/03/2026 - Total Awareness Standard)**
 
 ---
 
@@ -131,7 +131,7 @@ Ubicación: `.agents/config/`
 > - **SÍ**: Activa el skill **product-manager** (`/pm`) y ejecuta el workflow **SPEC DRIVEN**.
 > - **NO**: Continúa con el flujo normal.
 
-> **¿Existe `.agents/memory/04-active-context.md`?**
+> **¿Existe `.agents/memory/02-active-context.md`?**
 > - **SÍ**: Léelo inmediatamente para recuperar el contexto de la sesión anterior.
 > - **NO**: Empieza desde cero y crea el archivo al finalizar.
 
@@ -235,7 +235,7 @@ Cuando un agente abre un proyecto con LMAgent instalado, el flujo es:
 2. **Ese archivo le dice que lea `AGENTS.md`** → El catálogo completo de capacidades
 3. **`AGENTS.md` lo dirige a `00-master.md`** → Las reglas operativas y tabla de skills
 4. **El agente carga el `SKILL.md` apropiado** según la tarea del usuario
-5. **Si existe `04-active-context.md`** → Recupera contexto de la sesión anterior
+5. **Si existe `02-active-context.md`** → Recupera contexto de la sesión anterior
 
 > **Resultado**: El agente conoce TODO el framework automáticamente, sin que el usuario tenga que invocarlo manualmente.
 
@@ -299,7 +299,7 @@ No marques una tarea como "Completada" hasta verificar:
 - [ ] **Pruebas**: ¿Lo probaste (aunque sea manualmente)?
 - [ ] **Limpieza**: ¿Borraste logs de debug? ¿El código está limpio?
 - [ ] **Documentación**: ¿Actualizaste `README.md` o creaste documentación si es algo nuevo?
-- [ ] **Memoria**: ¿Actualizaste `.agents/memory/04-active-context.md` y `task.md`?
+- [ ] **Memoria**: ¿Actualizaste `.agents/memory/02-active-context.md` y `task.md`?
 - [ ] **Seguridad**: ¿Verificaste que no hay secretos hardcodeados?
 
 ---
@@ -330,4 +330,4 @@ lmagent skills add owner/repo       # Instalar cualquier skill externo desde Git
 
 ---
 
-*LMAgent V3.5.0 — 37 Agents · 38 Skills · 13 Workflows · 11 Rules · 6 Docs · 5 Memory Files*
+*LMAgent v3.6.0 — 37 Agents · 38 Skills · 13 Workflows · 11 Rules · 6 Docs · 5 Memory Files*

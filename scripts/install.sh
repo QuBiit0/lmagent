@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# LMAgent v3.5.0 Universal Installer para MacOS / Linux / Git Bash
+# LMAgent v3.6.0 Universal Installer para MacOS / Linux / Git Bash
 
 set -e
 
@@ -89,6 +89,6 @@ fi
 # ==========================================
 # Cierre
 # ==========================================
-echo -e "\n${CYAN}${BOLD}🎉 ¡LMAgent v3.5.0 está listo para trabajar!${NC}"
+echo -e "\n${CYAN}${BOLD}🎉 ¡LMAgent v3.6.0 está listo para trabajar!${NC}"
 echo -e "Abre cualquier agente soportado (Cursor, Claude, Windsurf, Roo, etc) en este proyecto."
 echo -e "Para ver los comandos disponibles, escribe: ${BOLD}lmagent --help${NC}\n"

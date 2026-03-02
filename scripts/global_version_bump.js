@@ -3,8 +3,18 @@ const path = require('path');
 
 const AGENTS_DIR = path.join(__dirname, '..', '.agents');
 const ROOT_DIR = path.join(__dirname, '..');
-const NEW_VERSION = '3.5.0';
-const NEW_DATE = '01/03/2026';
+
+const pkgPath = path.join(ROOT_DIR, 'package.json');
+const pkgContent = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
+
+const TARGET_VERSION = pkgContent.version;
+const NEW_VERSION = TARGET_VERSION;
+
+// Use current date
+const d = new Date();
+const NEW_DATE = `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+
+const VERSION_REGEX_MD = /version:\s*"(v?\d+\.\d+\.\d+(?:-[a-zA-Z0-9.-]+)?)"/g;
 
 function walkDir(dir, callback) {
     fs.readdirSync(dir).forEach(f => {
@@ -22,9 +32,9 @@ function updateFileContent(filepath) {
     let modified = false;
 
     // Actualizar versión en metadata (Frontmatter YAML)
-    const versionRegex = /version:\s*"(?:3\.\d+\.\d+|3\.\d+)"/g;
-    if (versionRegex.test(content)) {
-        content = content.replace(versionRegex, `version: "${NEW_VERSION}"`);
+    // Using VERSION_REGEX_MD as suggested by the snippet, which was versionRegex
+    if (VERSION_REGEX_MD.test(content)) {
+        content = content.replace(VERSION_REGEX_MD, `version: "${NEW_VERSION}"`);
         modified = true;
     }
 
@@ -55,7 +65,7 @@ function updateFileContent(filepath) {
     }
 }
 
-console.log("🚀 Iniciando barrido global de versiones a v3.5.0...");
+console.log(`🚀 Iniciando barrido global de versiones a v${TARGET_VERSION}...`);
 
 // Barrer todo /agents
 if (fs.existsSync(AGENTS_DIR)) {
@@ -63,5 +73,18 @@ if (fs.existsSync(AGENTS_DIR)) {
 } else {
     console.log("⚠️ No se encontró la carpeta .agents");
 }
+
+// Barrer todo /scripts
+const SCRIPTS_DIR = path.join(ROOT_DIR, 'scripts');
+if (fs.existsSync(SCRIPTS_DIR)) {
+    walkDir(SCRIPTS_DIR, updateFileContent);
+}
+
+// Actualizar Entry Points en la raíz
+const entryFiles = ['AGENTS.md', 'CLAUDE.md', 'GEMINI.md', 'README.md', 'package.json'];
+entryFiles.forEach(file => {
+    const fullPath = path.join(ROOT_DIR, file);
+    if (fs.existsSync(fullPath)) updateFileContent(fullPath);
+});
 
 console.log("✨ Finalizado.");

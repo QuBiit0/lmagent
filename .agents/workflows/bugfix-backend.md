@@ -2,7 +2,7 @@
 description: Workflow para analizar y arreglar bugs en servicios backend Python/Node
 level: 1-2
 personas: [backend-engineer, qa-engineer]
-version: "3.5.0"
+version: "3.6.0"
 type: workflow
 ---
 

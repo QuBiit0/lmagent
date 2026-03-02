@@ -89,6 +89,6 @@ if ($response -match "^n$|^no$") {
 # ==========================================
 # Cierre
 # ==========================================
-Write-Host "`n🎉 LMAgent v3.5.0 está listo para trabajar!" -ForegroundColor Cyan
+Write-Host "`n🎉 LMAgent v3.6.0 está listo para trabajar!" -ForegroundColor Cyan
 Write-Host "Abre cualquier agente soportado en este proyecto para comenzar a delegar."
 Write-Host "Para ver la ayuda, escribe: lmagent --help`n"

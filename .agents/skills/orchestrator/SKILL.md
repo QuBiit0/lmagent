@@ -30,7 +30,7 @@ allowed-tools:
   - notify_user
 metadata:
   author: QuBiit
-  version: "3.5.0"
+  version: "3.6.0"
   license: MIT
   framework: LMAgent
 ---

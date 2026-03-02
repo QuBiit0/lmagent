@@ -10,14 +10,11 @@
  *   node scripts/create_skill.js --name "My Skill"  # Semi-automático
  */
 
-import { mkdirSync, writeFileSync, existsSync } from 'fs';
-import { join, resolve, dirname } from 'path';
-import { fileURLToPath } from 'url';
-import { createInterface } from 'readline';
-import { readFileSync } from 'fs';
+const { mkdirSync, writeFileSync, existsSync } = require('fs');
+const { join, resolve, dirname } = require('path');
+const { createInterface } = require('readline');
+const { readFileSync } = require('fs');
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 const ROOT = resolve(__dirname, '..');
 const SKILLS_DIR = join(ROOT, '.agents', 'skills');
 

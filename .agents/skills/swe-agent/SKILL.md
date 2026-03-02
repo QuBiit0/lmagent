@@ -33,7 +33,7 @@ allowed-tools:
   - write_to_file
 metadata:
   author: QuBiit
-  version: "3.5.0"
+  version: "3.6.0"
   license: MIT
   framework: LMAgent
 ---

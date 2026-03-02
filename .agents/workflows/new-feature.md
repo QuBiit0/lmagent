@@ -2,7 +2,7 @@
 description: Workflow para implementar una nueva feature completa
 level: 2-3
 personas: [backend-engineer, frontend-engineer, qa-engineer]
-version: "3.5.0"
+version: "3.6.0"
 type: workflow
 ---
 

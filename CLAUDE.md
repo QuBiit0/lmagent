@@ -9,7 +9,7 @@
 ## 🔄 ARRANQUE AUTOMÁTICO (Haz esto al iniciar cada sesión)
 1. **Lee [AGENTS.md](./AGENTS.md)** — Tu catálogo completo de capacidades
 2. **Lee `.agents/rules/00-master.md`** — Reglas, protocolo de trabajo y triggers
-3. **Si existe `.agents/memory/04-active-context.md`** — Recupera contexto previo
+3. **Si existe `.agents/memory/02-active-context.md`** — Recupera contexto previo
 4. **Clasifica la tarea** (Nivel 0-4) y activa el skill apropiado
 
 ## 📁 RUTAS DE ENTORNO

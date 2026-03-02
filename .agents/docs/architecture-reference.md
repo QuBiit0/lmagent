@@ -1,6 +1,6 @@
 # 🏛️ LMAgent Architecture & Modules Reference
 
-Bienvenido al núcleo de **LMAgent v3.5**. Si eres un usuario nuevo que acaba de instalar el framework, este documento es tu **Manual Maestro**. Aquí explicaremos, directorio por directorio y función por función, cómo está estructurado el "Cerebro" de tus agentes y por qué funciona de la manera que lo hace.
+Bienvenido al núcleo de **LMAgent v3.6.0**. Si eres un usuario nuevo que acaba de instalar el framework, este documento es tu **Manual Maestro**. Aquí explicaremos, directorio por directorio y función por función, cómo está estructurado el "Cerebro" de tus agentes y por qué funciona de la manera que lo hace.
 
 > 💡 **Concepto Clave:** LMAgent separa el *Razonamiento* (tus reglas y contexto) de la *Ejecución* (el IDE que uses: Cursor, Windsurf, Trae, etc.). Toda la inteligencia vive centralizada en la carpeta oculta `.agents/` en la raíz de tu proyecto.
 

@@ -1,6 +1,6 @@
 # 🚀 Getting Started with LMAgent
 
-Bienvenido a **LMAgent v3.5.0** — el framework que transforma cualquier agente de IA en una agencia de desarrollo de software completa.
+Bienvenido a **LMAgent v3.6.0** — el framework que transforma cualquier agente de IA en una agencia de desarrollo de software completa.
 
 ## Requisitos Previos
 - **Node.js**: v22+ (requerido para el CLI)
