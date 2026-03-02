@@ -13,21 +13,32 @@
 ![Version](https://img.shields.io/badge/version-3.5.0-blue.svg) ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge) ![Agents](https://img.shields.io/badge/Agents-37_Supported-cyan?style=for-the-badge) ![Skills](https://img.shields.io/badge/Skills-38_Available-purple?style=for-the-badge)
 
 > **"Separate the reasoning from the execution."**
-> LMAgent is the foundational runtime that empowers your AI Agents with standardized **Skills**, **Rules**, and **Workflows** across **37 supported agents** (Cursor, Claude Code, Windsurf, Gemini CLI, Cline, Roo, Copilot, and many more).
+> LMAgent is the foundational runtime that empowers your AI Agents with standardized **Skills**, **Rules**, and **Workflows**
 
 ---
 
-## ⚡ Quick Start: One Command. Any Agent.
+## 2. Installation (Universal Native Setup)
 
-**Unix / macOS / Linux:**
+LMAgent installs a **global executable command** (`lmagent`). You do not need `npm` or internet registries, it runs natively on your machine by cloning the source.
+
+Choose your operating system:
+
+### 🍏🍎 Unix / macOS / Linux (Bash)
 ```bash
-curl -fsSL https://raw.githubusercontent.com/QuBiit0/lmagent/main/scripts/install.sh | bash
+git clone https://github.com/QuBiit0/lmagent.git
+cd lmagent
+./scripts/install.sh
 ```
 
-**Windows (PowerShell):**
+### 🪟 Windows (PowerShell)
 ```powershell
-iwr https://raw.githubusercontent.com/QuBiit0/lmagent/main/scripts/install.ps1 -useb | iex
+git clone https://github.com/QuBiit0/lmagent.git
+cd lmagent
+.\scripts\install.ps1
 ```
+
+*(These zero-friction scripts will automatically link `lmagent` to your global `$PATH` without relying on package managers).*
+
 > **Nota:** Si Windows bloquea la instalación por políticas de seguridad, ejecuta: `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser`
 
 This single command performs the entire setup:

@@ -38,40 +38,52 @@ if (-not (Get-Command "node" -ErrorAction SilentlyContinue)) {
     Exit
 }
 
-# 2. Chequear npm
-if (-not (Get-Command "npm" -ErrorAction SilentlyContinue)) {
-    Write-Host "X Error: npm no esta instalado." -ForegroundColor Red
-    Write-Host "  Asegurate que npm fue instalado junto con Node.js." -ForegroundColor Yellow
+    Write-Host "X Error: No se encuentra 'install.js' en la raiz." -ForegroundColor Red
+    Write-Host "  Ubicacion actual: $pwd" -ForegroundColor Yellow
     Exit
 }
 
-$nodeVersion = node -v
-Write-Host "V Node.js detectado ($nodeVersion)" -ForegroundColor Green
-
-
-Write-Host "`n[2/3] Instalando @qubiit/lmagent globalmente..." -ForegroundColor Cyan
+Write-Host "`n[2/2] Vinculando LMAgent globalmente (Symlink)..." -ForegroundColor Cyan
 
 try {
-    # Evitar output redundante y priorizar errores graves
-    npm install -g @qubiit/lmagent@latest --silent
+    # 1. Crear el archivo wrapper lmagent.cmd en un directorio que sabemos está en PATH
+    $npmGlobalPrefix = npm config get prefix
+    $binDir = if ($npmGlobalPrefix) { $npmGlobalPrefix } else { "$env:APPDATA\npm" }
+
+    if (-not (Test-Path $binDir)) {
+        New-Item -ItemType Directory -Force -Path $binDir | Out-Null
+    }
+
+    $lmagentCmdPath = Join-Path $binDir "lmagent.cmd"
+    $lmagentPs1Path = Join-Path $binDir "lmagent.ps1"
+    
+    # 2. El comando apunta explícitamente a node ejecutando el install.js de esta carpeta
+    $targetScript = Join-Path $pwd "install.js"
+    
+    $cmdContent = "@ECHO OFF`r`n`"node`" `"$targetScript`" %*"
+    Set-Content -Path $lmagentCmdPath -Value $cmdContent -Encoding UTF8
+
+    $ps1Content = "& `"node`" `"$targetScript`" `$args"
+    Set-Content -Path $lmagentPs1Path -Value $ps1Content -Encoding UTF8
+    
+    Write-Host "V Enlaces simbolicos creados en $binDir" -ForegroundColor Green
+    
 } catch {
-    Write-Host "X Hubo un problema instalando el paquete." -ForegroundColor Red
+    Write-Host "X Hubo un problema vinculando el paquete." -ForegroundColor Red
     Write-Host "$_" -ForegroundColor DarkRed
     Exit
 }
 
 # Comprobación final del binario
 if (-not (Get-Command "lmagent" -ErrorAction SilentlyContinue)) {
-     Write-Host "X LMAgent fue instalado via npm, pero el comando 'lmagent' no se reconoce." -ForegroundColor Red
-     Write-Host "  Asegurate que el directorio de instalacion global de npm este en tus Variables de Entorno (PATH)." -ForegroundColor Yellow
-     Exit
+     Write-Host "X LMAgent fue vinculado, pero el comando 'lmagent' no se reconoce en esta sesion." -ForegroundColor Red
+     Write-Host "  Puede que necesites reiniciar tu terminal o verificar que $binDir este en tu PATH." -ForegroundColor Yellow
 }
 
 Write-Host "V LMAgent instalado con exito." -ForegroundColor Green
 
 
-# ==========================================
-# Inicialización de Proyecto Actual
+# Inicialización Local
 # ==========================================
 Write-Host "`n[3/3] Inicializando entorno en el directorio actual..." -ForegroundColor Cyan
 

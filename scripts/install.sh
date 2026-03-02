@@ -37,9 +37,9 @@ if ! command -v node &> /dev/null; then
     exit 1
 fi
 
-if ! command -v npm &> /dev/null; then
-    echo -e "${RED}❌ npm no está instalado.${NC}"
-    echo -e "${YELLOW}npm viene con Node.js. Por favor revisa tu instalación de Node.js.${NC}"
+if [ ! -f "install.js" ]; then
+    echo -e "${RED}❌ Error: No se encuentra 'install.js' en la raíz.${NC}"
+    echo -e "${YELLOW}Asegúrate de ejecutar este script desde la carpeta del proyecto: ./scripts/install.sh${NC}"
     exit 1
 fi
 
@@ -47,20 +47,30 @@ NODE_VERSION=$(node -v | cut -d 'v' -f 2)
 echo -e "${GREEN}✓ Node.js detectado (v${NODE_VERSION})${NC}"
 
 # ==========================================
-# Instalación del Framework (Global)
+# Vinculación del Framework (Symlink Local)
 # ==========================================
-echo -e "\n${CYAN}[2/3] Instalando @qubiit/lmagent globalmente...${NC}"
+echo -e "\n${CYAN}[2/2] Vinculando LMAgent globalmente (Symlink)...${NC}"
 
-# Evitar sudo si no es necesario, pero advertir
-if [ "$EUID" -ne 0 ] && ! npm install -g @qubiit/lmagent@latest --dry-run &> /dev/null; then
-    echo -e "${YELLOW}⚠️ Es posible que necesites permisos de administrador (sudo) para instalar paquetes globales en este sistema.${NC}"
+TARGET_DIR="/usr/local/bin"
+if [ ! -d "$TARGET_DIR" ] || [ ! -w "$TARGET_DIR" ]; then
+    TARGET_DIR="$HOME/.local/bin"
+    mkdir -p "$TARGET_DIR"
 fi
 
-npm install -g @qubiit/lmagent@latest
+INSTALL_JS_PATH="$(pwd)/install.js"
 
-if ! command -v lmagent &> /dev/null; then
-    echo -e "${RED}❌ Hubo un problema vinculando el binario 'lmagent'. Revisa tu \$PATH.${NC}"
-    exit 1
+# Crear wrapper dinámico
+WRAPPER_PATH="$TARGET_DIR/lmagent"
+cat << 'EOF' > "$WRAPPER_PATH"
+#!/usr/bin/env bash
+node "INSTALL_PATH_PLACEHOLDER" "$@"
+EOF
+
+sed -i.bak "s|INSTALL_PATH_PLACEHOLDER|$INSTALL_JS_PATH|g" "$WRAPPER_PATH" && rm -f "${WRAPPER_PATH}.bak"
+chmod +x "$WRAPPER_PATH"
+
+if ! command -v lmagent &> /dev/null && [[ ":$PATH:" != *":$TARGET_DIR:"* ]]; then
+    echo -e "${YELLOW}⚠️ Aviso: $TARGET_DIR no está en tu PATH. El comando 'lmagent' podría no funcionar hasta que reinicies la terminal.${NC}"
 fi
 
 echo -e "${GREEN}✓ LMAgent instalado con éxito.${NC}"

@@ -48,66 +48,51 @@ Este archivo define la identidad, propósito y reglas fundamentales de **LMAgent
 
 Activa el skill apropiado según la tarea. Cada skill tiene `SKILL.md` con instrucciones detalladas, y opcionalmente `scripts/`, `references/` y `assets/`.
 
-<!-- SKILLS_CATALOG_START -->
-### Meta-Skill
-| Skill | Triggers | Descripción |
-|-------|----------|-------------|
-| **orchestrator** | `/orch`, `/start` | Meta-agent: clasifica tareas y enruta al skill correcto |
+<!-- LMAGENT_REGISTRY:SKILLS_START -->
 
-### Engineering
-| Skill | Triggers | Descripción |
-|-------|----------|-------------|
-| **backend-engineer** | `/dev`, `/backend`, `/api`, `/fix` | APIs, lógica de negocio, bases de datos |
-| **frontend-engineer** | `/front`, `/ui`, `/react` | React, Next.js, interfaces web |
-| **mobile-engineer** | `/mobile`, `/rn`, `/ios`, `/android` | React Native, Expo, apps móviles |
-| **data-engineer** | `/data`, `/db`, `/sql`, `/etl` | PostgreSQL, ETL, migraciones |
-| **devops-engineer** | `/devops`, `/infra`, `/deploy`, `/docker` | CI/CD, Docker, Kubernetes |
-| **performance-engineer** | `/perf`, `/slow`, `/optimize`, `/load` | Profiling, caching, optimización |
-| **security-analyst** | `/sec`, `/audit`, `/auth` | OWASP, auditoría, vulnerabilidades |
-| **qa-engineer** | `/qa`, `/test`, `/bug` | Testing, cobertura, E2E |
-| **systematic-debugger** | `/debug`, `/bug`, `/fix`, `/rca` | Debugging metódico en 4 fases, root cause analysis |
+| ID / Trigger | Skill | Icono & ROL | Descripción |
+|:---|:---|:---|:---|
+| `/ai` | **ai-agent-engineer** | 🤖 *Diseño y Desarrollo de Agentes IA* | Diseño e implementación de agentes de IA, sistemas multi-agente, RAG pipelines y evaluación de LLMs. Úsalo con /ai para construir agentes autónomos, pipelines de IA o sistemas de evaluación. |
+| `/api` | **api-designer** | 🔌 *Especialista en Diseño de APIs y Developer Experience* | Diseño de contratos de API REST y GraphQL, especificaciones OpenAPI y AsyncAPI. Úsalo con /api-design para definir contratos antes de implementar. |
+| `/architect` | **architect** | �️ *Senior Solutions Architect - Diseño de Sistemas Distribuidos* | Diseño de arquitectura de software, patrones de diseño y estructuración de sistemas robustos y escalables. Úsalo con /arch para decisiones técnicas críticas, diseño de sistemas distribuidos o creación de ADRs. |
+| `/automation` | **automation-engineer** | ⚙️ *Automatización e Integraciones* | Automatización de procesos con n8n, Make y scripts. Úsalo con /auto para diseñar workflows de automatización, integraciones entre sistemas o bots. |
+| `/backend` | **backend-engineer** | ⚙️ *Senior Backend Engineer & Tech Lead - Ingeniería de Software Robusta* | Desarrollo de lógica de servidor, APIs REST/GraphQL, bases de datos y servicios escalables. Úsalo con /dev para implementar endpoints, refactorizar código o debuggear problemas de backend. |
+| `/blockchain` | **blockchain-engineer** | ⛓️ *Web3 & Smart Contract Auditor - Tolerancia Cero Fallas* | Ingeniería de Smart Contracts, criptografía asimétrica y Web3. Úsalo con /web3 para diseñar en Solidity, Rust, arquitectura de dApps o auditar seguridad de cadenas de bloques (DeFi, NFTs). |
+| `/bmad` | **bmad-methodology** | 🧠 *Scale-Adaptive Intelligence & Project Orchestration* | Clasificación de complejidad de tareas y selección de metodología (BMAD, SWE-Agent, Spec-Driven). Úsalo con /bmad para determinar el nivel de una tarea (0-4) y el workflow correcto. |
+| `/browser` | **browser-agent** | 🌐 *Automatización de Navegador para Agentes IA* | Automatización de navegadores web, scraping, testing E2E y verificación visual de UIs. Úsalo con /browser para interactuar con páginas web, extraer datos o verificar flujos de usuario. |
+| `/cloud` | **cloud-architect** | ☁️ *Senior Cloud Architect & DevOps Engineer - Infraestructura Segura* | Diseño y despliegue de Infraestructura como Código (IaC) en AWS, GCP y Azure. Úsalo con /cloud para escribir Terraform, CloudFormation, políticas IAM y evaluar arquitecturas Cloud Native seguras y escalables. |
+| `/code` | **code-reviewer** | 🔍 *Experto en Code Review y Calidad de Código* | Revisión exhaustiva de código para detectar bugs, problemas de seguridad, deuda técnica y violaciones de estilo. Úsalo con /review para hacer code reviews de PRs o módulos. |
+| `/cursor` | **cursor-expert** | 🖱️ *IDE Automation and Configuration* | Especialista en configuración y desarrollo nativo para el IDE Cursor. Úsalo cuando necesites crear reglas de proyecto (.mdc), generar o migrar skills, configurar subagentes (.cursor/agents/) o modificar las configuraciones del usuario (settings.json). |
+| `/data` | **data-engineer** | 🗜️ *Diseño y Administración de Bases de Datos* | Diseño de pipelines de datos, ETL/ELT, modelado de datos y análisis. Úsalo con /data para construir pipelines, optimizar queries o diseñar esquemas de datos. |
+| `/devops` | **devops-engineer** | 🚀 *Infrastructure, CI/CD y Operaciones* | Configuración de CI/CD, infraestructura en la nube, contenedores y automatización de despliegues. Úsalo con /devops para Dockerfiles, pipelines de GitHub Actions, manifiestos de Kubernetes o configuración de monitoreo. |
+| `/document` | **document-generator** | 📄 *Generación de Documentos de Oficina* | Generación de documentación técnica, READMEs, changelogs y wikis. Úsalo con /docs para crear o actualizar documentación de proyectos. |
+| `/frontend` | **frontend-engineer** | 🎨 *Desarrollo de Interfaces de Usuario* | Desarrollo de interfaces de usuario modernas, responsivas y centradas en la experiencia del usuario con React/Next.js. Úsalo con /front para implementar componentes, integrar APIs o optimizar performance frontend. |
+| `/game` | **game-developer** | 🎮 *Graphics & Gameplay Engineer - Rendimiento y Renderizado* | Especialista en desarrollo de videojuegos, simulaciones 3D, física y arquitecturas ECS. Úsalo con /game para programar lógica en Unity (C#), Unreal Engine (C++/Blueprints), Godot (GDScript) o web (Three.js/WebGL). |
+| `/git` | **git-workflow** | 🌿 *Especialista en Git Workflows y Release Management* | Gestión de flujos de trabajo Git, branching strategies, commits semánticos y releases. Úsalo con /git para gestionar ramas, crear releases o resolver conflictos. |
+| `/machine` | **machine-learning-engineer** | 🧠 *Principal AI/ML Researcher & Data Scientist - Matemáticas y Entrenamiento* | Experto en ciencia de datos, Deep Learning, entrenamiento de modelos, PyTorch, TensorFlow y Scikit-Learn. Úsalo con /ml para diseñar arquitecturas de redes neuronales, optimizar loss functions y limpiar datasets masivos. |
+| `/mcp` | **mcp-builder** | 🔧 *Especialista en Model Context Protocol y Agent Tooling* | Construcción de servidores MCP (Model Context Protocol) para extender capacidades de agentes de IA. Úsalo con /mcp para crear herramientas y recursos MCP. |
+| `/mobile` | **mobile-engineer** | 📱 *Desarrollo de Aplicaciones Móviles* | Desarrollo de aplicaciones móviles con React Native y Expo. Úsalo con /mobile para implementar pantallas, navegación o integraciones nativas en apps iOS/Android. |
+| `/native` | **native-mobile-expert** | 📱 *Arquitecto Mobile Nativo - Swift & Kotlin* | Desarrollador Nivel Experto en arquitecturas nativas para iOS y Android. Úsalo con /native para crear o refactorizar en Swift, Kotlin, puentes (Bridges) JNI/TurboModules e integraciones OS profundas. |
+| `/orchestrator` | **orchestrator** | 🎯 *Meta-Agent que decide qué persona y workflow activar* | Meta-agente orquestador que clasifica tareas y rutea al experto correcto. Úsalo con /orch al inicio de cualquier tarea compleja o cuando no está claro qué persona activar. |
+| `/pentester` | **pentester** | 🥷 *Ciberseguridad Ofensiva & DevSecOps - Ethical Hacker* | Auditoría de ciberseguridad ofensiva, escaneo de vulnerabilidades, Red Teaming y DevSecOps. Úsalo con /hack o /sec para evaluar la seguridad de tu código, inyecciones, XSS, SSRF y mitigaciones OWASP. |
+| `/performance` | **performance-engineer** | 🏎️ *Optimización de Rendimiento y Escalabilidad* | Optimización de rendimiento de aplicaciones, profiling, análisis de bottlenecks y tuning. Úsalo con /perf para identificar y resolver problemas de performance. |
+| `/product` | **product-manager** | 📊 *Senior Product Manager - Estrategia y Visión de Producto* | Definición de la visión del producto, roadmap y requisitos detallados para maximizar el valor al usuario. Úsalo con /pm para generar PRDs, priorizar features con RICE/MoSCoW o conducir sesiones de brainstorming. |
+| `/prompt` | **prompt-engineer** | 🧠 *Ingeniería de Prompts y Arquitectura Cognitiva* | Diseño y optimización de prompts para LLMs, system prompts y cadenas de razonamiento. Úsalo con /prompt para mejorar la calidad de respuestas de agentes de IA. |
+| `/qa` | **qa-engineer** | 🧪 *Testing y Aseguramiento de Calidad* | Aseguramiento de la calidad mediante pruebas automatizadas, manuales y validación rigurosa de criterios de aceptación. Úsalo con /qa para escribir tests, analizar cobertura, reproducir bugs o evaluar agentes de IA con LLM Evals. |
+| `/scrum` | **scrum-master** | 🏉 *Agile Coach & Senior Scrum Master - Facilitador de Alto Rendimiento* | Facilitación de ceremonias ágiles, gestión de sprints y remoción de impedimentos. Úsalo con /scrum para planificar sprints, hacer retrospectivas o gestionar el backlog. |
+| `/security` | **security-analyst** | 🛡️ *Seguridad y Compliance* | Análisis de seguridad, threat modeling, revisión de vulnerabilidades y hardening. Úsalo con /sec para auditar código, revisar configuraciones o hacer threat modeling. |
+| `/seo` | **seo-auditor** | 🔎 *Auditoría Web y SEO Técnico* | Auditoría SEO, análisis de Core Web Vitals, optimización de metadatos y estrategia de contenido. Úsalo con /seo para auditar páginas web o mejorar el posicionamiento. |
+| `/spec` | **spec-driven-dev** | 📋 *Development Methodology - Specification as Source of Truth* | Metodología SPEC DRIVEN: pipeline SPECIFY → PLAN → TASKS → CODE → VERIFY. Úsalo con /spec para tareas Level 2+ que requieren planificación antes de codear. |
+| `/supabase` | **supabase-expert** | ⚡ *Experto en Supabase Platform & PostgreSQL* | Desarrollo con Supabase: Auth, Realtime, Storage, Edge Functions y Row Level Security. Úsalo con /supabase para implementar features con Supabase como backend. |
+| `/swe` | **swe-agent** | 🔧 *Autonomous Software Engineering Agent* | Resolución autónoma de issues de GitHub usando trajectory-based debugging. Úsalo con /swe para resolver bugs complejos de forma sistemática y autónoma. |
+| `/systematic` | **systematic-debugger** | 🔍 *Debugging Metódico y Resolución de Problemas* | Debugging sistemático y análisis de causa raíz de bugs. Úsalo con /debug para investigar errores complejos de forma metódica. |
+| `/tech` | **tech-lead** | 🧭 *Liderazgo Técnico y Mentorship* | Liderazgo técnico, decisiones de arquitectura, mentoring y gestión de deuda técnica. Úsalo con /lead para decisiones técnicas ejecutivas o revisiones de arquitectura. |
+| `/technical` | **technical-writer** | 📝 *Documentación Técnica y Comunicación* | Redacción de documentación técnica clara, tutoriales, guías de API y changelogs. Úsalo con /write para crear documentación de alta calidad. |
+| `/testing` | **testing-strategist** | 🧪 *Especialista en Testing Strategy y Quality Assurance Automation* | Diseño de estrategias de testing, selección de herramientas y definición de métricas de calidad. Úsalo con /test-strategy para planificar la cobertura de tests de un proyecto. |
+| `/ux` | **ux-ui-designer** | 🎨 *Diseño de Experiencia e Interfaz de Usuario* | Diseño de experiencias de usuario, sistemas de diseño, wireframes y accesibilidad. Úsalo con /ux para definir flujos de usuario, componentes de diseño o auditar accesibilidad. |
 
-### Quality & Testing
-| Skill | Triggers | Descripción |
-|-------|----------|-------------|
-| **code-reviewer** | `/review`, `/cr`, `/code-review` | Reviews sistemáticos multi-pass, anti-patrones |
-| **testing-strategist** | `/tdd`, `/testing`, `/test-strategy` | TDD/BDD, testing pyramid, estrategia de tests |
-| **git-workflow** | `/git`, `/branch`, `/release` | Branching, conventional commits, release management |
-| **api-designer** | `/api`, `/endpoint`, `/rest`, `/graphql` | Diseño REST/GraphQL, OpenAPI, DX |
 
-### AI & Automation
-| Skill | Triggers | Descripción |
-|-------|----------|-------------|
-| **ai-agent-engineer** | `/agent`, `/tool` | Agentes IA, tool-use, multi-agent |
-| **mcp-builder** | `/mcp`, `/mcp-server`, `/tool-builder` | MCP Servers, Tools, Resources, Prompts |
-| **automation-engineer** | `/auto`, `/n8n`, `/webhook` | n8n workflows, automatizaciones |
-| **prompt-engineer** | `/prompt`, `/cot`, `/llm` | Optimización de prompts |
-
-### Platform & Tools
-| Skill | Triggers | Descripción |
-|-------|----------|-------------|
-| **supabase-expert** | `/supa`, `/supabase`, `/rls`, `/edge-function` | RLS, Auth, Edge Functions, Realtime, Storage |
-| **browser-agent** | `/browser`, `/scrape`, `/crawl`, `/automate` | Playwright/Puppeteer, scraping, flujos web automáticos |
-| **document-generator** | `/pdf`, `/doc`, `/excel`, `/pptx` | Generación de PDF, DOCX, XLSX, PPTX programáticos |
-| **seo-auditor** | `/seo`, `/audit`, `/lighthouse`, `/a11y` | SEO técnico, Core Web Vitals, WCAG, schema markup |
-
-### Management & Process
-| Skill | Triggers | Descripción |
-|-------|----------|-------------|
-| **product-manager** | `/pm`, `/product`, `/prd` | PRD, user stories, roadmap |
-| **architect** | `/arch`, `/design`, `/system` | Diseño de sistemas, C4, ADRs |
-| **tech-lead** | `/tl`, `/adr`, `/debt` | Decisiones técnicas, tech debt |
-| **scrum-master** | `/sm`, `/agile`, `/coach` | Ceremonias, sprints, retrospectivas |
-| **technical-writer** | `/doc`, `/readme`, `/guide` | Documentación, guías |
-| **ux-ui-designer** | `/ux`, `/ui`, `/design` | Design systems, UX research |
-
-### Methodologies
-| Skill | Triggers | Descripción |
-|-------|----------|-------------|
-| **bmad-methodology** | `/bmad` | Scale-Adaptive Intelligence, niveles 0-4 |
-| **swe-agent** | `/swe`, `/issue-solve`, `/trajectory` | Resolución autónoma de issues |
-| **spec-driven-dev** | `/spec-dev`, `/sdd-skill`, `/spec-method` | Pipeline: Specify→Plan→Tasks→Implement→Verify |
-<!-- SKILLS_CATALOG_END -->
+<!-- LMAGENT_REGISTRY:SKILLS_END -->
 
 ---
 

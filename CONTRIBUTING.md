@@ -60,11 +60,8 @@ lmagent/
 │   ├── docs/                   # Documentación extendida
 │   └── scripts/                # Scripts de utilidad del framework
 │
-├── AGENTS.md                   # Cerebro del framework (leer primero)
-├── CLAUDE.md                   # Entry point para Claude Code
-├── GEMINI.md                   # Entry point para Gemini CLI / Antigravity
 ├── README.md                   # Documentación principal
-└── package.json                # Paquete npm: @qubiit/lmagent
+└── package.json                # Metadata del framework
 ```
 
 ---
@@ -123,13 +120,12 @@ version: 1.0.0
 ```bash
 git clone https://github.com/QuBiit0/lmagent.git
 cd lmagent
-npm install
-npm link
+./scripts/install.sh
 
-# Probar cambios
-lmagent doctor
-lmagent validate
-lmagent tokens
+# Probar comandos locales
+node install.js doctor
+node scripts/validate_skills.js
+node scripts/token-analyzer.js
 ```
 
 ### Convenciones de Commits
