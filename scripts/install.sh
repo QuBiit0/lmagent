@@ -47,47 +47,20 @@ NODE_VERSION=$(node -v | cut -d 'v' -f 2)
 echo -e "${GREEN}✓ Node.js detectado (v${NODE_VERSION})${NC}"
 
 # ==========================================
-# Descargar Instalador Temporal
+# Descargar e Inicializar LMAgent
 # ==========================================
 ORIGINAL_PWD="$(pwd)"
-TMP_DIR="$ORIGINAL_PWD/.lmagent-tmp"
 
-echo -e "\n${CYAN}[2/3] Descargando Core Installer de LMAgent...${NC}"
-
-if [ -d "$TMP_DIR" ]; then
-    rm -rf "$TMP_DIR"
-fi
-
-echo -e "Clonando repositorio de forma transitoria..."
-git clone https://github.com/QuBiit0/lmagent.git "$TMP_DIR" --depth 1 --quiet
-
-# ==========================================
-# Ejecutar Instalador Local
-# ==========================================
-echo -e "\n${CYAN}[3/3] Ejecutando instalacion nativa en el proyecto ($ORIGINAL_PWD)...${NC}"
-
-TARGET_SCRIPT="$TMP_DIR/install.js"
-
-if [ ! -f "$TARGET_SCRIPT" ]; then
-    echo -e "${RED}❌ Error critico: No se pudo descargar el instalador base.${NC}"
-    exit 1
-fi
+echo -e "\n${CYAN}[2/2] Descargando e inicializando LMAgent ($ORIGINAL_PWD)...${NC}"
 
 set +e # Evitar que el script aborte inmediatamente si el hijo falla
-node "$TARGET_SCRIPT" init
+# Usamos npx de forma puramente transitiva, con encapsulacion de modulos
+npx --yes @qubiit/lmagent@latest init
 INIT_EXIT_CODE=$?
 set -e
 
-# ==========================================
-# Limpieza Final Automática
-# ==========================================
-if [ -d "$TMP_DIR" ]; then
-    rm -rf "$TMP_DIR"
-    echo -e "${NC}✓ Archivos temporales de instalación limpiados."
-fi
-
 if [ $INIT_EXIT_CODE -ne 0 ]; then
-    echo -e "\n${RED}❌ Ocurrió un error durante la inicialización.${NC}"
+    echo -e "\n${RED}❌ Ocurrió un error durante la carga npx o inicialización.${NC}"
     exit $INIT_EXIT_CODE
 fi
 
@@ -95,5 +68,5 @@ fi
 # Cierre
 # ==========================================
 echo -e "\n${CYAN}${BOLD}🎉 LMAgent fue integrado en tu proyecto local.${NC}"
-echo -e "${NC}Para interactuar con el framework en el futuro (actualizar, agregar skills), ejecuta:"
-echo -e "${BOLD}node .agents/tools/lmagent.js${NC}\n"
+echo -e "${NC}Para interactuar con la terminal de comandos en el futuro, utiliza npx:"
+echo -e "${BOLD}npx @qubiit/lmagent${NC}\n"

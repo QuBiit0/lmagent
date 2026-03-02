@@ -796,17 +796,6 @@ async function runInstall(options) {
         }
     }
 
-    // Tools Automáticos Locales
-    const toolsDir = path.join(coreDir, 'tools');
-    if (!fs.existsSync(toolsDir)) fs.mkdirSync(toolsDir, { recursive: true });
-
-    // Archivo js real que levanta el CLI
-    if (!fs.existsSync(path.join(toolsDir, 'lmagent.js')) && fs.existsSync(__filename)) {
-        fs.copyFileSync(__filename, path.join(toolsDir, 'lmagent.js'));
-    }
-
-    console.log(`  ${chalk.green('✔')} Local Runner creado en .agents/tools/lmagent.js`);
-
     // ── PASO 4: Limpieza de Root ──
     console.log(chalk.bold('\n🧹 Limpieza de archivos root:'));
     const allRootFiles = [

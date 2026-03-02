@@ -5,7 +5,7 @@
   },
   "version": "3.6.0",
   "files": [
-    "install.js",
+    "lmagent.js",
     "README.md",
     "LICENSE",
     "AGENTS.md",
@@ -19,14 +19,14 @@
     "node": ">=22.0.0"
   },
   "description": "Universal Agent Compatibility Layer & Rules Framework (Total Awareness Standard)",
-  "main": "install.js",
+  "main": "lmagent.js",
   "bin": {
-    "lmagent-skills": "install.js",
-    "lmagent": "install.js"
+    "lmagent-skills": "lmagent.js",
+    "lmagent": "lmagent.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node install.js"
+    "start": "node lmagent.js"
   },
   "keywords": [
     "ai",
