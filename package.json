@@ -76,6 +76,7 @@
   "author": "Leandro Martín Alvarez (QuBiit)",
   "license": "MIT",
   "dependencies": {
+    "@qubiit/lmagent": "github:QuBiit0/lmagent",
     "boxen": "^8.0.1",
     "chalk": "^4.1.2",
     "commander": "^13.1.0",
