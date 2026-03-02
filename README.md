@@ -17,9 +17,9 @@
 
 ---
 
-## 2. Installation (Universal Native Setup)
+## 2. Installation (Project-Local Setup)
 
-LMAgent installs a **global executable command** (`lmagent`). It runs natively on your system by cloning the source directly, bypassing any public registries.
+LMAgent installs directly into your current project directory (inside `.agents/`). It runs natively by cloning the source transitorily, bypassing package registries and avoiding global system pollution.
 
 Choose your operating system:
 
@@ -51,7 +51,7 @@ cd lmagent
 .\scripts\install.ps1
 ```
 
-*(These zero-friction scripts will automatically link `lmagent` to your global `$PATH` without relying on package managers).*
+*(These zero-friction scripts will automatically download and isolate `lmagent` inside your project without relying on package managers).*
 
 > **Nota:** Si Windows bloquea la instalación por políticas de seguridad, ejecuta: `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser`
 
@@ -60,32 +60,33 @@ This single command performs the entire setup:
 2. **Deploys** all 38 skills, 11 rules, and 13 workflows strictly to `.agents/`
 3. **Generates** the correct entry point (like `CLAUDE.md`, `GEMINI.md`, or bridge files)
 4. **Links** everything to the Universal Brain (`AGENTS.md`)
+5. **Creates** the local CLI runner in `.agents/tools/lmagent.js`
 
-> **Requires Node.js ≥ 22**. Works on macOS, Linux, and Windows. 
+> **Requires Node.js ≥ 18**. Works on macOS, Linux, and Windows. 
 > V3.6.0 introdujo la Auditoría de Reglas Modernas (Self-Healing, Playwright UI, 12-Factor, Prompting Multiagente).
 
 ---
 
 ## �️ CLI Reference
 
-LMAgent installs a **global executable command** (`lmagent`). All interactions with the framework are natively done through this single CLI.
+LMAgent operates entirely within your project. All interactions with the framework are natively done through the local runner script.
 
 ```bash
 # Core Operations
-lmagent init         # Initialize project and install framework (auto-detects agents)
-lmagent install      # Alias for init
-lmagent update       # Alias for init
-lmagent uninstall    # Remove all LMAgent files from project
-lmagent uninstall --all  # Also remove root entry points (CLAUDE.md, etc.)
+node .agents/tools/lmagent.js init         # Initialize project and install framework (auto-detects agents)
+node .agents/tools/lmagent.js install      # Alias for init
+node .agents/tools/lmagent.js update       # Alias for init
+node .agents/tools/lmagent.js uninstall    # Remove all LMAgent files from project
+node .agents/tools/lmagent.js uninstall --all  # Also remove root entry points (CLAUDE.md, etc.)
 
 # Diagnostics
-lmagent doctor       # Verify project configuration and check agent health
-lmagent validate     # Validate integrity of all skills (frontmatter parsing)
-lmagent tokens       # Analyze framework token consumption
+node .agents/tools/lmagent.js doctor       # Verify project configuration and check agent health
+node .agents/tools/lmagent.js validate     # Validate integrity of all skills (frontmatter parsing)
+node .agents/tools/lmagent.js tokens       # Analyze framework token consumption
 
 # Skills Management
-lmagent create-skill             # Create a new skill interactively
-lmagent skills add owner/repo    # Install external skill from GitHub (LMAgent format required)
+node .agents/tools/lmagent.js create-skill             # Create a new skill interactively
+node .agents/tools/lmagent.js skills add owner/repo    # Install external skill from GitHub (LMAgent format required)
 ```
 
 ---
@@ -247,13 +248,13 @@ Activate any skill by simply typing its trigger in the chat:
 
 ```bash
 # Create a new skill interactively
-lmagent create-skill
+node .agents/tools/lmagent.js create-skill
 
 # Install an external skill from GitHub
-lmagent skills add owner/repo-name
+node .agents/tools/lmagent.js skills add owner/repo-name
 
 # Validate all skills
-lmagent validate
+node .agents/tools/lmagent.js validate
 ```
 
 Skills follow the standard structure:

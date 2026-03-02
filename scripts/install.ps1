@@ -1,8 +1,9 @@
 <#
 .SYNOPSIS
-    LMAgent Universal Installer for Windows PowerShell
+    LMAgent Localized Installer for Windows PowerShell
 .DESCRIPTION
-    Instala de forma global el paquete @qubiit/lmagent desde GitHub y prepara el entorno.
+    Instala de forma local el framework LMAgent en el proyecto actual.
+    Descarga el core transitoriamente y ejecuta la inicialización nativa.
     Compatible con ejecución remota vía Invoke-RestMethod (irm).
 #>
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
@@ -22,7 +23,7 @@ function Write-Header {
 }
 
 Write-Header
-Write-Host "[1/4] Verificando dependencias locales..." -ForegroundColor Cyan
+Write-Host "[1/3] Verificando dependencias locales..." -ForegroundColor Cyan
 
 if (-not (Get-Command "node" -ErrorAction SilentlyContinue)) {
     Write-Host "X Error: Node.js no esta instalado o no figura en tu PATH." -ForegroundColor Red
@@ -37,59 +38,39 @@ if (-not (Get-Command "git" -ErrorAction SilentlyContinue)) {
 }
 
 $originalPath = Get-Location
-$installDir = Join-Path $HOME ".lmagent"
+$tmpDir = Join-Path $originalPath ".lmagent-tmp"
 
-Write-Host "`n[2/4] Obteniendo LMAgent desde GitHub ($installDir)..." -ForegroundColor Cyan
-if (Test-Path $installDir) {
-    Write-Host "Directorio encontrado. Actualizando repositorio..." -ForegroundColor DarkGray
-    Set-Location $installDir
-    git pull origin main --quiet
-    Set-Location $originalPath
-} else {
-    Write-Host "Clonando repositorio..." -ForegroundColor DarkGray
-    git clone https://github.com/QuBiit0/lmagent.git $installDir --depth 1 --quiet
+Write-Host "`n[2/3] Descargando Core Installer de LMAgent..." -ForegroundColor Cyan
+if (Test-Path $tmpDir) {
+    Remove-Item -Recurse -Force $tmpDir | Out-Null
 }
 
-Write-Host "`n[3/4] Vinculando LMAgent globalmente (Symlink)..." -ForegroundColor Cyan
+Write-Host "Clonando repositorio de forma transitoria..." -ForegroundColor DarkGray
+git clone https://github.com/QuBiit0/lmagent.git $tmpDir --depth 1 --quiet
 
-try {
-    $npmGlobalPrefix = npm config get prefix
-    $binDir = if ($npmGlobalPrefix) { $npmGlobalPrefix } else { "$env:APPDATA\npm" }
+Write-Host "`n[3/3] Ejecutando instalacion nativa en el proyecto ($originalPath)..." -ForegroundColor Cyan
 
-    if (-not (Test-Path $binDir)) {
-        New-Item -ItemType Directory -Force -Path $binDir | Out-Null
-    }
+$targetScript = Join-Path $tmpDir "install.js"
 
-    $lmagentCmdPath = Join-Path $binDir "lmagent.cmd"
-    $lmagentPs1Path = Join-Path $binDir "lmagent.ps1"
-    
-    $targetScript = Join-Path $installDir "install.js"
-    
-    $cmdContent = "@ECHO OFF`r`n`"node`" `"$targetScript`" %*"
-    Set-Content -Path $lmagentCmdPath -Value $cmdContent -Encoding UTF8
-
-    $ps1Content = "& `"node`" `"$targetScript`" `$args"
-    Set-Content -Path $lmagentPs1Path -Value $ps1Content -Encoding UTF8
-    
-    Write-Host "V Enlaces creados en $binDir" -ForegroundColor Green
-    
-} catch {
-    Write-Host "X Hubo un problema vinculando el paquete." -ForegroundColor Red
-    Write-Host "$_" -ForegroundColor DarkRed
+if (-not (Test-Path $targetScript)) {
+    Write-Host "X Error critico: No se pudo descargar el instalador base." -ForegroundColor Red
     Exit
 }
 
-Write-Host "`n[4/4] Inicializando entorno en el directorio actual..." -ForegroundColor Cyan
-
-$response = Read-Host "Deseas inicializar LMAgent en el directorio actual ($originalPath)? [Y/n]"
-
-if ($response -match "^n$|^no$") {
-    Write-Host "Saltando inicializacion. Puedes hacerlo luego ingresando: lmagent init" -ForegroundColor Cyan
-} else {
-    Write-Host "Ejecutando lmagent init..." -ForegroundColor Blue
-    & $lmagentCmdPath init
+try {
+    # Ejecutamos el instalador base interactivo
+    & "node" "$targetScript" init
+} catch {
+    Write-Host "X Ocurrio un error durante la inicializacion." -ForegroundColor Red
+} finally {
+    # Limpieza rigurosa del directorio temporal fuente
+    if (Test-Path $tmpDir) {
+        Remove-Item -Recurse -Force $tmpDir | Out-Null
+        Write-Host "V Archivos temporales de instalacion limpiados." -ForegroundColor DarkGray
+    }
 }
 
-Write-Host "`n🎉 LMAgent v3.6.0 está listo para trabajar!" -ForegroundColor Cyan
-Write-Host "Abre cualquier agente soportado para comenzar a delegar."
-Write-Host "Para ver la ayuda, escribe: lmagent --help`n"
+Write-Host "`n🎉 LMAgent fue integrado en tu proyecto local." -ForegroundColor Cyan
+Write-Host "Para interactuar con el framework en el futuro (actualizar, agregar skills), ejecuta:" -ForegroundColor Gray
+Write-Host "node .agents/tools/lmagent.js" -ForegroundColor White
+Write-Host ""

@@ -180,7 +180,15 @@ program.command('create-skill')
     .description('Crear un nuevo skill interactivamente')
     .action(() => {
         const { execSync } = require('child_process');
-        const scriptPath = path.join(__dirname, 'scripts', 'create_skill.js');
+        // If we are running from .agents/tools, scripts are one directory above if not copied, but actually we should just fall back directly to node executable or a bundled path.
+        // It's safer to resolve relative to current __dirname
+        let scriptPath = path.join(__dirname, 'scripts', 'create_skill.js');
+        if (!fs.existsSync(scriptPath)) {
+            // Running localized mode -> .agents/tools -> projectRoot/.agents/scripts isn't there, so we tell the user:
+            console.error(chalk.yellow(`⚠️  El auto-generador de skills requiere el core completo clonado.`));
+            console.error(chalk.yellow(`   Manualmente puedes crear la carpeta de tu skill en .agents/skills/`));
+            process.exit(1);
+        }
         try {
             execSync(`node "${scriptPath}"`, { stdio: 'inherit' });
         } catch (e) {
@@ -787,6 +795,17 @@ async function runInstall(options) {
             console.log(`  ${chalk.cyan('ℹ')} Memory: ${newCount} nuevos (existentes preservados)`);
         }
     }
+
+    // Tools Automáticos Locales
+    const toolsDir = path.join(coreDir, 'tools');
+    if (!fs.existsSync(toolsDir)) fs.mkdirSync(toolsDir, { recursive: true });
+
+    // Archivo js real que levanta el CLI
+    if (!fs.existsSync(path.join(toolsDir, 'lmagent.js')) && fs.existsSync(__filename)) {
+        fs.copyFileSync(__filename, path.join(toolsDir, 'lmagent.js'));
+    }
+
+    console.log(`  ${chalk.green('✔')} Local Runner creado en .agents/tools/lmagent.js`);
 
     // ── PASO 4: Limpieza de Root ──
     console.log(chalk.bold('\n🧹 Limpieza de archivos root:'));
