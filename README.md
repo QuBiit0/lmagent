@@ -41,7 +41,7 @@ cd lmagent
 
 **Direct Installation (Recommended):**
 ```powershell
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/QuBiit0/lmagent/main/scripts/install.ps1" -OutFile "$env:TEMP\install.ps1"; & "$env:TEMP\install.ps1"
+iwr -useb "https://raw.githubusercontent.com/QuBiit0/lmagent/main/scripts/install.ps1" | iex
 ```
 
 **Alternative (Manual Clone):**
