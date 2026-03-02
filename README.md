@@ -17,9 +17,9 @@
 
 ---
 
-## 2. Installation (Project-Local Setup)
+## 2. Installation (Universal Native Setup)
 
-LMAgent installs directly into your current project directory (inside `.agents/`). It runs natively by cloning the source transitorily, bypassing package registries and avoiding global system pollution.
+LMAgent installs a **global executable command** (`lmagent`). It runs natively on your system by cloning the source directly, bypassing the public npm registry.
 
 Choose your operating system:
 
@@ -51,7 +51,7 @@ cd lmagent
 .\scripts\install.ps1
 ```
 
-*(These zero-friction scripts will automatically download and isolate `lmagent` inside your project using NPX).*
+*(These zero-friction scripts will automatically install `lmagent` to your global environment using npm and GitHub).*
 
 > **Nota:** Si Windows bloquea la instalación por políticas de seguridad, ejecuta: `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser`
 
@@ -68,24 +68,24 @@ This single command performs the entire setup:
 
 ## 🛠️ CLI Reference
 
-LMAgent operates entirely within your project. All interactions with the framework are natively done through `npx` (which resolves dependencies silently and guarantees you are always using the latest agent codebase).
+LMAgent installs a **global executable command** (`lmagent`). All interactions with the framework are natively done through this single CLI.
 
 ```bash
 # Core Operations
-npx @qubiit/lmagent init         # Initialize project and install framework (auto-detects agents)
-npx @qubiit/lmagent install      # Alias for init
-npx @qubiit/lmagent update       # Alias for init
-npx @qubiit/lmagent uninstall    # Remove all LMAgent files from project
-npx @qubiit/lmagent uninstall --all  # Also remove root entry points (CLAUDE.md, etc.)
+lmagent init         # Initialize project and install framework (auto-detects agents)
+lmagent install      # Alias for init
+lmagent update       # Alias for init
+lmagent uninstall    # Remove all LMAgent files from project
+lmagent uninstall --all  # Also remove root entry points (CLAUDE.md, etc.)
 
 # Diagnostics
-npx @qubiit/lmagent doctor       # Verify project configuration and check agent health
-npx @qubiit/lmagent validate     # Validate integrity of all skills (frontmatter parsing)
-npx @qubiit/lmagent tokens       # Analyze framework token consumption
+lmagent doctor       # Verify project configuration and check agent health
+lmagent validate     # Validate integrity of all skills (frontmatter parsing)
+lmagent tokens       # Analyze framework token consumption
 
 # Skills Management
-npx @qubiit/lmagent create-skill             # Create a new skill interactively
-npx @qubiit/lmagent skills add owner/repo    # Install external skill from GitHub (LMAgent format required)
+lmagent create-skill             # Create a new skill interactively
+lmagent skills add owner/repo    # Install external skill from GitHub (LMAgent format required)
 ```
 
 ---
@@ -247,13 +247,13 @@ Activate any skill by simply typing its trigger in the chat:
 
 ```bash
 # Create a new skill interactively
-npx @qubiit/lmagent create-skill
+lmagent create-skill
 
 # Install an external skill from GitHub
-npx @qubiit/lmagent skills add owner/repo-name
+lmagent skills add owner/repo-name
 
 # Validate all skills
-npx @qubiit/lmagent validate
+lmagent validate
 ```
 
 Skills follow the standard structure:

@@ -27,19 +27,25 @@ echo -e "${BLUE}${BOLD}        The Agentic Engineering Framework       ${NC}"
 echo ""
 
 # ==========================================
-# Validaciones
+# Inicio del Instalador
 # ==========================================
-echo -e "${CYAN}[1/3] Verificando dependencias locales...${NC}"
+echo -e "\n${CYAN}[1/3] Verificando dependencias locales...${NC}"
 
 if ! command -v node &> /dev/null; then
-    echo -e "${RED}❌ Node.js no está instalado.${NC}"
-    echo -e "${YELLOW}Por favor instala Node.js (v18 o superior) desde https://nodejs.org/ y vuelve a intentar.${NC}"
+    echo -e "${RED}❌ Error: Node.js no está instalado o no figura en tu PATH.${NC}"
+    echo -e "${YELLOW}Por favor instala Node.js (v18+) desde https://nodejs.org/ y vuelve a intentar.${NC}"
+    exit 1
+fi
+
+if ! command -v npm &> /dev/null; then
+    echo -e "${RED}❌ Error: npm no está instalado.${NC}"
+    echo -e "${YELLOW}Asegúrate que npm fue instalado junto con Node.js.${NC}"
     exit 1
 fi
 
 if ! command -v git &> /dev/null; then
-    echo -e "${RED}❌ Git no está instalado.${NC}"
-    echo -e "${YELLOW}Por favor instala Git desde https://git-scm.com/ y vuelve a intentar.${NC}"
+    echo -e "${RED}❌ Error: git no está instalado o no figura en tu PATH.${NC}"
+    echo -e "${YELLOW}git es requerido para realizar la instalación directa desde GitHub.${NC}"
     exit 1
 fi
 
@@ -47,26 +53,48 @@ NODE_VERSION=$(node -v | cut -d 'v' -f 2)
 echo -e "${GREEN}✓ Node.js detectado (v${NODE_VERSION})${NC}"
 
 # ==========================================
-# Descargar e Inicializar LMAgent
+# Instalar Core Globalmente desde GitHub
 # ==========================================
-ORIGINAL_PWD="$(pwd)"
+echo -e "\n${CYAN}[2/3] Instalando LMAgent globalmente desde GitHub...${NC}"
 
-echo -e "\n${CYAN}[2/2] Descargando e inicializando LMAgent ($ORIGINAL_PWD)...${NC}"
-
-set +e # Evitar que el script aborte inmediatamente si el hijo falla
-# Usamos npx de forma puramente transitiva, con encapsulacion de modulos
-npx --yes @qubiit/lmagent@latest init
-INIT_EXIT_CODE=$?
+set +e
+npm install -g git+https://github.com/QuBiit0/lmagent.git --silent
+INSTALL_EXIT_CODE=$?
 set -e
 
-if [ $INIT_EXIT_CODE -ne 0 ]; then
-    echo -e "\n${RED}❌ Ocurrió un error durante la carga npx o inicialización.${NC}"
-    exit $INIT_EXIT_CODE
+if [ $INSTALL_EXIT_CODE -ne 0 ]; then
+    echo -e "${RED}❌ Hubo un problema instalando el paquete. Revisa tu conexión a internet o configuración de Git.${NC}"
+    exit $INSTALL_EXIT_CODE
+fi
+
+if ! command -v lmagent &> /dev/null; then
+    echo -e "${RED}❌ LMAgent fue instalado, pero el comando 'lmagent' no se reconoce.${NC}"
+    echo -e "${YELLOW}Asegurate que el directorio global de npm (~/.npm-global/bin o similar) esté en tu PATH.${NC}"
+    exit 1
+fi
+
+echo -e "${GREEN}✓ LMAgent instalado con éxito.${NC}"
+
+# ==========================================
+# Inicialización de Proyecto Actual
+# ==========================================
+echo -e "\n${CYAN}[3/3] Inicializando entorno en el directorio actual...${NC}"
+
+ORIGINAL_PWD="$(pwd)"
+echo -n "Deseas inicializar LMAgent en el directorio actual ($ORIGINAL_PWD)? [Y/n] "
+read response
+
+if [[ "$response" =~ ^([nN][oO]|[nN])$ ]]; then
+    echo -e "${CYAN}Saltando inicializacion. Puedes hacerlo luego ingresando: lmagent init${NC}"
+else
+    echo -e "${BLUE}Ejecutando lmagent init...${NC}"
+    lmagent init
+    echo -e "${GREEN}✓ Proyecto inicializado exitosamente.${NC}"
 fi
 
 # ==========================================
 # Cierre
 # ==========================================
-echo -e "\n${CYAN}${BOLD}🎉 LMAgent fue integrado en tu proyecto local.${NC}"
-echo -e "${NC}Para interactuar con la terminal de comandos en el futuro, utiliza npx:"
-echo -e "${BOLD}npx @qubiit/lmagent${NC}\n"
+echo -e "\n${CYAN}${BOLD}🎉 LMAgent está listo para trabajar!${NC}"
+echo -e "Abre cualquier agente soportado en este proyecto para comenzar a delegar."
+echo -e "${NC}Para ver la ayuda en cualquier momento, escribe: ${BOLD}lmagent --help${NC}\n"
