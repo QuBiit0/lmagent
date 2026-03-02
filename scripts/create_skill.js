@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * LMAgent Skill Generator — v3.5.0
+ * LMAgent Skill Generator — v3.6.0
  * 
  * Genera la estructura completa de un nuevo skill interactivamente.
  * 
