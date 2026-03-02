@@ -19,7 +19,7 @@
 
 ## 2. Installation (Universal Native Setup)
 
-LMAgent installs a **global executable command** (`lmagent`). You do not need `npm` or internet registries, it runs natively on your machine by cloning the source.
+LMAgent installs a **global executable command** (`lmagent`). It runs natively on your system by cloning the source directly, bypassing any public registries.
 
 Choose your operating system:
 
@@ -68,7 +68,7 @@ This single command performs the entire setup:
 
 ## �️ CLI Reference
 
-LMAgent installs a **global executable command** (`lmagent`). You do not need `npx` or local `npm` scripts to interact with the framework.
+LMAgent installs a **global executable command** (`lmagent`). All interactions with the framework are natively done through this single CLI.
 
 ```bash
 # Core Operations
