@@ -407,7 +407,8 @@ program.command('uninstall')
             const markerInProject = ide.markerFile && fs.existsSync(path.join(projectRoot, ide.markerFile));
             const rulesDirInProject = ide.rulesDir && fs.existsSync(path.join(projectRoot, ide.rulesDir));
             const skillsDirInProject = ide.skillsDir && fs.existsSync(path.join(projectRoot, ide.skillsDir));
-            return markerInProject || rulesDirInProject || skillsDirInProject || ide.value === 'generic';
+            const configInProject = ide.configFile && fs.existsSync(path.join(projectRoot, ide.configFile));
+            return markerInProject || rulesDirInProject || skillsDirInProject || configInProject || ide.value === 'generic';
         });
 
         const rootEntryFiles = ['CLAUDE.md', 'GEMINI.md', 'AGENTS.md', '.cursorrules', '.windsurfrules', '.windsurfrules.md', '.continuerules', '.goosehints', 'openclaw.json'];
@@ -491,17 +492,6 @@ program.command('uninstall')
                 const configStat = fs.statSync(path.join(projectRoot, ide.configFile));
                 if (configStat.isFile()) {
                     toRemove.push({ path: path.join(projectRoot, ide.configFile), type: 'file', label: ide.configFile });
-
-                    // Cleanup dir si el archivo estaba dentro de una carpeta y quedó vacía (ej. .github)
-                    const configDir = path.dirname(path.join(projectRoot, ide.configFile));
-                    if (configDir !== projectRoot && fs.existsSync(configDir)) {
-                        try {
-                            const dirContent = fs.readdirSync(configDir);
-                            if (dirContent.length === 1 && dirContent[0] === path.basename(ide.configFile)) {
-                                toRemove.push({ path: configDir, type: 'dir', label: path.dirname(ide.configFile) + '/' });
-                            }
-                        } catch (e) { }
-                    }
                 }
             }
 
