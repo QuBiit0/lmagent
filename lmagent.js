@@ -452,8 +452,10 @@ program.command('uninstall')
         }
 
         console.log('');
+        console.log('');
         let removed = 0;
         let errors = 0;
+        const parentsToClean = new Set();
 
         // Eliminar directorios y archivos de cada agente
         for (const ide of installedIdes) {
@@ -515,24 +517,36 @@ program.command('uninstall')
                     console.log(`  ${chalk.red('✘')} ${ide.name}: ${chalk.gray(item.label)} eliminado`);
                     removed++;
 
-                    // Si eliminamos un subdirectorio (ej. .cursor/rules), intentemos borrar el padre (.cursor) si quedó vacío.
-                    if (item.type === 'dir' || item.type === 'file') {
-                        const parentDir = path.dirname(item.path);
-                        if (parentDir !== projectRoot && fs.existsSync(parentDir)) {
-                            try {
-                                const remainingFiles = fs.readdirSync(parentDir);
-                                if (remainingFiles.length === 0) {
-                                    fs.rmdirSync(parentDir);
-                                    console.log(`  ${chalk.red('✘')} ${ide.name}: ${chalk.gray(path.basename(parentDir) + '/')} (padre vacío) eliminado`);
-                                }
-                            } catch (e) { } // ignorar fallos si no se puede borrar el directorio padre
-                        }
-                    }
+                    // Si eliminamos un item, registramos su directorio padre para revisar posteriormente si quedó vacío
+                    parentsToClean.add(path.dirname(item.path));
                 } catch (e) {
                     console.error(`  ${chalk.red('❌')} Error eliminando ${item.label}: ${e.message}`);
                     errors++;
                 }
             }
+        }
+
+        // --- Limpieza Recursiva de Directorios Padre Vacíos ---
+        // Iteramos repetidamente los 'parentsToClean' subiendo nivel a nivel hasta la raíz
+        let queue = Array.from(parentsToClean);
+        while (queue.length > 0) {
+            let nextQueue = new Set();
+            for (const parentDir of queue) {
+                // Prevenir borrar la raíz del proyecto o fuera de él
+                if (parentDir === projectRoot || !parentDir.startsWith(projectRoot)) continue;
+
+                if (fs.existsSync(parentDir)) {
+                    try {
+                        const dirContent = fs.readdirSync(parentDir);
+                        if (dirContent.length === 0) {
+                            fs.rmdirSync(parentDir);
+                            console.log(`  ${chalk.red('✘')} ${chalk.gray(path.relative(projectRoot, parentDir) + '/')} (directorio vacío) eliminado`);
+                            nextQueue.add(path.dirname(parentDir)); // Agregamos el padre del padre para la próxima iteración
+                        }
+                    } catch (e) { } // Fallo silencioso si no se puede leer o borrar
+                }
+            }
+            queue = Array.from(nextQueue);
         }
 
         // Eliminar entry points raíz si --all
