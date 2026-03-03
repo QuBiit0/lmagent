@@ -1224,10 +1224,11 @@ async function runDoctor() {
         if (markerExist || rulesExist || isGlobal) {
             ideFound = true;
             const parts = [];
-            if (isGlobal && !markerExist && !rulesExist) parts.push(chalk.blue('global'));
+            if (isGlobal && !markerExist && !rulesExist) parts.push(chalk.blue('detectado en OS'));
             if (bridgeExists) parts.push(chalk.green('bridge ✔'));
             else if (configExists) parts.push(chalk.green('config ✔'));
-            else parts.push(chalk.yellow('sin bridge'));
+            else if (!ide.bridgeFile && !ide.configFile) parts.push(chalk.green('nativo ✔'));
+            else parts.push(chalk.yellow('requiere inicializar'));
 
             console.log(`  ${chalk.green('✔')} ${ide.name} (${parts.join(', ')})`);
             ok++;
