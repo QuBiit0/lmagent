@@ -55,7 +55,23 @@ echo -e "${GREEN}✓ Node.js detectado (v${NODE_VERSION})${NC}"
 # ==========================================
 # Instalar Core Globalmente desde GitHub
 # ==========================================
-echo -e "\n${CYAN}[2/3] Instalando LMAgent globalmente desde GitHub...${NC}"
+echo -e "\n${CYAN}[2/3] Limpiando instalaciones obsoletas y actualizando LMAgent...${NC}"
+
+# Limpiar restos de versiones anteriores (v3.4.x o menores) instaladas localmente
+if [ -f "$HOME/.local/bin/lmagent" ]; then
+    echo -e "${YELLOW}  > Removiendo binario obsoleto en ~/.local/bin...${NC}"
+    rm -f "$HOME/.local/bin/lmagent"
+fi
+
+if [ -f "/usr/local/bin/lmagent" ]; then
+    echo -e "${YELLOW}  > Removiendo binario obsoleto en /usr/local/bin...${NC}"
+    rm -f "/usr/local/bin/lmagent" || sudo rm -f "/usr/local/bin/lmagent" || true
+fi
+
+if [ -d "$HOME/.lmagent" ]; then
+    echo -e "${YELLOW}  > Removiendo motor antiguo en ~/.lmagent/...${NC}"
+    rm -rf "$HOME/.lmagent"
+fi
 
 set +e
 npm install -g git+https://github.com/QuBiit0/lmagent.git --silent
