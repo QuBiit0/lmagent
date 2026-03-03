@@ -508,10 +508,26 @@ program.command('uninstall')
                     if (item.type === 'dir') {
                         fs.rmSync(item.path, { recursive: true, force: true });
                     } else {
-                        fs.unlinkSync(item.path);
+                        if (fs.existsSync(item.path)) {
+                            fs.unlinkSync(item.path);
+                        }
                     }
                     console.log(`  ${chalk.red('✘')} ${ide.name}: ${chalk.gray(item.label)} eliminado`);
                     removed++;
+
+                    // Si eliminamos un subdirectorio (ej. .cursor/rules), intentemos borrar el padre (.cursor) si quedó vacío.
+                    if (item.type === 'dir' || item.type === 'file') {
+                        const parentDir = path.dirname(item.path);
+                        if (parentDir !== projectRoot && fs.existsSync(parentDir)) {
+                            try {
+                                const remainingFiles = fs.readdirSync(parentDir);
+                                if (remainingFiles.length === 0) {
+                                    fs.rmdirSync(parentDir);
+                                    console.log(`  ${chalk.red('✘')} ${ide.name}: ${chalk.gray(path.basename(parentDir) + '/')} (padre vacío) eliminado`);
+                                }
+                            } catch (e) { } // ignorar fallos si no se puede borrar el directorio padre
+                        }
+                    }
                 } catch (e) {
                     console.error(`  ${chalk.red('❌')} Error eliminando ${item.label}: ${e.message}`);
                     errors++;
@@ -522,13 +538,16 @@ program.command('uninstall')
         // Eliminar entry points raíz si --all
         if (options.all) {
             for (const f of existingRootFiles) {
-                try {
-                    fs.unlinkSync(path.join(projectRoot, f));
-                    console.log(`  ${chalk.red('✘')} ${chalk.gray(f)} eliminado`);
-                    removed++;
-                } catch (e) {
-                    console.error(`  ${chalk.red('❌')} Error eliminando ${f}: ${e.message}`);
-                    errors++;
+                const filePath = path.join(projectRoot, f);
+                if (fs.existsSync(filePath)) {
+                    try {
+                        fs.unlinkSync(filePath);
+                        console.log(`  ${chalk.red('✘')} ${chalk.gray(f)} eliminado`);
+                        removed++;
+                    } catch (e) {
+                        console.error(`  ${chalk.red('❌')} Error eliminando ${f}: ${e.message}`);
+                        errors++;
+                    }
                 }
             }
         }
