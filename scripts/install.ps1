@@ -56,7 +56,26 @@ $nodeVersion = node -v
 Write-Host "V Node.js detectado ($nodeVersion)" -ForegroundColor Green
 
 
-Write-Host "`n[2/3] Instalando LMAgent globalmente desde GitHub..." -ForegroundColor Cyan
+Write-Host "`n[2/3] Limpiando instalaciones obsoletas y actualizando LMAgent..." -ForegroundColor Cyan
+
+# Limpiar restos de versiones anteriores (v3.4.x o menores) instaladas localmente
+$lmagentDir = Join-Path $HOME ".lmagent"
+if (Test-Path $lmagentDir) {
+    Write-Host "  > Removiendo motor antiguo en ~/.lmagent/..." -ForegroundColor Yellow
+    Remove-Item -Recurse -Force $lmagentDir -ErrorAction SilentlyContinue
+}
+
+$localBin = Join-Path $HOME ".local\bin\lmagent"
+if (Test-Path $localBin) {
+    Write-Host "  > Removiendo binario obsoleto en ~/.local/bin..." -ForegroundColor Yellow
+    Remove-Item -Force $localBin -ErrorAction SilentlyContinue
+}
+
+$localBinCmd = Join-Path $HOME ".local\bin\lmagent.cmd"
+if (Test-Path $localBinCmd) {
+    Write-Host "  > Removiendo binario cmd obsoleto en ~/.local/bin..." -ForegroundColor Yellow
+    Remove-Item -Force $localBinCmd -ErrorAction SilentlyContinue
+}
 
 try {
     # Instalamos directamente desde el repo fuente para evitar usar el registro de npm publico
