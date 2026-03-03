@@ -45,18 +45,18 @@ const CORE_DIRS = [
 const HOME_PATHS = {
     'cursor': ['.cursor'],
     'windsurf': ['.windsurf', '.codeium/windsurf'],
-    'claude': ['.claude'],
-    'cline': ['.cline'],
-    'roo': ['.roo'],
-    'vscode': ['.vscode'],
-    'trae': ['.trae'],
-    'zed': ['.config/zed'],
-    'augment': ['.augment'],
+    'vscode': ['.github', '.vscode'],
     'gemini': ['.gemini'],
     'codex': ['.codex'],
     'continue': ['.continue'],
     'goose': ['.config/goose'],
     'junie': ['.junie'],
+    'claude': ['.claude'],
+    'cline': ['.cline'],
+    'roo': ['.roo'],
+    'trae': ['.trae'],
+    'zed': ['.config/zed'],
+    'augment': ['.augment'],
     'opencode': ['.opencode'],
     'openhands': ['.openhands'],
     'antigravity': ['.gemini/antigravity', '.agent'],
@@ -623,6 +623,41 @@ async function deployCorePillars(options, projectRoot) {
     }
 }
 
+function setupSecurityFiles(projectRoot) {
+    const envPath = path.join(projectRoot, '.env');
+    const gitignorePath = path.join(projectRoot, '.gitignore');
+
+    // Setup .env
+    const envPlaceholder = `# LMAgent Framework Settings\nLMAGENT_API_KEY=\nOPENAI_API_KEY=\n`;
+    if (!fs.existsSync(envPath)) {
+        fs.writeFileSync(envPath, envPlaceholder, 'utf8');
+        console.log(`  ${chalk.green('✔')} .env (Creado con placeholders secure)`);
+    } else {
+        const envContent = fs.readFileSync(envPath, 'utf8');
+        let appendContent = '';
+        if (!envContent.includes('LMAGENT_API_KEY')) appendContent += `LMAGENT_API_KEY=\n`;
+        if (!envContent.includes('OPENAI_API_KEY')) appendContent += `OPENAI_API_KEY=\n`;
+
+        if (appendContent) {
+            fs.appendFileSync(envPath, `\n# LMAgent Framework Settings\n${appendContent}`, 'utf8');
+            console.log(`  ${chalk.yellow('✎')} .env (Actualizado con placeholders LMAgent)`);
+        }
+    }
+
+    // Setup .gitignore
+    const ignoreRules = `\n# LMAgent Security\n.env\n.agents_memory/*.md\n!.agents_memory/01-global.md\n`;
+    if (!fs.existsSync(gitignorePath)) {
+        fs.writeFileSync(gitignorePath, ignoreRules.trim() + '\n', 'utf8');
+        console.log(`  ${chalk.green('✔')} .gitignore (Creado con reglas de seguridad)`);
+    } else {
+        const gitignoreContent = fs.readFileSync(gitignorePath, 'utf8');
+        if (!gitignoreContent.includes('.agents_memory')) {
+            fs.appendFileSync(gitignorePath, ignoreRules, 'utf8');
+            console.log(`  ${chalk.yellow('✎')} .gitignore (Actualizado con reglas de privacidad LMAgent)`);
+        }
+    }
+}
+
 async function runInstall(options) {
     console.clear();
     const branding = figlet.textSync('LMAGENT', { font: 'ANSI Shadow' });
@@ -633,6 +668,9 @@ async function runInstall(options) {
 
     // ── PASO 1: Desplegar Pilares (AGENTS.md) ──
     await deployCorePillars(options, projectRoot);
+
+    // ── PASO Seguridad: Generar / Configurar .env y .gitignore ──
+    setupSecurityFiles(projectRoot);
 
     // ── PASO 2: Detección Automática de Agentes (Global + Proyecto) ──
     // Detección global: busca agentes instalados en el HOME del usuario
