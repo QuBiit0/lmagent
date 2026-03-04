@@ -60,6 +60,25 @@ const HOME_PATHS = {
     'opencode': ['.opencode'],
     'openhands': ['.openhands'],
     'antigravity': ['.gemini/antigravity', '.agent'],
+    'codebuddy': ['.codebuddy'],
+    'command-code': ['.commandcode'],
+    'crush': ['.crush'],
+    'droid': ['.factory'],
+    'iflow': ['.iflow'],
+    'kilo': ['.kilocode'],
+    'kiro': ['.kiro'],
+    'kode': ['.kode'],
+    'mcpjam': ['.mcpjam'],
+    'mistral': ['.vibe'],
+    'mux': ['.mux'],
+    'pi': ['.pi'],
+    'qoder': ['.qoder'],
+    'qwen': ['.qwen'],
+    'trae-cn': ['.trae-cn'],
+    'zencoder': ['.zencoder'],
+    'neovate': ['.neovate'],
+    'pochi': ['.pochi'],
+    'adal': ['.adal']
 };
 
 // Helper: Detectar agentes instalados GLOBALMENTE en el HOME del usuario
