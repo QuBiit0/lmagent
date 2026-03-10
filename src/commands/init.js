@@ -403,6 +403,12 @@ async function runInstall(options) {
                     }
                 }
 
+                // Si el Agent Config requiere un archivo maestro ya despachado, saltar clonas.
+                if (ide.configFile === 'AGENTS.md' || ide.configFile === 'CLAUDE.md' || ide.configFile === 'GEMINI.md') {
+                    console.log('  ' + chalk.cyan('✔') + ' ' + ide.name + ': ' + ide.configFile + ' (Referenciado)');
+                    continue;
+                }
+
                 try {
                     if (!fs.existsSync(path.dirname(configPath))) fs.mkdirSync(path.dirname(configPath), { recursive: true });
                     if (!fs.existsSync(configPath) || options.force) {
