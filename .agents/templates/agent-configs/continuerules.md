@@ -2,7 +2,7 @@
 > Este archivo es leído automáticamente por Continue al iniciar una sesión.
 
 ## SOURCE OF TRUTH
-**Lee AGENTS.md inmediatamente 👉 [AGENTS.md](./AGENTS.md)**
+**Lee AGENTS.md inmediatamente 👉 [AGENTS.md](AGENTS.md)**
 
 ## Reglas Activas
 Este proyecto usa el framework LMAgent. Las reglas completas están en `.continue/rules/`.

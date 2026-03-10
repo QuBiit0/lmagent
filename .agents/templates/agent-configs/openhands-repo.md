@@ -2,7 +2,7 @@
 > Este archivo es leído automáticamente por OpenHands como instrucciones del repositorio.
 
 ## SOURCE OF TRUTH
-**Lee AGENTS.md inmediatamente 👉 [AGENTS.md](./AGENTS.md)**
+**Lee AGENTS.md inmediatamente 👉 [AGENTS.md](AGENTS.md)**
 
 ## Instrucciones para el Agente
 Este repositorio usa el framework LMAgent V{{MAJOR}}.

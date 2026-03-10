@@ -3,11 +3,11 @@
 > Contexto Activo: Este proyecto utiliza el estándar LMAgent V{{MAJOR}}.
 
 ## 🚨 SOURCE OF TRUTH (CEREBRO)
-**TU CONTEXTO Y REGLAS VIVEN AQUÍ 👉 [AGENTS.md](./AGENTS.md)**
+**TU CONTEXTO Y REGLAS VIVEN AQUÍ 👉 [AGENTS.md](AGENTS.md)**
 *Lee este archivo INMEDIATAMENTE para obtener tu identidad, skills y reglas operativas.*
 
 ## 🔄 ARRANQUE AUTOMÁTICO (Haz esto al iniciar cada sesión)
-1. **Lee [AGENTS.md](./AGENTS.md)** — Tu catálogo completo de capacidades
+1. **Lee [AGENTS.md](AGENTS.md)** — Tu catálogo completo de capacidades
 2. **Lee `.agents/rules/00-master.md`** — Reglas, protocolo de trabajo y triggers
 3. **Si existe `.agents/memory/02-active-context.md`** — Recupera contexto previo
 4. **Clasifica la tarea** (Nivel 0-4) y activa el skill apropiado
