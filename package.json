@@ -6,6 +6,7 @@
   "version": "4.0.0",
   "files": [
     "lmagent.js",
+    "src",
     "README.md",
     "LICENSE",
     "AGENTS.md",
