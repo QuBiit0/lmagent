@@ -19,6 +19,8 @@ const PACKAGE_MEMORY_DIR = path.join(ROOT_DIR, '.agents', 'memory');
 const INIT_FILES = [
     { src: 'AGENTS.md', desc: 'Catálogo de capacidades LMAgent (Entry Point Universal)', versionTemplate: false },
     { src: 'AGENTS_CATALOG.md', desc: 'Registro de Tablas Masivas LMAgent', versionTemplate: false },
+    { src: 'CLAUDE.md', desc: 'Documento Maestro para Anthropic Claude e IDEs OpenCode', versionTemplate: true },
+    { src: 'GEMINI.md', desc: 'Documento Maestro para Google Gemini e IDEs Antigravity', versionTemplate: true }
 ];
 
 // Directorios core a verificar en .agents/ (usado por doctor)
