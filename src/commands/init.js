@@ -7,6 +7,7 @@ const figlet = require('figlet');
 
 const {
     PKG_VERSION,
+    ROOT_DIR,
     PACKAGE_SKILLS_DIR,
     PACKAGE_RULES_DIR,
     PACKAGE_WORKFLOWS_DIR,
@@ -32,7 +33,7 @@ function arePathsEqual(p1, p2) {
 async function deployCorePillars(options, projectRoot) {
     console.log(chalk.bold('\n🚀 Desplegando Pilares de Inteligencia (Contexto Root):'));
     for (const file of INIT_FILES) {
-        const srcPath = path.join(__dirname, file.src);
+        const srcPath = path.join(ROOT_DIR, file.src);
         const destPath = path.join(projectRoot, file.src);
 
         if (fs.existsSync(srcPath)) {
@@ -359,7 +360,7 @@ async function runInstall(options) {
         if (ide.configFile) {
             if (ide.configFile.endsWith('.json') || ide.configFile.endsWith('.yaml') || ide.configFile.endsWith('.yml')) {
                 // Structured configs: use template if exists
-                const AGENT_CONFIGS_TEMPLATE_DIR = path.join(__dirname, '.agents', 'templates', 'agent-configs');
+                const AGENT_CONFIGS_TEMPLATE_DIR = path.join(ROOT_DIR, '.agents', 'templates', 'agent-configs');
                 const templateFile = ide.configTemplate ? path.join(AGENT_CONFIGS_TEMPLATE_DIR, ide.configTemplate) : null;
                 if (templateFile && fs.existsSync(templateFile)) {
                     const configPath = path.join(projectRoot, ide.configFile);
@@ -375,7 +376,7 @@ async function runInstall(options) {
             } else {
                 // Markdown configs (CLAUDE.md, GEMINI.md, copilot-instructions, etc.)
                 const configPath = path.join(projectRoot, ide.configFile);
-                const AGENT_CONFIGS_TEMPLATE_DIR = path.join(__dirname, '.agents', 'templates', 'agent-configs');
+                const AGENT_CONFIGS_TEMPLATE_DIR = path.join(ROOT_DIR, '.agents', 'templates', 'agent-configs');
                 const templateFile = ide.configTemplate
                     ? path.join(AGENT_CONFIGS_TEMPLATE_DIR, ide.configTemplate)
                     : path.join(AGENT_CONFIGS_TEMPLATE_DIR, '_generic.md');
@@ -394,7 +395,7 @@ async function runInstall(options) {
 
                 // Si es un archivo raíz (CLAUDE.md, GEMINI.md), usar contenido del paquete
                 if (!ide.configFile.includes('/')) {
-                    const srcFile = path.join(__dirname, ide.configFile);
+                    const srcFile = path.join(ROOT_DIR, ide.configFile);
                     if (fs.existsSync(srcFile)) {
                         content = fs.readFileSync(srcFile, 'utf8')
                             .replace(/\{\{VERSION\}\}/g, PKG_VERSION)
