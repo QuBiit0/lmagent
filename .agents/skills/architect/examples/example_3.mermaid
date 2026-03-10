@@ -1,0 +1,18 @@
+C4Container
+    title Container diagram for Internet Banking System
+
+    Person(customer, "Personal Banking Customer", "A customer of the bank, with personal bank accounts.")
+
+    System_Boundary(c1, "Internet Banking") {
+        Container(web_app, "Single-Page App", "JavaScript, React", "Delivers the static content and the Internet banking SPA")
+        Container(api, "API Application", "Java, Spring MVC", "Provides Internet banking functionality via JSON/HTTPS API")
+        ContainerDb(database, "Database", "Relational Database Schema", "Stores user registration information, hashed auth credentials, access logs, etc.")
+    }
+
+    System_Ext(email_system, "E-mail System", "The internal Microsoft Exchange system")
+
+    Rel(customer, web_app, "Uses", "HTTPS")
+    Rel(customer, api, "Uses", "HTTPS")
+    Rel(web_app, api, "Uses", "JSON/HTTPS")
+    Rel(api, email_system, "Sends e-mails using", "SMTP")
+    Rel(api, database, "Reads from and writes to", "JDBC")

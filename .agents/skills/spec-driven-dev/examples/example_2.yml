@@ -1,0 +1,24 @@
+# Template: templates/spec.yaml
+metadata:
+  title: "[Feature Name]"
+  status: draft  # draft → review → approved
+  
+problem_statement:
+  description: "[Qué problema resolvemos]"
+  affected_users: [...]
+  evidence: [...]
+
+solution:
+  overview: "[Descripción de alto nivel]"
+  in_scope: [...]
+  out_of_scope: [...]
+
+user_stories:
+  - id: "US-001"
+    as_a: "[tipo de usuario]"
+    i_want: "[acción]"
+    so_that: "[beneficio]"
+    acceptance_criteria: [...]
+
+success_metrics:
+  primary: { metric, baseline, target }

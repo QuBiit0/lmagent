@@ -28,7 +28,7 @@ const CURRENT_VERSION = JSON.parse(pkgContent).version;
 // ─── Configuración ────────────────────────────────────────────
 const REQUIRED_FIELDS = ['name', 'description', 'role', 'type', 'version', 'icon', 'expertise', 'activates_on', 'triggers'];
 const VALID_TYPES = ['agent_persona', 'methodology'];
-const OPTIONAL_DIRS = ['scripts', 'references', 'assets'];
+const OPTIONAL_DIRS = ['scripts', 'references', 'assets', 'examples'];
 
 // ─── Colores (sin dependencias) ───────────────────────────────
 const c = {

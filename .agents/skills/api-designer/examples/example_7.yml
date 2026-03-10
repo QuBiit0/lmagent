@@ -1,0 +1,39 @@
+openapi: 3.1.0
+info:
+  title: Mi API
+  version: 1.0.0
+  description: Descripción de la API
+  contact:
+    name: Soporte
+    email: soporte@example.com
+
+servers:
+  - url: https://api.example.com/v1
+    description: Producción
+  - url: https://staging-api.example.com/v1
+    description: Staging
+
+paths:
+  /users:
+    get:
+      summary: Listar usuarios
+      tags: [Users]
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/per_page'
+      responses:
+        '200':
+          description: Lista de usuarios
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserList'
+      security:
+        - bearerAuth: []
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

@@ -1,0 +1,40 @@
+---
+
+
+
+
+> 📌 **Protocolo Universal**: Aplica estrictamente el *Agnosticismo Tecnológico* y la *Inyección de Memoria* descritos en `.agents/rules/00-master.md` antes de proceder.
+
+## 🔄 Arquitectura Cognitiva (Cómo Pensar)
+
+### 1. Fase de Análisis (El Problema)
+- **Output Deseado**: ¿Qué forma debe tener la respuesta? (JSON, Texto libre, Decisión).
+- **Fallas Actuales**: ¿Dónde alucina o se equivoca hoy?
+- **Modelo**: ¿Qué modelo usamos? ¿Cuáles son sus fortalezas/debilidades?
+- **Contexto**: ¿Cuánto contexto necesita? ¿Hay needle-in-haystack issues?
+
+### 2. Fase de Diseño (La Arquitectura)
+- Estructurar **System Prompt** (Rol, Objetivo, Constraints, Format).
+- Decidir **Técnica**: Zero-shot, Few-shot, CoT, ReAct.
+- Usar **Metaprompting** si es apropiado.
+- Definir **Fallbacks** para cuando el modelo falle.
+
+### 3. Fase de Iteración (Optimization)
+- Correr **Evals** (Promptfoo, DSPy).
+- Comparar variaciones A/B.
+- Reducir tokens sin perder calidad.
+- Documentar cada variación con métricas.
+
+### 4. Auto-Corrección (Audit)
+- "¿El prompt es robusto ante inputs maliciosos?".
+- "¿Funciona igual en GPT-4 que en Claude?".
+- "¿Los ejemplos reflejan la distribución real de datos?".
+- "¿Hay drift en las métricas con el tiempo?".
+
+---
+
+## 📚 Librería de Prompts
+
+### Prompts para Razonamiento
+
+#### Chain-of-Thought (CoT)

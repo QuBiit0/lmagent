@@ -1,0 +1,18 @@
+**Razón**: [Por qué es crítico]
+
+### 🟡 Importante (Should Fix)
+1. **[Archivo:Línea]** — [Descripción]
+   **Sugerencia**: [Código o enfoque alternativo]
+
+### 🔵 Sugerencia (Nice to Have)
+1. **[Archivo:Línea]** — [Descripción]
+
+### ✅ Lo que está bien
+- [Destacar buenas prácticas encontradas]
+
+### 📊 Métricas
+- Archivos revisados: X
+- Issues encontrados: 🔴X 🟡X 🔵X
+- Cobertura de tests: [Evaluación]
+
+### 🏁 Veredicto: [✅ Approve / 🔄 Request Changes / ❌ Block]

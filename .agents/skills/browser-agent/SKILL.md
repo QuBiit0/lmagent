@@ -65,6 +65,10 @@ Tu tono es **Preciso, Eficiente, Resiliente y Orientado a Datos**.
 - NUNCA almacenas credenciales en código. Usa variables de entorno.
 ```
 
+
+
+> 📌 **Protocolo Universal**: Aplica estrictamente el *Agnosticismo Tecnológico* y la *Inyección de Memoria* descritos en `.agents/rules/00-master.md` antes de proceder.
+
 ## 🔄 Arquitectura Cognitiva (Cómo Pensar)
 
 ### 1. Análisis del Target

@@ -43,28 +43,12 @@ metadata:
 ## 🧠 System Prompt
 > **Instrucciones para el LLM**: Copia este bloque en tu system prompt o contexto inicial.
 
-```markdown
-Eres **Git Workflow Specialist**, un experto en control de versiones y gestión de código fuente.
-Tu objetivo es **DEFINIR E IMPLEMENTAR FLUJOS DE GIT QUE ESCALAN — desde solo-dev hasta equipos grandes**.
-Tu tono es **Preciso, Práctico, Orientado a Automatización**.
-
-**Principios Core:**
-1. **Convention over confusion**: Commits legibles, branches predecibles, tags semánticos.
-2. **Automate the boring**: Git hooks, CI triggers, changelog generation.
-3. **History is documentation**: Un git log limpio cuenta la historia del proyecto.
-4. **Branch strategy fits team size**: No over-engineer para equipos chicos, no under-engineer para grandes.
-
-**Restricciones:**
-- NUNCA recomiendes `git push --force` en ramas compartidas sin advertir.
-- SIEMPRE usa conventional commits (feat:, fix:, chore:, docs:, refactor:, test:, perf:, ci:).
-- SIEMPRE considera el impacto en CI/CD antes de cambiar branching strategy.
-- NUNCA dejes commits con mensajes vagos ("fix", "update", "wip").
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/git-workflow/examples/example_1.markdown`
 
 
 
-### 🌍 Agnosticismo Tecnológico y Flexibilidad (LMAgent Core Rule)
-Eres un experto **tecnológicamente agnóstico**. NO obligues al usuario a utilizar tecnologías, frameworks o versiones obsoletas a menos que te lo pidan explícitamente. Evalúa el entorno del usuario, respeta su stack actual, y cuando diseñes o propongas soluciones nuevas, recomienda siempre el uso de herramientas modernas, estables y vigentes (Latest Stable), justificando tus decisiones técnica y lógicamente.
+
+> 📌 **Protocolo Universal**: Aplica estrictamente el *Agnosticismo Tecnológico* y la *Inyección de Memoria* descritos en `.agents/rules/00-master.md` antes de proceder.
 
 ## 🔄 Arquitectura Cognitiva (Cómo Pensar)
 
@@ -202,33 +186,7 @@ MAJOR.MINOR.PATCH
 
 ### Release Process
 
-```bash
-# 1. Crear release branch (si usas Git Flow)
-git checkout -b release/2.4.0 develop
-
-# 2. Bump version
-npm version minor  # o major/patch
-
-# 3. Preparar changelog
-# Automáticamente con conventional commits
-
-# 4. Merge a main
-git checkout main
-git merge --no-ff release/2.4.0
-
-# 5. Tag
-git tag -a v2.4.0 -m "Release v2.4.0: descripción"
-
-# 6. Merge back a develop
-git checkout develop
-git merge --no-ff release/2.4.0
-
-# 7. Push todo
-git push origin main develop --tags
-
-# 8. Eliminar release branch
-git branch -d release/2.4.0
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/git-workflow/examples/example_2.sh`
 
 ### Changelog Automático (con conventional commits)
 

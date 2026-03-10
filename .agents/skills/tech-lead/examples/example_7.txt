@@ -1,0 +1,17 @@
+Junior → Mid:
+- Ownership de features
+- Code review básico
+- Testing mindset
+- Debugging skills
+
+Mid → Senior:
+- Diseño de sistemas
+- Mentoring de juniors
+- Decisiones técnicas
+- Cross-team communication
+
+Senior → Staff/Lead:
+- Estrategia técnica
+- Influencia sin autoridad
+- Desarrollo de equipo
+- Technical vision

@@ -1,0 +1,15 @@
+my-mcp-server/
+├── src/
+│   ├── index.ts          # Entry point
+│   ├── server.ts         # MCP server config
+│   ├── tools/
+│   │   ├── index.ts      # Tool registry
+│   │   ├── search.ts     # Tool: search
+│   │   └── create.ts     # Tool: create
+│   ├── resources/
+│   │   └── schema.ts     # Resource: schema
+│   └── prompts/
+│       └── review.ts     # Prompt: code_review
+├── package.json
+├── tsconfig.json
+└── README.md

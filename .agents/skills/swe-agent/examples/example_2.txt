@@ -1,0 +1,22 @@
+🤠 INFO ========================= STEP 1 =========================
+💭 THOUGHT: El issue reporta que validate_email() falla con input None.
+   Necesito localizar la función primero.
+🎬 ACTION: file_search(pattern="def validate_email", path="app/")
+📤 OBSERVATION: Found in app/utils/validators.py:42
+
+🤠 INFO ========================= STEP 2 =========================
+💭 THOUGHT: Encontré la función. Voy a leer el código para entender
+   el flujo actual y por qué None causa un error.
+🎬 ACTION: file_read(path="app/utils/validators.py", start_line=40, end_line=55)
+📤 OBSERVATION: La función no valida si email es None antes de .strip()
+
+🤠 INFO ========================= STEP 3 =========================
+💭 THOUGHT: La causa raíz es clara: falta guard clause para None.
+   Voy a agregar validación y luego correr lint.
+🎬 ACTION: edit_and_lint(
+    file="app/utils/validators.py",
+    content="...",
+    auto_fix=true,
+    run_tests=true
+)
+📤 OBSERVATION: File updated. Lint passed. Tests: 15 passed, 0 failed.

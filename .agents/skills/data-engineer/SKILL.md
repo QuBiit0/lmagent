@@ -45,28 +45,12 @@ metadata:
 ## 🧠 System Prompt
 > **Instrucciones para el LLM**: Copia este bloque en tu system prompt o contexto inicial.
 
-```markdown
-Eres **Data Engineer & DBA**, el guardián de la integridad, consistencia y rendimiento de los datos.
-Tu objetivo es **GARANTIZAR DATOS CONSISTENTES, SEGUROS Y RÁPIDOS**.
-Tu tono es **Metódico, Preciso y Conservador (los datos son sagrados)**.
-
-**Principios Core:**
-1. **Integridad ante todo**: Constraints (FK, Check, Unique) son tus mejores amigos.
-2. **Performance by Design**: No arregles queries lentas, diseña esquemas rápidos.
-3. **Safety First**: Nunca ejecutes un `DROP` o `ALTER` sin backup y transacción.
-4. **N+1 es el enemigo**: Cada query cuenta. Batch o JOINs inteligentes.
-
-**Restricciones:**
-- NUNCA permites N+1 queries en el diseño.
-- SIEMPRE usas migraciones versionadas (Alembic, Prisma Migrate).
-- SIEMPRE analizas el `EXPLAIN ANALYZE` antes de aprobar una query compleja.
-- NUNCA ejecutas DDL destructivo (DROP, TRUNCATE) sin backup verificado.
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/data-engineer/examples/example_1.markdown`
 
 
 
-### 🌍 Agnosticismo Tecnológico y Flexibilidad (LMAgent Core Rule)
-Eres un experto **tecnológicamente agnóstico**. NO obligues al usuario a utilizar tecnologías, frameworks o versiones obsoletas a menos que te lo pidan explícitamente. Evalúa el entorno del usuario, respeta su stack actual, y cuando diseñes o propongas soluciones nuevas, recomienda siempre el uso de herramientas modernas, estables y vigentes (Latest Stable), justificando tus decisiones técnica y lógicamente.
+
+> 📌 **Protocolo Universal**: Aplica estrictamente el *Agnosticismo Tecnológico* y la *Inyección de Memoria* descritos en `.agents/rules/00-master.md` antes de proceder.
 
 ## 🔄 Arquitectura Cognitiva (Cómo Pensar)
 
@@ -162,29 +146,7 @@ tenant_id UUID NOT NULL,
 
 ### Relationship Patterns
 
-```sql
--- One-to-Many (FK en el "Many")
-CREATE TABLE orders (
-    id UUID PRIMARY KEY,
-    user_id UUID NOT NULL REFERENCES users(id),
-    -- ...
-);
-
--- Many-to-Many (tabla pivot)
-CREATE TABLE user_roles (
-    user_id UUID REFERENCES users(id) ON DELETE CASCADE,
-    role_id UUID REFERENCES roles(id) ON DELETE CASCADE,
-    assigned_at TIMESTAMPTZ DEFAULT NOW(),
-    PRIMARY KEY (user_id, role_id)
-);
-
--- One-to-One (FK unique)
-CREATE TABLE user_profiles (
-    id UUID PRIMARY KEY,
-    user_id UUID UNIQUE NOT NULL REFERENCES users(id),
-    -- ...
-);
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/data-engineer/examples/example_2.sql`
 
 ## Query Optimization
 
@@ -204,153 +166,27 @@ SELECT * FROM orders WHERE user_id = 'xxx';
 
 ### Index Strategy
 
-```sql
--- 1. Índices para filtros frecuentes
-CREATE INDEX idx_orders_status ON orders(status);
-
--- 2. Índice compuesto para múltiples columnas
-CREATE INDEX idx_orders_user_status ON orders(user_id, status);
-
--- 3. Índice parcial para subconjuntos
-CREATE INDEX idx_orders_pending ON orders(created_at) 
-WHERE status = 'pending';
-
--- 4. Índice para ordenamiento
-CREATE INDEX idx_orders_created_desc ON orders(created_at DESC);
-
--- 5. Índice para búsqueda full-text
-CREATE INDEX idx_products_search ON products 
-USING GIN (to_tsvector('spanish', name || ' ' || description));
-
--- 6. Índice para JSONB
-CREATE INDEX idx_orders_metadata ON orders 
-USING GIN (metadata);
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/data-engineer/examples/example_3.sql`
 
 ### Query Patterns
 
-```sql
--- ✅ BUENO: Usar índices
-SELECT * FROM orders 
-WHERE user_id = $1 
-  AND status = 'completed'
-ORDER BY created_at DESC
-LIMIT 10;
-
--- ❌ MALO: Funciones sobre columnas indexadas
-SELECT * FROM users 
-WHERE LOWER(email) = 'test@example.com';
-
--- ✅ MEJOR: Índice expression o dato ya normalizado
-CREATE INDEX idx_users_email_lower ON users(LOWER(email));
-
--- ❌ MALO: SELECT *
-SELECT * FROM orders WHERE user_id = $1;
-
--- ✅ MEJOR: Solo columnas necesarias
-SELECT id, status, total, created_at 
-FROM orders WHERE user_id = $1;
-
--- ❌ MALO: N+1 queries
-FOR user IN users:
-    SELECT * FROM orders WHERE user_id = user.id
-
--- ✅ MEJOR: JOIN o subquery
-SELECT u.*, array_agg(o.*) as orders
-FROM users u
-LEFT JOIN orders o ON o.user_id = u.id
-GROUP BY u.id;
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/data-engineer/examples/example_4.sql`
 
 ## Migrations
 
 ### Migration Template
 
-```sql
--- migrations/20240121_add_orders_table.sql
-
--- Up Migration
-BEGIN;
-
--- 1. Verificar idempotencia
-DO $$
-BEGIN
-    IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'orders') THEN
-        RAISE EXCEPTION 'Table orders already exists';
-    END IF;
-END $$;
-
--- 2. Crear tabla
-CREATE TABLE orders (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    user_id UUID NOT NULL REFERENCES users(id),
-    status VARCHAR(20) DEFAULT 'pending',
-    total DECIMAL(10,2) NOT NULL,
-    created_at TIMESTAMPTZ DEFAULT NOW(),
-    updated_at TIMESTAMPTZ DEFAULT NOW()
-);
-
--- 3. Crear índices
-CREATE INDEX idx_orders_user ON orders(user_id);
-CREATE INDEX idx_orders_status ON orders(status);
-
--- 4. Registrar migración
-INSERT INTO _migrations (name, applied_at) 
-VALUES ('20240121_add_orders_table', NOW());
-
-COMMIT;
-
--- Down Migration (en archivo separado o comentado)
--- DROP TABLE orders;
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/data-engineer/examples/example_5.sql`
 
 ### Safe Migration Practices
 
-```sql
--- ✅ Agregar columna nullable (no lock)
-ALTER TABLE users ADD COLUMN phone VARCHAR(20);
-
--- ❌ PELIGROSO: Agregar columna NOT NULL sin default
--- Causa lock de tabla completa
-ALTER TABLE users ADD COLUMN required_field VARCHAR(20) NOT NULL;
-
--- ✅ SEGURO: En pasos
-ALTER TABLE users ADD COLUMN required_field VARCHAR(20);
-UPDATE users SET required_field = 'default' WHERE required_field IS NULL;
-ALTER TABLE users ALTER COLUMN required_field SET NOT NULL;
-
--- ✅ Crear índice sin bloqueo
-CREATE INDEX CONCURRENTLY idx_users_phone ON users(phone);
-
--- ⚠️ Renombrar columna (requiere cambios en app)
-ALTER TABLE users RENAME COLUMN old_name TO new_name;
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/data-engineer/examples/example_6.sql`
 
 ## Backup & Recovery
 
 ### Backup Strategy
 
-```bash
-# Backup completo diario
-pg_dump -Fc -U postgres mydb > backup_$(date +%Y%m%d).dump
-
-# Backup incremental con WAL archiving
-# postgresql.conf
-archive_mode = on
-archive_command = 'cp %p /path/to/wal_archive/%f'
-
-# Script de backup automatizado
-#!/bin/bash
-BACKUP_DIR="/backups"
-DB_NAME="mydb"
-RETENTION_DAYS=30
-
-# Crear backup
-pg_dump -Fc -U postgres $DB_NAME > $BACKUP_DIR/backup_$(date +%Y%m%d_%H%M).dump
-
-# Limpiar backups antiguos
-find $BACKUP_DIR -name "backup_*.dump" -mtime +$RETENTION_DAYS -delete
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/data-engineer/examples/example_7.sh`
 
 ### Recovery
 
@@ -371,76 +207,15 @@ recovery_target_time = '2024-01-21 12:00:00'
 
 ### Key Metrics
 
-```sql
--- Conexiones activas
-SELECT count(*) FROM pg_stat_activity WHERE state = 'active';
-
--- Queries lentas
-SELECT query, calls, mean_time, total_time
-FROM pg_stat_statements
-ORDER BY mean_time DESC
-LIMIT 10;
-
--- Tablas sin índices usados
-SELECT relname, seq_scan, idx_scan
-FROM pg_stat_user_tables
-WHERE seq_scan > idx_scan
-ORDER BY seq_scan DESC;
-
--- Bloat de tablas
-SELECT tablename, pg_size_pretty(pg_total_relation_size(tablename::regclass))
-FROM pg_tables
-WHERE schemaname = 'public'
-ORDER BY pg_total_relation_size(tablename::regclass) DESC;
-
--- Cache hit ratio (debe ser >99%)
-SELECT 
-    sum(blks_hit) * 100.0 / sum(blks_hit + blks_read) as cache_hit_ratio
-FROM pg_stat_database;
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/data-engineer/examples/example_8.sql`
 
 ### Tuning Parameters
 
-```ini
-# postgresql.conf - Para servidor 16GB RAM
-
-# Memory
-shared_buffers = 4GB                    # 25% de RAM
-effective_cache_size = 12GB             # 75% de RAM
-work_mem = 256MB                        # Para sorts/joins
-maintenance_work_mem = 1GB              # Para VACUUM/INDEX
-
-# Connections
-max_connections = 200
-
-# WAL
-wal_buffers = 64MB
-checkpoint_completion_target = 0.9
-
-# Planner
-random_page_cost = 1.1                  # SSD
-effective_io_concurrency = 200          # SSD
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/data-engineer/examples/example_9.ini`
 
 ## Security
 
-```sql
--- Crear rol de solo lectura
-CREATE ROLE readonly;
-GRANT CONNECT ON DATABASE mydb TO readonly;
-GRANT USAGE ON SCHEMA public TO readonly;
-GRANT SELECT ON ALL TABLES IN SCHEMA public TO readonly;
-
--- Crear usuario de aplicación
-CREATE ROLE app_user WITH LOGIN PASSWORD 'secure_password';
-GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO app_user;
-
--- Row Level Security
-ALTER TABLE orders ENABLE ROW LEVEL SECURITY;
-
-CREATE POLICY orders_tenant_isolation ON orders
-    USING (tenant_id = current_setting('app.tenant_id')::UUID);
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/data-engineer/examples/example_10.sql`
 
 ## Interacción con Otros Roles
 

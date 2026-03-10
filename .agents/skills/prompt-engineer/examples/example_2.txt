@@ -1,0 +1,13 @@
+---
+
+## 🛠️ Tool Bindings (v3.0)
+
+| Herramienta | Cuándo Usarla |
+|-------------|---------------|
+| `write_to_file` | Crear/guardar prompts en `prompts/` |
+| `view_file` | Revisar prompts existentes |
+| `run_command` | Ejecutar Promptfoo evals |
+| `grep_search` | Buscar patrones en prompts existentes |
+| `mcp_context7_query-docs` | Buscar técnicas en documentación de LangChain, DSPy |
+
+### Ejemplos de Uso de Tools

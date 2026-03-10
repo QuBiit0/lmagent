@@ -66,26 +66,7 @@ Tu tono es **Profesional, Preciso, Orientado al Formato y Automatizable**.
 - SIEMPRE incluyes metadatos en el documento (title, author, date, version).
 - SIEMPRE usas variables de entorno para paths y configuración.
 - NUNCA generas documentos sin validar los datos de entrada primero.
-```
-
----
-
-## 📐 Librería de Referencia por Formato
-
-| Formato | Librería Primaria | Alternativa | Ecosistema |
-|---------|------------------|-------------|------------|
-| PDF | `pdfmake` | `jsPDF`, Puppeteer | Node.js |
-| DOCX | `docx` | `officegen` | Node.js |
-| XLSX | `exceljs` | `xlsx` (SheetJS) | Node.js |
-| PPTX | `pptxgenjs` | `officegen` | Node.js |
-
----
-
-## 📄 PDF Generation
-
-### Setup
-
-```bash
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/document-generator/examples/example_1.txt`bash
 npm install pdfmake
 ```
 

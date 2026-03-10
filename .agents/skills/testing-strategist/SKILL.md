@@ -54,30 +54,12 @@ metadata:
 ## 🧠 System Prompt
 > **Instrucciones para el LLM**: Copia este bloque en tu system prompt o contexto inicial.
 
-```markdown
-Eres **Testing Strategist**, un especialista en testing automatizado con dominio de TDD/BDD.
-Tu objetivo es **DISEÑAR ESTRATEGIAS DE TESTING QUE DEN CONFIANZA PARA DEPLOYAR — cobertura inteligente, no cobertura ciega**.
-Tu tono es **Pragmático, Metódico, Orientado a Confianza**.
-
-**Principios Core:**
-1. **Test behavior, not implementation**: Tests que sobreviven refactors.
-2. **Pyramid, not ice cream cone**: Muchos unit, pocos E2E, nada manual.
-3. **Fast feedback loop**: Tests rápidos → developer feliz → más tests.
-4. **Coverage is a guide, not a goal**: 80% con tests significativos > 100% con tests vacíos.
-5. **Deterministic or die**: Tests flaky son peores que no tener tests.
-
-**Restricciones:**
-- NUNCA escribas tests que dependen del orden de ejecución.
-- SIEMPRE aísla dependencias externas (network, DB, filesystem).
-- SIEMPRE cubre happy path + edge cases + error cases.
-- NUNCA uses `sleep()` o timeouts fijos en tests async.
-- SIEMPRE nombra tests describiendo el COMPORTAMIENTO, no la implementación.
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/testing-strategist/examples/example_1.markdown`
 
 
 
-### 🌍 Agnosticismo Tecnológico y Flexibilidad (LMAgent Core Rule)
-Eres un experto **tecnológicamente agnóstico**. NO obligues al usuario a utilizar tecnologías, frameworks o versiones obsoletas a menos que te lo pidan explícitamente. Evalúa el entorno del usuario, respeta su stack actual, y cuando diseñes o propongas soluciones nuevas, recomienda siempre el uso de herramientas modernas, estables y vigentes (Latest Stable), justificando tus decisiones técnica y lógicamente.
+
+> 📌 **Protocolo Universal**: Aplica estrictamente el *Agnosticismo Tecnológico* y la *Inyección de Memoria* descritos en `.agents/rules/00-master.md` antes de proceder.
 
 ## 🔄 Arquitectura Cognitiva (Cómo Pensar)
 
@@ -139,36 +121,7 @@ Eres el estratega de quality assurance. No escribís tests por escribir — dise
 ## TDD Workflow Detallado
 
 ### Paso 1: RED — Escribir test que falla
-```typescript
-// test/users.test.ts
-describe('UserService.create', () => {
-  it('should create a user with valid data', async () => {
-    const userData = { name: 'Leo', email: 'leo@test.com' };
-    
-    const user = await userService.create(userData);
-    
-    expect(user.id).toBeDefined();
-    expect(user.name).toBe('Leo');
-    expect(user.email).toBe('leo@test.com');
-    expect(user.createdAt).toBeInstanceOf(Date);
-  });
-
-  it('should reject duplicate email', async () => {
-    const userData = { name: 'Leo', email: 'leo@test.com' };
-    await userService.create(userData);
-    
-    await expect(userService.create(userData))
-      .rejects.toThrow('Email already registered');
-  });
-
-  it('should require a valid email format', async () => {
-    const userData = { name: 'Leo', email: 'not-an-email' };
-    
-    await expect(userService.create(userData))
-      .rejects.toThrow('Invalid email format');
-  });
-});
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/testing-strategist/examples/example_2.ts`
 
 ### Paso 2: GREEN — Mínimo código que pasa
 ```typescript
@@ -236,60 +189,10 @@ it('should calculate total with tax', () => {
 ```
 
 ### Test Doubles (Tipos)
-```typescript
-// STUB — Retorna datos controlados
-const userRepo = {
-  findById: vi.fn().mockResolvedValue({ id: '1', name: 'Leo' })
-};
-
-// MOCK — Verifica interacciones
-const emailService = {
-  send: vi.fn()
-};
-await userService.register(data);
-expect(emailService.send).toHaveBeenCalledWith('leo@test.com', expect.any(String));
-
-// SPY — Observa sin reemplazar
-const logSpy = vi.spyOn(console, 'log');
-processOrder(order);
-expect(logSpy).toHaveBeenCalledWith('Order processed:', order.id);
-
-// FAKE — Implementación simplificada
-class InMemoryUserRepo implements UserRepository {
-  private users: Map<string, User> = new Map();
-  
-  async save(user: User): Promise<User> {
-    this.users.set(user.id, user);
-    return user;
-  }
-  
-  async findById(id: string): Promise<User | null> {
-    return this.users.get(id) || null;
-  }
-}
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/testing-strategist/examples/example_3.ts`
 
 ### Test Factories / Fixtures
-```typescript
-// factories/user.factory.ts
-function createUser(overrides: Partial<User> = {}): User {
-  return {
-    id: `usr_${Math.random().toString(36).substr(2)}`,
-    name: 'Test User',
-    email: `test-${Date.now()}@example.com`,
-    role: 'user',
-    createdAt: new Date(),
-    ...overrides,
-  };
-}
-
-// Uso en tests
-it('should deny access for non-admin users', async () => {
-  const user = createUser({ role: 'viewer' });
-  const result = await accessControl.canDelete(user, someResource);
-  expect(result).toBe(false);
-});
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/testing-strategist/examples/example_4.ts`
 
 ---
 
@@ -311,60 +214,10 @@ describe('calculateDiscount', () => {
 ```
 
 ### Pytest (Python/FastAPI)
-```python
-import pytest
-from httpx import AsyncClient
-
-@pytest.fixture
-async def client(app):
-    async with AsyncClient(app=app, base_url="http://test") as client:
-        yield client
-
-@pytest.mark.asyncio
-async def test_create_user_returns_201(client):
-    response = await client.post("/api/v1/users", json={
-        "name": "Leo",
-        "email": "leo@test.com"
-    })
-    assert response.status_code == 201
-    assert response.json()["data"]["name"] == "Leo"
-
-@pytest.mark.asyncio
-async def test_create_user_duplicate_email_returns_409(client):
-    user_data = {"name": "Leo", "email": "leo@test.com"}
-    await client.post("/api/v1/users", json=user_data)
-    
-    response = await client.post("/api/v1/users", json=user_data)
-    assert response.status_code == 409
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/testing-strategist/examples/example_5.py`
 
 ### Playwright (E2E)
-```typescript
-import { test, expect } from '@playwright/test';
-
-test.describe('Login Flow', () => {
-  test('should login with valid credentials', async ({ page }) => {
-    await page.goto('/login');
-    
-    await page.getByLabel('Email').fill('user@example.com');
-    await page.getByLabel('Password').fill('SecurePass123');
-    await page.getByRole('button', { name: 'Login' }).click();
-    
-    await expect(page).toHaveURL('/dashboard');
-    await expect(page.getByText('Welcome')).toBeVisible();
-  });
-  
-  test('should show error for invalid credentials', async ({ page }) => {
-    await page.goto('/login');
-    
-    await page.getByLabel('Email').fill('wrong@example.com');
-    await page.getByLabel('Password').fill('wrong');
-    await page.getByRole('button', { name: 'Login' }).click();
-    
-    await expect(page.getByText('Invalid credentials')).toBeVisible();
-  });
-});
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/testing-strategist/examples/example_6.ts`
 
 ---
 
@@ -397,52 +250,7 @@ test.describe('Login Flow', () => {
 
 ## Tests Anti-Patterns
 
-```typescript
-// ❌ Test que testea la implementación, no el comportamiento
-it('should call repository.save', async () => {
-  await service.create(data);
-  expect(repo.save).toHaveBeenCalled(); // Frágil — se rompe con refactor
-});
-
-// ✅ Test que testea el resultado
-it('should persist the user', async () => {
-  const user = await service.create(data);
-  const found = await repo.findById(user.id);
-  expect(found).toEqual(user); // Resistente a refactors
-});
-
-// ❌ Test sin assertions claras
-it('should work', async () => {
-  const result = await process(data);
-  expect(result).toBeTruthy(); // ¿Qué es "truthy"?
-});
-
-// ✅ Assertions específicas
-it('should return processed order with calculated tax', async () => {
-  const result = await process(orderData);
-  expect(result.total).toBe(242);
-  expect(result.tax).toBe(42);
-  expect(result.status).toBe('processed');
-});
-
-// ❌ Test flaky con timing
-it('should debounce search', async () => {
-  search('hello');
-  await new Promise(r => setTimeout(r, 500)); // ❌ Flaky
-  expect(results).toHaveLength(5);
-});
-
-// ✅ Test determinístico
-it('should debounce search', async () => {
-  vi.useFakeTimers();
-  search('hello');
-  vi.advanceTimersByTime(300);
-  expect(apiCall).not.toHaveBeenCalled();
-  vi.advanceTimersByTime(200);
-  expect(apiCall).toHaveBeenCalledOnce();
-  vi.useRealTimers();
-});
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/testing-strategist/examples/example_7.ts`
 
 ---
 

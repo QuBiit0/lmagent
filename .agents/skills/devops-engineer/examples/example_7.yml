@@ -1,0 +1,27 @@
+# SLO Definition
+service: lmagent-api
+slos:
+  - name: availability
+    target: 99.9%
+    window: 30d
+    sli:
+      type: ratio
+      good: successful requests
+      total: all requests
+
+  - name: latency
+    target: 95%
+    window: 30d
+    sli:
+      type: threshold
+      metric: http_request_duration_seconds
+      threshold: 0.3
+      percentile: 95
+
+  - name: error_rate
+    target: 99%
+    window: 7d
+    sli:
+      type: ratio
+      good: non-5xx requests
+      total: all requests

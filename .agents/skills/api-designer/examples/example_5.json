@@ -1,0 +1,17 @@
+{
+  "data": {
+    "id": "usr_abc123",
+    "type": "user",
+    "attributes": {
+      "name": "Leonardo",
+      "email": "leo@example.com"
+    },
+    "relationships": {
+      "orders": {
+        "links": {
+          "related": "/api/v1/users/usr_abc123/orders"
+        }
+      }
+    }
+  }
+}

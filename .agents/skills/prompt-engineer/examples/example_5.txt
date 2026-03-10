@@ -1,0 +1,15 @@
+---
+
+## 📊 Evaluación y Métricas
+
+¿Cómo sabes si tu prompt es bueno? No por "feeling", sino por datos.
+
+| Métrica | Definición | Target |
+|---------|------------|--------|
+| **Instruction Adherence** | ¿Siguió todas las reglas? | >95% |
+| **Reasoning Quality** | ¿Los pasos lógicos son sólidos? | >90% |
+| **Token Efficiency** | ¿Logró el objetivo con el mínimo output? | Baseline -20% |
+| **Hallucination Rate** | ¿Inventó información? | <5% |
+| **Faithfulness** | ¿Las citas son correctas? | >95% |
+
+### Promptfoo Config Ejemplo

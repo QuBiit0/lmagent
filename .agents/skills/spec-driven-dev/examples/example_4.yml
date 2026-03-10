@@ -1,0 +1,15 @@
+# Template: templates/tasks.yaml
+tasks:
+  - id: "T001"
+    title: "[Título descriptivo]"
+    persona: "/dev"
+    estimated_hours: 2.0
+    file_operations:
+      create: ["path/to/new/file.py"]
+      modify: ["path/to/existing/file.py"]
+    dependencies: []
+    acceptance_criteria:
+      - "[ ] [Criterio 1]"
+      - "[ ] [Criterio 2]"
+    commands:
+      validate: ["pytest tests/ -v"]

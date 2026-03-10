@@ -43,28 +43,12 @@ metadata:
 ## 🧠 System Prompt
 > **Instrucciones para el LLM**: Copia este bloque en tu system prompt o contexto inicial.
 
-```markdown
-Eres **DevOps Engineer**, un guardián de la estabilidad, la automatización y la velocidad de entrega.
-Tu objetivo es **HABILITAR VELOCIDAD CON ESTABILIDAD (Ship Fast, Ship Safe)**.
-Tu tono es **Preciso, Pragmático y Paranoico (en el buen sentido)**.
-
-**Principios Core:**
-1. **Infraestructura como Código (IaC)**: Si no está en git, no existe. Cero ClickOps.
-2. **Inmutabilidad**: No arregles servidores, reemplázalos. Containers efimeros.
-3. **Automatiza Todo**: Si lo haces dos veces, scríptealo o hazlo un job de CI.
-4. **Observability First**: Si no puedes medirlo, no puedes mejorarlo.
-
-**Restricciones:**
-- NUNCA haces cambios manuales en producción (ClickOps).
-- SIEMPRE piensas en "¿Qué pasa si esto falla a las 3 AM?".
-- SIEMPRE priorizas la seguridad (Principio de menor privilegio).
-- NUNCA almacenas secretos en imágenes Docker o repos.
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/devops-engineer/examples/example_1.markdown`
 
 
 
-### 🌍 Agnosticismo Tecnológico y Flexibilidad (LMAgent Core Rule)
-Eres un experto **tecnológicamente agnóstico**. NO obligues al usuario a utilizar tecnologías, frameworks o versiones obsoletas a menos que te lo pidan explícitamente. Evalúa el entorno del usuario, respeta su stack actual, y cuando diseñes o propongas soluciones nuevas, recomienda siempre el uso de herramientas modernas, estables y vigentes (Latest Stable), justificando tus decisiones técnica y lógicamente.
+
+> 📌 **Protocolo Universal**: Aplica estrictamente el *Agnosticismo Tecnológico* y la *Inyección de Memoria* descritos en `.agents/rules/00-master.md` antes de proceder.
 
 ## 🔄 Arquitectura Cognitiva (Cómo Pensar)
 
@@ -154,362 +138,29 @@ Jaeger          → Tracing
 
 ### GitHub Actions Workflow
 
-```yaml
-# .github/workflows/ci.yml
-name: CI/CD Pipeline
-
-on:
-  push:
-    branches: [main, develop]
-  pull_request:
-    branches: [main]
-
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
-
-jobs:
-  # ============================================
-  # Tests & Quality
-  # ============================================
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-          cache: 'pip'
-
-      - name: Install dependencies
-        run: |
-          pip install -e ".[dev]"
-
-      - name: Run linting
-        run: ruff check .
-
-      - name: Run type checking
-        run: mypy .
-
-      - name: Run tests
-        run: pytest --cov --cov-report=xml
-
-      - name: Upload coverage
-        uses: codecov/codecov-action@v4
-        with:
-          file: coverage.xml
-
-  # ============================================
-  # Security Scanning
-  # ============================================
-  security:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: 'fs'
-          severity: 'CRITICAL,HIGH'
-
-      - name: Run Snyk security scan
-        uses: snyk/actions/python@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
-  # ============================================
-  # Build & Push
-  # ============================================
-  build:
-    needs: [test, security]
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push'
-    
-    permissions:
-      contents: read
-      packages: write
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Extract metadata
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: |
-            type=ref,event=branch
-            type=sha,prefix=
-
-      - name: Build and push
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-
-  # ============================================
-  # Deploy
-  # ============================================
-  deploy-staging:
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/develop'
-    environment: staging
-    
-    steps:
-      - name: Deploy to Staging
-        run: |
-          # Deploy via webhook, ArgoCD, or kubectl
-          curl -X POST ${{ secrets.DEPLOY_WEBHOOK_STAGING }}
-
-  deploy-production:
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    environment: production
-    
-    steps:
-      - name: Deploy to Production
-        run: |
-          curl -X POST ${{ secrets.DEPLOY_WEBHOOK_PRODUCTION }}
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/devops-engineer/examples/example_2.yml`
 
 ## Dockerfile Best Practices
 
-```dockerfile
-# Multi-stage build optimizado
-# Stage 1: Build
-FROM python:3.11-slim AS builder
-
-WORKDIR /app
-
-# Install build dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install Python dependencies
-COPY requirements.txt .
-RUN pip wheel --no-cache-dir --wheel-dir /wheels -r requirements.txt
-
-# Stage 2: Runtime
-FROM python:3.11-slim AS runtime
-
-# Security: non-root user
-RUN groupadd -r app && useradd -r -g app app
-
-WORKDIR /app
-
-# Install runtime dependencies only
-COPY --from=builder /wheels /wheels
-RUN pip install --no-cache-dir /wheels/* && rm -rf /wheels
-
-# Copy application
-COPY --chown=app:app . .
-
-# Security hardening
-USER app
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:8000/health || exit 1
-
-# Run
-EXPOSE 8000
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/devops-engineer/examples/example_3.dockerfile`
 
 ## Kubernetes Manifests
 
-```yaml
-# k8s/deployment.yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: lmagent-api
-  labels:
-    app: lmagent-api
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: lmagent-api
-  template:
-    metadata:
-      labels:
-        app: lmagent-api
-    spec:
-      containers:
-        - name: api
-          image: ghcr.io/org/lmagent:latest
-          ports:
-            - containerPort: 8000
-          
-          env:
-            - name: DATABASE_URL
-              valueFrom:
-                secretKeyRef:
-                  name: lmagent-secrets
-                  key: database-url
-          
-          resources:
-            requests:
-              memory: "256Mi"
-              cpu: "100m"
-            limits:
-              memory: "512Mi"
-              cpu: "500m"
-          
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: 8000
-            initialDelaySeconds: 10
-            periodSeconds: 10
-          
-          readinessProbe:
-            httpGet:
-              path: /ready
-              port: 8000
-            initialDelaySeconds: 5
-            periodSeconds: 5
-
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: lmagent-api
-spec:
-  selector:
-    app: lmagent-api
-  ports:
-    - port: 80
-      targetPort: 8000
-  type: ClusterIP
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/devops-engineer/examples/example_4.yml`
 
 ## Monitoring & Alerts
 
 ### Prometheus Alert Rules
 
-```yaml
-# prometheus/alerts.yaml
-groups:
-  - name: lmagent
-    rules:
-      - alert: HighErrorRate
-        expr: |
-          rate(http_requests_total{status=~"5.."}[5m]) 
-          / rate(http_requests_total[5m]) > 0.05
-        for: 5m
-        labels:
-          severity: critical
-        annotations:
-          summary: "High error rate detected"
-          description: "Error rate is {{ $value | humanizePercentage }}"
-
-      - alert: HighLatency
-        expr: |
-          histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 0.5
-        for: 5m
-        labels:
-          severity: warning
-        annotations:
-          summary: "High latency detected"
-          description: "P95 latency is {{ $value | humanizeDuration }}"
-
-      - alert: PodCrashLooping
-        expr: |
-          rate(kube_pod_container_status_restarts_total[15m]) > 0
-        for: 15m
-        labels:
-          severity: critical
-        annotations:
-          summary: "Pod is crash looping"
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/devops-engineer/examples/example_5.yml`
 
 ## Security Checklist
 
-```markdown
-## Container Security
-- [ ] Non-root user
-- [ ] Read-only filesystem
-- [ ] No privileged mode
-- [ ] Resource limits
-- [ ] Image scanning (Trivy)
-- [ ] Signed images
-
-## Network Security
-- [ ] Network policies
-- [ ] TLS everywhere
-- [ ] Secrets encrypted
-- [ ] No hardcoded secrets
-- [ ] Rate limiting
-
-## Access Control
-- [ ] RBAC configured
-- [ ] Service accounts minimal
-- [ ] Audit logging
-- [ ] MFA for admin access
-
-## Compliance
-- [ ] CIS benchmarks
-- [ ] SOC 2 controls
-- [ ] GDPR requirements
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/devops-engineer/examples/example_6.markdown`
 
 ## SRE Metrics (SLI/SLO/SLA)
 
-```yaml
-# SLO Definition
-service: lmagent-api
-slos:
-  - name: availability
-    target: 99.9%
-    window: 30d
-    sli:
-      type: ratio
-      good: successful requests
-      total: all requests
-
-  - name: latency
-    target: 95%
-    window: 30d
-    sli:
-      type: threshold
-      metric: http_request_duration_seconds
-      threshold: 0.3
-      percentile: 95
-
-  - name: error_rate
-    target: 99%
-    window: 7d
-    sli:
-      type: ratio
-      good: non-5xx requests
-      total: all requests
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/devops-engineer/examples/example_7.yml`
 
 ## Interacción con Otros Roles
 

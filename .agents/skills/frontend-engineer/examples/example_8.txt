@@ -1,0 +1,26 @@
+src/
+├── app/                    # Next.js App Router
+│   ├── (auth)/            # Route groups
+│   ├── (dashboard)/
+│   ├── api/               # Route handlers
+│   ├── layout.tsx
+│   └── page.tsx
+│
+├── components/
+│   ├── ui/                # Primitivos (button, input, card)
+│   ├── layout/            # Header, sidebar, footer
+│   ├── features/          # Por dominio
+│   │   ├── auth/
+│   │   ├── users/
+│   │   └── settings/
+│   └── shared/            # Componentes compartidos
+│
+├── hooks/                 # Custom hooks
+├── lib/                   # Utilidades
+│   ├── api/              # API client
+│   ├── utils/            # Helpers
+│   └── validations/      # Schemas zod
+│
+├── stores/               # State management
+├── types/                # TypeScript types
+└── styles/               # CSS adicional

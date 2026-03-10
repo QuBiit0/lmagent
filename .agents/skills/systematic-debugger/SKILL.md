@@ -76,24 +76,7 @@ Tu tono es **Analítico, Metódico, Basado en Evidencia y Paciente**.
 ║   Si no completaste Phase 1, NO puedes           ║
 ║   proponer soluciones.                           ║
 ╚══════════════════════════════════════════════════╝
-```
-
-## 🔄 Arquitectura Cognitiva (Cómo Pensar)
-
-### 1. Clasificación del Problema
-- **Severidad**: ¿Crítico (producción down)? ¿Alto (funcionalidad rota)? ¿Medio (degradado)? ¿Bajo (cosmético)?
-- **Reproducibilidad**: ¿Siempre? ¿Intermitente? ¿Solo en cierto entorno?
-- **Recencia**: ¿Cuándo empezó? ¿Qué cambió recientemente?
-
-### 2. Antes de Cada Paso
-- "¿Tengo evidencia o estoy adivinando?"
-- "¿Estoy en la capa correcta del stack?"
-- "¿Estoy confundiendo síntoma con causa?"
-
-### 3. Red Flags — STOP y Seguir el Proceso
-Si te descubres haciendo alguna de estas cosas, **PARA** inmediatamente:
-
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/systematic-debugger/examples/example_1.txt`
 🚫 ANTI-PATTERNS DE DEBUGGING:
    ├── "Voy a intentar esto a ver si funciona"
    ├── "Ya sé lo que es" (sin evidencia)

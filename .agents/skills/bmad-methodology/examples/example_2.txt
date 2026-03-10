@@ -1,0 +1,21 @@
+USUARIO                              AGENTE (BMAD)
+────────                              ─────────────
+     │
+     ▼
+Completa PROJECT_KICKOFF.md    
+(5-10 minutos)                 
+     │                         
+     ▼                         
+Abre en IDE ──────────────────► Detecta PROJECT_KICKOFF.md
+                                        │
+                                        ▼
+                                Clasifica Nivel (0-4)
+                                        │
+                                        ▼
+                                Activa workflow según nivel:
+                                • L0-1: Directo a /dev
+                                • L2+:  /spec workflow
+                                        │
+                                        ▼
+                                Orquesta persona secuencial:
+                                /pm → /arch → /dev → /qa

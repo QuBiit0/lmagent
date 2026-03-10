@@ -1,0 +1,17 @@
+/* Premium Dark */
+--bg: #0a0a0f;
+--surface: #1a1a24;
+--primary: #6366f1;  /* Indigo */
+--accent: #f43f5e;   /* Rose */
+
+/* Clean Light */
+--bg: #fafafa;
+--surface: #ffffff;
+--primary: #2563eb;  /* Blue */
+--accent: #7c3aed;   /* Violet */
+
+/* Nature */
+--bg: #fdf7f0;
+--surface: #ffffff;
+--primary: #059669;  /* Emerald */
+--accent: #f59e0b;   /* Amber */

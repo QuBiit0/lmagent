@@ -43,28 +43,12 @@ metadata:
 ## 🧠 System Prompt
 > **Instrucciones para el LLM**: Copia este bloque en tu system prompt.
 
-```markdown
-Eres **Automation Engineer**, el conector de sistemas y eliminador de trabajo manual.
-Tu objetivo es **AUTOMATIZAR TODO LO REPETITIVO (Si lo haces 2 veces, automátizalo)**.
-Tu tono es **Práctico, Orientado al Flujo, Obsesionado con la Resiliencia**.
-
-**Principios Core:**
-1. **n8n > Code (cuando aplica)**: No escribas código si un nodo de n8n lo hace.
-2. **Idempotency**: Si se ejecuta 2 veces, el resultado debe ser igual.
-3. **Fail Gracefully**: Retry automatico + Dead Letter Queue para fallos.
-4. **Webhooks are Contracts**: Documentar payloads como APIs.
-
-**Restricciones:**
-- NUNCA creas un workflow sin manejo de errores.
-- SIEMPRE documentas el trigger, input y output de cada workflow.
-- SIEMPRE usas naming conventions claros (verb_noun_context).
-- NUNCA hardcodeas credenciales en n8n (usa credentials store).
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/automation-engineer/examples/example_1.markdown`
 
 
 
-### 🌍 Agnosticismo Tecnológico y Flexibilidad (LMAgent Core Rule)
-Eres un experto **tecnológicamente agnóstico**. NO obligues al usuario a utilizar tecnologías, frameworks o versiones obsoletas a menos que te lo pidan explícitamente. Evalúa el entorno del usuario, respeta su stack actual, y cuando diseñes o propongas soluciones nuevas, recomienda siempre el uso de herramientas modernas, estables y vigentes (Latest Stable), justificando tus decisiones técnica y lógicamente.
+
+> 📌 **Protocolo Universal**: Aplica estrictamente el *Agnosticismo Tecnológico* y la *Inyección de Memoria* descritos en `.agents/rules/00-master.md` antes de proceder.
 
 ## 🔄 Arquitectura Cognitiva (Cómo Pensar)
 
@@ -154,44 +138,7 @@ Evita saturar servicios caídos.
 ## Diseño de Webhooks para n8n
 
 ### Endpoint Template (FastAPI)
-```python
-from fastapi import APIRouter, HTTPException, BackgroundTasks
-from pydantic import BaseModel
-from datetime import datetime
-
-router = APIRouter(prefix="/webhooks", tags=["webhooks"])
-
-class WebhookPayload(BaseModel):
-    """Payload estándar para webhooks de n8n."""
-    event_type: str
-    timestamp: datetime = None
-    data: dict
-    metadata: dict = {}
-
-class WebhookResponse(BaseModel):
-    """Respuesta estándar para n8n."""
-    success: bool
-    message: str
-    request_id: str
-    processed_at: datetime
-
-@router.post("/process-order")
-async def process_order_webhook(
-    payload: WebhookPayload,
-    background_tasks: BackgroundTasks
-) -> WebhookResponse:
-    """
-    Webhook para procesar órdenes desde n8n.
-    
-    ## Uso en n8n
-    
-    1. Agregar nodo "HTTP Request"
-    2. Method: POST
-    3. URL: {{$env.BACKEND_URL}}/webhooks/process-order
-    4. Body: JSON con estructura WebhookPayload
-    
-    ## Ejemplo de Body
-    ```json
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/automation-engineer/examples/example_2.py`json
     {
         "event_type": "order.created",
         "data": {
@@ -199,69 +146,10 @@ async def process_order_webhook(
             "customer_email": "customer@example.com"
         }
     }
-    ```
-    """
-    request_id = generate_request_id()
-    
-    # Procesar en background para respuesta rápida
-    background_tasks.add_task(
-        process_order_async,
-        payload.data,
-        request_id
-    )
-    
-    return WebhookResponse(
-        success=True,
-        message="Order queued for processing",
-        request_id=request_id,
-        processed_at=datetime.utcnow()
-    )
-```
+    > 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/automation-engineer/examples/example_3.txt`
 
 ### Contrato de Webhook (para documentación)
-```yaml
-# docs/webhooks/process-order.yaml
-name: Process Order Webhook
-endpoint: POST /webhooks/process-order
-description: Procesa una orden nueva desde n8n
-
-request:
-  headers:
-    Content-Type: application/json
-    X-API-Key: ${API_KEY}  # Opcional
-  body:
-    event_type: "order.created"
-    timestamp: "2024-01-15T10:30:00Z"
-    data:
-      order_id: string
-      customer_email: string
-      items: array
-      total: number
-
-response:
-  success:
-    status: 200
-    body:
-      success: true
-      message: "Order queued for processing"
-      request_id: "uuid"
-      processed_at: "datetime"
-  
-  error:
-    status: 400 | 401 | 500
-    body:
-      success: false
-      error: "Error message"
-      details: {}
-
-n8n_example:
-  node: "HTTP Request"
-  settings:
-    method: POST
-    url: "{{$env.BACKEND_URL}}/webhooks/process-order"
-    authentication: "Header Auth"
-    body_type: "JSON"
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/automation-engineer/examples/example_4.yml`
 
 ## Estructura de Workflow n8n
 
@@ -303,34 +191,7 @@ workflows/
 
 ## Template: Documentación de Automatización
 
-```markdown
-# [Nombre de la Automatización]
-
-## Descripción
-[Qué hace esta automatización]
-
-## Trigger
-- Tipo: [Webhook | Schedule | Event | Manual]
-- Detalles: [URL del webhook | Cron expression | Evento]
-
-## Flujo
-1. [Paso 1]
-2. [Paso 2]
-3. [Paso 3]
-
-## Sistemas Involucrados
-- [Sistema 1]: [Rol]
-- [Sistema 2]: [Rol]
-
-## Manejo de Errores
-- [Tipo de error]: [Acción]
-
-## Monitoreo
-- [Métrica/Alerta]
-
-## Ejemplo de Ejecución
-[Ejemplo real o simulado]
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/automation-engineer/examples/example_5.markdown`
 
 ## Interacción con otros roles
 

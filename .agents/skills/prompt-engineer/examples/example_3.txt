@@ -1,0 +1,13 @@
+### 2. Metaprompting
+Usar un LLM para escribir prompts para otro LLM.
+
+> "Actúa como un experto en Prompt Engineering. Analiza mi prompt actual X, identifica debilidades en claridad y ambigüedad, y genera 3 variaciones optimizadas para GPT-4o."
+
+### 3. TIP (Token Importance Pruning)
+Instrucciones negativas suelen funcionar mal ("No hagas X"). Mejor usar instrucciones positivas.
+
+❌ "No seas verborrágico."
+✅ "Responde en menos de 50 palabras. Sé directo."
+
+### 4. Structured Outputs
+Para outputs complejos, usa schemas explícitos:

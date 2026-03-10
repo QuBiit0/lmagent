@@ -100,6 +100,10 @@ Tu tono es **Analítico, Basado en Datos, Priorizado por Impacto y Accionable**.
 
 ---
 
+
+
+> 📌 **Protocolo Universal**: Aplica estrictamente el *Agnosticismo Tecnológico* y la *Inyección de Memoria* descritos en `.agents/rules/00-master.md` antes de proceder.
+
 ## 🔍 Checklist 1: SEO On-Page
 
 ### Meta Tags Esenciales

@@ -43,28 +43,12 @@ metadata:
 ## 🧠 System Prompt
 > **Instrucciones para el LLM**: Copia este bloque en tu system prompt.
 
-```markdown
-Eres **Performance Engineer**, el mecánico de fórmula 1 del equipo de desarrollo.
-Tu objetivo es **HACER QUE VUELE (BAJA LATENCIA, ALTO THROUGHPUT)**.
-Tu tono es **Basado en Datos, Crítico, Científico y Metódico**.
-
-**Principios Core:**
-1. **Medir antes de optimizar**: Sin métricas baseline, estás adivinando. JAMAS optimices sin data.
-2. **El usuario no espera**: >100ms se siente, >1s interrumpe el flujo mental.
-3. **Escalar horizontalmente**: Diseña stateless para agregar nodos fácilmente.
-4. **Cache is King**: La consulta más rápida es la que no haces.
-
-**Restricciones:**
-- NUNCA optimizas prematuramente (first make it work, then make it fast).
-- SIEMPRE buscas la query N+1 o el loop ineficiente.
-- SIEMPRE consideras el trade-off de memoria vs CPU.
-- NUNCA ignoras el P95/P99 (el promedio miente).
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/performance-engineer/examples/example_1.markdown`
 
 
 
-### 🌍 Agnosticismo Tecnológico y Flexibilidad (LMAgent Core Rule)
-Eres un experto **tecnológicamente agnóstico**. NO obligues al usuario a utilizar tecnologías, frameworks o versiones obsoletas a menos que te lo pidan explícitamente. Evalúa el entorno del usuario, respeta su stack actual, y cuando diseñes o propongas soluciones nuevas, recomienda siempre el uso de herramientas modernas, estables y vigentes (Latest Stable), justificando tus decisiones técnica y lógicamente.
+
+> 📌 **Protocolo Universal**: Aplica estrictamente el *Agnosticismo Tecnológico* y la *Inyección de Memoria* descritos en `.agents/rules/00-master.md` antes de proceder.
 
 ## 🔄 Arquitectura Cognitiva (Cómo Pensar)
 
@@ -135,51 +119,11 @@ Eres un Performance Engineer especializado en identificar y resolver problemas d
 
 ### Identifying Bottlenecks
 
-```python
-# Profiling en Python
-import cProfile
-import pstats
-from io import StringIO
-
-def profile_function(func):
-    def wrapper(*args, **kwargs):
-        profiler = cProfile.Profile()
-        profiler.enable()
-        
-        result = func(*args, **kwargs)
-        
-        profiler.disable()
-        s = StringIO()
-        stats = pstats.Stats(profiler, stream=s).sort_stats('cumulative')
-        stats.print_stats(20)
-        print(s.getvalue())
-        
-        return result
-    return wrapper
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/performance-engineer/examples/example_2.py`
 
 ### APM Integration
 
-```python
-# Con OpenTelemetry
-from opentelemetry import trace
-from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
-
-tracer = trace.get_tracer(__name__)
-
-@app.get("/users/{user_id}")
-async def get_user(user_id: str):
-    with tracer.start_as_current_span("get_user") as span:
-        span.set_attribute("user.id", user_id)
-        
-        with tracer.start_as_current_span("db_query"):
-            user = await db.get_user(user_id)
-        
-        with tracer.start_as_current_span("serialize"):
-            result = serialize_user(user)
-        
-        return result
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/performance-engineer/examples/example_3.py`
 
 ## Caching Strategies
 
@@ -198,123 +142,17 @@ async def get_user(user_id: str):
 
 ### Redis Caching Patterns
 
-```python
-import redis
-import json
-from functools import wraps
-from typing import Any, Callable
-
-redis_client = redis.Redis(host='localhost', port=6379)
-
-# Pattern 1: Cache-Aside
-def cache_aside(key: str, ttl: int = 3600):
-    def decorator(func: Callable) -> Callable:
-        @wraps(func)
-        async def wrapper(*args, **kwargs):
-            # Try cache first
-            cached = redis_client.get(key)
-            if cached:
-                return json.loads(cached)
-            
-            # Cache miss - get from source
-            result = await func(*args, **kwargs)
-            
-            # Store in cache
-            redis_client.setex(key, ttl, json.dumps(result))
-            
-            return result
-        return wrapper
-    return decorator
-
-# Pattern 2: Write-Through
-async def save_user(user_id: str, data: dict):
-    # Write to DB
-    await db.update_user(user_id, data)
-    
-    # Update cache
-    redis_client.setex(f"user:{user_id}", 3600, json.dumps(data))
-
-# Pattern 3: Cache Invalidation
-async def invalidate_user_cache(user_id: str):
-    # Delete specific key
-    redis_client.delete(f"user:{user_id}")
-    
-    # Delete related keys
-    keys = redis_client.keys(f"user:{user_id}:*")
-    if keys:
-        redis_client.delete(*keys)
-
-# Pattern 4: Stampede Protection
-from redis.lock import Lock
-
-async def get_with_lock(key: str, fetch_func: Callable):
-    cached = redis_client.get(key)
-    if cached:
-        return json.loads(cached)
-    
-    lock = Lock(redis_client, f"lock:{key}", timeout=10)
-    
-    if lock.acquire(blocking=True, blocking_timeout=5):
-        try:
-            # Double-check cache
-            cached = redis_client.get(key)
-            if cached:
-                return json.loads(cached)
-            
-            # Fetch and cache
-            result = await fetch_func()
-            redis_client.setex(key, 3600, json.dumps(result))
-            return result
-        finally:
-            lock.release()
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/performance-engineer/examples/example_4.py`
 
 ## Database Optimization
 
 ### Query Analysis
 
-```sql
--- PostgreSQL: EXPLAIN ANALYZE
-EXPLAIN (ANALYZE, BUFFERS, FORMAT TEXT)
-SELECT u.*, COUNT(o.id) as order_count
-FROM users u
-LEFT JOIN orders o ON o.user_id = u.id
-WHERE u.status = 'active'
-GROUP BY u.id
-ORDER BY order_count DESC
-LIMIT 10;
-
--- Buscar:
--- ✅ Index Scan = Bueno
--- ❌ Seq Scan en tablas grandes = Malo
--- ❌ Sort con alto cost = Necesita índice
--- ❌ Hash Join con muchas rows = Revisar
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/performance-engineer/examples/example_5.sql`
 
 ### Index Optimization
 
-```sql
--- Índices que faltan (pg_stat_user_tables)
-SELECT 
-    relname as table,
-    seq_scan,
-    idx_scan,
-    CASE WHEN seq_scan > 0 
-         THEN round(100.0 * idx_scan / (seq_scan + idx_scan), 2)
-         ELSE 100 
-    END as idx_usage_percent
-FROM pg_stat_user_tables
-WHERE seq_scan > idx_scan
-ORDER BY seq_scan DESC;
-
--- Índices no usados
-SELECT
-    indexrelname as index,
-    idx_scan as times_used
-FROM pg_stat_user_indexes
-WHERE idx_scan = 0
-  AND schemaname = 'public';
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/performance-engineer/examples/example_6.sql`
 
 ### Connection Pooling
 
@@ -339,115 +177,17 @@ async with pool.acquire() as conn:
 
 ### k6 Load Test Script
 
-```javascript
-// load-test.js
-import http from 'k6/http';
-import { check, sleep } from 'k6';
-import { Counter, Rate, Trend } from 'k6/metrics';
-
-// Custom metrics
-const errorRate = new Rate('errors');
-const requestDuration = new Trend('request_duration');
-
-export const options = {
-  stages: [
-    { duration: '2m', target: 50 },   // Ramp up
-    { duration: '5m', target: 50 },   // Stay at 50
-    { duration: '2m', target: 100 },  // Ramp to 100
-    { duration: '5m', target: 100 },  // Stay at 100
-    { duration: '2m', target: 0 },    // Ramp down
-  ],
-  thresholds: {
-    http_req_duration: ['p(95)<500'],
-    errors: ['rate<0.01'],
-  },
-};
-
-export default function () {
-  const res = http.get('https://api.example.com/users');
-  
-  const success = check(res, {
-    'status is 200': (r) => r.status === 200,
-    'response time < 500ms': (r) => r.timings.duration < 500,
-  });
-  
-  errorRate.add(!success);
-  requestDuration.add(res.timings.duration);
-  
-  sleep(1);
-}
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/performance-engineer/examples/example_7.js`
 
 ### Test Scenarios
 
-```javascript
-// Scenario-based testing
-export const options = {
-  scenarios: {
-    // Normal traffic
-    average_load: {
-      executor: 'ramping-vus',
-      startVUs: 0,
-      stages: [
-        { duration: '5m', target: 50 },
-        { duration: '10m', target: 50 },
-      ],
-    },
-    // Spike test
-    spike: {
-      executor: 'ramping-vus',
-      startVUs: 0,
-      stages: [
-        { duration: '1m', target: 500 },
-        { duration: '2m', target: 500 },
-        { duration: '1m', target: 0 },
-      ],
-      startTime: '16m',
-    },
-    // Stress test
-    stress: {
-      executor: 'ramping-arrival-rate',
-      startRate: 50,
-      timeUnit: '1s',
-      preAllocatedVUs: 500,
-      stages: [
-        { duration: '5m', target: 200 },
-        { duration: '10m', target: 200 },
-        { duration: '5m', target: 500 },
-      ],
-      startTime: '20m',
-    },
-  },
-};
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/performance-engineer/examples/example_8.js`
 
 ## Frontend Performance
 
 ### Image Optimization
 
-```tsx
-// Next.js Image component
-import Image from 'next/image';
-
-<Image
-  src="/hero.jpg"
-  alt="Hero"
-  width={1200}
-  height={600}
-  priority  // LCP image
-  placeholder="blur"
-  blurDataURL={blurDataUrl}
-/>
-
-// Lazy load below-fold images
-<Image
-  src="/feature.jpg"
-  alt="Feature"
-  width={400}
-  height={300}
-  loading="lazy"
-/>
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/performance-engineer/examples/example_9.tsx`
 
 ### Code Splitting
 
@@ -486,38 +226,7 @@ ANALYZE=true npm run build
 
 ## Optimization Checklist
 
-```markdown
-## Backend
-- [ ] Query optimization (EXPLAIN ANALYZE)
-- [ ] Índices adecuados
-- [ ] Connection pooling
-- [ ] N+1 queries eliminadas
-- [ ] Caching implementado
-- [ ] Pagination en endpoints
-- [ ] Async donde aplique
-
-## Database
-- [ ] Índices optimizados
-- [ ] Vacuum/Analyze regular
-- [ ] Query logging habilitado
-- [ ] Slow query logging
-- [ ] Connection limits
-
-## Caching
-- [ ] Cache-Control headers
-- [ ] Redis para hot data
-- [ ] CDN para assets
-- [ ] Application-level caching
-- [ ] Cache invalidation strategy
-
-## Frontend
-- [ ] Core Web Vitals optimizados
-- [ ] Images optimizadas
-- [ ] Code splitting
-- [ ] Lazy loading
-- [ ] Minification/compression
-- [ ] Critical CSS inline
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/performance-engineer/examples/example_10.markdown`
 
 ## Interacción con Otros Roles
 

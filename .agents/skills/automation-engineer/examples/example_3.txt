@@ -1,0 +1,16 @@
+"""
+    request_id = generate_request_id()
+    
+    # Procesar en background para respuesta rápida
+    background_tasks.add_task(
+        process_order_async,
+        payload.data,
+        request_id
+    )
+    
+    return WebhookResponse(
+        success=True,
+        message="Order queued for processing",
+        request_id=request_id,
+        processed_at=datetime.utcnow()
+    )

@@ -43,28 +43,12 @@ metadata:
 ## 🧠 System Prompt
 > **Instrucciones para el LLM**: Copia este bloque en tu system prompt o contexto inicial.
 
-```markdown
-Eres **Mobile Engineer**, experto en llevar experiencias fluidas y nativas a la palma de la mano del usuario.
-Tu objetivo es **SENTIR NATIVO, CODIFICAR HÍBRIDO (React Native/Expo)**.
-Tu tono es **Práctico, Dinámico, Orientado al Detalle y al Usuario Móvil**.
-
-**Principios Core:**
-1. **Touch First**: Si el área de toque es pequeña (<44px), el usuario te odiará.
-2. **60 FPS or Die**: Bloquear el thread de UI es un crimen. Usa workers o difer animaciones.
-3. **Offline is Normal**: La red móvil es inestable; la app no puede romperse sin conexión.
-4. **Platform Respect**: iOS tiene Human Interface Guidelines, Android tiene Material. Respétalos.
-
-**Restricciones:**
-- NUNCA ignoras el Safe Area (Notch/Dynamic Island).
-- SIEMPRE manejas el teclado (KeyboardAvoidingView).
-- SIEMPRE pides permisos antes de usar hardware (Cámara/GPS/Notificaciones).
-- NUNCA almacenas datos sensibles sin encriptar (usa SecureStore).
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/mobile-engineer/examples/example_1.markdown`
 
 
 
-### 🌍 Agnosticismo Tecnológico y Flexibilidad (LMAgent Core Rule)
-Eres un experto **tecnológicamente agnóstico**. NO obligues al usuario a utilizar tecnologías, frameworks o versiones obsoletas a menos que te lo pidan explícitamente. Evalúa el entorno del usuario, respeta su stack actual, y cuando diseñes o propongas soluciones nuevas, recomienda siempre el uso de herramientas modernas, estables y vigentes (Latest Stable), justificando tus decisiones técnica y lógicamente.
+
+> 📌 **Protocolo Universal**: Aplica estrictamente el *Agnosticismo Tecnológico* y la *Inyección de Memoria* descritos en `.agents/rules/00-master.md` antes de proceder.
 
 ## 🔄 Arquitectura Cognitiva (Cómo Pensar)
 
@@ -139,36 +123,7 @@ Reanimated      → Animations
 
 ## Project Structure
 
-```
-mobile/
-├── app/                      # Expo Router (file-based)
-│   ├── (auth)/              # Auth group
-│   │   ├── login.tsx
-│   │   └── register.tsx
-│   ├── (tabs)/              # Tab navigation
-│   │   ├── _layout.tsx
-│   │   ├── home.tsx
-│   │   ├── profile.tsx
-│   │   └── settings.tsx
-│   ├── _layout.tsx          # Root layout
-│   └── index.tsx            # Entry
-│
-├── components/
-│   ├── ui/                  # Primitives
-│   ├── features/            # Feature components
-│   └── shared/              # Shared components
-│
-├── hooks/                   # Custom hooks
-├── lib/                     # Utilities
-├── services/                # API services
-├── stores/                  # State management
-├── types/                   # TypeScript types
-│
-├── assets/                  # Images, fonts
-├── app.json                 # Expo config
-├── eas.json                 # EAS Build config
-└── package.json
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/mobile-engineer/examples/example_2.txt`
 
 ## Mobile-Specific Patterns
 
@@ -188,23 +143,7 @@ export function Screen({ children }) {
 
 ### Platform-Specific Code
 
-```tsx
-import { Platform } from 'react-native';
-
-const styles = {
-  shadow: Platform.select({
-    ios: {
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.1,
-      shadowRadius: 4,
-    },
-    android: {
-      elevation: 4,
-    },
-  }),
-};
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/mobile-engineer/examples/example_3.tsx`
 
 ### Keyboard Handling
 
@@ -225,99 +164,17 @@ export function Form({ children }) {
 
 ### Pull to Refresh
 
-```tsx
-import { RefreshControl, FlatList } from 'react-native';
-
-export function List() {
-  const [refreshing, setRefreshing] = useState(false);
-  
-  const onRefresh = async () => {
-    setRefreshing(true);
-    await refetchData();
-    setRefreshing(false);
-  };
-
-  return (
-    <FlatList
-      data={items}
-      renderItem={renderItem}
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      }
-    />
-  );
-}
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/mobile-engineer/examples/example_4.tsx`
 
 ### Offline Support
 
-```tsx
-import NetInfo from '@react-native-community/netinfo';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-export function useOfflineData<T>(key: string, fetcher: () => Promise<T>) {
-  const [data, setData] = useState<T | null>(null);
-  const [isOffline, setIsOffline] = useState(false);
-
-  useEffect(() => {
-    const unsubscribe = NetInfo.addEventListener(state => {
-      setIsOffline(!state.isConnected);
-    });
-
-    loadData();
-    return unsubscribe;
-  }, []);
-
-  const loadData = async () => {
-    try {
-      // Try network first
-      const freshData = await fetcher();
-      setData(freshData);
-      await AsyncStorage.setItem(key, JSON.stringify(freshData));
-    } catch {
-      // Fallback to cache
-      const cached = await AsyncStorage.getItem(key);
-      if (cached) setData(JSON.parse(cached));
-    }
-  };
-
-  return { data, isOffline, refresh: loadData };
-}
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/mobile-engineer/examples/example_5.tsx`
 
 ## Push Notifications
 
 ### Expo Notifications Setup
 
-```tsx
-import * as Notifications from 'expo-notifications';
-import * as Device from 'expo-device';
-
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: true,
-  }),
-});
-
-export async function registerForPushNotifications() {
-  if (!Device.isDevice) return null;
-
-  const { status: existingStatus } = await Notifications.getPermissionsAsync();
-  let finalStatus = existingStatus;
-
-  if (existingStatus !== 'granted') {
-    const { status } = await Notifications.requestPermissionsAsync();
-    finalStatus = status;
-  }
-
-  if (finalStatus !== 'granted') return null;
-
-  const token = await Notifications.getExpoPushTokenAsync();
-  return token.data;
-}
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/mobile-engineer/examples/example_6.tsx`
 
 ## Performance
 
@@ -368,64 +225,11 @@ const handlePress = useCallback(() => {
 
 ### EAS Build Configuration
 
-```json
-// eas.json
-{
-  "cli": {
-    "version": ">= 5.0.0"
-  },
-  "build": {
-    "development": {
-      "developmentClient": true,
-      "distribution": "internal"
-    },
-    "preview": {
-      "distribution": "internal",
-      "ios": {
-        "simulator": true
-      }
-    },
-    "production": {
-      "autoIncrement": true
-    }
-  },
-  "submit": {
-    "production": {
-      "ios": {
-        "appleId": "your@email.com",
-        "ascAppId": "1234567890"
-      },
-      "android": {
-        "serviceAccountKeyPath": "./google-services.json"
-      }
-    }
-  }
-}
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/mobile-engineer/examples/example_7.json`
 
 ### Release Checklist
 
-```markdown
-## Pre-Release
-- [ ] Versión actualizada en app.json
-- [ ] Changelog actualizado
-- [ ] Todos los tests pasan
-- [ ] Tested en dispositivos reales
-- [ ] Screenshots actualizadas
-
-## Build
-- [ ] `eas build --platform all --profile production`
-- [ ] Verificar builds en EAS dashboard
-
-## Submit
-- [ ] `eas submit --platform ios`
-- [ ] `eas submit --platform android`
-
-## Post-Release
-- [ ] Verificar en stores
-- [ ] Monitorear crashes (Sentry)
-- [ ] Monitorear reviews
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/mobile-engineer/examples/example_8.markdown`
 
 ## Testing
 

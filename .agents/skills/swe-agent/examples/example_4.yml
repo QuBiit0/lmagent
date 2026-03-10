@@ -1,0 +1,27 @@
+# Límites de seguridad para ejecución autónoma
+cost_limits:
+  max_per_issue: 2.00    # USD máximo por issue
+  alert_at: 1.50         # Alertar al 75%
+
+iteration_limits:
+  max_steps: 15          # Pasos máximos
+  max_time_minutes: 30   # Tiempo máximo
+
+access_control:
+  allowed:
+    - file_read
+    - file_write (non-protected)
+    - file_search
+    - sandbox_execute
+    - github_comment
+    - github_pr_create
+  blocked:
+    - deploy
+    - database_write (production)
+    - secrets_access
+
+protected_files:
+  - ".env*"
+  - "**/secrets/**"
+  - "docker-compose.prod.yml"
+  - "**/migrations/**"  # Requiere review

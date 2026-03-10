@@ -52,28 +52,12 @@ metadata:
 ## 🧠 System Prompt
 > **Instrucciones para el LLM**: Copia este bloque en tu system prompt.
 
-```markdown
-Eres **AI Agent Engineer**, el constructor de los "cerebros" de la automatización.
-Tu objetivo es **CREAR AGENTES CONFIABLES, CONTROLABLES Y ÚTILES**.
-Tu tono es **Experimental, Pragmático, Orientado a la Confiabilidad**.
-
-**Principios Core:**
-1. **Tool-first, LLM-second**: El LLM decide; las herramientas ejecutan.
-2. **Guardrails are Non-negotiable**: Un agente sin límites es un liability.
-3. **Evals > Vibes**: Si no lo mides, no sabes si mejora.
-4. **MCP is the Standard (2026)**: Usa el Model Context Protocol para herramientas.
-
-**Restricciones:**
-- NUNCA dejas un agente sin timeout o rate limit.
-- SIEMPRE defines tool schemas estrictos (Pydantic/Zod).
-- SIEMPRE implementas logging de tool calls y LLM outputs.
-- NUNCA expones prompts o reasoning interno al usuario final.
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/ai-agent-engineer/examples/example_1.markdown`
 
 
 
-### 🌍 Agnosticismo Tecnológico y Flexibilidad (LMAgent Core Rule)
-Eres un experto **tecnológicamente agnóstico**. NO obligues al usuario a utilizar tecnologías, frameworks o versiones obsoletas a menos que te lo pidan explícitamente. Evalúa el entorno del usuario, respeta su stack actual, y cuando diseñes o propongas soluciones nuevas, recomienda siempre el uso de herramientas modernas, estables y vigentes (Latest Stable), justificando tus decisiones técnica y lógicamente.
+
+> 📌 **Protocolo Universal**: Aplica estrictamente el *Agnosticismo Tecnológico* y la *Inyección de Memoria* descritos en `.agents/rules/00-master.md` antes de proceder.
 
 ## 🔄 Arquitectura Cognitiva (Cómo Pensar)
 
@@ -172,89 +156,12 @@ Query: "¿Cómo impacta X en Y?"
 
 ## Estructura de Agente (Python)
 
-```python
-from abc import ABC, abstractmethod
-from typing import List, Dict, Any
-from pydantic import BaseModel
-
-class Tool(BaseModel, ABC):
-    """Base class para herramientas de agentes."""
-    name: str
-    description: str
-    
-    @abstractmethod
-    async def execute(self, **kwargs) -> Any:
-        """Ejecuta la herramienta con los parámetros dados."""
-        pass
-    
-    def to_openai_function(self) -> Dict:
-        """Convierte a formato OpenAI function calling."""
-        pass
-
-class AgentConfig(BaseModel):
-    """Configuración de un agente."""
-    name: str
-    system_prompt: str
-    tools: List[str]  # Nombres de tools del registry
-    model: str = "gpt-4o"
-    temperature: float = 0.7
-    max_tokens: int = 4096
-    max_iterations: int = 10
-
-class BaseAgent(ABC):
-    """Base class para agentes de IA."""
-    
-    def __init__(self, config: AgentConfig):
-        self.config = config
-        self.tools = self._load_tools()
-        self.history = []
-    
-    async def run(self, user_input: str) -> str:
-        """Ejecuta el agente con el input del usuario."""
-        self.history.append({"role": "user", "content": user_input})
-        
-        for iteration in range(self.config.max_iterations):
-            response = await self._get_llm_response()
-            
-            if response.tool_calls:
-                results = await self._execute_tools(response.tool_calls)
-                self.history.append({"role": "tool", "results": results})
-            else:
-                self.history.append({
-                    "role": "assistant", 
-                    "content": response.content
-                })
-                return response.content
-        
-        return "Max iterations reached"
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/ai-agent-engineer/examples/example_2.py`
 
 ## Diseño de Prompts
 
 ### System Prompt Template
-```markdown
-You are {agent_name}, an AI assistant specialized in {domain}.
-
-## Your Role
-{role_description}
-
-## Available Tools
-You have access to the following tools:
-{tools_list}
-
-## Guidelines
-1. Always think step by step before acting
-2. Use tools when you need external information
-3. Be concise in your responses
-4. If you're unsure, say so
-
-## Output Format
-{output_format}
-
-## Constraints
-- {constraint_1}
-- {constraint_2}
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/ai-agent-engineer/examples/example_3.markdown`
 
 ### Prompt Engineering Best Practices
 
@@ -274,73 +181,11 @@ You have access to the following tools:
 5. **Observable**: Logging de todas las ejecuciones
 
 ### Template de Herramienta
-```python
-from lmagent.tools.base import Tool
-from pydantic import Field
-from typing import Optional
-
-class SearchDatabaseTool(Tool):
-    """
-    Busca información en la base de datos del proyecto.
-    
-    Usa esta herramienta cuando necesites:
-    - Buscar usuarios por email o nombre
-    - Obtener datos de órdenes
-    - Consultar productos
-    """
-    name: str = "search_database"
-    description: str = "Search project database for information"
-    
-    async def execute(
-        self,
-        query: str = Field(..., description="Natural language query"),
-        table: Optional[str] = Field(None, description="Specific table to search"),
-        limit: int = Field(10, description="Max results to return")
-    ) -> dict:
-        """
-        Ejecuta búsqueda en la base de datos.
-        
-        Returns:
-            dict with 'results' array and 'count' integer
-        """
-        try:
-            # Implementación
-            results = await self._search(query, table, limit)
-            return {
-                "success": True,
-                "results": results,
-                "count": len(results)
-            }
-        except Exception as e:
-            return {
-                "success": False,
-                "error": str(e),
-                "suggestion": "Try a more specific query"
-            }
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/ai-agent-engineer/examples/example_4.py`
 
 ## Trajectory Logging
 
-```python
-class TrajectoryLogger:
-    """Registra todas las acciones del agente para debugging."""
-    
-    def log_step(self, step: int, thought: str, action: str, result: str):
-        entry = {
-            "step": step,
-            "timestamp": datetime.utcnow().isoformat(),
-            "thought": thought,
-            "action": action,
-            "result": result
-        }
-        self.trajectory.append(entry)
-        
-        # Log visual
-        print(f"🤠 INFO STEP {step}")
-        print(f"💭 THOUGHT: {thought}")
-        print(f"🎬 ACTION: {action}")
-        print(f"📤 OBSERVATION: {result[:200]}...")
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/ai-agent-engineer/examples/example_5.py`
 
 ## Cost Tracking
 

@@ -1,0 +1,22 @@
+{
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "status": 422,
+    "message": "No se pudo crear el usuario",
+    "details": [
+      {
+        "field": "email",
+        "code": "INVALID_FORMAT",
+        "message": "El email no tiene un formato válido",
+        "value": "no-es-un-email"
+      },
+      {
+        "field": "password",
+        "code": "TOO_SHORT",
+        "message": "La contraseña debe tener al menos 8 caracteres"
+      }
+    ],
+    "request_id": "req_xyz789",
+    "docs": "https://docs.example.com/errors/VALIDATION_ERROR"
+  }
+}

@@ -1,0 +1,16 @@
+# ❌ Verbos en la URL
+GET    /api/getUsers
+POST   /api/createUser
+PUT    /api/updateUser/123
+
+# ❌ Singular
+GET    /api/user/123
+
+# ❌ Sin versionado
+GET    /users
+
+# ❌ Demasiado anidado (>3 niveles)
+GET    /api/v1/companies/1/departments/2/teams/3/members/4/tasks
+
+# ✅ Aplanar cuando sea necesario
+GET    /api/v1/tasks?team_id=3&member_id=4

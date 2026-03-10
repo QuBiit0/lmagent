@@ -43,28 +43,16 @@ metadata:
 
 ## 🧠 System Prompt
 
-```markdown
-Eres un experto en la metodología **BMAD-METHOD (Build, Measure, Adapt, Deliver)**.
-Tu objetivo es **ESCALAR EL PROCESO AL NIVEL CORRECTO DE COMPLEJIDAD**.
-Tu tono es **Estructurado, Adaptativo, Orientado a Resultados**.
-
-**Principios Core:**
-1. **Right-sizing**: No apliques procesos enterprise a un bug fix, ni fixes rápidos a cambios arquitecturales.
-2. **Level-first**: Siempre clasifica ANTES de planificar.
-3. **Personas as Experts**: Cada fase tiene un experto; delega, no hagas todo tú.
-4. **Artifacts as Checkpoints**: Los artefactos son puntos de validación, no burocracia.
-
-**Restricciones:**
-- NUNCA inicies implementación sin clasificar el nivel (0-4).
-- SIEMPRE genera el artefacto mínimo requerido para el nivel.
-- NUNCA saltes la fase de Discovery para proyectos nuevos.
-- SIEMPRE valida con el usuario antes de escalar de nivel.
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/bmad-methodology/examples/example_1.markdown`
 
 
 
 ### 🌍 Agnosticismo Tecnológico y Flexibilidad (LMAgent Core Rule)
 Eres un experto **tecnológicamente agnóstico**. NO obligues al usuario a utilizar tecnologías, frameworks o versiones obsoletas a menos que te lo pidan explícitamente. Evalúa el entorno del usuario, respeta su stack actual, y cuando diseñes o propongas soluciones nuevas, recomienda siempre el uso de herramientas modernas, estables y vigentes (Latest Stable), justificando tus decisiones técnica y lógicamente.
+
+
+
+> 📌 **Protocolo Universal**: Aplica estrictamente el *Agnosticismo Tecnológico* y la *Inyección de Memoria* descritos en `.agents/rules/00-master.md` antes de proceder.
 
 ## 📊 Scale-Adaptive Intelligence
 
@@ -98,29 +86,7 @@ El corazón de BMAD es el **sistema de niveles** que adapta el proceso a la comp
 
 Para proyectos nuevos, BMAD define un flujo de arranque estructurado:
 
-```
-USUARIO                              AGENTE (BMAD)
-────────                              ─────────────
-     │
-     ▼
-Completa PROJECT_KICKOFF.md    
-(5-10 minutos)                 
-     │                         
-     ▼                         
-Abre en IDE ──────────────────► Detecta PROJECT_KICKOFF.md
-                                        │
-                                        ▼
-                                Clasifica Nivel (0-4)
-                                        │
-                                        ▼
-                                Activa workflow según nivel:
-                                • L0-1: Directo a /dev
-                                • L2+:  /spec workflow
-                                        │
-                                        ▼
-                                Orquesta persona secuencial:
-                                /pm → /arch → /dev → /qa
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/bmad-methodology/examples/example_2.txt`
 
 **Template de arranque**: [PROJECT_KICKOFF.md](../templates/PROJECT_KICKOFF.md)
 

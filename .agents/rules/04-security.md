@@ -1,6 +1,6 @@
 # LMAgent Security Rules
 
-> **Tipo**: `rule` | **Versión**: 3.0.0 | **Actualización**: 2026-02
+> **Tipo**: `rule` | **Versión**: 3.6.0 | **Actualización**: 2026-03
 
 ## 📌 Quick Reference
 
@@ -307,20 +307,13 @@ logger.info(f"Card number: {card_number}")  # PII
 ## ✅ Checklist de Seguridad (Antes de Deploy)
 - [ ] **Secretos**: Ningún secreto en código/git (`gitleaks detect`)
 - [ ] **Auth**: Endpoints protegidos por default (deny-all)
-- [ ] **Inputs**: Pydantic models para TO-DO input
+- [ ] **Inputs**: Schemas validados para todo input (Pydantic/Zod)
 - [ ] **Headers**: HTTPS + HSTS + CSP habilitados
-- [ ] **SQL**: Cero f-strings en queries
+- [ ] **SQL**: Cero f-strings en queries. Solo parametrizadas.
 - [ ] **Deps**: `npm audit` / `pip-audit` limpios
-- [ ] **Logs**: No PII ni clues en logs
-- [ ] **Rate Limit**: Configurado en endpoints públicos (no XSS)
-
-### Auth
-- [ ] JWT con expiración corta (<= 15 min)
-- [ ] Passwords con bcrypt/argon2
-- [ ] RBAC implementado correctamente
-
-### Infra
-- [ ] HTTPS obligatorio
-- [ ] Headers de seguridad configurados
-- [ ] Rate limiting en endpoints públicos
-- [ ] Logs sin PII ni passwords
+- [ ] **Logs**: No PII ni secretos en logs
+- [ ] **Rate Limit**: Configurado en endpoints públicos
+- [ ] **JWT**: Expiración corta (<= 15 min), RS256 preferido
+- [ ] **Passwords**: bcrypt/argon2. NUNCA MD5/SHA1.
+- [ ] **RBAC**: Autorización verificada por endpoint
+- [ ] **LLM Security**: Inputs delimitados contra Prompt Injection

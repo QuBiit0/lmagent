@@ -54,30 +54,12 @@ metadata:
 ## 🧠 System Prompt
 > **Instrucciones para el LLM**: Copia este bloque en tu system prompt o contexto inicial.
 
-```markdown
-Eres **MCP Builder**, un experto en el Model Context Protocol de Anthropic.
-Tu objetivo es **CONSTRUIR MCP SERVERS ROBUSTOS QUE EXTIENDEN LAS CAPACIDADES DE AGENTES IA**.
-Tu tono es **Técnico, Preciso, Protocol-aware**.
-
-**Principios Core:**
-1. **Tools are interfaces**: Diseñá tools claras con schemas bien definidos — el agente depende de eso.
-2. **Fail gracefully**: Los agentes no pueden debuggear — errors descriptivos son CRÍTICOS.
-3. **Stateless by default**: MCP servers deben ser stateless salvo que haya una razón explícita.
-4. **Schema is documentation**: Un buen JSON Schema elimina la necesidad de explicación adicional.
-5. **Transport-agnostic**: Tu server debe funcionar con stdio, SSE, y HTTP sin cambios de lógica.
-
-**Restricciones:**
-- NUNCA dejes que un tool falle silenciosamente — siempre devuelve error descriptivo.
-- SIEMPRE define JSON Schema completo para inputs (types, descriptions, constraints).
-- SIEMPRE maneja timeouts en tools que hacen I/O.
-- NUNCA hardcodees configuración — usa variables de entorno.
-- SIEMPRE documenta cada tool con description clara y examples.
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/mcp-builder/examples/example_1.markdown`
 
 
 
-### 🌍 Agnosticismo Tecnológico y Flexibilidad (LMAgent Core Rule)
-Eres un experto **tecnológicamente agnóstico**. NO obligues al usuario a utilizar tecnologías, frameworks o versiones obsoletas a menos que te lo pidan explícitamente. Evalúa el entorno del usuario, respeta su stack actual, y cuando diseñes o propongas soluciones nuevas, recomienda siempre el uso de herramientas modernas, estables y vigentes (Latest Stable), justificando tus decisiones técnica y lógicamente.
+
+> 📌 **Protocolo Universal**: Aplica estrictamente el *Agnosticismo Tecnológico* y la *Inyección de Memoria* descritos en `.agents/rules/00-master.md` antes de proceder.
 
 ## 🔄 Arquitectura Cognitiva (Cómo Pensar)
 
@@ -140,207 +122,14 @@ Eres el constructor de interfaces entre agentes IA y el mundo exterior. Tu traba
 ## MCP Server en TypeScript
 
 ### Estructura del Proyecto
-```
-my-mcp-server/
-├── src/
-│   ├── index.ts          # Entry point
-│   ├── server.ts         # MCP server config
-│   ├── tools/
-│   │   ├── index.ts      # Tool registry
-│   │   ├── search.ts     # Tool: search
-│   │   └── create.ts     # Tool: create
-│   ├── resources/
-│   │   └── schema.ts     # Resource: schema
-│   └── prompts/
-│       └── review.ts     # Prompt: code_review
-├── package.json
-├── tsconfig.json
-└── README.md
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/mcp-builder/examples/example_2.txt`
 
 ### Implementación Base (TypeScript SDK)
-```typescript
-import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import { z } from 'zod';
-
-const server = new McpServer({
-  name: "my-mcp-server",
-  version: "3.6.0",
-});
-
-// ── Tool: Search Users ──────────────────────────
-server.tool(
-  "search_users",
-  "Search users by name or email. Returns matching users with their profiles.",
-  {
-    query: z.string().describe("Search query (name or email)"),
-    limit: z.number().min(1).max(100).default(10)
-      .describe("Maximum number of results to return"),
-    status: z.enum(["active", "inactive", "all"]).default("all")
-      .describe("Filter by user status"),
-  },
-  async ({ query, limit, status }) => {
-    try {
-      const users = await db.users.search({ query, limit, status });
-      
-      return {
-        content: [{
-          type: "text",
-          text: JSON.stringify(users, null, 2),
-        }],
-      };
-    } catch (error) {
-      return {
-        content: [{
-          type: "text",
-          text: `Error searching users: ${error.message}`,
-        }],
-        isError: true,
-      };
-    }
-  }
-);
-
-// ── Tool: Create User ──────────────────────────
-server.tool(
-  "create_user",
-  "Create a new user account. Returns the created user object.",
-  {
-    name: z.string().min(2).describe("User's full name"),
-    email: z.string().email().describe("User's email address"),
-    role: z.enum(["admin", "user", "viewer"]).default("user")
-      .describe("User's role in the system"),
-  },
-  async ({ name, email, role }) => {
-    try {
-      const user = await db.users.create({ name, email, role });
-      
-      return {
-        content: [{
-          type: "text",
-          text: `User created successfully:\n${JSON.stringify(user, null, 2)}`,
-        }],
-      };
-    } catch (error) {
-      if (error.code === 'DUPLICATE_EMAIL') {
-        return {
-          content: [{
-            type: "text",
-            text: `Cannot create user: email "${email}" is already registered. Try a different email.`,
-          }],
-          isError: true,
-        };
-      }
-      throw error;
-    }
-  }
-);
-
-// ── Resource: Database Schema ──────────────────
-server.resource(
-  "database-schema",
-  "db://schema",
-  async (uri) => ({
-    contents: [{
-      uri: uri.href,
-      mimeType: "application/json",
-      text: JSON.stringify(await db.getSchema(), null, 2),
-    }],
-  })
-);
-
-// ── Prompt: Code Review ────────────────────────
-server.prompt(
-  "code_review",
-  "Generate a structured code review for the given code",
-  [
-    { name: "code", description: "The code to review", required: true },
-    { name: "language", description: "Programming language", required: false },
-  ],
-  ({ code, language }) => ({
-    messages: [{
-      role: "user",
-      content: {
-        type: "text",
-        text: `Review this ${language || ''} code:\n\n\`\`\`${language || ''}\n${code}\n\`\`\`\n\nProvide: 1) Security issues 2) Performance 3) Maintainability 4) Suggestions`,
-      },
-    }],
-  })
-);
-
-// ── Start Server ───────────────────────────────
-async function main() {
-  const transport = new StdioServerTransport();
-  await server.connect(transport);
-  console.error("MCP Server running on stdio");
-}
-
-main().catch(console.error);
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/mcp-builder/examples/example_3.ts`
 
 ## MCP Server en Python
 
-```python
-from mcp.server import Server
-from mcp.server.stdio import stdio_server
-from mcp.types import Tool, TextContent
-import json
-
-server = Server("my-mcp-server")
-
-@server.list_tools()
-async def list_tools():
-    return [
-        Tool(
-            name="search_users",
-            description="Search users by name or email",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "query": {
-                        "type": "string",
-                        "description": "Search query (name or email)"
-                    },
-                    "limit": {
-                        "type": "integer",
-                        "minimum": 1,
-                        "maximum": 100,
-                        "default": 10,
-                        "description": "Max results"
-                    }
-                },
-                "required": ["query"]
-            }
-        )
-    ]
-
-@server.call_tool()
-async def call_tool(name: str, arguments: dict):
-    if name == "search_users":
-        try:
-            results = await db.search_users(
-                query=arguments["query"],
-                limit=arguments.get("limit", 10)
-            )
-            return [TextContent(
-                type="text",
-                text=json.dumps(results, indent=2)
-            )]
-        except Exception as e:
-            return [TextContent(
-                type="text",
-                text=f"Error: {str(e)}"
-            )]
-
-async def main():
-    async with stdio_server() as (read_stream, write_stream):
-        await server.run(read_stream, write_stream)
-
-if __name__ == "__main__":
-    import asyncio
-    asyncio.run(main())
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/mcp-builder/examples/example_4.py`
 
 ---
 
@@ -362,57 +151,10 @@ execute_action
 ```
 
 ### JSON Schema Design
-```json
-{
-  "type": "object",
-  "properties": {
-    "query": {
-      "type": "string",
-      "description": "Search query. Supports partial matching on name and email.",
-      "minLength": 2,
-      "examples": ["john", "john@example.com"]
-    },
-    "filters": {
-      "type": "object",
-      "description": "Optional filters to narrow results",
-      "properties": {
-        "role": {
-          "type": "string",
-          "enum": ["admin", "user", "viewer"],
-          "description": "Filter by user role"
-        },
-        "created_after": {
-          "type": "string",
-          "format": "date",
-          "description": "Only include users created after this date (ISO 8601)"
-        }
-      }
-    }
-  },
-  "required": ["query"]
-}
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/mcp-builder/examples/example_5.json`
 
 ### Error Handling para Agentes
-```typescript
-// ❌ Error inútil para el agente
-return { content: [{ type: "text", text: "Error" }], isError: true };
-
-// ✅ Error que el agente puede resolver
-return {
-  content: [{
-    type: "text",
-    text: [
-      "Error creating user: email 'leo@test.com' already exists.",
-      "Suggestions:",
-      "1. Search for existing user with: search_users query='leo@test.com'",
-      "2. Use a different email address",
-      "3. Update the existing user with: update_user id='usr_123'"
-    ].join("\n")
-  }],
-  isError: true,
-};
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/mcp-builder/examples/example_6.ts`
 
 ---
 

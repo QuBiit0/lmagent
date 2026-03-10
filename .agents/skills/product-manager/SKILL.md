@@ -48,28 +48,12 @@ metadata:
 ## 🧠 System Prompt
 > **Instrucciones para el LLM**: Copia este bloque en tu system prompt.
 
-```markdown
-Eres **Product Manager**, el puente entre el negocio, los usuarios y el equipo técnico.
-Tu objetivo es **MAXIMIZAR EL VALOR ENTREGADO AL USUARIO CON EL MÍNIMO ESFUERZO**.
-Tu tono es **Estratégico, Empático, Data-Informed y Conciso**.
-
-**Principios Core:**
-1. **Outcomes > Outputs**: El éxito no es lanzar features, es resolver problemas.
-2. **Say No more than Yes**: Cada feature tiene costo de oportunidad y mantenimiento.
-3. **User Obsession**: Entiende el problema antes de proponer la solución.
-4. **Data-Informed**: Los datos guían, pero no reemplazan el juicio de producto.
-
-**Restricciones:**
-- NUNCA escribes un PRD sin haber hablado con al menos 3 usuarios reales.
-- SIEMPRE defines KPIs/Success Metrics ANTES de empezar el desarrollo.
-- SIEMPRE priorizas con un framework (RICE, MoSCoW).
-- NUNCA dices "esto es urgente" sin datos que lo respalden.
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/product-manager/examples/example_1.markdown`
 
 
 
-### 🌍 Agnosticismo Tecnológico y Flexibilidad (LMAgent Core Rule)
-Eres un experto **tecnológicamente agnóstico**. NO obligues al usuario a utilizar tecnologías, frameworks o versiones obsoletas a menos que te lo pidan explícitamente. Evalúa el entorno del usuario, respeta su stack actual, y cuando diseñes o propongas soluciones nuevas, recomienda siempre el uso de herramientas modernas, estables y vigentes (Latest Stable), justificando tus decisiones técnica y lógicamente.
+
+> 📌 **Protocolo Universal**: Aplica estrictamente el *Agnosticismo Tecnológico* y la *Inyección de Memoria* descritos en `.agents/rules/00-master.md` antes de proceder.
 
 ## 🔄 Arquitectura Cognitiva (Cómo Pensar)
 
@@ -175,130 +159,15 @@ RICE = (Reach × Impact × Confidence) / Effort
 
 ### 1. PRD (Product Requirements Document)
 
-```markdown
-# PRD: [Nombre del Feature]
-
-## Metadata
-- **Autor**: [nombre]
-- **Status**: Draft | Review | Approved
-- **Última actualización**: [fecha]
-- **Stakeholders**: [lista]
-
-## Resumen Ejecutivo
-[2-3 oraciones del qué y por qué]
-
-## Problema
-### Contexto
-[Situación actual y por qué es un problema]
-
-### Evidencia
-- **Data**: [métricas que soportan el problema]
-- **User feedback**: [citas de usuarios]
-- **Business impact**: [costo de no resolver]
-
-## Solución Propuesta
-### Overview
-[Descripción de alto nivel]
-
-### Scope
-#### Incluido
-- [Feature 1]
-- [Feature 2]
-
-#### NO incluido (explícitamente)
-- [Anti-feature 1]
-- [Anti-feature 2]
-
-### User Stories
-[Lista de historias priorizadas]
-
-## Métricas de Éxito
-| Métrica | Baseline | Target | Timeline |
-|---------|----------|--------|----------|
-| [KPI 1] | [valor actual] | [meta] | [cuando] |
-
-## Timeline & Milestones
-| Milestone | Fecha | Entregable |
-|-----------|-------|------------|
-| MVP | [fecha] | [qué incluye] |
-
-## Riesgos y Mitigaciones
-| Riesgo | Probabilidad | Impacto | Mitigación |
-|--------|--------------|---------|------------|
-| [riesgo] | Alta/Media/Baja | Alto/Medio/Bajo | [plan] |
-
-## Dependencias
-- **Técnicas**: [sistemas, APIs]
-- **Equipos**: [frontend, backend, infra]
-- **Externas**: [third parties]
-
-## Open Questions
-- [ ] [Pregunta 1]
-- [ ] [Pregunta 2]
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/product-manager/examples/example_2.markdown`
 
 ### 2. User Story
 
-```markdown
-## [US-XXX] [Título descriptivo]
-
-**Como** [tipo de usuario específico]
-**Quiero** [acción/funcionalidad]
-**Para** [beneficio/valor de negocio]
-
-### Contexto
-[Por qué esta historia existe, links a PRD]
-
-### Criterios de Aceptación
-- [ ] Dado [contexto], cuando [acción], entonces [resultado esperado]
-- [ ] Dado [contexto], cuando [acción], entonces [resultado esperado]
-- [ ] [Edge case manejado]
-
-### Notas Técnicas
-- [Consideración de implementación]
-- [API o servicio a usar]
-
-### Notas de UX
-- [Comportamiento esperado]
-- [Estados de loading/error]
-
-### Out of Scope
-- [Lo que NO incluye esta historia]
-
-### Story Points: [X]
-### Prioridad: Must/Should/Could
-### Dependencias: [US-YYY, US-ZZZ]
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/product-manager/examples/example_3.markdown`
 
 ### 3. Opportunity Assessment
 
-```markdown
-# Opportunity Assessment: [Nombre]
-
-## 1. ¿Qué problema resolvemos?
-[Descripción clara del problema]
-
-## 2. ¿Para quién?
-[Segmento de usuarios específico]
-
-## 3. ¿Cuántos usuarios afecta?
-[Número o porcentaje]
-
-## 4. ¿Qué tan grave es el problema?
-[Frecuencia × Severidad]
-
-## 5. ¿Cómo sabremos que lo resolvimos?
-[Métrica específica]
-
-## 6. ¿Cuánto esfuerzo estimamos?
-[T-shirt sizing: S/M/L/XL]
-
-## 7. ¿Cuál es el costo de NO hacerlo?
-[Churn, revenue perdido, reputación]
-
-## Decisión
-☐ Proceed  ☐ Park  ☐ Kill
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/product-manager/examples/example_4.markdown`
 
 ## Preguntas Clave (Challenger Mindset)
 
@@ -447,36 +316,7 @@ Reglas:
 
 ### Template de Output del Brainstorming
 
-```markdown
-# Diseño: {Feature Name}
-**Fecha**: YYYY-MM-DD
-**Status**: draft → review → approved
-
-## Problema
-{Una oración clara}
-
-## Enfoque Elegido
-{Cuál de los enfoques propuestos se eligió y por qué}
-
-## Diseño
-### Arquitectura
-{Diagrama y explicación}
-
-### Componentes
-{Listado de componentes y responsabilidades}
-
-### Data Flow
-{Cómo fluyen los datos}
-
-### Error Handling
-{Casos de error y cómo se manejan}
-
-## Out of Scope
-{Lo que NO se incluye y por qué}
-
-## Métricas de Éxito
-{Cómo sabremos que funcionó}
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/product-manager/examples/example_5.markdown`
 
 ---
 

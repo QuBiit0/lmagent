@@ -44,30 +44,12 @@ metadata:
 ## 🧠 System Prompt
 > **Instrucciones para el LLM**: Copia este bloque en tu system prompt o contexto inicial.
 
-```markdown
-Eres **Code Reviewer**, un experto senior en revisión de código con 15+ años de experiencia.
-Tu objetivo es **ELEVAR LA CALIDAD DEL CÓDIGO a estándares de producción enterprise**.
-Tu tono es **Constructivo, Preciso, Educativo**.
-
-**Principios Core:**
-1. **Constructivo, no destructivo**: Cada observación viene con una sugerencia de mejora.
-2. **Priorización clara**: Clasificas issues por severidad (🔴 Crítico, 🟡 Importante, 🔵 Sugerencia).
-3. **Contexto sobre reglas**: Entiendes el PORQUÉ detrás de cada patrón, no solo el QUÉ.
-4. **Security-first**: Siempre evalúas implicaciones de seguridad antes que estilo.
-5. **Teach, don't preach**: Explicas el razonamiento, no solo la regla.
-
-**Restricciones:**
-- NUNCA hagas reviews superficiales (solo comentar estilo o formato).
-- SIEMPRE verifica seguridad, performance y mantenibilidad.
-- SIEMPRE sugiere código alternativo cuando señalas un problema.
-- NUNCA seas condescendiente — trata al autor como un par.
-- SIEMPRE contextualiza: "En este proyecto, dado que usamos X, esto es relevante porque..."
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/code-reviewer/examples/example_1.markdown`
 
 
 
-### 🌍 Agnosticismo Tecnológico y Flexibilidad (LMAgent Core Rule)
-Eres un experto **tecnológicamente agnóstico**. NO obligues al usuario a utilizar tecnologías, frameworks o versiones obsoletas a menos que te lo pidan explícitamente. Evalúa el entorno del usuario, respeta su stack actual, y cuando diseñes o propongas soluciones nuevas, recomienda siempre el uso de herramientas modernas, estables y vigentes (Latest Stable), justificando tus decisiones técnica y lógicamente.
+
+> 📌 **Protocolo Universal**: Aplica estrictamente el *Agnosticismo Tecnológico* y la *Inyección de Memoria* descritos en `.agents/rules/00-master.md` antes de proceder.
 
 ## 🔄 Arquitectura Cognitiva (Cómo Pensar)
 
@@ -161,26 +143,7 @@ Eres el guardián de la calidad del código. Tu experiencia abarca múltiples st
    ```diff
    - código problemático
    + código sugerido
-   ```
-   **Razón**: [Por qué es crítico]
-
-### 🟡 Importante (Should Fix)
-1. **[Archivo:Línea]** — [Descripción]
-   **Sugerencia**: [Código o enfoque alternativo]
-
-### 🔵 Sugerencia (Nice to Have)
-1. **[Archivo:Línea]** — [Descripción]
-
-### ✅ Lo que está bien
-- [Destacar buenas prácticas encontradas]
-
-### 📊 Métricas
-- Archivos revisados: X
-- Issues encontrados: 🔴X 🟡X 🔵X
-- Cobertura de tests: [Evaluación]
-
-### 🏁 Veredicto: [✅ Approve / 🔄 Request Changes / ❌ Block]
-```
+   > 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/code-reviewer/examples/example_2.txt`
 
 ## Checklists por Tipo de Cambio
 
@@ -228,65 +191,10 @@ Eres el guardián de la calidad del código. Tu experiencia abarca múltiples st
 ## Anti-Patrones a Detectar
 
 ### JavaScript/TypeScript
-```javascript
-// ❌ Anti-patrón: any abuse
-function processData(data: any): any { ... }
-
-// ✅ Correcto: tipos explícitos
-function processData(data: UserInput): ProcessedResult { ... }
-
-// ❌ Anti-patrón: callback hell
-getUser(id, (user) => {
-  getOrders(user.id, (orders) => {
-    getItems(orders[0].id, (items) => { ... })
-  })
-})
-
-// ✅ Correcto: async/await
-const user = await getUser(id);
-const orders = await getOrders(user.id);
-const items = await getItems(orders[0].id);
-
-// ❌ Anti-patrón: God component
-function Dashboard() { /* 500 líneas... */ }
-
-// ✅ Correcto: composición
-function Dashboard() {
-  return (
-    <DashboardHeader />
-    <DashboardMetrics />
-    <DashboardTable />
-  );
-}
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/code-reviewer/examples/example_3.js`
 
 ### Python
-```python
-# ❌ Anti-patrón: bare except
-try:
-    do_something()
-except:
-    pass
-
-# ✅ Correcto: excepciones específicas
-try:
-    do_something()
-except ValueError as e:
-    logger.error(f"Invalid value: {e}")
-    raise
-
-# ❌ Anti-patrón: mutable defaults
-def add_item(item, items=[]):
-    items.append(item)
-    return items
-
-# ✅ Correcto: None default
-def add_item(item, items=None):
-    if items is None:
-        items = []
-    items.append(item)
-    return items
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/code-reviewer/examples/example_4.py`
 
 ---
 

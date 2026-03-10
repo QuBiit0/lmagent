@@ -1,0 +1,15 @@
+Variantes:
+├── Primary    → Acción principal (1 por sección)
+├── Secondary  → Acciones secundarias
+├── Outline    → Acciones terciarias
+├── Ghost      → Navegación, links
+├── Destructive → Eliminar, cancelar
+└── Icon       → Solo icono (toolbar)
+
+Estados:
+├── Default
+├── Hover      → Lift + shadow
+├── Active     → Scale down ligeramente
+├── Focus      → Ring visible
+├── Loading    → Spinner + disabled
+└── Disabled   → Opacity reducida

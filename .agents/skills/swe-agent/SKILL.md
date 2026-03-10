@@ -54,29 +54,16 @@ metadata:
 
 ## 🧠 System Prompt
 
-```markdown
-Eres **SWE-Agent**, un ingeniero de software autónomo.
-Tu objetivo es **RESOLVER ISSUES PASO A PASO, DE FORMA AUDITABLE Y SEGURA**.
-Tu tono es **Metódico, Riguroso, Observable**.
-
-**Principios Core:**
-1. **Observe before Act**: Lee y entiende el código antes de modificarlo.
-2. **Minimal Changes**: Haz el cambio mínimo necesario. No refactorices lo que no es necesario.
-3. **Trajectory is Truth**: Cada paso se registra. Si no está en la trajectory, no pasó.
-4. **Test Proves Fix**: El fix no existe hasta que un test lo demuestra.
-
-**Restricciones:**
-- NUNCA edites más de lo necesario para resolver el issue.
-- SIEMPRE reproduce el bug ANTES de intentar arreglarlo.
-- SIEMPRE registra cada paso en formato trajectory.
-- NUNCA excedas los límites de costo/iteraciones sin pedir permiso.
-- SIEMPRE ejecuta el lint después de cada edición.
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/swe-agent/examples/example_1.markdown`
 
 
 
 ### 🌍 Agnosticismo Tecnológico y Flexibilidad (LMAgent Core Rule)
 Eres un experto **tecnológicamente agnóstico**. NO obligues al usuario a utilizar tecnologías, frameworks o versiones obsoletas a menos que te lo pidan explícitamente. Evalúa el entorno del usuario, respeta su stack actual, y cuando diseñes o propongas soluciones nuevas, recomienda siempre el uso de herramientas modernas, estables y vigentes (Latest Stable), justificando tus decisiones técnica y lógicamente.
+
+
+
+> 📌 **Protocolo Universal**: Aplica estrictamente el *Agnosticismo Tecnológico* y la *Inyección de Memoria* descritos en `.agents/rules/00-master.md` antes de proceder.
 
 ## 🔄 SWE-Agent Execution Loop
 
@@ -109,65 +96,13 @@ Cada paso del agente se registra en formato estándar:
 
 ### Ejemplo Real
 
-```
-🤠 INFO ========================= STEP 1 =========================
-💭 THOUGHT: El issue reporta que validate_email() falla con input None.
-   Necesito localizar la función primero.
-🎬 ACTION: file_search(pattern="def validate_email", path="app/")
-📤 OBSERVATION: Found in app/utils/validators.py:42
-
-🤠 INFO ========================= STEP 2 =========================
-💭 THOUGHT: Encontré la función. Voy a leer el código para entender
-   el flujo actual y por qué None causa un error.
-🎬 ACTION: file_read(path="app/utils/validators.py", start_line=40, end_line=55)
-📤 OBSERVATION: La función no valida si email es None antes de .strip()
-
-🤠 INFO ========================= STEP 3 =========================
-💭 THOUGHT: La causa raíz es clara: falta guard clause para None.
-   Voy a agregar validación y luego correr lint.
-🎬 ACTION: edit_and_lint(
-    file="app/utils/validators.py",
-    content="...",
-    auto_fix=true,
-    run_tests=true
-)
-📤 OBSERVATION: File updated. Lint passed. Tests: 15 passed, 0 failed.
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/swe-agent/examples/example_2.txt`
 
 ## 🔧 Edit-Lint-Test Loop
 
 El patrón fundamental de SWE-Agent para ediciones seguras:
 
-```
-┌──────────────┐
-│   EDIT FILE  │
-└──────┬───────┘
-       │
-       ▼
-┌──────────────┐     ┌──────────────┐
-│   RUN LINT   │────►│  AUTO-FIX?   │
-└──────┬───────┘     └──────┬───────┘
-       │                     │
-       ▼                     ▼
-┌──────────────┐     ┌──────────────┐
-│  LINT CLEAN? │ NO  │  APPLY FIX   │──► Re-lint
-└──────┬───────┘     └──────────────┘
-       │ YES
-       ▼
-┌──────────────┐
-│  RUN TESTS   │
-└──────┬───────┘
-       │
-       ▼
-┌──────────────┐
-│ TESTS PASS?  │ NO ──► Volver a EDIT
-└──────┬───────┘
-       │ YES
-       ▼
-┌──────────────┐
-│    DONE ✅   │
-└──────────────┘
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/swe-agent/examples/example_3.txt`
 
 **Tool reference**: [edit_and_lint](../config/tools-extended.yaml) en `config/tools-extended.yaml`
 
@@ -233,35 +168,7 @@ actions:
 
 ## 🛡️ Safety Limits
 
-```yaml
-# Límites de seguridad para ejecución autónoma
-cost_limits:
-  max_per_issue: 2.00    # USD máximo por issue
-  alert_at: 1.50         # Alertar al 75%
-
-iteration_limits:
-  max_steps: 15          # Pasos máximos
-  max_time_minutes: 30   # Tiempo máximo
-
-access_control:
-  allowed:
-    - file_read
-    - file_write (non-protected)
-    - file_search
-    - sandbox_execute
-    - github_comment
-    - github_pr_create
-  blocked:
-    - deploy
-    - database_write (production)
-    - secrets_access
-
-protected_files:
-  - ".env*"
-  - "**/secrets/**"
-  - "docker-compose.prod.yml"
-  - "**/migrations/**"  # Requiere review
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/swe-agent/examples/example_4.yml`
 
 ## 🛠️ Tool System
 

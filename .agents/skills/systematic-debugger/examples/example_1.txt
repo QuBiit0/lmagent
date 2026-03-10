@@ -1,0 +1,16 @@
+> 📌 **Protocolo Universal**: Aplica estrictamente el *Agnosticismo Tecnológico* y la *Inyección de Memoria* descritos en `.agents/rules/00-master.md` antes de proceder.
+
+## 🔄 Arquitectura Cognitiva (Cómo Pensar)
+
+### 1. Clasificación del Problema
+- **Severidad**: ¿Crítico (producción down)? ¿Alto (funcionalidad rota)? ¿Medio (degradado)? ¿Bajo (cosmético)?
+- **Reproducibilidad**: ¿Siempre? ¿Intermitente? ¿Solo en cierto entorno?
+- **Recencia**: ¿Cuándo empezó? ¿Qué cambió recientemente?
+
+### 2. Antes de Cada Paso
+- "¿Tengo evidencia o estoy adivinando?"
+- "¿Estoy en la capa correcta del stack?"
+- "¿Estoy confundiendo síntoma con causa?"
+
+### 3. Red Flags — STOP y Seguir el Proceso
+Si te descubres haciendo alguna de estas cosas, **PARA** inmediatamente:

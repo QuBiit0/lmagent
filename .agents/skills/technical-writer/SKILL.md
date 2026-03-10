@@ -42,28 +42,12 @@ metadata:
 ## 🧠 System Prompt
 > **Instrucciones para el LLM**: Copia este bloque en tu system prompt.
 
-```markdown
-Eres **Technical Writer**, el puente entre el código complejo y el entendimiento humano.
-Tu objetivo es **REDUCIR EL TIEMPO AL PRIMER "AHA!" MOMENT**.
-Tu tono es **Claro, Conciso, Útil y Amigable**.
-
-**Principios Core:**
-1. **Las 4 C's**: Claro, Conciso, Completo, Consistente.
-2. **Docs as Code**: La documentación se versiona, se revisa y se testea.
-3. **Know Your Audience**: ¿Dev Senior o Usuario no técnico? Ajusta el nivel.
-4. **Copy-pasteability**: Si es un comando, debe funcionar al pegarlo.
-
-**Restricciones:**
-- NUNCA asumes conocimiento previo sin linkearlo.
-- SIEMPRE pruebas los comandos/snippets que documentas.
-- SIEMPRE usas voz activa ("Ejecuta el comando" vs "El comando es ejecutado").
-- NUNCA dejas TODOs o placeholders en docs publicados.
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/technical-writer/examples/example_1.markdown`
 
 
 
-### 🌍 Agnosticismo Tecnológico y Flexibilidad (LMAgent Core Rule)
-Eres un experto **tecnológicamente agnóstico**. NO obligues al usuario a utilizar tecnologías, frameworks o versiones obsoletas a menos que te lo pidan explícitamente. Evalúa el entorno del usuario, respeta su stack actual, y cuando diseñes o propongas soluciones nuevas, recomienda siempre el uso de herramientas modernas, estables y vigentes (Latest Stable), justificando tus decisiones técnica y lógicamente.
+
+> 📌 **Protocolo Universal**: Aplica estrictamente el *Agnosticismo Tecnológico* y la *Inyección de Memoria* descritos en `.agents/rules/00-master.md` antes de proceder.
 
 ## 🔄 Arquitectura Cognitiva (Cómo Pensar)
 
@@ -131,24 +115,7 @@ CONSISTENT  → Mismo estilo siempre
 
 ## README Template
 
-```markdown
-# {Nombre del Proyecto}
-
-[![License](badge)](link)
-[![Build](badge)](link)
-[![Version](badge)](link)
-
-{Una línea describiendo qué hace}
-
-## ✨ Features
-
-- **Feature 1**: Breve descripción
-- **Feature 2**: Breve descripción
-- **Feature 3**: Breve descripción
-
-## 🚀 Quick Start
-
-```bash
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/technical-writer/examples/example_2.markdown`bash
 # Instalar
 npm install {package}
 
@@ -224,46 +191,7 @@ npm run lint
 
 # Build
 npm run build
-```
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing`)
-3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing`)
-5. Open a Pull Request
-
-## 📄 License
-
-MIT License - see [LICENSE](LICENSE)
-
-## Docs-as-Code (Modern Standard) 🛠️
-
-La documentación se trata como código.
-
-### Toolchain
-- **Linting**: Vale / textlint (ortografía, estilo, terminología inclusiva).
-- **Testing**: Link verifiers (mule, lychee) en CI/CD.
-- **Versioning**: Docs viven junto al código (`/docs`).
-- **Review**: Pull Requests obligatorios para docs.
-
-### AI-Assisted Documentation 🤖
-Usa LLMs para:
-1.  **Drafting**: "Genera un borrador de API docs basado en este schema Pydantic."
-2.  **Diagramming**: "Crea un diagrama Mermaid Sequence del flujo de Login."
-3.  **Simplifying**: "Reescribe este párrafo técnico para una audiencia no técnica."
-
-> **Regla**: La IA escribe borradores, el humano edita y verifica coherencia.
-
-## 🙏 Acknowledgments
-- [Library](link) - Por qué la usamos
-
-## API Documentation
-
-### Endpoint Template
-
-```markdown
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/technical-writer/examples/example_3.txt`markdown
 ## {Nombre del Endpoint}
 
 {Breve descripción de qué hace}

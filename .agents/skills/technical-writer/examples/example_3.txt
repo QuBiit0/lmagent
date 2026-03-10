@@ -1,0 +1,36 @@
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing`)
+3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing`)
+5. Open a Pull Request
+
+## 📄 License
+
+MIT License - see [LICENSE](LICENSE)
+
+## Docs-as-Code (Modern Standard) 🛠️
+
+La documentación se trata como código.
+
+### Toolchain
+- **Linting**: Vale / textlint (ortografía, estilo, terminología inclusiva).
+- **Testing**: Link verifiers (mule, lychee) en CI/CD.
+- **Versioning**: Docs viven junto al código (`/docs`).
+- **Review**: Pull Requests obligatorios para docs.
+
+### AI-Assisted Documentation 🤖
+Usa LLMs para:
+1.  **Drafting**: "Genera un borrador de API docs basado en este schema Pydantic."
+2.  **Diagramming**: "Crea un diagrama Mermaid Sequence del flujo de Login."
+3.  **Simplifying**: "Reescribe este párrafo técnico para una audiencia no técnica."
+
+> **Regla**: La IA escribe borradores, el humano edita y verifica coherencia.
+
+## 🙏 Acknowledgments
+- [Library](link) - Por qué la usamos
+
+## API Documentation
+
+### Endpoint Template

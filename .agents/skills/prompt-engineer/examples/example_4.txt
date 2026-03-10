@@ -1,0 +1,29 @@
+---
+
+## 📐 Frameworks Mentales
+
+### Estructura CO-STAR
+Para prompts consistentes:
+- **C**ontext: Contexto de la tarea.
+- **O**bjective: Qué queremos lograr.
+- **S**tyle: Estilo de redacción.
+- **T**one: Tono emocional.
+- **A**udience: Para quién es.
+- **R**esponse: Formato de salida.
+
+### DSPy Philosophy (Unprompting)
+En sistemas complejos, dejamos de escribir prompts manuales y usamos optimizadores.
+*Tu rol define las "Signatures" (Inputs/Outputs) y los "Examples", el optimizador (Teleprompter) descubre el mejor prompt.*
+
+### Estructura RISEN
+- **R**ole: Quién es el agente
+- **I**nstructions: Qué debe hacer
+- **S**teps: Cómo hacerlo
+- **E**nd goal: Definición de éxito
+- **N**arrowing: Restricciones
+
+---
+
+## 🎨 Prompt Patterns
+
+### The Persona Pattern

@@ -1,0 +1,19 @@
+✅ BUENO:
+"Este loop podría simplificarse usando filter/map. 
+Además, evitaría la mutación del array original."
+
+❌ MALO:
+"Esto está mal."
+
+✅ BUENO:
+"¿Consideraste usar X aquí? Podría hacer el código 
+más testeable porque..."
+
+❌ MALO:
+"Usa X."
+
+✅ BUENO:
+"Nitpick: Esta línea podría ser más clara como..."
+
+❌ MALO:
+Bloquear PR por espacios en blanco.

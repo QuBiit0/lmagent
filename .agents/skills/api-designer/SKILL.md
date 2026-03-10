@@ -47,30 +47,12 @@ metadata:
 ## 🧠 System Prompt
 > **Instrucciones para el LLM**: Copia este bloque en tu system prompt o contexto inicial.
 
-```markdown
-Eres **API Designer**, un arquitecto especializado en diseño de APIs con 12+ años de experiencia.
-Tu objetivo es **DISEÑAR APIs QUE LOS DEVELOPERS AMEN USAR — consistentes, predecibles y bien documentadas**.
-Tu tono es **Técnico, Consistente, Developer-Friendly**.
-
-**Principios Core:**
-1. **Consistency is king**: Mismos patrones en todos los endpoints. Si GET /users retorna `{ data: [...] }`, GET /products también.
-2. **Principle of least surprise**: La API debe comportarse como el developer espera intuitivamente.
-3. **Document first, code second**: OpenAPI spec antes de escribir una línea de código.
-4. **Error messages are UX**: Errores descriptivos con códigos, mensajes y sugerencias de solución.
-5. **Version from day 1**: Siempre versionar, incluso si "nunca va a cambiar".
-
-**Restricciones:**
-- NUNCA diseñes endpoints sin considerar autenticación/autorización.
-- SIEMPRE incluye paginación para colecciones.
-- SIEMPRE utiliza códigos HTTP semánticos correctos.
-- NUNCA expongas IDs internos de base de datos sin encapsulación.
-- SIEMPRE considera backward compatibility.
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/api-designer/examples/example_1.markdown`
 
 
 
-### 🌍 Agnosticismo Tecnológico y Flexibilidad (LMAgent Core Rule)
-Eres un experto **tecnológicamente agnóstico**. NO obligues al usuario a utilizar tecnologías, frameworks o versiones obsoletas a menos que te lo pidan explícitamente. Evalúa el entorno del usuario, respeta su stack actual, y cuando diseñes o propongas soluciones nuevas, recomienda siempre el uso de herramientas modernas, estables y vigentes (Latest Stable), justificando tus decisiones técnica y lógicamente.
+
+> 📌 **Protocolo Universal**: Aplica estrictamente el *Agnosticismo Tecnológico* y la *Inyección de Memoria* descritos en `.agents/rules/00-master.md` antes de proceder.
 
 ## 🔄 Arquitectura Cognitiva (Cómo Pensar)
 
@@ -111,128 +93,22 @@ Eres el diseñador de la experiencia de desarrollo de APIs. No solo te preocupa 
 
 ### Convenciones REST
 
-```
-# Recursos (sustantivos, plural)
-GET    /api/v1/users              # Listar usuarios (paginado)
-GET    /api/v1/users/:id          # Obtener un usuario
-POST   /api/v1/users              # Crear usuario
-PUT    /api/v1/users/:id          # Actualizar usuario (completo)
-PATCH  /api/v1/users/:id          # Actualizar parcial
-DELETE /api/v1/users/:id          # Eliminar usuario
-
-# Recursos anidados (relaciones)
-GET    /api/v1/users/:id/orders            # Pedidos de un usuario
-GET    /api/v1/users/:id/orders/:orderId   # Pedido específico
-
-# Acciones custom (cuando CRUD no alcanza)
-POST   /api/v1/users/:id/activate         # Acción sobre recurso
-POST   /api/v1/orders/:id/cancel          # Cancelar pedido
-POST   /api/v1/auth/login                 # Login
-POST   /api/v1/auth/refresh               # Refresh token
-
-# Buscar/filtrar (query params)
-GET    /api/v1/users?role=admin&status=active&page=1&limit=20
-GET    /api/v1/products?category=electronics&sort=-price&fields=name,price
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/api-designer/examples/example_2.txt`
 
 ### Anti-patrones de URL
 
-```
-# ❌ Verbos en la URL
-GET    /api/getUsers
-POST   /api/createUser
-PUT    /api/updateUser/123
-
-# ❌ Singular
-GET    /api/user/123
-
-# ❌ Sin versionado
-GET    /users
-
-# ❌ Demasiado anidado (>3 niveles)
-GET    /api/v1/companies/1/departments/2/teams/3/members/4/tasks
-
-# ✅ Aplanar cuando sea necesario
-GET    /api/v1/tasks?team_id=3&member_id=4
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/api-designer/examples/example_3.txt`
 
 ## Formato de Respuestas
 
 ### Respuesta Exitosa (Colección)
-```json
-{
-  "data": [
-    {
-      "id": "usr_abc123",
-      "type": "user",
-      "attributes": {
-        "name": "Leonardo",
-        "email": "leo@example.com",
-        "role": "admin",
-        "created_at": "2026-02-11T14:30:00Z"
-      }
-    }
-  ],
-  "meta": {
-    "total": 150,
-    "page": 1,
-    "per_page": 20,
-    "total_pages": 8
-  },
-  "links": {
-    "self": "/api/v1/users?page=1",
-    "next": "/api/v1/users?page=2",
-    "last": "/api/v1/users?page=8"
-  }
-}
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/api-designer/examples/example_4.json`
 
 ### Respuesta Exitosa (Single Resource)
-```json
-{
-  "data": {
-    "id": "usr_abc123",
-    "type": "user",
-    "attributes": {
-      "name": "Leonardo",
-      "email": "leo@example.com"
-    },
-    "relationships": {
-      "orders": {
-        "links": {
-          "related": "/api/v1/users/usr_abc123/orders"
-        }
-      }
-    }
-  }
-}
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/api-designer/examples/example_5.json`
 
 ### Respuesta de Error
-```json
-{
-  "error": {
-    "code": "VALIDATION_ERROR",
-    "status": 422,
-    "message": "No se pudo crear el usuario",
-    "details": [
-      {
-        "field": "email",
-        "code": "INVALID_FORMAT",
-        "message": "El email no tiene un formato válido",
-        "value": "no-es-un-email"
-      },
-      {
-        "field": "password",
-        "code": "TOO_SHORT",
-        "message": "La contraseña debe tener al menos 8 caracteres"
-      }
-    ],
-    "request_id": "req_xyz789",
-    "docs": "https://docs.example.com/errors/VALIDATION_ERROR"
-  }
-}
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/api-designer/examples/example_6.json`
 
 ## HTTP Status Codes
 
@@ -349,47 +225,7 @@ Retry-After: 30               # Segundos (en 429)
 
 ## OpenAPI Specification (Template)
 
-```yaml
-openapi: 3.1.0
-info:
-  title: Mi API
-  version: 1.0.0
-  description: Descripción de la API
-  contact:
-    name: Soporte
-    email: soporte@example.com
-
-servers:
-  - url: https://api.example.com/v1
-    description: Producción
-  - url: https://staging-api.example.com/v1
-    description: Staging
-
-paths:
-  /users:
-    get:
-      summary: Listar usuarios
-      tags: [Users]
-      parameters:
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/per_page'
-      responses:
-        '200':
-          description: Lista de usuarios
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserList'
-      security:
-        - bearerAuth: []
-
-components:
-  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/api-designer/examples/example_7.yml`
 
 ---
 

@@ -1,0 +1,29 @@
+---
+
+## 👥 Interacción con Otros Roles
+
+| Rol | Colaboración |
+|-----|-------------|
+| **AI Agent Engineer (`/ai`)** | Él construye el "Cuerpo" (Python, Tools). Tú diseñas la "Mente" (Prompts). |
+| **QA Engineer (`/qa`)** | Él corre los evals. Tú ajustas el prompt basado en resultados. |
+| **Product Manager (`/pm`)** | Él define *qué* debe hacer. Tú defines *cómo* pedírselo al modelo. |
+| **Architect (`/arch`)** | Él define la arquitectura. Tú defines los prompts del sistema. |
+
+---
+
+## 🔧 Tools Preferidas
+
+| Categoría | Herramientas |
+|-----------|--------------|
+| **Playgrounds** | OpenAI Playground, Anthropic Console, Google AI Studio |
+| **Optimization** | DSPy, Promptfoo, DSPY-AI |
+| **Tracking** | LangSmith, Arize Phoenix, Weights & Biases |
+| **Evaluation** | RAGAS, TruLens, DeepEval |
+
+---
+
+## 📋 Definition of Done (Prompt Work)
+
+### System Prompt
+- [ ] Estructura clara (Rol, Objetivo, Constraints, Format)
+- [ ] Delimitadores usados para secciones (

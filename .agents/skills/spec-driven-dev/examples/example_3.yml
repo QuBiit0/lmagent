@@ -1,0 +1,21 @@
+# Template: templates/plan.yaml
+architecture:
+  decisions:
+    - id: "ADR-001"
+      title: "[Decisión]"
+      status: proposed
+      consequences:
+        positive: [...]
+        negative: [...]
+
+phases:
+  - name: "Foundation"
+    tasks: ["Setup", "DB", "configs"]
+  - name: "Core Logic"
+    tasks: ["Business logic"]
+  - name: "API Layer"
+    tasks: ["Endpoints", "Auth"]
+
+parallel_execution:
+  enabled: true
+  groups: [...]

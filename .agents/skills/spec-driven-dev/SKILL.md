@@ -44,29 +44,7 @@ metadata:
 
 ## 🧠 System Prompt (The Orchestrator)
 
-```markdown
-Eres el **Orquestador SDD** (Spec-Driven Agentic Development).
-Tu objetivo es **GARANTIZAR QUE EL CÓDIGO REFLEJE EXACTAMENTE LO ESPECIFICADO** delegando cada fase a un **Sub-Agente** independiente para mantener el contexto limpio.
-
-**Principios Core:**
-1. **Delegate Only**: NUNCA redactas specs ni código directamente. Envías instrucciones aisladas a un sub-agente especializado (ej. explorador, diseñador, planner).
-2. **Artifacts as Contracts**: Cada fase produce un artefacto que es contrato para la siguiente (persistencia tipo `engram` u `openspec`).
-3. **Phase Gates**: No avanzar de fase sin validar el artefacto anterior.
-4. **Context Isolation**: Cada fase comienza con un contexto fresco.
-
-**Restricciones:**
-- NUNCA implementes sin un spec.yaml aprobado por el usuario tras la fase de propuesta.
-- SIEMPRE mantén trazabilidad: proposal → spec → design → tasks → code → tests.
-- Usa el Context Handoff Protocol para informar al usuario pero *no envíes comandos sueltos, delega*.
-
-
-
-### 🌍 Agnosticismo Tecnológico y Flexibilidad (LMAgent Core Rule)
-Eres un experto **tecnológicamente agnóstico**. NO obligues al usuario a utilizar tecnologías, frameworks o versiones obsoletas a menos que te lo pidan explícitamente. Evalúa el entorno del usuario, respeta su stack actual, y cuando diseñes o propongas soluciones nuevas, recomienda siempre el uso de herramientas modernas, estables y vigentes (Latest Stable), justificando tus decisiones técnica y lógicamente.
-
-## 🔑 Carga Dinámica de Roles (Agent Teams Rules)
-Para ejecutar cualquier fase (Ej: `/sdd-explore`, `/sdd-design`), DEBES LEER OBLIGATORIAMENTE su System Prompt individual ubicado en `references/prompt-[fase].md` y asimilar su "Misión y Reglas Estrictas" antes de dar tu Output. El Orquestador General manda, pero el Rol de Fase ejecuta el trabajo sucio.
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/spec-driven-dev/examples/example_1.markdown`
 
 ## 📊 Dependencia de Fases (La delegación de Sub-Agentes)
 
@@ -89,32 +67,7 @@ graph TD
 
 ### Artefacto: `spec.yaml`
 
-```yaml
-# Template: templates/spec.yaml
-metadata:
-  title: "[Feature Name]"
-  status: draft  # draft → review → approved
-  
-problem_statement:
-  description: "[Qué problema resolvemos]"
-  affected_users: [...]
-  evidence: [...]
-
-solution:
-  overview: "[Descripción de alto nivel]"
-  in_scope: [...]
-  out_of_scope: [...]
-
-user_stories:
-  - id: "US-001"
-    as_a: "[tipo de usuario]"
-    i_want: "[acción]"
-    so_that: "[beneficio]"
-    acceptance_criteria: [...]
-
-success_metrics:
-  primary: { metric, baseline, target }
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/spec-driven-dev/examples/example_2.yml`
 
 ### Gate de Aprobación
 - [ ] Problem Statement validado con evidencia
@@ -132,29 +85,7 @@ success_metrics:
 
 ### Artefacto: `plan.yaml`
 
-```yaml
-# Template: templates/plan.yaml
-architecture:
-  decisions:
-    - id: "ADR-001"
-      title: "[Decisión]"
-      status: proposed
-      consequences:
-        positive: [...]
-        negative: [...]
-
-phases:
-  - name: "Foundation"
-    tasks: ["Setup", "DB", "configs"]
-  - name: "Core Logic"
-    tasks: ["Business logic"]
-  - name: "API Layer"
-    tasks: ["Endpoints", "Auth"]
-
-parallel_execution:
-  enabled: true
-  groups: [...]
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/spec-driven-dev/examples/example_3.yml`
 
 ### Gate de Aprobación
 - [ ] ADRs documentados para decisiones clave
@@ -172,23 +103,7 @@ parallel_execution:
 
 ### Artefacto: `tasks.yaml`
 
-```yaml
-# Template: templates/tasks.yaml
-tasks:
-  - id: "T001"
-    title: "[Título descriptivo]"
-    persona: "/dev"
-    estimated_hours: 2.0
-    file_operations:
-      create: ["path/to/new/file.py"]
-      modify: ["path/to/existing/file.py"]
-    dependencies: []
-    acceptance_criteria:
-      - "[ ] [Criterio 1]"
-      - "[ ] [Criterio 2]"
-    commands:
-      validate: ["pytest tests/ -v"]
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/spec-driven-dev/examples/example_4.yml`
 
 ### Reglas para Tasks
 

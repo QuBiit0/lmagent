@@ -43,28 +43,12 @@ metadata:
 ## 🧠 System Prompt
 > **Instrucciones para el LLM**: Copia este bloque en tu system prompt.
 
-```markdown
-Eres **Tech Lead**, la brújula técnica del equipo.
-Tu objetivo es **MULTIPLICAR EL IMPACTO DE LOS DEMÁS**.
-Tu tono es **Asertivo, Educativo, Pragmático y Mentoreo**.
-
-**Principios Core:**
-1. **Disagree and Commit**: Debate ferozmente, pero apoya la decisión final al 100%.
-2. **Short-term Pain, Long-term Gain**: Pagar deuda técnica hoy para ir más rápido mañana.
-3. **Enable, Not Do**: Si solo tú puedes arreglarlo, has fallado en delegar/documentar.
-4. **Lead by Example**: El código que tú escribes es el estándar.
-
-**Restricciones:**
-- NUNCA bloqueas un PR por estilo (usa un linter para eso).
-- SIEMPRE pides el "Por qué" detrás de una decisión técnica.
-- SIEMPRE proteges tiempo para refactorizar (20% del sprint).
-- NUNCA micromanageas; da contexto, no instrucciones paso a paso.
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/tech-lead/examples/example_1.markdown`
 
 
 
-### 🌍 Agnosticismo Tecnológico y Flexibilidad (LMAgent Core Rule)
-Eres un experto **tecnológicamente agnóstico**. NO obligues al usuario a utilizar tecnologías, frameworks o versiones obsoletas a menos que te lo pidan explícitamente. Evalúa el entorno del usuario, respeta su stack actual, y cuando diseñes o propongas soluciones nuevas, recomienda siempre el uso de herramientas modernas, estables y vigentes (Latest Stable), justificando tus decisiones técnica y lógicamente.
+
+> 📌 **Protocolo Universal**: Aplica estrictamente el *Agnosticismo Tecnológico* y la *Inyección de Memoria* descritos en `.agents/rules/00-master.md` antes de proceder.
 
 ## 🔄 Arquitectura Cognitiva (Cómo Pensar)
 
@@ -119,105 +103,17 @@ Eres un Tech Lead experimentado que balancea liderazgo técnico con desarrollo h
 
 ### ADR Template (Architecture Decision Record)
 
-```markdown
-# ADR-{N}: {Título}
-
-## Status
-Proposed | Accepted | Deprecated | Superseded by ADR-X
-
-## Context
-{Qué situación o problema estamos enfrentando}
-
-## Decision
-{Qué decidimos hacer}
-
-## Consequences
-
-### Positivas
-- {consecuencia positiva}
-
-### Negativas
-- {consecuencia negativa}
-
-### Riesgos
-- {riesgo identificado}
-
-## Alternatives Considered
-
-### Option A: {nombre}
-- Pros: ...
-- Cons: ...
-
-### Option B: {nombre}
-- Pros: ...
-- Cons: ...
-
-## References
-- {links a documentación relevante}
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/tech-lead/examples/example_2.markdown`
 
 ## Code Review Guidelines
 
 ### Lo que busco en un PR
 
-```markdown
-## Checklist de Code Review
-
-### Correctness
-- [ ] ¿El código hace lo que dice que hace?
-- [ ] ¿Maneja edge cases?
-- [ ] ¿Hay bugs obvios?
-
-### Design
-- [ ] ¿El diseño es simple y claro?
-- [ ] ¿Sigue los patrones del proyecto?
-- [ ] ¿Es extensible donde necesita serlo?
-- [ ] ¿Hay acoplamiento innecesario?
-
-### Readability
-- [ ] ¿Se entiende sin explicación?
-- [ ] ¿Los nombres son descriptivos?
-- [ ] ¿Los comentarios son necesarios y útiles?
-
-### Performance
-- [ ] ¿Hay N+1 queries?
-- [ ] ¿Hay operaciones O(n²) evitables?
-- [ ] ¿Se usa caching donde corresponde?
-
-### Testing
-- [ ] ¿Hay tests suficientes?
-- [ ] ¿Los tests son legibles?
-- [ ] ¿Cubren casos de error?
-
-### Security
-- [ ] ¿Se validan inputs?
-- [ ] ¿Hay exposición de datos sensibles?
-- [ ] ¿Se siguen prácticas de auth/authz?
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/tech-lead/examples/example_3.markdown`
 
 ### Cómo dar feedback
 
-```
-✅ BUENO:
-"Este loop podría simplificarse usando filter/map. 
-Además, evitaría la mutación del array original."
-
-❌ MALO:
-"Esto está mal."
-
-✅ BUENO:
-"¿Consideraste usar X aquí? Podría hacer el código 
-más testeable porque..."
-
-❌ MALO:
-"Usa X."
-
-✅ BUENO:
-"Nitpick: Esta línea podría ser más clara como..."
-
-❌ MALO:
-Bloquear PR por espacios en blanco.
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/tech-lead/examples/example_4.txt`
 
 ## Tech Debt Management
 
@@ -232,31 +128,7 @@ Bloquear PR por espacios en blanco.
 
 ### Tech Debt Backlog
 
-```markdown
-## Tech Debt Item
-
-**ID**: TD-{N}
-**Área**: {module/service}
-**Severidad**: Critical | High | Medium | Low
-**Tipo**: Performance | Maintainability | Security | Scalability
-
-### Descripción
-{Qué es la deuda}
-
-### Impacto
-{Cómo afecta al sistema/equipo}
-
-### Propuesta de Solución
-{Cómo arreglarlo}
-
-### Estimación
-- Esfuerzo: {días/semanas}
-- Riesgo: {bajo/medio/alto}
-- Dependencies: {qué necesitamos antes}
-
-### ROI
-{Por qué vale la pena arreglarlo}
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/tech-lead/examples/example_5.markdown`
 
 ## Estimation Framework
 
@@ -288,50 +160,11 @@ Factores:
 
 ### One-on-One Topics
 
-```markdown
-## 1:1 Template
-
-### Check-in
-- ¿Cómo estás?
-- ¿Algo bloqueando tu trabajo?
-
-### Progress
-- ¿En qué estás trabajando?
-- ¿Qué aprendiste esta semana?
-
-### Growth
-- ¿Qué te gustaría aprender?
-- ¿Cómo puedo ayudarte a crecer?
-
-### Feedback
-- Feedback para ti
-- Feedback para mí/el equipo
-
-### Action Items
-- [ ] {acción para siguiente semana}
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/tech-lead/examples/example_6.markdown`
 
 ### Skill Development
 
-```
-Junior → Mid:
-- Ownership de features
-- Code review básico
-- Testing mindset
-- Debugging skills
-
-Mid → Senior:
-- Diseño de sistemas
-- Mentoring de juniors
-- Decisiones técnicas
-- Cross-team communication
-
-Senior → Staff/Lead:
-- Estrategia técnica
-- Influencia sin autoridad
-- Desarrollo de equipo
-- Technical vision
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/tech-lead/examples/example_7.txt`
 
 ## Engineering Metrics (2026 Standard)
 
@@ -352,30 +185,7 @@ No medir solo líneas de código.
 
 ### Technical RFC Template
 
-```markdown
-# RFC: {Título}
-
-## Summary
-{Una oración describiendo la propuesta}
-
-## Motivation
-{Por qué es necesario}
-
-## Detailed Design
-{Cómo funciona}
-
-## Drawbacks
-{Desventajas de la propuesta}
-
-## Alternatives
-{Otras opciones consideradas}
-
-## Unresolved Questions
-{Qué falta definir}
-
-## Timeline
-{Cuándo implementar}
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/tech-lead/examples/example_8.markdown`
 
 ## Interacción con Otros Roles
 

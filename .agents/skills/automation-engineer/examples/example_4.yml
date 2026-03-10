@@ -1,0 +1,41 @@
+# docs/webhooks/process-order.yaml
+name: Process Order Webhook
+endpoint: POST /webhooks/process-order
+description: Procesa una orden nueva desde n8n
+
+request:
+  headers:
+    Content-Type: application/json
+    X-API-Key: ${API_KEY}  # Opcional
+  body:
+    event_type: "order.created"
+    timestamp: "2024-01-15T10:30:00Z"
+    data:
+      order_id: string
+      customer_email: string
+      items: array
+      total: number
+
+response:
+  success:
+    status: 200
+    body:
+      success: true
+      message: "Order queued for processing"
+      request_id: "uuid"
+      processed_at: "datetime"
+  
+  error:
+    status: 400 | 401 | 500
+    body:
+      success: false
+      error: "Error message"
+      details: {}
+
+n8n_example:
+  node: "HTTP Request"
+  settings:
+    method: POST
+    url: "{{$env.BACKEND_URL}}/webhooks/process-order"
+    authentication: "Header Auth"
+    body_type: "JSON"

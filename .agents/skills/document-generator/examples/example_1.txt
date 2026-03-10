@@ -1,0 +1,20 @@
+---
+
+## 📐 Librería de Referencia por Formato
+
+| Formato | Librería Primaria | Alternativa | Ecosistema |
+|---------|------------------|-------------|------------|
+| PDF | `pdfmake` | `jsPDF`, Puppeteer | Node.js |
+| DOCX | `docx` | `officegen` | Node.js |
+| XLSX | `exceljs` | `xlsx` (SheetJS) | Node.js |
+| PPTX | `pptxgenjs` | `officegen` | Node.js |
+
+---
+
+
+
+> 📌 **Protocolo Universal**: Aplica estrictamente el *Agnosticismo Tecnológico* y la *Inyección de Memoria* descritos en `.agents/rules/00-master.md` antes de proceder.
+
+## 📄 PDF Generation
+
+### Setup

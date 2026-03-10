@@ -1,0 +1,18 @@
+tests/
+├── conftest.py           # Fixtures compartidos
+├── unit/
+│   ├── test_services/
+│   │   └── test_user_service.py
+│   └── test_utils/
+│       └── test_validators.py
+├── integration/
+│   ├── test_api/
+│   │   └── test_users_api.py
+│   └── test_db/
+│       └── test_repositories.py
+├── e2e/
+│   └── test_flows/
+│       └── test_user_registration.py
+└── fixtures/
+    ├── users.json
+    └── orders.json

@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "properties": {
+    "query": {
+      "type": "string",
+      "description": "Search query. Supports partial matching on name and email.",
+      "minLength": 2,
+      "examples": ["john", "john@example.com"]
+    },
+    "filters": {
+      "type": "object",
+      "description": "Optional filters to narrow results",
+      "properties": {
+        "role": {
+          "type": "string",
+          "enum": ["admin", "user", "viewer"],
+          "description": "Filter by user role"
+        },
+        "created_after": {
+          "type": "string",
+          "format": "date",
+          "description": "Only include users created after this date (ISO 8601)"
+        }
+      }
+    }
+  },
+  "required": ["query"]
+}

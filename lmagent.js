@@ -25,6 +25,7 @@ const PACKAGE_MEMORY_DIR = path.join(__dirname, '.agents', 'memory');
 // Usan {{VERSION}} como placeholder; se reemplaza dinámicamente al instalar
 const INIT_FILES = [
     { src: 'AGENTS.md', desc: 'Catálogo de capacidades LMAgent (Entry Point Universal)', versionTemplate: false },
+    { src: 'AGENTS_CATALOG.md', desc: 'Registro de Tablas Masivas LMAgent', versionTemplate: false },
     // CLAUDE.md y GEMINI.md NO van aquí — se despliegan solo cuando su agente está detectado/seleccionado,
     // para evitar conflictos de contexto duplicado en agentes como Cursor y Zed que leen múltiples .md del raíz.
 ];
@@ -404,7 +405,7 @@ program.command('upgrade')
 program.command('uninstall')
     .description('Eliminar todos los archivos instalados por LMAgent del proyecto')
     .option('-f, --force', 'No pedir confirmación, eliminar directamente')
-    .option('--all', 'También eliminar entry points raíz (CLAUDE.md, GEMINI.md, AGENTS.md)')
+    .option('--all', 'También eliminar entry points raíz (CLAUDE.md, GEMINI.md, AGENTS.md, AGENTS_CATALOG.md)')
     .action(async (options) => {
         console.clear();
         const branding = figlet.textSync('LMAGENT', { font: 'ANSI Shadow' });
@@ -430,7 +431,7 @@ program.command('uninstall')
             return markerInProject || rulesDirInProject || skillsDirInProject || configInProject || ide.value === 'generic';
         });
 
-        const rootEntryFiles = ['CLAUDE.md', 'GEMINI.md', 'AGENTS.md', '.cursorrules', '.windsurfrules', '.windsurfrules.md', '.continuerules', '.goosehints', 'openclaw.json'];
+        const rootEntryFiles = ['CLAUDE.md', 'GEMINI.md', 'AGENTS.md', 'AGENTS_CATALOG.md', '.cursorrules', '.windsurfrules', '.windsurfrules.md', '.continuerules', '.goosehints', 'openclaw.json'];
         const existingRootFiles = rootEntryFiles.filter(f => fs.existsSync(path.join(projectRoot, f)));
 
         if (installedIdes.length === 0 && existingRootFiles.length === 0) {
@@ -579,7 +580,7 @@ program.command('uninstall')
         if (errors === 0) {
             console.log(gradient.pastel(`\n✨ Limpieza completada. ${removed} elemento(s) eliminado(s).\n`));
             if (!options.all) {
-                console.log(chalk.dim('   💡 Usa `lmagent uninstall --all` para también eliminar CLAUDE.md, GEMINI.md y AGENTS.md.'));
+                console.log(chalk.dim('   💡 Usa `lmagent uninstall --all` para también eliminar CLAUDE.md, GEMINI.md, AGENTS.md y AGENTS_CATALOG.md.'));
             }
         } else {
             console.log(chalk.yellow(`\n⚠️  ${removed} eliminado(s), ${errors} error(es).\n`));
@@ -882,7 +883,7 @@ async function runInstall(options) {
         '.cursorrules', '.windsurfrules', '.windsurfrules.md', '.continuerules',
         '.goosehints', '.roorules'
     ];
-    const requiredRootFiles = new Set(['AGENTS.md']);
+    const requiredRootFiles = new Set(['AGENTS.md', 'AGENTS_CATALOG.md']);
     for (const ide of targetIdes) {
         if (ide.configFile && !ide.configFile.includes('/')) requiredRootFiles.add(ide.configFile);
     }

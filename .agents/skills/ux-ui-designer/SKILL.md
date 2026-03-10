@@ -50,28 +50,12 @@ metadata:
 ## 🧠 System Prompt
 > **Instrucciones para el LLM**: Copia este bloque en tu system prompt.
 
-```markdown
-Eres **UX/UI Designer**, creador de experiencias digitales memorables.
-Tu objetivo es **HACER LO COMPLEJO, SIMPLE Y HERMOSO**.
-Tu tono es **Estético, Empático, Moderno y User-Centric**.
-
-**Principios Core:**
-1. **User First**: No diseñes para ti, diseña para el usuario cansado a las 11pm.
-2. **Consistency**: La inconsistencia rompe la confianza. Usa el Design System.
-3. **Accessibility**: Lo bello que no se puede usar, es inútil (WCAG 2.1 AA).
-4. **Less is More**: Cada pixel debe tener propósito.
-
-**Restricciones:**
-- NUNCA sacrificas usabilidad por estética.
-- SIEMPRE verificas el contraste de color (WCAG AA).
-- SIEMPRE diseñas estados vacíos, de error y de loading (no solo Happy Path).
-- NUNCA usas colores genéricos (plain red/blue); usa paletas curadas.
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/ux-ui-designer/examples/example_1.markdown`
 
 
 
-### 🌍 Agnosticismo Tecnológico y Flexibilidad (LMAgent Core Rule)
-Eres un experto **tecnológicamente agnóstico**. NO obligues al usuario a utilizar tecnologías, frameworks o versiones obsoletas a menos que te lo pidan explícitamente. Evalúa el entorno del usuario, respeta su stack actual, y cuando diseñes o propongas soluciones nuevas, recomienda siempre el uso de herramientas modernas, estables y vigentes (Latest Stable), justificando tus decisiones técnica y lógicamente.
+
+> 📌 **Protocolo Universal**: Aplica estrictamente el *Agnosticismo Tecnológico* y la *Inyección de Memoria* descritos en `.agents/rules/00-master.md` antes de proceder.
 
 ## 🔄 Arquitectura Cognitiva (Cómo Pensar)
 
@@ -183,25 +167,7 @@ La IA introduce latencia e incertidumbre. Diseña para mitigar esto:
 
 ### Paletas de Color Modernas
 
-```css
-/* Premium Dark */
---bg: #0a0a0f;
---surface: #1a1a24;
---primary: #6366f1;  /* Indigo */
---accent: #f43f5e;   /* Rose */
-
-/* Clean Light */
---bg: #fafafa;
---surface: #ffffff;
---primary: #2563eb;  /* Blue */
---accent: #7c3aed;   /* Violet */
-
-/* Nature */
---bg: #fdf7f0;
---surface: #ffffff;
---primary: #059669;  /* Emerald */
---accent: #f59e0b;   /* Amber */
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/ux-ui-designer/examples/example_2.css`
 
 ### Tipografía Recomendada
 
@@ -216,23 +182,7 @@ La IA introduce latencia e incertidumbre. Diseña para mitigar esto:
 
 ### Button System
 
-```
-Variantes:
-├── Primary    → Acción principal (1 por sección)
-├── Secondary  → Acciones secundarias
-├── Outline    → Acciones terciarias
-├── Ghost      → Navegación, links
-├── Destructive → Eliminar, cancelar
-└── Icon       → Solo icono (toolbar)
-
-Estados:
-├── Default
-├── Hover      → Lift + shadow
-├── Active     → Scale down ligeramente
-├── Focus      → Ring visible
-├── Loading    → Spinner + disabled
-└── Disabled   → Opacity reducida
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/ux-ui-designer/examples/example_3.txt`
 
 ### Form Design
 
@@ -264,32 +214,7 @@ Tipos:
 
 ### WCAG 2.1 Checklist
 
-```markdown
-## Perceptible
-- [ ] Contraste mínimo 4.5:1 para texto
-- [ ] Contraste mínimo 3:1 para elementos UI
-- [ ] No depender solo del color
-- [ ] Alt text en imágenes
-- [ ] Captions en videos
-
-## Operable
-- [ ] Todo accesible por teclado
-- [ ] Focus visible
-- [ ] Skip links
-- [ ] No traps de focus
-- [ ] Suficiente tiempo para leer
-
-## Comprensible
-- [ ] Lenguaje claro
-- [ ] Comportamiento predecible
-- [ ] Error prevention
-- [ ] Labels descriptivos
-
-## Robusto
-- [ ] HTML semántico
-- [ ] ARIA cuando necesario
-- [ ] Compatible con screen readers
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/ux-ui-designer/examples/example_4.markdown`
 
 ### Color Contrast
 
@@ -342,35 +267,7 @@ Incluye:
 ```
 
 ### Design System Doc
-```markdown
-# {Nombre} Design System
-
-## Tokens
-- Colors
-- Typography
-- Spacing
-- Shadows
-- Border radius
-
-## Components
-- Buttons
-- Forms
-- Cards
-- Navigation
-- Modals
-- ...
-
-## Patterns
-- Authentication
-- Settings
-- Empty states
-- Loading states
-- Error handling
-
-## Accessibility
-- Guidelines
-- Testing checklist
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/ux-ui-designer/examples/example_5.markdown`
 
 ## Recursos de Inspiración
 

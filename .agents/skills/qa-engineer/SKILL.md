@@ -52,28 +52,12 @@ metadata:
 ## 🧠 System Prompt
 > **Instrucciones para el LLM**: Copia este bloque en tu system prompt.
 
-```markdown
-Eres **QA Engineer**, el último muro de defensa antes de producción.
-Tu objetivo es **ROMPER EL SOFTWARE PARA QUE EL USUARIO NO LO HAGA**.
-Tu tono es **Escéptico, Riguroso, Metódico y Constructivo**.
-
-**Principios Core:**
-1. **Confianza Cero**: "Funciona en mi máquina" no es una prueba válida.
-2. **Pirámide de Testing**: Muchos unitarios (rápidos), pocos E2E (lentos).
-3. **Calidad ≠ Testing**: La calidad se construye (shift-left), no se testea al final.
-4. **Reproducción es Poder**: Si no puedo reproducir un bug, no puedo asegurar que esté arreglado.
-
-**Restricciones:**
-- NUNCA apruebas un PR sin tests de regresión para bugs arreglados.
-- SIEMPRE exiges criterios de aceptación claros antes de empezar a testear.
-- SIEMPRE buscas el caso borde (null, vacío, emoji, inyección SQL, unicode).
-- NUNCA dependes de la UI para validar lógica de negocio (usa Unit tests).
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/qa-engineer/examples/example_1.markdown`
 
 
 
-### 🌍 Agnosticismo Tecnológico y Flexibilidad (LMAgent Core Rule)
-Eres un experto **tecnológicamente agnóstico**. NO obligues al usuario a utilizar tecnologías, frameworks o versiones obsoletas a menos que te lo pidan explícitamente. Evalúa el entorno del usuario, respeta su stack actual, y cuando diseñes o propongas soluciones nuevas, recomienda siempre el uso de herramientas modernas, estables y vigentes (Latest Stable), justificando tus decisiones técnica y lógicamente.
+
+> 📌 **Protocolo Universal**: Aplica estrictamente el *Agnosticismo Tecnológico* y la *Inyección de Memoria* descritos en `.agents/rules/00-master.md` antes de proceder.
 
 ## 🔄 Arquitectura Cognitiva (Cómo Pensar)
 
@@ -168,133 +152,18 @@ factory-boy>=3.3.0
 
 ## Estructura de Tests (Python)
 
-```
-tests/
-├── conftest.py           # Fixtures compartidos
-├── unit/
-│   ├── test_services/
-│   │   └── test_user_service.py
-│   └── test_utils/
-│       └── test_validators.py
-├── integration/
-│   ├── test_api/
-│   │   └── test_users_api.py
-│   └── test_db/
-│       └── test_repositories.py
-├── e2e/
-│   └── test_flows/
-│       └── test_user_registration.py
-└── fixtures/
-    ├── users.json
-    └── orders.json
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/qa-engineer/examples/example_2.txt`
 
 ## Patrones de Testing
 
 ### Fixtures (conftest.py)
-```python
-import pytest
-from httpx import AsyncClient
-from sqlalchemy.orm import Session
-from app.main import app
-from app.core.database import engine
-
-@pytest.fixture
-async def client():
-    """Cliente HTTP para tests de API."""
-    async with AsyncClient(app=app, base_url="http://test") as ac:
-        yield ac
-
-@pytest.fixture
-def db_session():
-    """Sesión de base de datos para tests."""
-    connection = engine.connect()
-    transaction = connection.begin()
-    session = Session(bind=connection)
-    
-    yield session
-    
-    session.close()
-    transaction.rollback()
-    connection.close()
-
-@pytest.fixture
-def user_factory():
-    """Factory para crear usuarios de prueba."""
-    def _create_user(**kwargs):
-        defaults = {
-            "email": f"test_{uuid4()}@example.com",
-            "name": "Test User"
-        }
-        defaults.update(kwargs)
-        return User(**defaults)
-    return _create_user
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/qa-engineer/examples/example_3.py`
 
 ### Unit Test
-```python
-import pytest
-from app.services.user_service import UserService
-from app.core.exceptions import ValidationError
-
-class TestUserService:
-    """Tests para UserService."""
-    
-    @pytest.mark.asyncio
-    async def test_create_user_success(self, mock_repository):
-        """Debe crear usuario cuando datos son válidos."""
-        service = UserService(repository=mock_repository)
-        
-        result = await service.create({
-            "email": "valid@example.com",
-            "name": "Valid User"
-        })
-        
-        assert result.email == "valid@example.com"
-        mock_repository.create.assert_called_once()
-    
-    @pytest.mark.asyncio
-    async def test_create_user_invalid_email(self, mock_repository):
-        """Debe fallar cuando email es inválido."""
-        service = UserService(repository=mock_repository)
-        
-        with pytest.raises(ValidationError) as exc:
-            await service.create({
-                "email": "invalid-email",
-                "name": "User"
-            })
-        
-        assert "email" in str(exc.value)
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/qa-engineer/examples/example_4.py`
 
 ### Integration Test
-```python
-import pytest
-from httpx import AsyncClient
-
-class TestUsersAPI:
-    """Tests de integración para Users API."""
-    
-    @pytest.mark.asyncio
-    async def test_create_user_endpoint(self, client: AsyncClient):
-        """POST /users debe crear usuario y retornar 201."""
-        response = await client.post("/users/", json={
-            "email": "new@example.com",
-            "name": "New User"
-        })
-        
-        assert response.status_code == 201
-        data = response.json()
-        assert data["email"] == "new@example.com"
-        assert "id" in data
-    
-    @pytest.mark.asyncio
-    async def test_get_user_not_found(self, client: AsyncClient):
-        """GET /users/{id} debe retornar 404 si no existe."""
-        response = await client.get("/users/99999")
-        
-        assert response.status_code == 404
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/qa-engineer/examples/example_5.py`
 
 ## Testing de Agentes IA (LLM Evals) 🤖
 
@@ -308,42 +177,7 @@ El testing determinista no sirve para IA. Usa **LLM-based Evals**.
 
 ### Ejemplo de Eval (con `deepeval` o custom)
 
-```python
-import pytest
-from deepeval import assert_test
-from deepeval.metrics import FaithfulnessMetric, AnswerRelevancyMetric
-from deepeval.test_case import LLMTestCase
-
-class TestAgentQuality:
-    
-    def test_rag_faithfulness(self, agent_rag):
-        """Asegura que el agente no alucine información fuera de su knowledge base."""
-        
-        query = "Políticas de reembolso"
-        context = ["Reembolsos solo en 30 días."]
-        
-        # Ejecutar agente
-        actual_output = agent_rag.query(query)
-        
-        # Definir caso de prueba
-        test_case = LLMTestCase(
-            input=query,
-            actual_output=actual_output,
-            retrieval_context=context
-        )
-        
-        # Métrica: Fidelidad
-        metric = FaithfulnessMetric(threshold=0.7)
-        
-        # Assert usando otro LLM como juez
-        assert_test(test_case, [metric])
-
-    def test_tool_selection_determinism(self, agent):
-        """El agente debe elegir SIEMPRE 'calculator' para sumas."""
-        for _ in range(5):
-            plan = agent.plan("Cuánto es 50 + 20")
-            assert plan.tool == "calculator", f"Falló en intento {_}"
-```
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/qa-engineer/examples/example_6.py`
 
 ### Determinismo vs Creatividad
 - Para **Function Calling**: `temperature=0`. Debe ser 100% determinista.
@@ -381,25 +215,7 @@ jest --coverage --coverageThreshold='{"global":{"lines":80}}'
 
 ## Template: Bug Report
 
-```markdown
-## Bug: [Título descriptivo]
-
-### Descripción
-[Descripción clara del bug]
-
-### Pasos para Reproducir
-1. [Paso 1]
-2. [Paso 2]
-3. [Paso 3]
-
-### Comportamiento Esperado
-[Qué debería pasar]
-
-### Comportamiento Actual
-[Qué pasa actualmente]
-
-### Código de Reproducción
-```python
+> 📂 **Ejemplo Extraído**: Ver implementación completa en `.agents/skills/qa-engineer/examples/example_7.markdown`python
 # Script mínimo para reproducir
 ```
 

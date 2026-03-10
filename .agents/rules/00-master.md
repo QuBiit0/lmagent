@@ -13,15 +13,25 @@
 
 ---
 
-## 🧠 Framework
+## 🧠 Framework & Protocolo Universal
 
-> ⚠️ **FLEXIBILIDAD TECNOLÓGICA UNIVERSAL**: LMAgent se diseña asumiendo que **la tecnología evoluciona**. Cualquier framework, librería o versión específica mencionada en las reglas (`.agents/rules/`), skills (`.agents/skills/`) o workflows (`.agents/workflows/`) actúa como **ejemplo de referencia**. Como agente, tienes libertad total para recomendar, evaluar y utilizar herramientas más modernas, seguras o estables si esto beneficia al proyecto.
+> ⚠️ **AGNOSTICISMO TECNOLÓGICO UNIVERSAL**: LMAgent asume que **la tecnología evoluciona**. Respeta el stack del usuario, pero tienes libertad total para recomendar/utilizar herramientas más modernas y eficientes si beneficia al proyecto. Adapta tu conocimiento al stack detectado. No fuerces herramientas innecesarias.
 
-Este archivo define la identidad, propósito y reglas fundamentales de **LMAgent v3.6.0**. Antes de implementar cualquier cambio:
+> 🧠 **INYECCIÓN DE MEMORIA Y CONTEXTO (OBLIGATORIO)**:
+> ANTES de ejecutar cualquier tarea, el agente DEBE leer estos archivos para obtener el contexto del proyecto actual:
+> 1. `.agents/memory/01-global.md` — Identidad, misión y objetivos
+> 2. `.agents/memory/02-active-context.md` — Sprint/tarea activa AHORA
+> 3. `.agents/memory/03-tech-stack.md` — Stack tecnológico y dependencias
+> 4. `.agents/memory/04-decision-log.md` — Lecciones aprendidas y bugs
+> 5. `.agents/memory/05-product-state.md` — Estado del producto y roadmap
+> 6. `.agents/memory/06-conventions.md` — Convenciones de código y naming
+> *(Si un archivo no existe, simplemente omítelo).*
 
-1. **Lee `AGENTS.md`** — Catálogo completo de skills, rules y workflows
-2. **Clasifica la tarea** — Nivel 0-4 según complejidad (ver `.agents/rules/01-workflow.md`)
-3. **Activa el skill apropiado** — Según la tabla de abajo
+Este archivo define las reglas fundamentales de **LMAgent v3.6.0**. Antes de implementar cualquier cambio:
+
+1. **Lee `AGENTS.md`** — Catálogo completo de skills y rules
+2. **Clasifica la tarea** — Nivel 0-4 según complejidad (`.agents/rules/01-workflow.md`)
+3. **Activa el skill apropiado** — Según la tabla inferior
 
 ---
 
@@ -106,9 +116,12 @@ Activa el skill apropiado según la tarea. Cada skill tiene `SKILL.md` con instr
 6. **[05-testing.md](.agents/rules/05-testing.md)**: Estrategias de prueba.
 7. **[06-api-design.md](.agents/rules/06-api-design.md)**: Estándares REST API.
 8. **[07-documentation.md](.agents/rules/07-documentation.md)**: Guías de documentación.
-9. **[08-agents-ai.md](.agents/rules/08-agents-ai.md)**: Construcción de Agentes.
-10. **[09-automations.md](.agents/rules/09-automations.md)**: Integraciones n8n.
-11. **[10-git-flow.md](.agents/rules/10-git-flow.md)**: Gestión de versiones y commits.
+9. **[08-agents-ai.md](.agents/rules/08-agents-ai.md)**: Construcción de Agentes IA.
+10. **[09-automations.md](.agents/rules/09-automations.md)**: Automatizaciones y Workflows.
+11. **[10-git-flow.md](.agents/rules/10-git-flow.md)**: Git Flow y Versionamiento.
+12. **[11-prompt-engineering.md](.agents/rules/11-prompt-engineering.md)**: Prompt Engineering y comunicación Agent-to-Agent.
+13. **[12-cloud-native.md](.agents/rules/12-cloud-native.md)**: Cloud Native, 12-Factor App y contenedores.
+14. **[13-performance-baseline.md](.agents/rules/13-performance-baseline.md)**: Performance, escalabilidad y patrones de caché.
 
 ---
 
