@@ -7,7 +7,7 @@ const inquirer = require('inquirer');
 
 // Utilizando la abstracción JSON unificada
 const IDE_REGISTRY = require('../core/ide-registry.json');
-const { INIT_FILES } = require('../core/constants.js');
+const { INIT_FILES, ROOT_DIR } = require('../core/constants.js');
 
 module.exports = async function runUninstall(options) {
     console.clear();
@@ -18,7 +18,7 @@ module.exports = async function runUninstall(options) {
     const projectRoot = process.cwd();
 
     // Safety check crucial: evitar que el framework se auto-elimine si se corre en su propio repo fuente
-    if (projectRoot === path.join(__dirname, '..', '..')) {
+    if (projectRoot === ROOT_DIR) {
         console.log(chalk.red('❌ Advertencia de Seguridad: Estás intentando ejecutar uninstall dentro del repositorio fuente de LMAgent. Esta acción destruiría el código fuente. Desinstalación bloqueada.'));
         return;
     }
