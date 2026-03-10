@@ -18,6 +18,8 @@
 - **Workflows**: `.agents/workflows/`
 - **Memory**: `.agents/memory/`
 - **Config**: `.agents/config/`
+- **Docs**: `.agents/docs/`
+- **Templates**: `.agents/templates/`
 
 ## ⚡ QUICK START TRIGGERS (Menú Rápido)
 | Trigger | Rol / Skill | Objetivo |

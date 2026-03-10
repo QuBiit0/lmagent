@@ -447,6 +447,9 @@ globs: **/*
 - **Rules**: \`.agents/rules/\` (${ruleCount} reglas)
 - **Workflows**: \`.agents/workflows/\` (${wfCount} workflows)
 - **Memory**: \`.agents/memory/\`
+- **Config**: \`.agents/config/\`
+- **Docs**: \`.agents/docs/\`
+- **Templates**: \`.agents/templates/\`
 
 !! SYSTEM NOTE: You MUST read AGENTS.md at startup. !!
 `;
@@ -459,6 +462,9 @@ globs: **/*
 - **Rules**: \`.agents/rules/\` (${ruleCount} reglas)
 - **Workflows**: \`.agents/workflows/\` (${wfCount} workflows)
 - **Memory**: \`.agents/memory/\`
+- **Config**: \`.agents/config/\`
+- **Docs**: \`.agents/docs/\`
+- **Templates**: \`.agents/templates/\`
 `;
             }
 
@@ -494,8 +500,8 @@ globs: **/*
 // Helper: Genera config mínimo si no hay template
 function generateMinimalConfig(ide, version) {
     return `# LMAgent Framework v${version}
-> LEE [AGENTS.md](./AGENTS.md) para obtener tu contexto completo.
-> Skills: .agents/skills/ | Rules: .agents/rules/ | Workflows: .agents/workflows/
+> LEE [AGENTS.md](AGENTS.md) para obtener tu contexto completo.
+> Modulos: .agents/skills/ | rules/ | workflows/ | memory/ | config/ | docs/ | templates/
 `;
 }
 

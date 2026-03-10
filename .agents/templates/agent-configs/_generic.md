@@ -17,6 +17,8 @@
 - **Workflows**: `{{WORKFLOWS_DIR}}` → SOPs y procedimientos (flujos paso a paso)
 - **Memory**: `.agents/memory/` → Contexto persistente entre sesiones
 - **Config**: `.agents/config/` → Configuración del framework (tools, models, levels)
+- **Docs**: `.agents/docs/` → Documentación y recursos ampliados
+- **Templates**: `.agents/templates/` → Formatos estándar estructurados
 
 ## ⚡ QUICK START TRIGGERS (Menú Rápido)
 Usa estos comandos para activar un rol. Para el catálogo completo de 31 skills, consulta `AGENTS.md`.
