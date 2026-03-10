@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * LMAgent Skill Generator — v3.6.0
+ * LMAgent Skill Generator — v4.0.0
  * 
  * Genera la estructura completa de un nuevo skill interactivamente.
  * 
@@ -82,14 +82,12 @@ function slugify(name) {
         .replace(/^-|-$/g, '');
 }
 
-// ─── Generar SKILL.md ─────────────────────────────────────────
-function generateSkillMd(data) {
+function generateSkillYaml(data) {
     const expertise = data.expertise.map(e => `  - ${e}`).join('\n');
     const activatesOn = data.activatesOn.map(a => `  - ${a}`).join('\n');
     const triggers = data.triggers.map(t => `  - ${t}`).join('\n');
 
-    return `---
-name: ${data.name}
+    return `name: ${data.name}
 description: ${data.description}
 role: ${data.role}
 type: ${data.type}
@@ -101,9 +99,24 @@ activates_on:
 ${activatesOn}
 triggers:
 ${triggers}
----
+compatibility: "Universal - Compatible con todos los agentes LMAgent."
+allowed-tools:
+  - view_file
+  - view_file_outline
+  - grep_search
+  - run_command
+  - replace_file_content
+  - multi_replace_file_content
+  - write_to_file
+  - mcp_context7_query-docs
+metadata:
+  framework: LMAgent
+`;
+}
 
-# ${data.name} Persona
+// ─── Generar SKILL.md ─────────────────────────────────────────
+function generateSkillMd(data) {
+    return `# ${data.name} Persona
 
 ## 🧠 System Prompt
 > **Instrucciones para el LLM**: Copia este bloque en tu system prompt o contexto inicial.
@@ -274,8 +287,8 @@ async function main() {
             mkdirSync(join(skillDir, 'assets'), { recursive: true });
         }
 
-        // Generar SKILL.md
-        const skillMd = generateSkillMd({
+        // Generar SKILL.md y skill.yaml
+        const skillYaml = generateSkillYaml({
             name,
             description,
             role,
@@ -286,6 +299,13 @@ async function main() {
             triggers,
         });
 
+        const skillMd = generateSkillMd({
+            name,
+            description,
+            role,
+        });
+
+        writeFileSync(join(skillDir, 'skill.yaml'), skillYaml, 'utf-8');
         writeFileSync(join(skillDir, 'SKILL.md'), skillMd, 'utf-8');
 
         console.log(c.green(`\n✅ Skill creado exitosamente en: ${skillDir}`));

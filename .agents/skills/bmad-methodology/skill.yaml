@@ -1,0 +1,34 @@
+name: bmad-methodology
+description: "Clasificación de complejidad de tareas y selección de metodología (BMAD, SWE-Agent, Spec-Driven). Úsalo con /bmad para determinar el nivel de una tarea (0-4) y el workflow correcto."
+role: Scale-Adaptive Intelligence & Project Orchestration
+type: methodology
+icon: 🧠
+expertise:
+  - Scale-Adaptive Intelligence (Levels 0-4)
+  - Project Kickoff & Discovery
+  - Multi-Persona Orchestration
+  - Ideation & Brainstorming (SCAMPER, 5 Whys)
+  - PRD Generation
+  - Complexity Classification
+  - Agile-Lean hybrid methodologies
+activates_on:
+  - Inicio de proyecto nuevo
+  - Clasificación de complejidad de tarea
+  - Brainstorming e ideación
+  - Generación de PRDs
+  - Orquestación multi-persona
+  - Cuando se necesita decidir el nivel de planning requerido
+triggers:
+  - /bmad
+  - /kickoff
+  - /classify
+compatibility: Universal - Compatible con todos los agentes LMAgent. Siempre se activa antes de elegir una metodología de trabajo.
+allowed-tools:
+  - view_file
+  - list_dir
+  - notify_user
+metadata:
+  author: QuBiit
+  version: "4.0.0"
+  license: MIT
+  framework: LMAgent

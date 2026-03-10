@@ -1,0 +1,414 @@
+[
+    {
+        "name": "Cursor",
+        "value": "cursor",
+        "rulesDir": ".cursor/rules",
+        "skillsDir": ".cursor/rules/skills",
+        "workflowsDir": ".cursor/workflows",
+        "configFile": null,
+        "bridgeFile": "00-lmagent.mdc",
+        "markerFile": ".cursorrules",
+        "forceCopy": true
+    },
+    {
+        "name": "Windsurf",
+        "value": "windsurf",
+        "rulesDir": ".windsurf/rules",
+        "skillsDir": ".windsurf/skills",
+        "workflowsDir": ".windsurf/workflows",
+        "configFile": null,
+        "bridgeFile": "lmagent.md",
+        "markerFile": ".windsurf",
+        "forceCopy": true
+    },
+    {
+        "name": "Cline",
+        "value": "cline",
+        "rulesDir": ".clinerules",
+        "skillsDir": ".cline/skills",
+        "workflowsDir": ".cline/workflows",
+        "configFile": null,
+        "bridgeFile": "00-lmagent.md",
+        "markerFile": ".clinerules",
+        "forceCopy": true
+    },
+    {
+        "name": "Roo Code",
+        "value": "roo",
+        "rulesDir": ".roo/rules",
+        "skillsDir": ".roo/skills",
+        "workflowsDir": ".roo/workflows",
+        "configFile": null,
+        "bridgeFile": "00-lmagent.md",
+        "markerFile": ".roo",
+        "forceCopy": true
+    },
+    {
+        "name": "VSCode Copilot",
+        "value": "vscode",
+        "rulesDir": ".github/instructions",
+        "skillsDir": ".github/skills",
+        "workflowsDir": ".github/copilot-workflows",
+        "configFile": ".github/copilot-instructions.md",
+        "bridgeFile": null,
+        "markerFile": ".vscode"
+    },
+    {
+        "name": "Trae",
+        "value": "trae",
+        "rulesDir": ".trae/rules",
+        "skillsDir": ".trae/skills",
+        "workflowsDir": ".trae/workflows",
+        "configFile": null,
+        "bridgeFile": "lmagent.md",
+        "markerFile": ".trae",
+        "forceCopy": true
+    },
+    {
+        "name": "Claude Code",
+        "value": "claude",
+        "rulesDir": ".claude/rules",
+        "skillsDir": ".claude/skills",
+        "workflowsDir": ".claude/workflows",
+        "configFile": "CLAUDE.md",
+        "bridgeFile": null,
+        "markerFile": ".claude",
+        "forceCopy": true
+    },
+    {
+        "name": "Zed",
+        "value": "zed",
+        "rulesDir": ".rules",
+        "skillsDir": ".rules/skills",
+        "workflowsDir": ".rules/workflows",
+        "configFile": null,
+        "bridgeFile": "lmagent.md",
+        "markerFile": ".zed"
+    },
+    {
+        "name": "Amp / Kimi / Replit",
+        "value": "amp",
+        "rulesDir": ".agents/rules",
+        "skillsDir": ".agents/skills",
+        "workflowsDir": ".agents/workflows",
+        "configFile": null,
+        "bridgeFile": null,
+        "markerFile": ".agents"
+    },
+    {
+        "name": "Antigravity",
+        "value": "antigravity",
+        "rulesDir": ".agents/rules",
+        "skillsDir": ".agents/skills",
+        "workflowsDir": ".agents/workflows",
+        "configFile": "GEMINI.md",
+        "bridgeFile": null,
+        "markerFile": ".agent"
+    },
+    {
+        "name": "Augment",
+        "value": "augment",
+        "rulesDir": ".augment/rules",
+        "skillsDir": ".augment/skills",
+        "workflowsDir": ".augment/workflows",
+        "configFile": null,
+        "bridgeFile": null,
+        "markerFile": ".augment"
+    },
+    {
+        "name": "Gemini CLI",
+        "value": "gemini",
+        "rulesDir": ".gemini/rules",
+        "skillsDir": ".gemini/skills",
+        "workflowsDir": ".gemini/workflows",
+        "configFile": "GEMINI.md",
+        "bridgeFile": null,
+        "markerFile": ".gemini"
+    },
+    {
+        "name": "OpenClaw / Envoid",
+        "value": "openclaw",
+        "rulesDir": "rules",
+        "skillsDir": "skills",
+        "workflowsDir": "workflows",
+        "configFile": "openclaw.json",
+        "configTemplate": "openclaw.json",
+        "bridgeFile": null,
+        "markerFile": "openclaw.json"
+    },
+    {
+        "name": "CodeBuddy",
+        "value": "codebuddy",
+        "rulesDir": ".codebuddy/rules",
+        "skillsDir": ".codebuddy/skills",
+        "workflowsDir": ".codebuddy/workflows",
+        "configFile": null,
+        "bridgeFile": null,
+        "markerFile": ".codebuddy",
+        "forceCopy": true
+    },
+    {
+        "name": "Codex",
+        "value": "codex",
+        "rulesDir": ".codex",
+        "skillsDir": ".codex/skills",
+        "workflowsDir": ".codex/workflows",
+        "configFile": "AGENTS.md",
+        "bridgeFile": null,
+        "markerFile": ".codex"
+    },
+    {
+        "name": "Command Code",
+        "value": "command-code",
+        "rulesDir": ".commandcode/rules",
+        "skillsDir": ".commandcode/skills",
+        "workflowsDir": ".commandcode/workflows",
+        "configFile": null,
+        "bridgeFile": null,
+        "markerFile": ".commandcode"
+    },
+    {
+        "name": "Continue",
+        "value": "continue",
+        "rulesDir": ".continue/rules",
+        "skillsDir": ".continue/skills",
+        "workflowsDir": ".continue/workflows",
+        "configFile": ".continue/continuerules",
+        "configTemplate": "continuerules.md",
+        "bridgeFile": "00-lmagent.md",
+        "markerFile": ".continue"
+    },
+    {
+        "name": "Crush",
+        "value": "crush",
+        "rulesDir": ".crush/rules",
+        "skillsDir": ".crush/skills",
+        "workflowsDir": ".crush/workflows",
+        "configFile": null,
+        "bridgeFile": null,
+        "markerFile": ".crush"
+    },
+    {
+        "name": "Droid",
+        "value": "droid",
+        "rulesDir": ".factory/rules",
+        "skillsDir": ".factory/skills",
+        "workflowsDir": ".factory/workflows",
+        "configFile": null,
+        "bridgeFile": null,
+        "markerFile": ".factory"
+    },
+    {
+        "name": "Goose",
+        "value": "goose",
+        "rulesDir": ".goose",
+        "skillsDir": ".goose/skills",
+        "workflowsDir": ".goose/workflows",
+        "configFile": ".goosehints",
+        "configTemplate": "goosehints.md",
+        "bridgeFile": null,
+        "markerFile": ".goose"
+    },
+    {
+        "name": "Junie",
+        "value": "junie",
+        "rulesDir": ".junie",
+        "skillsDir": ".junie/skills",
+        "workflowsDir": ".junie/workflows",
+        "configFile": ".junie/guidelines.md",
+        "configTemplate": "junie-guidelines.md",
+        "bridgeFile": null,
+        "markerFile": ".junie"
+    },
+    {
+        "name": "iFlow CLI",
+        "value": "iflow",
+        "rulesDir": ".iflow/rules",
+        "skillsDir": ".iflow/skills",
+        "workflowsDir": ".iflow/workflows",
+        "configFile": null,
+        "bridgeFile": null,
+        "markerFile": ".iflow"
+    },
+    {
+        "name": "Kilo Code",
+        "value": "kilo",
+        "rulesDir": ".kilocode/rules",
+        "skillsDir": ".kilocode/skills",
+        "workflowsDir": ".kilocode/workflows",
+        "configFile": null,
+        "bridgeFile": null,
+        "markerFile": ".kilocode"
+    },
+    {
+        "name": "Kiro CLI",
+        "value": "kiro",
+        "rulesDir": ".kiro/rules",
+        "skillsDir": ".kiro/skills",
+        "workflowsDir": ".kiro/workflows",
+        "configFile": null,
+        "bridgeFile": null,
+        "markerFile": ".kiro"
+    },
+    {
+        "name": "Kode",
+        "value": "kode",
+        "rulesDir": ".kode/rules",
+        "skillsDir": ".kode/skills",
+        "workflowsDir": ".kode/workflows",
+        "configFile": null,
+        "bridgeFile": null,
+        "markerFile": ".kode"
+    },
+    {
+        "name": "MCPJam",
+        "value": "mcpjam",
+        "rulesDir": ".mcpjam/rules",
+        "skillsDir": ".mcpjam/skills",
+        "workflowsDir": ".mcpjam/workflows",
+        "configFile": null,
+        "bridgeFile": null,
+        "markerFile": ".mcpjam"
+    },
+    {
+        "name": "Mistral Vibe",
+        "value": "mistral",
+        "rulesDir": ".vibe/rules",
+        "skillsDir": ".vibe/skills",
+        "workflowsDir": ".vibe/workflows",
+        "configFile": null,
+        "bridgeFile": null,
+        "markerFile": ".vibe"
+    },
+    {
+        "name": "Mux",
+        "value": "mux",
+        "rulesDir": ".mux/rules",
+        "skillsDir": ".mux/skills",
+        "workflowsDir": ".mux/workflows",
+        "configFile": null,
+        "bridgeFile": null,
+        "markerFile": ".mux"
+    },
+    {
+        "name": "OpenCode",
+        "value": "opencode",
+        "rulesDir": ".opencode/rules",
+        "skillsDir": ".opencode/skills",
+        "workflowsDir": ".opencode/workflows",
+        "configFile": null,
+        "bridgeFile": null,
+        "markerFile": ".opencode"
+    },
+    {
+        "name": "OpenHands",
+        "value": "openhands",
+        "rulesDir": ".openhands/microagents",
+        "skillsDir": ".openhands/skills",
+        "workflowsDir": ".openhands/workflows",
+        "configFile": ".openhands/microagents/repo.md",
+        "configTemplate": "openhands-repo.md",
+        "bridgeFile": null,
+        "markerFile": ".openhands"
+    },
+    {
+        "name": "Pi",
+        "value": "pi",
+        "rulesDir": ".pi/rules",
+        "skillsDir": ".pi/skills",
+        "workflowsDir": ".pi/workflows",
+        "configFile": null,
+        "bridgeFile": null,
+        "markerFile": ".pi"
+    },
+    {
+        "name": "Qoder",
+        "value": "qoder",
+        "rulesDir": ".qoder/rules",
+        "skillsDir": ".qoder/skills",
+        "workflowsDir": ".qoder/workflows",
+        "configFile": null,
+        "bridgeFile": null,
+        "markerFile": ".qoder"
+    },
+    {
+        "name": "Qwen Code",
+        "value": "qwen",
+        "rulesDir": ".qwen/rules",
+        "skillsDir": ".qwen/skills",
+        "workflowsDir": ".qwen/workflows",
+        "configFile": null,
+        "bridgeFile": null,
+        "markerFile": ".qwen"
+    },
+    {
+        "name": "Trae CN",
+        "value": "trae-cn",
+        "rulesDir": ".trae-cn/rules",
+        "skillsDir": ".trae-cn/skills",
+        "workflowsDir": ".trae-cn/workflows",
+        "configFile": null,
+        "bridgeFile": "lmagent.md",
+        "markerFile": ".trae-cn"
+    },
+    {
+        "name": "Zencoder",
+        "value": "zencoder",
+        "rulesDir": ".zencoder/rules",
+        "skillsDir": ".zencoder/skills",
+        "workflowsDir": ".zencoder/workflows",
+        "configFile": null,
+        "bridgeFile": null,
+        "markerFile": ".zencoder"
+    },
+    {
+        "name": "Neovate",
+        "value": "neovate",
+        "rulesDir": ".neovate/rules",
+        "skillsDir": ".neovate/skills",
+        "workflowsDir": ".neovate/workflows",
+        "configFile": null,
+        "bridgeFile": null,
+        "markerFile": ".neovate"
+    },
+    {
+        "name": "Pochi",
+        "value": "pochi",
+        "rulesDir": ".pochi/rules",
+        "skillsDir": ".pochi/skills",
+        "workflowsDir": ".pochi/workflows",
+        "configFile": null,
+        "bridgeFile": null,
+        "markerFile": ".pochi"
+    },
+    {
+        "name": "AdaL",
+        "value": "adal",
+        "rulesDir": ".adal/rules",
+        "skillsDir": ".adal/skills",
+        "workflowsDir": ".adal/workflows",
+        "configFile": null,
+        "bridgeFile": null,
+        "markerFile": ".adal"
+    },
+    {
+        "name": "Generic/Other",
+        "value": "generic",
+        "rulesDir": ".agents/rules",
+        "skillsDir": ".agents/skills",
+        "workflowsDir": ".agents/workflows",
+        "configFile": null,
+        "bridgeFile": null,
+        "markerFile": ".agents"
+    },
+    {
+        "name": "Custom Path (Manual)",
+        "value": "custom",
+        "rulesDir": "",
+        "skillsDir": "",
+        "workflowsDir": "",
+        "configFile": null,
+        "bridgeFile": null,
+        "markerFile": ""
+    }
+]

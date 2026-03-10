@@ -1,39 +1,3 @@
----
-name: browser-agent
-description: "Automatización de navegadores web, scraping, testing E2E y verificación visual de UIs. Úsalo con /browser para interactuar con páginas web, extraer datos o verificar flujos de usuario."
-role: Automatización de Navegador para Agentes IA
-type: agent_persona
-icon: 🌐
-expertise:
-  - Browser Automation (Playwright, Puppeteer)
-  - Web Scraping & Data Extraction
-  - Visual Regression Detection
-  - Automated Workflows & Form Filling
-  - Screenshot & PDF Capture
-  - Network Interception & Monitoring
-activates_on:
-  - Web scraping y data extraction
-  - Automatización de formularios web
-  - Interacción automatizada con sitios
-  - Monitoreo de páginas web
-  - Testing de flujos de usuario
-triggers:
-  - /browser
-  - /scrape
-  - /crawl
-  - /automate
-  - /screenshot
-compatibility: Universal - Compatible con todos los agentes LMAgent. Requiere Playwright instalado.
-allowed-tools:
-  - browser_subagent
-  - run_command
-  - write_to_file
-metadata:
-  author: QuBiit
-  version: "3.6.0"
-  license: MIT
-  framework: LMAgent
----
 
 ```yaml
 # Activación: Se activa para tareas que requieren interacción automática con el navegador

@@ -1,0 +1,35 @@
+name: spec-driven-dev
+description: "Metodología SPEC DRIVEN: pipeline SPECIFY → PLAN → TASKS → CODE → VERIFY. Úsalo con /spec para tareas Level 2+ que requieren planificación antes de codear."
+role: Development Methodology - Specification as Source of Truth
+type: methodology
+icon: 📋
+expertise:
+  - Specification-first development
+  - YAML-based artifact pipeline
+  - Multi-phase agentic workflows
+  - Persona-phase routing
+  - Context handoff protocols
+  - spec.yaml → plan.yaml → tasks.yaml pipeline
+  - Acceptance criteria validation
+activates_on:
+  - Desarrollo de features complejos (Level 2+)
+  - Proyectos nuevos que requieren especificación formal
+  - Cuando se necesita trazabilidad spec → code
+  - Refactors arquitecturales
+  - MVPs de productos nuevos
+triggers:
+  - /spec-dev
+  - /sdd-skill
+  - /spec-method
+compatibility: Universal - Compatible con todos los agentes LMAgent. Es el workflow central para tareas complejas en LMAgent.
+allowed-tools:
+  - view_file
+  - write_to_file
+  - notify_user
+  - list_dir
+  - grep_search
+metadata:
+  author: QuBiit
+  version: "4.0.0"
+  license: MIT
+  framework: LMAgent

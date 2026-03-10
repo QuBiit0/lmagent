@@ -3,7 +3,7 @@ const path = require('path');
 
 const SKILLS_DIR = path.join(__dirname, '..', '.agents', 'skills');
 const VALIDATOR_PATH = path.join(__dirname, 'validate_skills.js');
-const CURRENT_VERSION = "3.6.0";
+const CURRENT_VERSION = "4.0.0";
 
 // Mensajes a inyectar
 const AGNOSTIC_INJECTION = `

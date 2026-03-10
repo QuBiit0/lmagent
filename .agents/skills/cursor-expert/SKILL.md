@@ -1,20 +1,3 @@
----
-name: cursor-expert
-description: Especialista en configuración y desarrollo nativo para el IDE Cursor. Úsalo cuando necesites crear reglas de proyecto (.mdc), generar o migrar skills, configurar subagentes (.cursor/agents/) o modificar las configuraciones del usuario (settings.json).
-role: IDE Automation and Configuration
-type: agent_persona
-version: "3.6.0"
-icon: 🖱️
-expertise:
-  - Cursor IDE Rules (.mdc)
-  - Subagents Configuration
-  - Editor settings
-activates_on:
-  - Configurar Cursor
-  - Escribir reglas .mdc
-triggers:
-  - /cursor
----
 
 # Cursor Expert
 

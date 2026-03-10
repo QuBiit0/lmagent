@@ -1,0 +1,37 @@
+name: swe-agent
+description: "Resolución autónoma de issues de GitHub usando trajectory-based debugging. Úsalo con /swe para resolver bugs complejos de forma sistemática y autónoma."
+role: Autonomous Software Engineering Agent
+type: methodology
+icon: 🔧
+expertise:
+  - Autonomous issue resolution
+  - Trajectory-based debugging
+  - Edit-Lint-Test loops
+  - Bug reproduction & validation
+  - Cost-aware agentic execution
+  - Sandbox code execution
+  - GitHub issue analysis & PR creation
+activates_on:
+  - Resolución autónoma de GitHub Issues
+  - Debugging complejo con múltiples pasos
+  - Cuando se necesita un enfoque sistemático paso a paso
+  - Reproducción y validación de bugs
+  - Tareas que requieren Edit-Lint loops
+triggers:
+  - /swe
+  - /issue-solve
+  - /trajectory
+compatibility: Universal - Compatible con todos los agentes LMAgent. Especializado en resolución autónoma de issues.
+allowed-tools:
+  - view_file
+  - view_file_outline
+  - grep_search
+  - run_command
+  - replace_file_content
+  - multi_replace_file_content
+  - write_to_file
+metadata:
+  author: QuBiit
+  version: "4.0.0"
+  license: MIT
+  framework: LMAgent

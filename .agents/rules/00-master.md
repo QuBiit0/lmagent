@@ -27,7 +27,7 @@
 > 6. `.agents/memory/06-conventions.md` — Convenciones de código y naming
 > *(Si un archivo no existe, simplemente omítelo).*
 
-Este archivo define las reglas fundamentales de **LMAgent v3.6.0**. Antes de implementar cualquier cambio:
+Este archivo define las reglas fundamentales de **LMAgent v4.0.0**. Antes de implementar cualquier cambio:
 
 1. **Lee `AGENTS.md`** — Catálogo completo de skills y rules
 2. **Clasifica la tarea** — Nivel 0-4 según complejidad (`.agents/rules/01-workflow.md`)

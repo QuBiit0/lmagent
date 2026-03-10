@@ -1,4 +1,4 @@
-# 📚 LMAgent v3.6.0 — Catálogo de Recursos
+# 📚 LMAgent v4.0.0 — Catálogo de Recursos
 
 > **REFERENCIA BAJO DEMANDA**: Este archivo contiene las tablas de referencia y diccionarios del framework. 
 > A diferencia de `AGENTS.md`, este archivo **NO** debe ser leído en cada sesión, sino consultado cuando busques un recurso específico.

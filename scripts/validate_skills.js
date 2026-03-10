@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * LMAgent Skills Validator — v3.6.0
+ * LMAgent Skills Validator — v4.0.0
  * 
  * Valida la integridad de todos los skills del framework.
  * Verifica: frontmatter YAML, campos obligatorios, estructura de directorio.
@@ -40,12 +40,9 @@ const c = {
     dim: (s) => `\x1b[2m${s}\x1b[0m`,
 };
 
-// ─── Parser de Frontmatter YAML (simple, sin deps) ───────────
-function parseFrontmatter(content) {
-    const match = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
-    if (!match) return null;
-
-    const yaml = match[1];
+// ─── Parser de YAML Simple (sin deps externas) ───────────────
+function parseYaml(content) {
+    const yaml = content;
     const result = {};
     let currentKey = null;
     let currentList = null;
@@ -89,19 +86,35 @@ function validateSkill(skillDir) {
     const errors = [];
     const warnings = [];
 
-    // 1. Verificar SKILL.md existe
-    if (!existsSync(skillMdPath)) {
+    // 1. Verificar archivos y leer metadata
+    let fmMd = null;
+    let yamlContent = null;
+    const skillYamlPath = join(skillDir, 'skill.yaml');
+
+    if (existsSync(skillMdPath)) {
+        const fullMd = readFileSync(skillMdPath, 'utf-8');
+        const fmMatch = fullMd.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+        if (fmMatch) fmMd = parseYaml(fmMatch[1]);
+    } else {
         errors.push('Falta archivo SKILL.md');
-        return { skillName, errors, warnings, frontmatter: null };
     }
 
-    // 2. Parsear frontmatter
-    const content = readFileSync(skillMdPath, 'utf-8');
-    const fm = parseFrontmatter(content);
+    if (existsSync(skillYamlPath)) {
+        yamlContent = readFileSync(skillYamlPath, 'utf-8');
+    }
 
-    if (!fm) {
-        errors.push('No se encontró frontmatter YAML (debe empezar con ---)');
-        return { skillName, errors, warnings, frontmatter: null };
+    if (!yamlContent && !fmMd) {
+        errors.push('No se encontró metadatos legibles (ni skill.yaml ni YAML Frontmatter en SKILL.md)');
+        return { valid: false, errors, warnings };
+    }
+
+    // 2. Parsear YAML o Fallback
+    const parsedData = yamlContent ? parseYaml(yamlContent) : fmMd;
+    fm = parsedData;
+
+    if (!fm || Object.keys(fm).length === 0) {
+        errors.push('No se pudo parsear el manifiesto local (ni skill.yaml ni SKILL.md)');
+        return { valid: false, errors, warnings };
     }
 
     // 3. Verificar campos obligatorios
@@ -156,15 +169,20 @@ function validateSkill(skillDir) {
         : null;
     // Solo warning, no error, porque los nombres pueden variar razonablemente
 
-    // 10. Verificar secciones del contenido
+    // 10. Verificar secciones del contenido MD
+    let content = '';
+    if (existsSync(skillMdPath)) {
+        content = readFileSync(skillMdPath, 'utf-8');
+    }
+
     const expectedSections = [
         { name: 'System Prompt', alternatives: ['Persona', 'Role Definition'] },
         { name: 'Definition of Done', alternatives: ['Done', 'Criterios de Aceptación'] }
     ];
 
     for (const section of expectedSections) {
-        const found = content.includes(section.name) ||
-            section.alternatives.some(alt => content.includes(alt));
+        const found = content && (content.includes(section.name) ||
+            section.alternatives.some(alt => content.includes(alt)));
 
         if (!found) {
             warnings.push(`Sección recomendada faltante: "${section.name}" (o alternativas: ${section.alternatives.join(', ')})`);
