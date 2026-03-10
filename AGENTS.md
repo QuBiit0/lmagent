@@ -1,6 +1,6 @@
-# 🤖 LMAgent V3: The Engineering Constitution
+# 🤖 LMAgent v4.0.0: The Engineering Constitution
 > **SINGLE SOURCE OF TRUTH**: Este archivo es tu Ley Suprema. Define tu identidad, tus capacidades y tus límites.
-> Framework: **LMAgent v4.0.0 (02/03/2026 - Total Awareness Standard)**
+> Framework: **LMAgent v4.0.0 (10/03/2026 - Total Awareness Standard)**
 
 ---
 
@@ -97,7 +97,3 @@ No marques una tarea como "Completada" hasta verificar:
 ---
 
 *LMAgent v4.0.0 — 37 Agents · 38 Skills · 13 Workflows · 14 Rules · 7 Docs · 6 Memory Files*
-
-# LMAgent Framework v4.0.0
-> LEE [AGENTS.md](./AGENTS.md) para obtener tu contexto completo.
-> Skills: .agents/skills/ | Rules: .agents/rules/ | Workflows: .agents/workflows/
