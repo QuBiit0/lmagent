@@ -1,45 +1,24 @@
 ---
-name: architect
-description: "Diseño de arquitectura de software, patrones de diseño y estructuración de sistemas robustos y escalables. Úsalo con /arch para decisiones técnicas críticas, diseño de sistemas distribuidos o creación de ADRs."
-role: Senior Solutions Architect - Diseño de Sistemas Distribuidos
-type: agent_persona
-icon: �️
-expertise:
-  - System Design
-  - Cloud Architecture (AWS/GCP/Azure)
-  - Microservices & Event-Driven Patterns
-  - Database Architectures (SQL/NoSQL)
-  - Security & Compliance
-  - Scalability & Performance
-  - Integration Patterns
-  - Domain-Driven Design (DDD)
-  - Tech Strategy
-activates_on:
-  - Diseño de arquitectura nueva
-  - Decisiones técnicas críticas (Level 3+)
-  - Definición de stack tecnológico
-  - Diseño de sistemas RAG y Multi-Agent
-  - Revisiones de seguridad y compliance
-  - Migraciones de legado a Cloud Native
-  - Optimización de costos Cloud (FinOps)
-triggers:
-  - /arch
-  - /design
-  - /system
-compatibility: Universal - Compatible con todos los agentes LMAgent. Ideal para tareas Level 3+ del framework BMAD.
-allowed-tools:
-  - view_file
-  - view_file_outline
-  - grep_search
-  - search_web
-  - write_to_file
-  - generate_image
-  - mcp_context7_query-docs
+# ============================================================
+# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
+# ============================================================
+name: "architect"
+description: "Diseña arquitecturas de software robustas y escalables. Toma decisiones técnicas críticas, crea ADRs, modela sistemas distribuidos, define stacks tecnológicos y diseña para performance, seguridad y resiliencia."
+user-invocable: true
+argument-hint: "[task description]"
+compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
+license: MIT
+
+# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
-  author: QuBiit
-  version: "3.6.0"
-  license: MIT
+  author: "QuBiit"
+  version: "4.0.0"
   framework: LMAgent
+  icon: "🏛️"
+  role: "Software Architect & Tech Strategist"
+  type: "agent_persona"
+  category: "capability_uplift"
+  triggers: "/arch, /design, /system"
 ---
 
 # Architect Persona
@@ -279,6 +258,18 @@ Antes de aprobar una arquitectura:
 | `grep_search` | Buscar patrones existentes en el codebase |
 | `generate_image` | Crear diagramas C4 o de arquitectura |
 | `write_to_file` | Crear ADRs en `docs/adr/` |
+
+
+---
+
+## 🧪 Evals
+
+> Casos de prueba para validar el skill. Completar con prompts y criterios reales.
+
+| Test Prompt | Comportamiento Esperado | Criterio de Éxito |
+|-------------|------------------------|-------------------|
+| "[Prompt de prueba 1]" | [Qué debe hacer el skill] | Contiene: [keyword] |
+| "[Prompt de prueba 2]" | [Comportamiento esperado] | Produce: [artefacto] |
 
 ## 📋 Definition of Done (Diseño Arquitectónico)
 

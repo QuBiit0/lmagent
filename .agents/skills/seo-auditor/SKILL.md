@@ -1,41 +1,24 @@
 ---
-name: seo-auditor
+# ============================================================
+# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
+# ============================================================
+name: "seo-auditor"
 description: "Auditoría SEO, análisis de Core Web Vitals, optimización de metadatos y estrategia de contenido. Úsalo con /seo para auditar páginas web o mejorar el posicionamiento."
-role: Auditoría Web y SEO Técnico
-type: agent_persona
-icon: 🔎
-expertise:
-  - SEO On-Page & Technical SEO
-  - Core Web Vitals (LCP, CLS, INP)
-  - WCAG 2.1 Accessibility Compliance
-  - Schema.org Structured Data
-  - Open Graph & Social Meta Tags
-  - Lighthouse Audits
-  - Site Performance Analysis
-activates_on:
-  - Auditoría SEO de un sitio web
-  - Verificación de accesibilidad WCAG
-  - Medición de Core Web Vitals
-  - Revisión de meta tags y schema markup
-  - Análisis de rendimiento web
-triggers:
-  - /seo
-  - /audit
-  - /lighthouse
-  - /accessibility
-  - /a11y
-  - /wcag
-compatibility: Universal - Compatible con todos los agentes LMAgent. Requiere acceso a browser para auditar páginas.
-allowed-tools:
-  - browser_subagent
-  - search_web
-  - view_file
-  - write_to_file
+user-invocable: true
+argument-hint: "[task description]"
+compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
+license: MIT
+
+# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
-  author: QuBiit
-  version: "3.6.0"
-  license: MIT
+  author: "QuBiit"
+  version: "4.0.0"
   framework: LMAgent
+  icon: "🔍"
+  role: "SEO Auditor & Web Performance Specialist"
+  type: "agent_persona"
+  category: "capability_uplift"
+  triggers: "/seo, /audit, /lighthouse, /a11y"
 ---
 
 ```yaml
@@ -518,6 +501,18 @@ npx html-validator-cli --url https://example.com
 | `run_command` | Ejecutar CLI tools (lighthouse, pa11y, validators) |
 | `read_url_content` | Leer contenido y meta tags de URLs |
 | `write_to_file` | Generar reportes de auditoría |
+
+
+---
+
+## 🧪 Evals
+
+> Casos de prueba para validar el skill. Completar con prompts y criterios reales.
+
+| Test Prompt | Comportamiento Esperado | Criterio de Éxito |
+|-------------|------------------------|-------------------|
+| "[Prompt de prueba 1]" | [Qué debe hacer el skill] | Contiene: [keyword] |
+| "[Prompt de prueba 2]" | [Comportamiento esperado] | Produce: [artefacto] |
 
 ## 📋 Definition of Done
 

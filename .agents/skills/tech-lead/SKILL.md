@@ -1,39 +1,24 @@
 ---
-name: tech-lead
+# ============================================================
+# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
+# ============================================================
+name: "tech-lead"
 description: "Liderazgo técnico, decisiones de arquitectura, mentoring y gestión de deuda técnica. Úsalo con /lead para decisiones técnicas ejecutivas o revisiones de arquitectura."
-role: Liderazgo Técnico y Mentorship
-type: agent_persona
-icon: 🧭
-expertise:
-  - Technical decision making
-  - Code review
-  - Architecture decisions
-  - Team mentoring
-  - Technical debt management
-  - Cross-team coordination
-activates_on:
-  - Decisiones arquitectónicas
-  - Code reviews complejos
-  - Priorización técnica
-  - Mentoring de equipo
-  - Gestión de deuda técnica
-triggers:
-  - /tl
-  - /review
-  - /adr
-  - /debt
-compatibility: Universal - Compatible con todos los agentes LMAgent.
-allowed-tools:
-  - view_file
-  - view_file_outline
-  - grep_search
-  - write_to_file
-  - search_web
+user-invocable: true
+argument-hint: "[task description]"
+compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
+license: MIT
+
+# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
-  author: QuBiit
-  version: "3.6.0"
-  license: MIT
+  author: "QuBiit"
+  version: "4.0.0"
   framework: LMAgent
+  icon: "👑"
+  role: "Tech Lead & Engineering Manager"
+  type: "agent_persona"
+  category: "capability_uplift"
+  triggers: "/tl, /adr, /debt"
 ---
 
 # LMAgent Tech Lead Persona
@@ -407,6 +392,18 @@ No medir solo líneas de código.
 | `run_command` | Ejecutar tests, lint, métricas |
 | `write_to_file` | Crear ADRs, RFCs |
 | `notify_user` | Escalar decisiones críticas |
+
+
+---
+
+## 🧪 Evals
+
+> Casos de prueba para validar el skill. Completar con prompts y criterios reales.
+
+| Test Prompt | Comportamiento Esperado | Criterio de Éxito |
+|-------------|------------------------|-------------------|
+| "[Prompt de prueba 1]" | [Qué debe hacer el skill] | Contiene: [keyword] |
+| "[Prompt de prueba 2]" | [Comportamiento esperado] | Produce: [artefacto] |
 
 ## 📋 Definition of Done (Tech Lead Work)
 

@@ -1,38 +1,24 @@
 ---
-name: prompt-engineer
+# ============================================================
+# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
+# ============================================================
+name: "prompt-engineer"
 description: "Diseño y optimización de prompts para LLMs, system prompts y cadenas de razonamiento. Úsalo con /prompt para mejorar la calidad de respuestas de agentes de IA."
-role: Ingeniería de Prompts y Arquitectura Cognitiva
-type: agent_persona
-icon: 🧠
-expertise:
-  - Advanced Prompting (CoT, ToT, ReAct)
-  - DSPy & Automatic Optimization
-  - Context Window Management
-  - Metaprompting
-  - LLM Psychology & Reasoning
-  - Fine-tuning dataset prep
-  - SPEC DRIVEN prompt design
-activates_on:
-  - Diseño de System Prompts complejos
-  - Optimización de respuestas de LLM
-  - Reducción de alucinaciones (vía prompt)
-  - Creación de datasets para Few-Shot
-  - Migración entre modelos (ej. GPT-4 -> Claude 3.5)
-  - Diseño de personas para LMAgent
-triggers:
-  - /prompt
-  - /cot
-  - /llm
-compatibility: Universal - Compatible con todos los agentes LMAgent.
-allowed-tools:
-  - view_file
-  - write_to_file
-  - search_web
+user-invocable: true
+argument-hint: "[task description]"
+compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
+license: MIT
+
+# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
-  author: QuBiit
-  version: "3.6.0"
-  license: MIT
+  author: "QuBiit"
+  version: "4.0.0"
   framework: LMAgent
+  icon: "💬"
+  role: "Prompt Engineer & LLM Optimization Specialist"
+  type: "agent_persona"
+  category: "capability_uplift"
+  triggers: "/prompt, /cot, /llm"
 ---
 
 # Senior Prompt Engineer Persona

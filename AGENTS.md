@@ -1,6 +1,6 @@
-# 🤖 LMAgent V3: The Engineering Constitution
+# 🤖 LMAgent V4: The Engineering Constitution
 > **SINGLE SOURCE OF TRUTH**: Este archivo es tu Ley Suprema. Define tu identidad, tus capacidades y tus límites.
-> Framework: **LMAgent v3.6.0 (02/03/2026 - Total Awareness Standard)**
+> Framework: **LMAgent v4.0.0 (11/03/2026 - Anthropic Skills v2.0 Compatible)**
 
 ---
 
@@ -66,6 +66,34 @@ Ubicación: `.agents/skills/[nombre]/SKILL.md`
 > Los skills se cargan **bajo demanda** con su trigger. No están todos activos al mismo tiempo.
 > Ver catálogo completo en **Sección 5**.
 
+#### Schema Frontmatter v4.0 (Anthropic Skills v2.0 Compatible)
+
+```yaml
+---
+# Campos oficiales soportados por Anthropic Skills v2.0
+name: "skill-name"               # kebab-case, identificador único
+description: "..."               # Orientado a capability (min 30 chars)
+user-invocable: true             # Aparece como /slash-command
+argument-hint: "[task]"          # Hint de argumento para el usuario
+compatibility: "Universal - ..." # IDEs compatibles
+license: MIT
+
+# Extensiones LMAgent (bajo el campo libre 'metadata')
+metadata:
+  author: "QuBiit"
+  version: "4.0.0"
+  framework: LMAgent
+  icon: "🔧"
+  role: "Título profesional del rol"
+  type: "agent_persona"          # agent_persona | methodology
+  category: "capability_uplift"  # capability_uplift | encoded_preferences
+  triggers: "/trigger1, /trigger2"
+---
+```
+
+**Campos NO soportados** (diagnóstico IDE lo rechaza): `allowed-tools`, `agent`, `model`, `lmagent` namespace.
+**Dos categorías de skills**: `capability_uplift` (técnicas superiores) vs `encoded_preferences` (workflows del equipo).
+
 ### 🔄 3.4 Workflows (SOPs y Procedimientos)
 Ubicación: `.agents/workflows/`
 | Archivo | Propósito |
@@ -100,8 +128,8 @@ Ubicación: `.agents/memory/`
 Ubicación: `.agents/scripts/` y `scripts/` (raíz del paquete)
 | Script | Propósito |
 |:---|:---|
-| `create_skill.js` | Generador interactivo de nuevos Skills. |
-| `validate_skills.js` | Validador de integridad de Skills (frontmatter, estructura). |
+| `create_skill.js` | Generador interactivo v4.0 — produce skills con frontmatter Anthropic Skills v2.0. Modos: `--type persona\|anthropic\|subagent`. |
+| `validate_skills.js` | Validador v4.0 — verifica estructura y frontmatter. Flag `--migrate` migra skills v3.x → v4.0 automáticamente. |
 | `token-analyzer.js` | Analizador de consumo de tokens del framework instalado. |
 
 ### 📋 3.7 Templates (Plantillas de Proyecto)
@@ -152,8 +180,9 @@ Clasifica tu tarea actual para decidir tu nivel de autonomía:
 Ubicación Universal: `.agents/skills/[nombre_skill]/SKILL.md`
 
 > **Cómo activar un skill**: Escribe el trigger en el chat. El agente cargará el `SKILL.md` correspondiente.
-> **Cómo funciona**: Cada skill define un rol especializado con sus propias instrucciones, herramientas y criterios de éxito.
+> **Cómo funciona**: Cada skill define un rol especializado (Anthropic Skills v2.0) con frontmatter compatible con Claude Code y 33+ IDEs.
 > **Nota**: Esta sección se actualiza automáticamente con `lmagent install` al detectar skills nuevos.
+> **Formato**: Todos los skills usan frontmatter v4.0 — compatible con `Anthropic Skills v2.0`.
 
 <!-- LMAGENT_REGISTRY:SKILLS_START -->
 
@@ -293,4 +322,4 @@ No marques una tarea como "Completada" hasta verificar:
 - [ ] **Seguridad**: ¿Verificaste que no hay secretos hardcodeados?
 ---
 
-*LMAgent v3.6.0 — 37 Agents · 38 Skills · 13 Workflows · 11 Rules · 6 Docs · 5 Memory Files*
+*LMAgent v4.0.0 — Anthropic Skills v2.0 Compatible · 37 Agents · 38 Skills · 13 Workflows · 11 Rules · 6 Docs · 5 Memory Files*

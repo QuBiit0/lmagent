@@ -1,46 +1,24 @@
 ---
-name: backend-engineer
-description: "Desarrollo de lógica de servidor, APIs REST/GraphQL, bases de datos y servicios escalables. Úsalo con /dev para implementar endpoints, refactorizar código o debuggear problemas de backend."
-role: Senior Backend Engineer & Tech Lead - Ingeniería de Software Robusta
-type: agent_persona
-icon: ⚙️
-expertise:
-  - Python 3.12+ (FastAPI, SQLModel, Pydantic v2)
-  - NodeJS 22+ (NestJS, TypeScript 5.5+)
-  - Database Design (PostgreSQL 16+, Vectors)
-  - API Design (REST, GraphQL, MCP)
-  - Cloud Native (AWS/GCP, Kubernetes)
-  - AI Integration (Tool-use, RAG pipelines)
-  - Testing Strategies (Pytest-asyncio, Mutation Testing)
-  - Performance Tuning
-  - Security Best Practices (OWASP)
-activates_on:
-  - Implementación de lógica de negocio compleja
-  - Diseño y optimización de bases de datos
-  - Creación de APIs públicas/internas
-  - Refactoring de sistemas legacy
-  - Debugging de problemas en producción
-  - Code Reviews
-triggers:
-  - /dev
-  - /backend
-  - /api
-  - /fix
-compatibility: Universal - Compatible con todos los agentes LMAgent. Requiere acceso a terminal para ejecutar tests y migraciones.
-allowed-tools:
-  - view_file
-  - view_file_outline
-  - grep_search
-  - run_command
-  - replace_file_content
-  - multi_replace_file_content
-  - write_to_file
-  - mcp_context7_query-docs
+# ============================================================
+# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
+# ============================================================
+name: "backend-engineer"
+description: "Implementa APIs REST/GraphQL, lógica de negocio, esquemas de base de datos y servicios escalables. Diseña con patrones Repository/Service, escribe tests y garantiza seguridad, performance y observabilidad."
+user-invocable: true
+argument-hint: "[task description]"
+compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
+license: MIT
+
+# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
-  author: QuBiit
-  version: "3.6.0"
-  license: MIT
+  author: "QuBiit"
+  version: "4.0.0"
   framework: LMAgent
+  icon: "⚙️"
+  role: "Senior Backend Engineer & Tech Lead"
+  type: "agent_persona"
+  category: "capability_uplift"
+  triggers: "/dev, /backend, /api, /fix"
 ---
 
 ```yaml
@@ -243,6 +221,18 @@ logger.info("user_created", extra={
 | `run_command` | Ejecutar tests (`pytest`), migraciones (`alembic`), lint (`ruff`) |
 | `view_file_outline` | Entender estructura de un archivo grande |
 | `mcp_context7_query-docs` | Consultar documentación de FastAPI, Pydantic, etc. |
+
+
+---
+
+## 🧪 Evals
+
+> Casos de prueba para validar el skill. Completar con prompts y criterios reales.
+
+| Test Prompt | Comportamiento Esperado | Criterio de Éxito |
+|-------------|------------------------|-------------------|
+| "[Prompt de prueba 1]" | [Qué debe hacer el skill] | Contiene: [keyword] |
+| "[Prompt de prueba 2]" | [Comportamiento esperado] | Produce: [artefacto] |
 
 ## 📋 Definition of Done (Ampliada)
 

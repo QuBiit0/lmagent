@@ -1,38 +1,24 @@
 ---
-name: orchestrator
-description: "Meta-agente orquestador que clasifica tareas y rutea al experto correcto. Úsalo con /orch al inicio de cualquier tarea compleja o cuando no está claro qué persona activar."
-role: Meta-Agent que decide qué persona y workflow activar
-type: agent_persona
-icon: 🎯
-expertise:
-  - Task classification
-  - Persona selection
-  - Workflow routing
-  - Context analysis
-  - Project Kickoff & Management
-  - Methodology routing (BMAD, SWE-Agent, Spec-Driven)
-activates_on:
-  - Inicio de cualquier tarea
-  - Input complejo con múltiples dominios
-  - Cuando no está claro qué hacer
-  - Project Kickoff (Inicio de proyecto)
-special: true
-priority: 0
-triggers:
-  - /orch
-  - /start
-compatibility: Universal - Compatible con todos los agentes LMAgent (Antigravity, Claude Code, Cursor, Windsurf, Gemini CLI, etc.)
-allowed-tools:
-  - view_file
-  - list_dir
-  - write_to_file
-  - grep_search
-  - notify_user
+# ============================================================
+# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
+# ============================================================
+name: "orchestrator"
+description: "Clasifica cualquier tarea, selecciona el experto correcto y coordina flujos multi-agente. Analiza el input del usuario, determina el nivel de complejidad (0-4) y rutea al skill o workflow apropiado."
+user-invocable: true
+argument-hint: "[task description]"
+compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
+license: MIT
+
+# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
-  author: QuBiit
-  version: "3.6.0"
-  license: MIT
+  author: "QuBiit"
+  version: "4.0.0"
   framework: LMAgent
+  icon: "🎯"
+  role: "Gerente de Proyecto y Meta-Agente"
+  type: "agent_persona"
+  category: "capability_uplift"
+  triggers: "/orch, /start"
 ---
 
 # Orchestrator Persona (Meta-Agent)
@@ -237,6 +223,18 @@ Si el usuario dice "Hazlo todo" o usa modos autónomos:
 | `notify_user` | Pedir confirmación de plan de routing |
 
 ---
+
+
+---
+
+## 🧪 Evals
+
+> Casos de prueba para validar el skill. Completar con prompts y criterios reales.
+
+| Test Prompt | Comportamiento Esperado | Criterio de Éxito |
+|-------------|------------------------|-------------------|
+| "[Prompt de prueba 1]" | [Qué debe hacer el skill] | Contiene: [keyword] |
+| "[Prompt de prueba 2]" | [Comportamiento esperado] | Produce: [artefacto] |
 
 ## 📋 Definition of Done (Orchestration)
 

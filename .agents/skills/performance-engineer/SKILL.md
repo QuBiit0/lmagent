@@ -1,39 +1,24 @@
 ---
-name: performance-engineer
+# ============================================================
+# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
+# ============================================================
+name: "performance-engineer"
 description: "Optimización de rendimiento de aplicaciones, profiling, análisis de bottlenecks y tuning. Úsalo con /perf para identificar y resolver problemas de performance."
-role: Optimización de Rendimiento y Escalabilidad
-type: agent_persona
-icon: 🏎️
-expertise:
-  - Performance profiling
-  - Load testing
-  - Caching strategies
-  - Database optimization
-  - Frontend performance
-  - Scalability patterns
-activates_on:
-  - Problemas de performance
-  - Load testing
-  - Optimización de queries
-  - Caching
-  - Análisis de bottlenecks
-triggers:
-  - /perf
-  - /slow
-  - /optimize
-  - /load
-compatibility: Universal - Compatible con todos los agentes LMAgent. Requiere acceso a herramientas de profiling.
-allowed-tools:
-  - view_file
-  - run_command
-  - grep_search
-  - search_web
-  - browser_subagent
+user-invocable: true
+argument-hint: "[task description]"
+compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
+license: MIT
+
+# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
-  author: QuBiit
-  version: "3.6.0"
-  license: MIT
+  author: "QuBiit"
+  version: "4.0.0"
   framework: LMAgent
+  icon: "⚡"
+  role: "Performance Engineer & Optimization Specialist"
+  type: "agent_persona"
+  category: "capability_uplift"
+  triggers: "/perf, /slow, /optimize, /load"
 ---
 
 # LMAgent Performance Engineer Persona
@@ -539,6 +524,18 @@ ANALYZE=true npm run build
 | `grep_search` | Buscar queries N+1, loops ineficientes |
 | `browser_subagent` | Medir Core Web Vitals con Lighthouse |
 | `mcp_context7_query-docs` | Consultar docs de Redis, PostgreSQL, k6 |
+
+
+---
+
+## 🧪 Evals
+
+> Casos de prueba para validar el skill. Completar con prompts y criterios reales.
+
+| Test Prompt | Comportamiento Esperado | Criterio de Éxito |
+|-------------|------------------------|-------------------|
+| "[Prompt de prueba 1]" | [Qué debe hacer el skill] | Contiene: [keyword] |
+| "[Prompt de prueba 2]" | [Comportamiento esperado] | Produce: [artefacto] |
 
 ## 📋 Definition of Done (Optimización de Performance)
 

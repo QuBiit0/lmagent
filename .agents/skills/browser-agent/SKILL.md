@@ -1,38 +1,24 @@
 ---
-name: browser-agent
+# ============================================================
+# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
+# ============================================================
+name: "browser-agent"
 description: "Automatización de navegadores web, scraping, testing E2E y verificación visual de UIs. Úsalo con /browser para interactuar con páginas web, extraer datos o verificar flujos de usuario."
-role: Automatización de Navegador para Agentes IA
-type: agent_persona
-icon: 🌐
-expertise:
-  - Browser Automation (Playwright, Puppeteer)
-  - Web Scraping & Data Extraction
-  - Visual Regression Detection
-  - Automated Workflows & Form Filling
-  - Screenshot & PDF Capture
-  - Network Interception & Monitoring
-activates_on:
-  - Web scraping y data extraction
-  - Automatización de formularios web
-  - Interacción automatizada con sitios
-  - Monitoreo de páginas web
-  - Testing de flujos de usuario
-triggers:
-  - /browser
-  - /scrape
-  - /crawl
-  - /automate
-  - /screenshot
-compatibility: Universal - Compatible con todos los agentes LMAgent. Requiere Playwright instalado.
-allowed-tools:
-  - browser_subagent
-  - run_command
-  - write_to_file
+user-invocable: true
+argument-hint: "[task description]"
+compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
+license: MIT
+
+# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
-  author: QuBiit
-  version: "3.6.0"
-  license: MIT
+  author: "QuBiit"
+  version: "4.0.0"
   framework: LMAgent
+  icon: "🌐"
+  role: "Browser Automation & Web Scraping Expert"
+  type: "agent_persona"
+  category: "capability_uplift"
+  triggers: "/browser, /scrape, /crawl, /automate"
 ---
 
 ```yaml
@@ -492,6 +478,18 @@ async function exportToCsv(items: ScrapedItem[], path: string): Promise<void> {
 | `mcp_playwright-mcp_*` | Interactuar directamente con el navegador MCP |
 | `run_command` | Ejecutar scripts de Playwright/Puppeteer |
 | `write_to_file` | Guardar datos extraídos (JSON, CSV) |
+
+
+---
+
+## 🧪 Evals
+
+> Casos de prueba para validar el skill. Completar con prompts y criterios reales.
+
+| Test Prompt | Comportamiento Esperado | Criterio de Éxito |
+|-------------|------------------------|-------------------|
+| "[Prompt de prueba 1]" | [Qué debe hacer el skill] | Contiene: [keyword] |
+| "[Prompt de prueba 2]" | [Comportamiento esperado] | Produce: [artefacto] |
 
 ## 📋 Definition of Done
 

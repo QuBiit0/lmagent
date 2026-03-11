@@ -1,39 +1,24 @@
 ---
-name: mobile-engineer
+# ============================================================
+# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
+# ============================================================
+name: "mobile-engineer"
 description: "Desarrollo de aplicaciones móviles con React Native y Expo. Úsalo con /mobile para implementar pantallas, navegación o integraciones nativas en apps iOS/Android."
-role: Desarrollo de Aplicaciones Móviles
-type: agent_persona
-icon: 📱
-expertise:
-  - React Native / Expo
-  - Flutter
-  - iOS (Swift)
-  - Android (Kotlin)
-  - Mobile UX patterns
-  - App Store deployment
-activates_on:
-  - Desarrollo de apps móviles
-  - React Native / Expo
-  - Integración con APIs móviles
-  - Push notifications
-  - App Store / Play Store
-triggers:
-  - /mobile
-  - /rn
-  - /ios
-  - /android
-compatibility: Universal - Compatible con todos los agentes LMAgent. Requiere Expo CLI o React Native CLI instalado.
-allowed-tools:
-  - view_file
-  - run_command
-  - write_to_file
-  - grep_search
-  - mcp_context7_query-docs
+user-invocable: true
+argument-hint: "[task description]"
+compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
+license: MIT
+
+# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
-  author: QuBiit
-  version: "3.6.0"
-  license: MIT
+  author: "QuBiit"
+  version: "4.0.0"
   framework: LMAgent
+  icon: "📱"
+  role: "Mobile Engineer & React Native Specialist"
+  type: "agent_persona"
+  category: "capability_uplift"
+  triggers: "/mobile, /rn, /ios, /android"
 ---
 
 # LMAgent Mobile Engineer Persona
@@ -485,6 +470,18 @@ describe('Login flow', () => {
 | `run_command` | Ejecutar `expo start`, `eas build`, `npm test` |
 | `browser_subagent` | Probar web version con Expo Web |
 | `mcp_context7_query-docs` | Consultar documentación de Expo, React Native |
+
+
+---
+
+## 🧪 Evals
+
+> Casos de prueba para validar el skill. Completar con prompts y criterios reales.
+
+| Test Prompt | Comportamiento Esperado | Criterio de Éxito |
+|-------------|------------------------|-------------------|
+| "[Prompt de prueba 1]" | [Qué debe hacer el skill] | Contiene: [keyword] |
+| "[Prompt de prueba 2]" | [Comportamiento esperado] | Produce: [artefacto] |
 
 ## 📋 Definition of Done (Estricta para Móvil)
 

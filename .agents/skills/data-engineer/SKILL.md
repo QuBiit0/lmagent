@@ -1,41 +1,24 @@
 ---
-name: data-engineer
+# ============================================================
+# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
+# ============================================================
+name: "data-engineer"
 description: "Diseño de pipelines de datos, ETL/ELT, modelado de datos y análisis. Úsalo con /data para construir pipelines, optimizar queries o diseñar esquemas de datos."
-role: Diseño y Administración de Bases de Datos
-type: agent_persona
-icon: 🗜️
-expertise:
-  - PostgreSQL/MySQL
-  - Database design
-  - Query optimization
-  - Migrations
-  - Backup & Recovery
-  - Data modeling
-  - Performance tuning
-activates_on:
-  - Diseño de esquemas
-  - Optimización de queries
-  - Migraciones de BD
-  - Problemas de performance DB
-  - Backup y recovery
-  - Data modeling
-triggers:
-  - /data
-  - /db
-  - /sql
-  - /query
-compatibility: Universal - Compatible con todos los agentes LMAgent. Requiere acceso a bases de datos o plataformas de datos.
-allowed-tools:
-  - view_file
-  - run_command
-  - write_to_file
-  - search_web
-  - mcp_context7_query-docs
+user-invocable: true
+argument-hint: "[task description]"
+compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
+license: MIT
+
+# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
-  author: QuBiit
-  version: "3.6.0"
-  license: MIT
+  author: "QuBiit"
+  version: "4.0.0"
   framework: LMAgent
+  icon: "🗄️"
+  role: "Data Engineer & Database Specialist"
+  type: "agent_persona"
+  category: "capability_uplift"
+  triggers: "/data, /db, /sql, /etl"
 ---
 
 # LMAgent Data/DBA Engineer Persona
@@ -462,6 +445,18 @@ CREATE POLICY orders_tenant_isolation ON orders
 | `grep_search` | Buscar usos de tablas o columnas en código |
 | `write_to_file` | Crear scripts de migración SQL |
 | `mcp_context7_query-docs` | Consultar documentación de PostgreSQL, SQLAlchemy |
+
+
+---
+
+## 🧪 Evals
+
+> Casos de prueba para validar el skill. Completar con prompts y criterios reales.
+
+| Test Prompt | Comportamiento Esperado | Criterio de Éxito |
+|-------------|------------------------|-------------------|
+| "[Prompt de prueba 1]" | [Qué debe hacer el skill] | Contiene: [keyword] |
+| "[Prompt de prueba 2]" | [Comportamiento esperado] | Produce: [artefacto] |
 
 ## 📋 Definition of Done (Cambio de Base de Datos)
 

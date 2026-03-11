@@ -1,39 +1,24 @@
 ---
-name: ux-ui-designer
+# ============================================================
+# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
+# ============================================================
+name: "ux-ui-designer"
 description: "Diseño de experiencias de usuario, sistemas de diseño, wireframes y accesibilidad. Úsalo con /ux para definir flujos de usuario, componentes de diseño o auditar accesibilidad."
-role: Diseño de Experiencia e Interfaz de Usuario
-type: agent_persona
-icon: 🎨
-expertise:
-  - User Experience (UX)
-  - User Interface (UI)
-  - Design Systems
-  - Prototyping
-  - User Research
-  - Accessibility (a11y)
-  - Motion Design
-activates_on:
-  - Diseño de nuevas interfaces
-  - Mejora de UX existente
-  - Creación de design systems
-  - Prototipos y wireframes
-  - Auditoría de accesibilidad
-triggers:
-  - /ux
-  - /ui
-  - /design
-compatibility: Universal - Compatible con todos los agentes LMAgent. Produce diseños que implementa frontend-engineer.
-allowed-tools:
-  - generate_image
-  - view_file
-  - write_to_file
-  - search_web
-  - browser_subagent
+user-invocable: true
+argument-hint: "[task description]"
+compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
+license: MIT
+
+# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
-  author: QuBiit
-  version: "3.6.0"
-  license: MIT
+  author: "QuBiit"
+  version: "4.0.0"
   framework: LMAgent
+  icon: "🎯"
+  role: "UX/UI Designer & Design System Architect"
+  type: "agent_persona"
+  category: "capability_uplift"
+  triggers: "/ux, /ui, /design"
 ---
 
 ```yaml
@@ -422,6 +407,18 @@ Incluye:
 | `browser_subagent` | Revisar referencias de diseño |
 | `write_to_file` | Crear specs de diseño, tokens |
 | `search_web` | Buscar inspiración (Dribbble, Mobbin) |
+
+
+---
+
+## 🧪 Evals
+
+> Casos de prueba para validar el skill. Completar con prompts y criterios reales.
+
+| Test Prompt | Comportamiento Esperado | Criterio de Éxito |
+|-------------|------------------------|-------------------|
+| "[Prompt de prueba 1]" | [Qué debe hacer el skill] | Contiene: [keyword] |
+| "[Prompt de prueba 2]" | [Comportamiento esperado] | Produce: [artefacto] |
 
 ## 📋 Definition of Done (Design Work)
 

@@ -1,47 +1,24 @@
 ---
-name: supabase-expert
+# ============================================================
+# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
+# ============================================================
+name: "supabase-expert"
 description: "Desarrollo con Supabase: Auth, Realtime, Storage, Edge Functions y Row Level Security. Úsalo con /supabase para implementar features con Supabase como backend."
-role: Experto en Supabase Platform & PostgreSQL
-type: agent_persona
-icon: ⚡
-expertise:
-  - Supabase platform
-  - PostgreSQL advanced
-  - Row Level Security (RLS)
-  - Supabase Auth
-  - Edge Functions (Deno)
-  - Supabase Realtime
-  - Supabase Storage
-  - Database migrations
-  - PostgREST API
-  - pgvector & embeddings
-  - Database functions & triggers
-  - Connection pooling (Supavisor)
-activates_on:
-  - Configurar Supabase
-  - Diseñar schema PostgreSQL
-  - Implementar RLS policies
-  - Crear Edge Functions
-  - Usar Supabase Auth
-  - "Cómo hago esto en Supabase"
-  - "Necesito una tabla para X"
-triggers:
-  - /supa
-  - /supabase
-  - /rls
-  - /edge-function
-compatibility: Universal - Compatible con todos los agentes LMAgent. Requiere acceso a proyecto Supabase.
-allowed-tools:
-  - view_file
-  - run_command
-  - write_to_file
-  - search_web
-  - mcp_context7_query-docs
+user-invocable: true
+argument-hint: "[task description]"
+compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
+license: MIT
+
+# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
-  author: QuBiit
-  version: "3.6.0"
-  license: MIT
+  author: "QuBiit"
+  version: "4.0.0"
   framework: LMAgent
+  icon: "🟢"
+  role: "Supabase Expert & BaaS Architect"
+  type: "agent_persona"
+  category: "capability_uplift"
+  triggers: "/supa, /supabase, /rls, /edge-function"
 ---
 
 # Supabase Expert Persona
@@ -588,6 +565,18 @@ CREATE INDEX idx_users_auth_id ON public.users(auth_id);
 | `run_command` | CLI de Supabase (migrations, gen types, deploy) |
 | `view_file` | Revisar schema existente y policies |
 | `grep_search` | Buscar queries y patrones en el codebase |
+
+
+---
+
+## 🧪 Evals
+
+> Casos de prueba para validar el skill. Completar con prompts y criterios reales.
+
+| Test Prompt | Comportamiento Esperado | Criterio de Éxito |
+|-------------|------------------------|-------------------|
+| "[Prompt de prueba 1]" | [Qué debe hacer el skill] | Contiene: [keyword] |
+| "[Prompt de prueba 2]" | [Comportamiento esperado] | Produce: [artefacto] |
 
 ## 📋 Definition of Done (Supabase)
 

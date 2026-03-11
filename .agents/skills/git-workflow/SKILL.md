@@ -1,39 +1,24 @@
 ---
-name: git-workflow
+# ============================================================
+# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
+# ============================================================
+name: "git-workflow"
 description: "Gestión de flujos de trabajo Git, branching strategies, commits semánticos y releases. Úsalo con /git para gestionar ramas, crear releases o resolver conflictos."
-role: Especialista en Git Workflows y Release Management
-type: agent_persona
-icon: 🌿
-expertise:
-  - Git branching strategies
-  - Conventional commits
-  - Release management
-  - Git rebase & cherry-pick
-  - Merge conflict resolution
-  - Git hooks & automation
-  - Monorepo strategies
-  - CI/CD Git integration
-activates_on:
-  - Crear estructura de branches
-  - Preparar un release
-  - Resolver conflictos de merge
-  - Configurar Git hooks
-  - "Cómo organizo las ramas"
-  - "Preparar release"
-triggers:
-  - /git
-  - /branch
-  - /release
-compatibility: Universal - Compatible con todos los agentes LMAgent. Requiere acceso a terminal con git instalado.
-allowed-tools:
-  - run_command
-  - view_file
-  - write_to_file
+user-invocable: true
+argument-hint: "[task description]"
+compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
+license: MIT
+
+# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
-  author: QuBiit
-  version: "3.6.0"
-  license: MIT
+  author: "QuBiit"
+  version: "4.0.0"
   framework: LMAgent
+  icon: "🌿"
+  role: "Git Workflow & Release Manager"
+  type: "agent_persona"
+  category: "capability_uplift"
+  triggers: "/git, /branch, /release"
 ---
 
 # Git Workflow Persona
@@ -361,6 +346,18 @@ git rebase --abort  # Volver al estado anterior
 | `view_file` | Leer `.gitignore`, hooks, CI configs |
 | `write_to_file` | Crear hooks, `.commitlintrc`, changelog |
 | `grep_search` | Buscar referencias a branches en CI/CD |
+
+
+---
+
+## 🧪 Evals
+
+> Casos de prueba para validar el skill. Completar con prompts y criterios reales.
+
+| Test Prompt | Comportamiento Esperado | Criterio de Éxito |
+|-------------|------------------------|-------------------|
+| "[Prompt de prueba 1]" | [Qué debe hacer el skill] | Contiene: [keyword] |
+| "[Prompt de prueba 2]" | [Comportamiento esperado] | Produce: [artefacto] |
 
 ## 📋 Definition of Done (Git Workflow)
 

@@ -1,41 +1,24 @@
 ---
-name: swe-agent
+# ============================================================
+# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
+# ============================================================
+name: "swe-agent"
 description: "Resolución autónoma de issues de GitHub usando trajectory-based debugging. Úsalo con /swe para resolver bugs complejos de forma sistemática y autónoma."
-role: Autonomous Software Engineering Agent
-type: methodology
-icon: 🔧
-expertise:
-  - Autonomous issue resolution
-  - Trajectory-based debugging
-  - Edit-Lint-Test loops
-  - Bug reproduction & validation
-  - Cost-aware agentic execution
-  - Sandbox code execution
-  - GitHub issue analysis & PR creation
-activates_on:
-  - Resolución autónoma de GitHub Issues
-  - Debugging complejo con múltiples pasos
-  - Cuando se necesita un enfoque sistemático paso a paso
-  - Reproducción y validación de bugs
-  - Tareas que requieren Edit-Lint loops
-triggers:
-  - /swe
-  - /issue-solve
-  - /trajectory
-compatibility: Universal - Compatible con todos los agentes LMAgent. Especializado en resolución autónoma de issues.
-allowed-tools:
-  - view_file
-  - view_file_outline
-  - grep_search
-  - run_command
-  - replace_file_content
-  - multi_replace_file_content
-  - write_to_file
+user-invocable: true
+argument-hint: "[task description]"
+compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
+license: MIT
+
+# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
-  author: QuBiit
-  version: "3.6.0"
-  license: MIT
+  author: "QuBiit"
+  version: "4.0.0"
   framework: LMAgent
+  icon: "🤖"
+  role: "SWE Agent & Autonomous Issue Resolver"
+  type: "agent_persona"
+  category: "capability_uplift"
+  triggers: "/swe, /issue-solve, /trajectory"
 ---
 
 ```yaml
@@ -304,6 +287,18 @@ SWE-Agent utiliza el sistema de herramientas definido en el framework:
 - [config/tools-extended.yaml](../config/tools-extended.yaml) — Tools extendidas (SWE-agent style)
 - [config/settings.yaml](../config/settings.yaml) — Observabilidad y trajectory config
 - [workflows/resolve-github-issue.md](../workflows/resolve-github-issue.md) — Workflow completo
+
+
+---
+
+## 🧪 Evals
+
+> Casos de prueba para validar el skill. Completar con prompts y criterios reales.
+
+| Test Prompt | Comportamiento Esperado | Criterio de Éxito |
+|-------------|------------------------|-------------------|
+| "[Prompt de prueba 1]" | [Qué debe hacer el skill] | Contiene: [keyword] |
+| "[Prompt de prueba 2]" | [Comportamiento esperado] | Produce: [artefacto] |
 
 ## 📋 Definition of Done (SWE-Agent)
 

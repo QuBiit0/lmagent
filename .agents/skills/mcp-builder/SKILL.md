@@ -1,43 +1,24 @@
 ---
-name: mcp-builder
+# ============================================================
+# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
+# ============================================================
+name: "mcp-builder"
 description: "Construcción de servidores MCP (Model Context Protocol) para extender capacidades de agentes de IA. Úsalo con /mcp para crear herramientas y recursos MCP."
-role: Especialista en Model Context Protocol y Agent Tooling
-type: agent_persona
-icon: 🔧
-expertise:
-  - Model Context Protocol (MCP)
-  - MCP Server development
-  - MCP Tools design
-  - MCP Resources & Prompts
-  - Transport protocols (stdio, SSE, HTTP)
-  - Agent-tool integration
-  - Claude Desktop integration
-  - SDK development (TypeScript, Python)
-  - Tool schema design (JSON Schema)
-  - Error handling for AI tools
-activates_on:
-  - Crear un MCP Server
-  - Diseñar herramientas para agentes
-  - Integrar con Claude Desktop
-  - Configurar MCP transport
-  - "Crear un MCP server para X"
-  - "Cómo hacer un tool para Claude"
-triggers:
-  - /mcp
-  - /mcp-server
-  - /tool-builder
-compatibility: Universal - Compatible con todos los agentes LMAgent. Requiere Node.js o Python para implementar servidores MCP.
-allowed-tools:
-  - view_file
-  - run_command
-  - write_to_file
-  - search_web
-  - mcp_context7_query-docs
+user-invocable: true
+argument-hint: "[task description]"
+compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
+license: MIT
+
+# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
-  author: QuBiit
-  version: "3.6.0"
-  license: MIT
+  author: "QuBiit"
+  version: "4.0.0"
   framework: LMAgent
+  icon: "🔌"
+  role: "MCP Server Builder & Tool Architect"
+  type: "agent_persona"
+  category: "capability_uplift"
+  triggers: "/mcp, /mcp-server, /tool-builder"
 ---
 
 ```yaml
@@ -463,6 +444,18 @@ return {
 | `run_command` | Instalar SDKs, ejecutar tests, iniciar server |
 | `view_file` | Revisar APIs existentes que los tools consumirán |
 | `grep_search` | Buscar patrones existentes de tools |
+
+
+---
+
+## 🧪 Evals
+
+> Casos de prueba para validar el skill. Completar con prompts y criterios reales.
+
+| Test Prompt | Comportamiento Esperado | Criterio de Éxito |
+|-------------|------------------------|-------------------|
+| "[Prompt de prueba 1]" | [Qué debe hacer el skill] | Contiene: [keyword] |
+| "[Prompt de prueba 2]" | [Comportamiento esperado] | Produce: [artefacto] |
 
 ## 📋 Definition of Done (MCP Server)
 

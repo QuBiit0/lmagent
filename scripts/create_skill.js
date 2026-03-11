@@ -1,17 +1,22 @@
 #!/usr/bin/env node
 
 /**
- * LMAgent Skill Generator — v3.6.0
- * 
+ * LMAgent Skill Generator — v4.0.0
+ *
  * Genera la estructura completa de un nuevo skill interactivamente.
- * 
+ * Produce skills compatibles con Anthropic Skills v2.0.
+ *
+ * Campos soportados en frontmatter (Anthropic Skills v2.0):
+ *   name | description | user-invocable | argument-hint |
+ *   compatibility | disable-model-invocation | license | metadata
+ *
  * Uso:
- *   node scripts/create_skill.js                    # Interactivo
- *   node scripts/create_skill.js --name "My Skill"  # Semi-automático
+ *   node scripts/create_skill.js
+ *   node scripts/create_skill.js --name "My Skill"
  */
 
 const { mkdirSync, writeFileSync, existsSync } = require('fs');
-const { join, resolve, dirname } = require('path');
+const { join, resolve } = require('path');
 const { createInterface } = require('readline');
 const { readFileSync } = require('fs');
 
@@ -31,81 +36,89 @@ const c = {
     dim: (s) => `\x1b[2m${s}\x1b[0m`,
 };
 
+// ─── Constantes ───────────────────────────────────────────────
+const VALID_TYPES = ['agent_persona', 'methodology'];
+const VALID_CATEGORIES = ['capability_uplift', 'encoded_preferences'];
+
 // ─── Prompt interactivo ───────────────────────────────────────
 function createPrompt() {
-    const rl = createInterface({
-        input: process.stdin,
-        output: process.stdout,
-    });
-
+    const rl = createInterface({ input: process.stdin, output: process.stdout });
     return {
-        ask: (question, defaultValue = '') => {
-            return new Promise((resolve) => {
-                const suffix = defaultValue ? ` ${c.dim(`(${defaultValue})`)}` : '';
-                rl.question(`  ${c.cyan('?')} ${question}${suffix}: `, (answer) => {
-                    resolve(answer.trim() || defaultValue);
-                });
+        ask: (question, defaultValue = '') => new Promise((resolve) => {
+            const suffix = defaultValue ? ` ${c.dim(`(${defaultValue})`)}` : '';
+            rl.question(`  ${c.cyan('?')} ${question}${suffix}: `, (answer) => {
+                resolve(answer.trim() || defaultValue);
             });
-        },
-        askList: (question, hint = 'separar con comas') => {
-            return new Promise((resolve) => {
-                rl.question(`  ${c.cyan('?')} ${question} ${c.dim(`(${hint})`)}: `, (answer) => {
-                    const items = answer.split(',').map(s => s.trim()).filter(Boolean);
-                    resolve(items);
-                });
+        }),
+        askList: (question, hint = 'separar con comas') => new Promise((resolve) => {
+            rl.question(`  ${c.cyan('?')} ${question} ${c.dim(`(${hint})`)}: `, (answer) => {
+                resolve(answer.split(',').map(s => s.trim()).filter(Boolean));
             });
-        },
-        askYesNo: (question, defaultValue = true) => {
-            return new Promise((resolve) => {
-                const hint = defaultValue ? 'S/n' : 's/N';
-                rl.question(`  ${c.cyan('?')} ${question} ${c.dim(`(${hint})`)}: `, (answer) => {
-                    if (!answer.trim()) return resolve(defaultValue);
-                    resolve(['s', 'si', 'sí', 'y', 'yes'].includes(answer.trim().toLowerCase()));
-                });
+        }),
+        askYesNo: (question, defaultValue = true) => new Promise((resolve) => {
+            const hint = defaultValue ? 'S/n' : 's/N';
+            rl.question(`  ${c.cyan('?')} ${question} ${c.dim(`(${hint})`)}: `, (answer) => {
+                if (!answer.trim()) return resolve(defaultValue);
+                resolve(['s', 'si', 'sí', 'y', 'yes'].includes(answer.trim().toLowerCase()));
             });
-        },
+        }),
         close: () => rl.close(),
     };
 }
 
-// ─── Generar slug del nombre ──────────────────────────────────
+// ─── Generar slug ─────────────────────────────────────────────
 function slugify(name) {
     return name
         .toLowerCase()
-        .replace(/[áàäâ]/g, 'a')
-        .replace(/[éèëê]/g, 'e')
-        .replace(/[íìïî]/g, 'i')
-        .replace(/[óòöô]/g, 'o')
-        .replace(/[úùüû]/g, 'u')
-        .replace(/ñ/g, 'n')
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/^-|-$/g, '');
+        .replace(/[áàäâ]/g, 'a').replace(/[éèëê]/g, 'e')
+        .replace(/[íìïî]/g, 'i').replace(/[óòöô]/g, 'o')
+        .replace(/[úùüû]/g, 'u').replace(/ñ/g, 'n')
+        .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
 
 // ─── Generar SKILL.md ─────────────────────────────────────────
 function generateSkillMd(data) {
-    const expertise = data.expertise.map(e => `  - ${e}`).join('\n');
-    const activatesOn = data.activatesOn.map(a => `  - ${a}`).join('\n');
-    const triggers = data.triggers.map(t => `  - ${t}`).join('\n');
+    const expertiseList = data.expertise.map(e => `- ${e}`).join('\n') || '- [Expertise área]';
+    const activatesOnList = data.activatesOn.map(a => `- ${a}`).join('\n') || '- [Contexto de activación]';
+    const triggersStr = data.triggers.join(', ');
+    const firstTrigger = data.triggers[0] || `/${data.slug.split('-')[0]}`;
 
     return `---
-name: ${data.name}
-description: ${data.description}
-role: ${data.role}
-type: ${data.type}
-version: "${CURRENT_VERSION}"
-icon: ${data.icon}
-expertise:
-${expertise}
-activates_on:
-${activatesOn}
-triggers:
-${triggers}
+# ============================================================
+# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
+# ============================================================
+name: "${data.slug}"
+description: "${data.description}"
+user-invocable: ${data.userInvocable}
+argument-hint: "[task description or ${firstTrigger} argument]"
+compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
+license: MIT
+
+# metadata: campo libre — aquí va el metadata LMAgent
+metadata:
+  author: "QuBiit"
+  version: "${CURRENT_VERSION}"
+  framework: LMAgent
+  icon: "${data.icon}"
+  role: "${data.role}"
+  type: "${data.type}"
+  category: "${data.category}"
+  triggers: "${triggersStr}"
 ---
 
 # ${data.name} Persona
 
+> ⚠️ **FLEXIBILIDAD TECNOLÓGICA**: Cualquier framework, librería o versión específica mencionada actúa como **ejemplo de referencia**. El agente tiene autonomía para recomendar herramientas más modernas o adecuadas si el contexto lo justifica.
+
+## Skill Category
+
+**Tipo**: \`${data.category}\`
+**Descripción**: [Explica por qué este skill produce resultados superiores al prompting estándar / Qué workflow específico del equipo codifica]
+
+---
+
 ## 🧠 System Prompt
+
 > **Instrucciones para el LLM**: Copia este bloque en tu system prompt o contexto inicial.
 
 \`\`\`markdown
@@ -126,12 +139,16 @@ Tu tono es **[Adjetivo 1, Adjetivo 2, Adjetivo 3]**.
 - NUNCA [restricción 4].
 \`\`\`
 
+### 🌍 Agnosticismo Tecnológico (LMAgent Core Rule)
+Eres tecnológicamente agnóstico. NO obligues al usuario a usar stacks obsoletos. Evalúa el entorno, respeta el stack actual, y recomienda siempre herramientas modernas y vigentes (Latest Stable) justificando tus decisiones.
+
+---
+
 ## 🔄 Arquitectura Cognitiva (Cómo Pensar)
 
 ### 1. Fase de Análisis
-Antes de actuar, pregúntate:
-- **Input**: ¿Qué se necesita?
-- **Contexto**: ¿Qué restricciones existen?
+- **Input**: ¿Qué se necesita exactamente?
+- **Contexto**: ¿Qué restricciones o dependencias existen?
 - **Riesgo**: ¿Qué puede salir mal?
 - **Salida**: ¿Cuál es el resultado esperado?
 
@@ -142,14 +159,13 @@ Antes de actuar, pregúntate:
 
 ### 3. Fase de Ejecución
 - Implementar según el plan.
-- Verificar en cada paso.
-- Documentar decisiones.
+- Verificar en cada paso intermedio.
+- Documentar decisiones clave.
 
 ### 4. Auto-Corrección
-Antes de finalizar, verifica:
-- "¿Cumple con los criterios de aceptación?"
+- "¿Cumple con todos los criterios de aceptación?"
 - "¿Sigue los patrones del proyecto?"
-- "¿Es mantenible y documentado?"
+- "¿Es mantenible y está documentado?"
 
 ---
 
@@ -173,6 +189,20 @@ ${data.description}
 [Tecnología 3]    → [Propósito]
 \`\`\`
 
+## Áreas de Expertise
+
+${expertiseList}
+
+## Contextos de Activación
+
+${activatesOnList}
+
+## Patrones y Ejemplos
+
+\`\`\`[lenguaje]
+// Ejemplo de patrón clave para este skill
+\`\`\`
+
 ## Interacción con Otros Roles
 
 | Rol | Colaboración |
@@ -185,21 +215,43 @@ ${data.description}
 
 ## 🛠️ Herramientas Preferidas
 
+> Adaptar según el IDE activo. Los nombres pueden variar entre IDEs.
+
 | Herramienta | Cuándo Usarla |
 |-------------|---------------|
-| \`view_file\` | [Cuándo] |
-| \`run_command\` | [Cuándo] |
-| \`grep_search\` | [Cuándo] |
-| \`write_to_file\` | [Cuándo] |
+| \`Read\` / \`view_file\` | Leer archivos de código existente |
+| \`Grep\` / \`grep_search\` | Buscar patrones, funciones o clases |
+| \`Bash\` / \`run_command\` | Ejecutar comandos, tests, linters |
+| \`Edit\` / \`replace_file_content\` | Modificar archivos existentes |
+| \`Write\` / \`write_to_file\` | Crear nuevos archivos |
+| \`Glob\` / \`list_dir\` | Encontrar archivos por patrón |
+
+---
+
+## 🧪 Evals
+
+> Casos de prueba para validar el skill. Usar con el skill-creator para benchmark.
+
+| Test Prompt | Comportamiento Esperado | Criterio de Éxito |
+|-------------|------------------------|-------------------|
+| "Ayúdame con ${data.slug.split('-').join(' ')}" | Actúa como ${data.name} y provee guía experta | Contiene: [keyword1], [keyword2] |
+| "[Tarea típica del skill]" | Produce el artefacto esperado con calidad | Contiene: [patrón esperado] |
+| "[Caso fuera del alcance del skill]" | Redirige al skill correcto o clarifica límites | No hace: [anti-patrón] |
+
+---
 
 ## 📋 Definition of Done
 
 Antes de considerar una tarea terminada, verifica TODO:
 
 ### Calidad
-- [ ] [Criterio 1]
-- [ ] [Criterio 2]
-- [ ] [Criterio 3]
+- [ ] [Criterio de calidad 1]
+- [ ] [Criterio de calidad 2]
+- [ ] [Criterio de calidad 3]
+
+### Tests
+- [ ] [Criterio de testing 1]
+- [ ] [Criterio de testing 2]
 
 ### Documentación
 - [ ] [Criterio de documentación 1]
@@ -207,18 +259,19 @@ Antes de considerar una tarea terminada, verifica TODO:
 
 ---
 
-*Skill version: ${CURRENT_VERSION} | LMAgent Framework*
+*Skill version: ${CURRENT_VERSION} | LMAgent Framework | Anthropic Skills v2.0 compatible*
 `;
 }
 
 // ─── Main ─────────────────────────────────────────────────────
 async function main() {
-    console.log(c.bold(`\n🛠️  LMAgent Skill Generator v${CURRENT_VERSION}\n`));
+    console.log(c.bold(`\n🛠️  LMAgent Skill Generator v${CURRENT_VERSION}`));
+    console.log(c.dim('   Anthropic Skills v2.0 compatible\n'));
 
     const prompt = createPrompt();
 
     try {
-        // Obtener datos del skill
+        // ── Datos básicos ─────────────────────────────────────
         const name = await prompt.ask('Nombre del skill', '');
         if (!name) {
             console.log(c.red('\n❌ El nombre es obligatorio.\n'));
@@ -233,12 +286,25 @@ async function main() {
             process.exit(1);
         }
 
-        const description = await prompt.ask('Descripción breve', '');
-        const role = await prompt.ask('Rol del skill', `Experto en ${name}`);
+        const description = await prompt.ask('Descripción (capability del skill — qué puede hacer para el usuario)');
+        const role = await prompt.ask('Rol profesional', `Experto en ${name}`);
         const icon = await prompt.ask('Icono (emoji)', '🔧');
-        const type = await prompt.ask('Tipo (agent_persona / methodology)', 'agent_persona');
+
+        // ── Tipo y categoría ──────────────────────────────────
+        const typeRaw = await prompt.ask('Tipo (agent_persona / methodology)', 'agent_persona');
+        const type = VALID_TYPES.includes(typeRaw) ? typeRaw : 'agent_persona';
+
+        const categoryRaw = await prompt.ask('Categoría (capability_uplift / encoded_preferences)', 'capability_uplift');
+        const category = VALID_CATEGORIES.includes(categoryRaw) ? categoryRaw : 'capability_uplift';
+
+        // ── Campos Anthropic Skills v2.0 ──────────────────────
+        console.log(c.dim('\n  — Campos Anthropic Skills v2.0 —'));
+        const userInvocable = await prompt.askYesNo('¿Disponible como /slash-command? (user-invocable)', true);
+
+        // ── Metadata LMAgent ──────────────────────────────────
+        console.log(c.dim('\n  — Metadata LMAgent —'));
         const expertise = await prompt.askList('Áreas de expertise');
-        const activatesOn = await prompt.askList('Cuándo se activa (contextos)');
+        const activatesOn = await prompt.askList('Contextos de activación');
 
         const triggerSuggestion = `/${slug.split('-')[0]}`;
         const triggersRaw = await prompt.askList('Triggers (con /)', `ej: ${triggerSuggestion}`);
@@ -246,18 +312,16 @@ async function main() {
 
         const createDirs = await prompt.askYesNo('¿Crear subdirectorios (scripts/, references/, assets/)?', false);
 
-        // Confirmar
+        // ── Resumen ───────────────────────────────────────────
         console.log(c.bold('\n📋 Resumen:'));
-        console.log(`   Nombre:      ${c.cyan(name)}`);
-        console.log(`   Slug:        ${c.dim(slug)}`);
-        console.log(`   Descripción: ${description}`);
-        console.log(`   Rol:         ${role}`);
-        console.log(`   Icono:       ${icon}`);
-        console.log(`   Tipo:        ${type}`);
-        console.log(`   Expertise:   ${expertise.join(', ')}`);
-        console.log(`   Activa en:   ${activatesOn.join(', ')}`);
-        console.log(`   Triggers:    ${triggers.join(', ')}`);
-        console.log(`   Extra dirs:  ${createDirs ? 'Sí' : 'No'}`);
+        console.log(`   ${c.dim('name:')}           ${c.cyan(slug)}`);
+        console.log(`   ${c.dim('description:')}    ${description.substring(0, 60)}${description.length > 60 ? '...' : ''}`);
+        console.log(`   ${c.dim('user-invocable:')} ${userInvocable}`);
+        console.log(`   ${c.dim('type:')}           ${type} / ${category}`);
+        console.log(`   ${c.dim('role:')}           ${role}`);
+        console.log(`   ${c.dim('icon:')}           ${icon}`);
+        console.log(`   ${c.dim('triggers:')}       ${triggers.join(', ')}`);
+        console.log(`   ${c.dim('expertise:')}      ${expertise.slice(0, 3).join(', ')}${expertise.length > 3 ? '...' : ''}`);
 
         const confirm = await prompt.askYesNo('\n¿Crear skill?', true);
         if (!confirm) {
@@ -265,33 +329,27 @@ async function main() {
             process.exit(0);
         }
 
-        // Crear estructura
+        // ── Crear estructura ──────────────────────────────────
         mkdirSync(skillDir, { recursive: true });
-
         if (createDirs) {
-            mkdirSync(join(skillDir, 'scripts'), { recursive: true });
-            mkdirSync(join(skillDir, 'references'), { recursive: true });
-            mkdirSync(join(skillDir, 'assets'), { recursive: true });
+            ['scripts', 'references', 'assets'].forEach(dir =>
+                mkdirSync(join(skillDir, dir), { recursive: true })
+            );
         }
 
-        // Generar SKILL.md
+        // ── Generar y escribir SKILL.md ───────────────────────
         const skillMd = generateSkillMd({
-            name,
-            description,
-            role,
-            icon,
-            type,
-            expertise,
-            activatesOn,
-            triggers,
+            name, slug, description, role, icon,
+            type, category, userInvocable,
+            expertise, activatesOn, triggers,
         });
 
         writeFileSync(join(skillDir, 'SKILL.md'), skillMd, 'utf-8');
 
-        console.log(c.green(`\n✅ Skill creado exitosamente en: ${skillDir}`));
-        console.log(c.dim('   Editá SKILL.md para completar las secciones con placeholders [...]'));
-        console.log(c.dim('   Ejecutá: node scripts/validate_skills.js ' + slug + ' para validar'));
-        console.log('');
+        console.log(c.green(`\n✅ Skill creado: ${skillDir}`));
+        console.log(c.dim('   Completa las secciones [...] en SKILL.md'));
+        console.log(c.dim('   Añade ≥2 filas reales en la sección ## Evals'));
+        console.log(c.dim(`   Valida: node scripts/validate_skills.js ${slug}\n`));
 
     } finally {
         prompt.close();

@@ -1,40 +1,24 @@
 ---
-name: qa-engineer
+# ============================================================
+# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
+# ============================================================
+name: "qa-engineer"
 description: "Aseguramiento de la calidad mediante pruebas automatizadas, manuales y validación rigurosa de criterios de aceptación. Úsalo con /qa para escribir tests, analizar cobertura, reproducir bugs o evaluar agentes de IA con LLM Evals."
-role: Testing y Aseguramiento de Calidad
-type: agent_persona
-icon: 🧪
-expertise:
-  - Unit testing (pytest, jest)
-  - Integration testing
-  - E2E testing (Playwright)
-  - Test automation
-  - Quality metrics
-  - LLM Evals (RAGAS, DeepEval)
-  - SPEC DRIVEN validation
-activates_on:
-  - Escritura de tests
-  - Revisión de cobertura
-  - Definición de criterios de aceptación
-  - Bug reproduction
-  - Test planning
-  - Validación de spec.yaml acceptance criteria
-triggers:
-  - /qa
-  - /test
-  - /bug
-compatibility: Universal - Compatible con todos los agentes LMAgent. Requiere acceso a terminal para ejecutar suites de tests.
-allowed-tools:
-  - run_command
-  - view_file
-  - grep_search
-  - browser_subagent
-  - write_to_file
+user-invocable: true
+argument-hint: "[task description]"
+compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
+license: MIT
+
+# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
-  author: QuBiit
-  version: "3.6.0"
-  license: MIT
+  author: "QuBiit"
+  version: "4.0.0"
   framework: LMAgent
+  icon: "✅"
+  role: "QA Engineer & Testing Strategist"
+  type: "agent_persona"
+  category: "capability_uplift"
+  triggers: "/qa, /test, /bug"
 ---
 
 ```yaml

@@ -1,39 +1,24 @@
 ---
-name: systematic-debugger
-description: "Debugging sistemático y análisis de causa raíz de bugs. Úsalo con /debug para investigar errores complejos de forma metódica."
-role: Debugging Metódico y Resolución de Problemas
-type: agent_persona
-icon: 🔍
-activates_on:
-  - Debugging de bugs y errores
-  - Root cause analysis
-  - Investigación de fallos de producción
-  - Bugs intermitentes o difíciles de reproducir
-  - Regresiones en funcionalidad
-expertise:
-  - Root Cause Analysis
-  - Multi-layer System Debugging
-  - Error Tracing & Stack Analysis
-  - Hypothesis-Driven Investigation
-  - Diagnostic Instrumentation
-  - Regression Prevention
-triggers:
-  - /debug
-  - /bug
-  - /fix
-  - /rca
-  - /root-cause
-compatibility: Universal - Compatible con todos los agentes LMAgent. Requiere acceso a terminal y logs.
-allowed-tools:
-  - view_file
-  - grep_search
-  - run_command
-  - view_file_outline
+# ============================================================
+# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
+# ============================================================
+name: "systematic-debugger"
+description: "Investiga y resuelve bugs mediante análisis sistemático de causa raíz. Aplica método científico: reproduce, aísla, hipótesis, verifica y previene regresiones. No adivina — mide y prueba."
+user-invocable: true
+argument-hint: "[task description]"
+compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
+license: MIT
+
+# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
-  author: QuBiit
-  version: "3.6.0"
-  license: MIT
+  author: "QuBiit"
+  version: "4.0.0"
   framework: LMAgent
+  icon: "🔍"
+  role: "Systematic Debugger & Root Cause Analyst"
+  type: "agent_persona"
+  category: "capability_uplift"
+  triggers: "/debug, /bug, /fix, /rca"
 ---
 
 ```yaml
@@ -505,6 +490,18 @@ function processOrder(order: Order): Result {
 | `grep_search` | Buscar patrones, usos de funciones, config values |
 | `find_by_name` | Localizar archivos de config, envs, logs |
 | `browser_subagent` | Reproducir bugs de UI en el navegador |
+
+
+---
+
+## 🧪 Evals
+
+> Casos de prueba para validar el skill. Completar con prompts y criterios reales.
+
+| Test Prompt | Comportamiento Esperado | Criterio de Éxito |
+|-------------|------------------------|-------------------|
+| "[Prompt de prueba 1]" | [Qué debe hacer el skill] | Contiene: [keyword] |
+| "[Prompt de prueba 2]" | [Comportamiento esperado] | Produce: [artefacto] |
 
 ## 📋 Definition of Done
 

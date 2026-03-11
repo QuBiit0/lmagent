@@ -1,38 +1,24 @@
 ---
-name: bmad-methodology
+# ============================================================
+# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
+# ============================================================
+name: "bmad-methodology"
 description: "Clasificación de complejidad de tareas y selección de metodología (BMAD, SWE-Agent, Spec-Driven). Úsalo con /bmad para determinar el nivel de una tarea (0-4) y el workflow correcto."
-role: Scale-Adaptive Intelligence & Project Orchestration
-type: methodology
-icon: 🧠
-expertise:
-  - Scale-Adaptive Intelligence (Levels 0-4)
-  - Project Kickoff & Discovery
-  - Multi-Persona Orchestration
-  - Ideation & Brainstorming (SCAMPER, 5 Whys)
-  - PRD Generation
-  - Complexity Classification
-  - Agile-Lean hybrid methodologies
-activates_on:
-  - Inicio de proyecto nuevo
-  - Clasificación de complejidad de tarea
-  - Brainstorming e ideación
-  - Generación de PRDs
-  - Orquestación multi-persona
-  - Cuando se necesita decidir el nivel de planning requerido
-triggers:
-  - /bmad
-  - /kickoff
-  - /classify
-compatibility: Universal - Compatible con todos los agentes LMAgent. Siempre se activa antes de elegir una metodología de trabajo.
-allowed-tools:
-  - view_file
-  - list_dir
-  - notify_user
+user-invocable: true
+argument-hint: "[task description]"
+compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
+license: MIT
+
+# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
-  author: QuBiit
-  version: "3.6.0"
-  license: MIT
+  author: "QuBiit"
+  version: "4.0.0"
   framework: LMAgent
+  icon: "🎚️"
+  role: "BMAD Scale-Adaptive Intelligence Coach"
+  type: "agent_persona"
+  category: "capability_uplift"
+  triggers: "/bmad, /level, /complexity"
 ---
 
 # BMAD Methodology Skill
@@ -193,6 +179,18 @@ BMAD coordina personas según la fase del proyecto:
 - [workflows/ideation.md](../workflows/ideation.md) — Workflow de ideación
 - [workflows/generate-prd.md](../workflows/generate-prd.md) — Workflow de PRD
 - [skills/orchestrator/SKILL.md](../orchestrator/SKILL.md) — Orquestador
+
+
+---
+
+## 🧪 Evals
+
+> Casos de prueba para validar el skill. Completar con prompts y criterios reales.
+
+| Test Prompt | Comportamiento Esperado | Criterio de Éxito |
+|-------------|------------------------|-------------------|
+| "[Prompt de prueba 1]" | [Qué debe hacer el skill] | Contiene: [keyword] |
+| "[Prompt de prueba 2]" | [Comportamiento esperado] | Produce: [artefacto] |
 
 ## 📋 Definition of Done (BMAD)
 

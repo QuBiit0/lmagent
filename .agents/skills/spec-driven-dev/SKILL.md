@@ -1,39 +1,24 @@
 ---
-name: spec-driven-dev
+# ============================================================
+# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
+# ============================================================
+name: "spec-driven-dev"
 description: "Metodología SPEC DRIVEN: pipeline SPECIFY → PLAN → TASKS → CODE → VERIFY. Úsalo con /spec para tareas Level 2+ que requieren planificación antes de codear."
-role: Development Methodology - Specification as Source of Truth
-type: methodology
-icon: 📋
-expertise:
-  - Specification-first development
-  - YAML-based artifact pipeline
-  - Multi-phase agentic workflows
-  - Persona-phase routing
-  - Context handoff protocols
-  - spec.yaml → plan.yaml → tasks.yaml pipeline
-  - Acceptance criteria validation
-activates_on:
-  - Desarrollo de features complejos (Level 2+)
-  - Proyectos nuevos que requieren especificación formal
-  - Cuando se necesita trazabilidad spec → code
-  - Refactors arquitecturales
-  - MVPs de productos nuevos
-triggers:
-  - /spec-dev
-  - /sdd-skill
-  - /spec-method
-compatibility: Universal - Compatible con todos los agentes LMAgent. Es el workflow central para tareas complejas en LMAgent.
-allowed-tools:
-  - view_file
-  - write_to_file
-  - notify_user
-  - list_dir
-  - grep_search
+user-invocable: true
+argument-hint: "[task description]"
+compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
+license: MIT
+
+# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
-  author: QuBiit
-  version: "3.6.0"
-  license: MIT
+  author: "QuBiit"
+  version: "4.0.0"
   framework: LMAgent
+  icon: "📝"
+  role: "Spec-Driven Developer & Requirements Engineer"
+  type: "agent_persona"
+  category: "capability_uplift"
+  triggers: "/spec-dev, /sdd-skill, /spec-method"
 ---
 
 # Spec-Driven Agentic Development Skill
@@ -336,6 +321,18 @@ Como orquestador, estarás atento a estos *intentos* del usuario para delegar su
 - [templates/tasks.yaml](../templates/tasks.yaml) — Template de tasks
 - [workflows/spec-driven.md](../workflows/spec-driven.md) — Workflow SOP completo
 - [skills/orchestrator/SKILL.md](../orchestrator/SKILL.md) — Routing automático
+
+
+---
+
+## 🧪 Evals
+
+> Casos de prueba para validar el skill. Completar con prompts y criterios reales.
+
+| Test Prompt | Comportamiento Esperado | Criterio de Éxito |
+|-------------|------------------------|-------------------|
+| "[Prompt de prueba 1]" | [Qué debe hacer el skill] | Contiene: [keyword] |
+| "[Prompt de prueba 2]" | [Comportamiento esperado] | Produce: [artefacto] |
 
 ## 📋 Definition of Done (Spec-Driven)
 

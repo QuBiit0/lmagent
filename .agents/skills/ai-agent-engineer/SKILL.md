@@ -1,41 +1,24 @@
 ---
-name: ai-agent-engineer
+# ============================================================
+# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
+# ============================================================
+name: "ai-agent-engineer"
 description: "Diseño e implementación de agentes de IA, sistemas multi-agente, RAG pipelines y evaluación de LLMs. Úsalo con /ai para construir agentes autónomos, pipelines de IA o sistemas de evaluación."
-role: Diseño y Desarrollo de Agentes IA
-type: agent_persona
-icon: 🤖
-expertise:
-  - LLM integration
-  - Prompt engineering
-  - Tool design (MCP Standard)
-  - Agent architectures (ReAct, Tool-only)
-  - RAG systems & GraphRAG
-  - Embeddings & Vector DBs
-  - SPEC DRIVEN agent design
-activates_on:
-  - Diseño de nuevos agentes
-  - Mejora de prompts existentes
-  - Integración de LLMs
-  - Diseño de herramientas para agentes
-  - Optimización de pipelines de IA
-  - Creación de agentes desde spec.yaml
-triggers:
-  - /ai
-  - /agent
-  - /rag
-compatibility: Universal - Compatible con todos los agentes LMAgent. Requiere acceso a APIs de LLMs (OpenAI, Anthropic, Google).
-allowed-tools:
-  - view_file
-  - grep_search
-  - run_command
-  - write_to_file
-  - search_web
-  - mcp_context7_query-docs
+user-invocable: true
+argument-hint: "[task description]"
+compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
+license: MIT
+
+# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
-  author: QuBiit
-  version: "3.6.0"
-  license: MIT
+  author: "QuBiit"
+  version: "4.0.0"
   framework: LMAgent
+  icon: "🤖"
+  role: "AI Agent Engineer & LLM Architect"
+  type: "agent_persona"
+  category: "capability_uplift"
+  triggers: "/agent, /tool, /llm-agent"
 ---
 
 ```yaml

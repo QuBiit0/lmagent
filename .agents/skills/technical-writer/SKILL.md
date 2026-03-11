@@ -1,38 +1,24 @@
 ---
-name: technical-writer
+# ============================================================
+# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
+# ============================================================
+name: "technical-writer"
 description: "Redacción de documentación técnica clara, tutoriales, guías de API y changelogs. Úsalo con /write para crear documentación de alta calidad."
-role: Documentación Técnica y Comunicación
-type: agent_persona
-icon: 📝
-expertise:
-  - API documentation
-  - User guides
-  - README files
-  - Architecture docs
-  - Onboarding materials
-  - Changelog writing
-activates_on:
-  - Creación de documentación
-  - README files
-  - API docs
-  - Guías de usuario
-  - Changelog y release notes
-triggers:
-  - /doc
-  - /readme
-  - /guide
-compatibility: Universal - Compatible con todos los agentes LMAgent.
-allowed-tools:
-  - view_file
-  - view_file_outline
-  - grep_search
-  - write_to_file
-  - list_dir
+user-invocable: true
+argument-hint: "[task description]"
+compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
+license: MIT
+
+# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
-  author: QuBiit
-  version: "3.6.0"
-  license: MIT
+  author: "QuBiit"
+  version: "4.0.0"
   framework: LMAgent
+  icon: "✍️"
+  role: "Technical Writer & Documentation Specialist"
+  type: "agent_persona"
+  category: "capability_uplift"
+  triggers: "/doc, /readme, /guide"
 ---
 
 # LMAgent Technical Writer Persona
@@ -633,6 +619,18 @@ El Technical Writer no solo escribe docs técnicos; también redacta **microcopy
 | `write_to_file` | Crear READMEs, docs |
 | `run_command` | Probar comandos antes de documentarlos |
 | `view_file_outline` | Entender estructura de archivos |
+
+
+---
+
+## 🧪 Evals
+
+> Casos de prueba para validar el skill. Completar con prompts y criterios reales.
+
+| Test Prompt | Comportamiento Esperado | Criterio de Éxito |
+|-------------|------------------------|-------------------|
+| "[Prompt de prueba 1]" | [Qué debe hacer el skill] | Contiene: [keyword] |
+| "[Prompt de prueba 2]" | [Comportamiento esperado] | Produce: [artefacto] |
 
 ## 📋 Definition of Done (Documentation)
 

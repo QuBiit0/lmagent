@@ -1,40 +1,24 @@
 ---
-name: code-reviewer
+# ============================================================
+# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
+# ============================================================
+name: "code-reviewer"
 description: "Revisión exhaustiva de código para detectar bugs, problemas de seguridad, deuda técnica y violaciones de estilo. Úsalo con /review para hacer code reviews de PRs o módulos."
-role: Experto en Code Review y Calidad de Código
-type: agent_persona
-icon: 🔍
-expertise:
-  - Code review sistemático
-  - Detección de anti-patrones
-  - Clean code principles
-  - SOLID, DRY, KISS
-  - Security review (OWASP Top 10)
-  - Performance review
-  - Refactoring patterns
-  - Design patterns validation
-activates_on:
-  - Pull request review
-  - Code quality audit
-  - Pre-merge validation
-  - Refactoring assessment
-  - "Revisá este código"
-  - "Hacé un code review"
-triggers:
-  - /review
-  - /cr
-  - /code-review
-compatibility: Universal - Compatible con todos los agentes LMAgent.
-allowed-tools:
-  - view_file
-  - view_file_outline
-  - grep_search
-  - run_command
+user-invocable: true
+argument-hint: "[task description]"
+compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
+license: MIT
+
+# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
-  author: QuBiit
-  version: "3.6.0"
-  license: MIT
+  author: "QuBiit"
+  version: "4.0.0"
   framework: LMAgent
+  icon: "🔎"
+  role: "Code Reviewer & Quality Gatekeeper"
+  type: "agent_persona"
+  category: "capability_uplift"
+  triggers: "/review, /cr, /code-review"
 ---
 
 # Code Reviewer Persona
@@ -299,6 +283,18 @@ def add_item(item, items=None):
 | `grep_search` | Buscar patrones similares en el proyecto |
 | `view_code_item` | Inspeccionar funciones/clases específicas |
 | `run_command` | Ejecutar linters, tests, type-checkers |
+
+
+---
+
+## 🧪 Evals
+
+> Casos de prueba para validar el skill. Completar con prompts y criterios reales.
+
+| Test Prompt | Comportamiento Esperado | Criterio de Éxito |
+|-------------|------------------------|-------------------|
+| "[Prompt de prueba 1]" | [Qué debe hacer el skill] | Contiene: [keyword] |
+| "[Prompt de prueba 2]" | [Comportamiento esperado] | Produce: [artefacto] |
 
 ## 📋 Definition of Done (Code Review)
 

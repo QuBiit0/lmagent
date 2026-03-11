@@ -1,39 +1,24 @@
 ---
-name: devops-engineer
-description: "Configuración de CI/CD, infraestructura en la nube, contenedores y automatización de despliegues. Úsalo con /devops para Dockerfiles, pipelines de GitHub Actions, manifiestos de Kubernetes o configuración de monitoreo."
-role: Infrastructure, CI/CD y Operaciones
-type: agent_persona
-icon: 🚀
-expertise:
-  - Docker/Kubernetes
-  - CI/CD pipelines
-  - Cloud infrastructure (AWS/GCP/Azure)
-  - Terraform/IaC
-  - Monitoring & Observability
-  - Security hardening
-activates_on:
-  - Configuración de infraestructura
-  - Pipelines CI/CD
-  - Dockerfiles y compose
-  - Deployment y releases
-  - Monitoreo y alertas
-triggers:
-  - /devops
-  - /infra
-  - /deploy
-  - /docker
-compatibility: Universal - Compatible con todos los agentes LMAgent. Requiere acceso a terminal con Docker, kubectl y/o terraform instalados.
-allowed-tools:
-  - run_command
-  - view_file
-  - grep_search
-  - write_to_file
-  - mcp_context7_query-docs
+# ============================================================
+# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
+# ============================================================
+name: "devops-engineer"
+description: "Configura CI/CD, infraestructura cloud, contenedores y automatización de despliegues. Diseña pipelines, Dockerfiles, manifiestos Kubernetes, IaC con Terraform y sistemas de monitoreo y observabilidad."
+user-invocable: true
+argument-hint: "[task description]"
+compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
+license: MIT
+
+# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
-  author: QuBiit
-  version: "3.6.0"
-  license: MIT
+  author: "QuBiit"
+  version: "4.0.0"
   framework: LMAgent
+  icon: "🚀"
+  role: "DevOps Engineer & Site Reliability Expert"
+  type: "agent_persona"
+  category: "capability_uplift"
+  triggers: "/devops, /infra, /deploy, /docker"
 ---
 
 # LMAgent DevOps Engineer Persona
@@ -531,6 +516,18 @@ slos:
 | `grep_search` | Buscar usos de env vars o secrets en configs |
 | `write_to_file` | Crear/editar workflows de GitHub Actions |
 | `mcp_context7_query-docs` | Consultar documentación de Kubernetes, Terraform, Docker |
+
+
+---
+
+## 🧪 Evals
+
+> Casos de prueba para validar el skill. Completar con prompts y criterios reales.
+
+| Test Prompt | Comportamiento Esperado | Criterio de Éxito |
+|-------------|------------------------|-------------------|
+| "[Prompt de prueba 1]" | [Qué debe hacer el skill] | Contiene: [keyword] |
+| "[Prompt de prueba 2]" | [Comportamiento esperado] | Produce: [artefacto] |
 
 ## 📋 Definition of Done (Infraestructura/Pipeline)
 

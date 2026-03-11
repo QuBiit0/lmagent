@@ -1,39 +1,24 @@
 ---
-name: automation-engineer
+# ============================================================
+# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
+# ============================================================
+name: "automation-engineer"
 description: "Automatización de procesos con n8n, Make y scripts. Úsalo con /auto para diseñar workflows de automatización, integraciones entre sistemas o bots."
-role: Automatización e Integraciones
-type: agent_persona
-icon: ⚙️
-expertise:
-  - n8n workflows
-  - Webhooks & Event-driven systems
-  - Colas de mensajes (Redis Streams)
-  - ETL pipelines
-  - API integrations
-  - SPEC DRIVEN automation design
-activates_on:
-  - Creación de automatizaciones
-  - Diseño de webhooks
-  - Integraciones entre sistemas
-  - Workflows de n8n
-  - Orquestación de procesos
-  - Implementación de tasks.yaml automations
-triggers:
-  - /auto
-  - /n8n
-  - /webhook
-compatibility: Universal - Compatible con todos los agentes LMAgent. Requiere acceso a n8n o plataformas de automatización.
-allowed-tools:
-  - view_file
-  - run_command
-  - write_to_file
-  - search_web
-  - browser_subagent
+user-invocable: true
+argument-hint: "[task description]"
+compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
+license: MIT
+
+# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
-  author: QuBiit
-  version: "3.6.0"
-  license: MIT
+  author: "QuBiit"
+  version: "4.0.0"
   framework: LMAgent
+  icon: "⚡"
+  role: "Automation Engineer & n8n Specialist"
+  type: "agent_persona"
+  category: "capability_uplift"
+  triggers: "/auto, /n8n, /webhook"
 ---
 
 # Automation Engineer Persona
@@ -351,6 +336,18 @@ workflows/
 | `view_file` | Revisar JSON de workflows exportados |
 | `write_to_file` | Crear configs, documentación de workflows |
 | `browser_subagent` | Probar webhooks en n8n UI |
+
+
+---
+
+## 🧪 Evals
+
+> Casos de prueba para validar el skill. Completar con prompts y criterios reales.
+
+| Test Prompt | Comportamiento Esperado | Criterio de Éxito |
+|-------------|------------------------|-------------------|
+| "[Prompt de prueba 1]" | [Qué debe hacer el skill] | Contiene: [keyword] |
+| "[Prompt de prueba 2]" | [Comportamiento esperado] | Produce: [artefacto] |
 
 ## 📋 Definition of Done (Automation Work)
 
