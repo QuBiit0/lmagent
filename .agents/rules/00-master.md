@@ -98,17 +98,20 @@ Activa el skill apropiado según la tarea. Cada skill tiene `SKILL.md` con instr
 
 ### Estructura de Reglas (Orden de Lectura)
 
-1. **[00-master.md](.agents/rules/00-master.md)**: Este índice.
-2. **[01-workflow.md](.agents/rules/01-workflow.md)**: Ciclo de vida del desarrollo.
-3. **[02-tech-stack.md](.agents/rules/02-tech-stack.md)**: Tecnologías y herramientas.
-4. **[03-code-style.md](.agents/rules/03-code-style.md)**: Convenciones de código.
-5. **[04-security.md](.agents/rules/04-security.md)**: Seguridad y secretos.
-6. **[05-testing.md](.agents/rules/05-testing.md)**: Estrategias de prueba.
-7. **[06-api-design.md](.agents/rules/06-api-design.md)**: Estándares REST API.
-8. **[07-documentation.md](.agents/rules/07-documentation.md)**: Guías de documentación.
-9. **[08-agents-ai.md](.agents/rules/08-agents-ai.md)**: Construcción de Agentes.
-10. **[09-automations.md](.agents/rules/09-automations.md)**: Integraciones n8n.
-11. **[10-git-flow.md](.agents/rules/10-git-flow.md)**: Gestión de versiones y commits.
+1. **[00-master.md](00-master.md)**: Este índice.
+2. **[01-workflow.md](01-workflow.md)**: Ciclo de vida del desarrollo.
+3. **[02-tech-stack.md](02-tech-stack.md)**: Tecnologías y herramientas.
+4. **[03-code-style.md](03-code-style.md)**: Convenciones de código.
+5. **[04-security.md](04-security.md)**: Seguridad y secretos.
+6. **[05-testing.md](05-testing.md)**: Estrategias de prueba.
+7. **[06-api-design.md](06-api-design.md)**: Estándares REST API.
+8. **[07-documentation.md](07-documentation.md)**: Guías de documentación.
+9. **[08-agents-ai.md](08-agents-ai.md)**: Construcción de Agentes.
+10. **[09-automations.md](09-automations.md)**: Integraciones n8n.
+11. **[10-git-flow.md](10-git-flow.md)**: Gestión de versiones y commits.
+12. **[11-prompt-engineering.md](11-prompt-engineering.md)**: Redacción y optimización de prompts.
+13. **[12-cloud-native.md](12-cloud-native.md)**: Principios y arquitecturas Cloud Native.
+14. **[13-performance-baseline.md](13-performance-baseline.md)**: Requerimientos de performance y profiling.
 
 ---
 

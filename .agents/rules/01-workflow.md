@@ -6,12 +6,12 @@
 
 | Paso | Acción |
 |------|--------|
-| 1. **Entender** | Leer [00-master.md](.agents/rules/00-master.md) + reglas aplicables |
+| 1. **Entender** | Leer [00-master.md](00-master.md) + reglas aplicables |
 | 2. **Clasificar** | Determinar Level (0-4) + skill(s) |
 | 3. **Planear** | (Level 2+) Crear `implementation_plan.md` + pedir aprobación |
 | 4. **Implementar** | Modelos → Repos → Services → Routers → Tests |
 | 5. **Validar** | `pytest` + `ruff check` + `ruff format` |
-| 6. **Documentar** | Actualizar docs ([07-documentation.md](.agents/rules/07-documentation.md)) |
+| 6. **Documentar** | Actualizar docs ([07-documentation.md](07-documentation.md)) |
 
 ### Escalado Automático
 - Auth/Security → Mínimo Level 2
@@ -259,7 +259,7 @@ Tiempo estimado: [T]
 
 ### Gestión de Versiones
 
-> **Ver [10-git-flow.md](.agents/rules/10-git-flow.md) para reglas detalladas de commits y ramas.**
+> **Ver [10-git-flow.md](10-git-flow.md) para reglas detalladas de commits y ramas.**
 
 ---
 

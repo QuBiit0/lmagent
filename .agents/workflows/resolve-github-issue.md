@@ -11,8 +11,8 @@ Este workflow permite que un agente analice y resuelva issues de GitHub de forma
 
 ## Pre-requisitos
 
-1. Leer [AGENTS.md](../AGENTS.md)
-2. Leer [rules/workflow.md](../rules/workflow.md)
+1. Leer [AGENTS.md](../../AGENTS.md)
+2. Leer [rules/workflow.md](../rules/01-workflow.md)
 3. Issue con etiqueta `agent-resolvable` o asignado al agente
 4. `GITHUB_TOKEN` configurado
 

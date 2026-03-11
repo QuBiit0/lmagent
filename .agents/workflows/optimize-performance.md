@@ -10,8 +10,8 @@ Este workflow guía la identificación y resolución de problemas de performance
 
 ## Pre-requisitos
 
-1. Leer [AGENTS.md](../AGENTS.md)
-2. Leer [rules/stack.md](../rules/stack.md)
+1. Leer [AGENTS.md](../../AGENTS.md)
+2. Leer [rules/stack.md](../rules/02-tech-stack.md)
 3. Definir métricas objetivo de performance
 
 ## Información Requerida

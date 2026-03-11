@@ -10,7 +10,7 @@
                                                   by QuBit
 ```
 
-![Version](https://img.shields.io/badge/version-3.6.0-blue.svg) ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge) ![Agents](https://img.shields.io/badge/Agents-37_Supported-cyan?style=for-the-badge) ![Skills](https://img.shields.io/badge/Skills-38_Available-purple?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-4.0.0-blue.svg) ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge) ![Agents](https://img.shields.io/badge/Agents-37_Supported-cyan?style=for-the-badge) ![Skills](https://img.shields.io/badge/Skills-38_Available-purple?style=for-the-badge)
 
 > **"Separate the reasoning from the execution."**
 > LMAgent is the foundational runtime that empowers your AI Agents with standardized **Skills**, **Rules**, and **Workflows**
@@ -62,7 +62,7 @@ This single command performs the entire setup:
 4. **Links** everything to the Universal Brain (`AGENTS.md`)
 
 > **Requires Node.js ≥ 18**. Works on macOS, Linux, and Windows. 
-> V3.6.0 introdujo la Auditoría de Reglas Modernas (Self-Healing, Playwright UI, 12-Factor, Prompting Multiagente).
+> V4.0.0 introdujo compatibilidad total con **Anthropic Skills v2.0**, Auditoría de Reglas Modernas, soporte para 37 agentes simultáneos y resolución de enlaces rotos arquitectónicos.
 
 ---
 

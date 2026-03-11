@@ -14,9 +14,9 @@ Este workflow guía el proceso de análisis y corrección de bugs en backends.
 
 ## Pre-requisitos
 
-1. Leer [AGENTS.md](../AGENTS.md)
-2. Leer [rules/workflow.md](../rules/workflow.md)
-3. Leer [personas/backend-engineer.md](../personas/backend-engineer.md)
+1. Leer [AGENTS.md](../../AGENTS.md)
+2. Leer [rules/workflow.md](../rules/01-workflow.md)
+3. Leer [personas/backend-engineer.md](../skills/backend-engineer/SKILL.md)
 
 ## Información Requerida
 

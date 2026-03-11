@@ -11,7 +11,7 @@ Este workflow facilita sesiones de brainstorming e ideación asistidas por IA.
 
 ## Pre-requisitos
 
-1. Leer [AGENTS.md](../AGENTS.md)
+1. Leer [AGENTS.md](../../AGENTS.md)
 2. Tener un tema, problema o área a explorar
 
 ## Modos de Ideación

@@ -480,10 +480,10 @@ metadata:
 - [spec.yaml template](../templates/spec.yaml)
 - [plan.yaml template](../templates/plan.yaml)
 - [tasks.yaml template](../templates/tasks.yaml)
-- [Product Manager persona](../personas/product-manager.md)
-- [Architect persona](../personas/architect.md)
-- [Backend Engineer persona](../personas/backend-engineer.md)
-- [QA Engineer persona](../personas/qa-engineer.md)
+- [Product Manager persona](../skills/product-manager/SKILL.md)
+- [Architect persona](../skills/architect/SKILL.md)
+- [Backend Engineer persona](../skills/backend-engineer/SKILL.md)
+- [QA Engineer persona](../skills/qa-engineer/SKILL.md)
 
 ---
 

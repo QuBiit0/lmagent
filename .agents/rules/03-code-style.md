@@ -586,7 +586,7 @@ counter += 1  # Increment counter
 - [ ] Commits sin tests
 - [ ] PRs gigantes sin dividir
 
-> **Nota**: Para convenciones de Commits y Git, ver **[10-git-flow.md](.agents/rules/10-git-flow.md)**.
+> **Nota**: Para convenciones de Commits y Git, ver **[10-git-flow.md](10-git-flow.md)**.
 
 ### TypeScript
 - [ ] `eslint .` pasa sin errores

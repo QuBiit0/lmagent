@@ -315,7 +315,7 @@ Como orquestador, estarás atento a estos *intentos* del usuario para delegar su
 - [templates/spec.yaml](../templates/spec.yaml) — Template de especificación
 - [templates/plan.yaml](../templates/plan.yaml) — Template de plan
 - [templates/tasks.yaml](../templates/tasks.yaml) — Template de tasks
-- [workflows/spec-driven.md](../workflows/spec-driven.md) — Workflow SOP completo
+- [workflows/spec-driven.md](../../workflows/spec-driven.md) — Workflow SOP completo
 - [skills/orchestrator/SKILL.md](../orchestrator/SKILL.md) — Routing automático
 
 

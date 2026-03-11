@@ -2,14 +2,16 @@
 > **Update Frequency:** Weekly / Per Sprint.
 
 ## 🚀 Roadmap
-- [x] **Phase 1 (MVP)**: Framework base con 30 agentes, rules, workflows, instalador CLI universal.
-- [x] **Phase 2 (UX / Extensions)**: Sistema `lmagent skills add` para GH remotos, Doctor y Validator de YAML/Markdown integrados. Extensión de catálogo de Skills a 38.
-- [ ] **Phase 3**: Extensión nativa de LMAgent para VSCode/Cursor que no requiera CLI para update/fetch. Despliegue de MCP nativo para lectura compartida y auto-sincronización remota.
+- [ ] **Phase 1 ([Nombre de la Fase o MVP])**: [Objetivo principal de la fase, epics o features críticas esperadas].
+- [ ] **Phase 2 ([Nombre de la Fase])**: [Siguiente iteración de mejoras o expansión de capacidades].
+- [ ] **Phase 3 ([Nombre de la Fase])**: [Planes a futuro o funcionalidades a largo plazo].
 
 ## ✅ Completed Features
-- Instalador unificado CLI multiplataforma (Node + bash + ps1) - Q1/2026.
-- 38 Skills especializados con prompts estructurados modulares - Q1/2026.
-- Soporte para 37+ LLM interfaces/IDEs (Cursor, Windsurf, Claude, Roo, Zed, etc.) - Q1/2026.
+- [Fecha o Hito] [Nombre de la feature completada 1] - Breve contexto.
+- [Fecha o Hito] [Nombre de la feature completada 2] - Breve contexto.
+- [Fecha o Hito] [Nombre de la feature completada 3] - Breve contexto.
 
 ## 🧪 Experiments / Features in Testing
-- Auto-dumper de memoria activa y CLI analyzer de Token limit (para reportar en tiempo real que overhead generan las reglas a nivel proyecto).
+- [Nombre de Experimento o Feature en Beta]: [Hipótesis a validar o estado del testing actual].
+- [Nombre de Experimento o Feature en Beta]: [Hipótesis a validar o estado del testing actual].
+

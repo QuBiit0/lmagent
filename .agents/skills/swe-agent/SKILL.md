@@ -208,7 +208,7 @@ actions:
   - Comentar en issue con resultado
 ```
 
-**Workflow completo**: [resolve-github-issue.md](../workflows/resolve-github-issue.md)
+**Workflow completo**: [resolve-github-issue.md](../../workflows/resolve-github-issue.md)
 
 ## 🛡️ Safety Limits
 
@@ -282,7 +282,7 @@ SWE-Agent utiliza el sistema de herramientas definido en el framework:
 - [config/tools.yaml](../config/tools.yaml) — Registry de herramientas core
 - [config/tools-extended.yaml](../config/tools-extended.yaml) — Tools extendidas (SWE-agent style)
 - [config/settings.yaml](../config/settings.yaml) — Observabilidad y trajectory config
-- [workflows/resolve-github-issue.md](../workflows/resolve-github-issue.md) — Workflow completo
+- [workflows/resolve-github-issue.md](../../workflows/resolve-github-issue.md) — Workflow completo
 
 
 ---

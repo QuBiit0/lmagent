@@ -14,9 +14,9 @@ Este workflow guía la creación de una nueva automatización end-to-end.
 
 ## Pre-requisitos
 
-1. Leer [AGENTS.md](../AGENTS.md)
-2. Leer [rules/automations-n8n.md](../rules/automations-n8n.md)
-3. Leer [rules/stack.md](../rules/stack.md)
+1. Leer [AGENTS.md](../../AGENTS.md)
+2. Leer [rules/automations-n8n.md](../rules/09-automations.md)
+3. Leer [rules/stack.md](../rules/02-tech-stack.md)
 
 ## Información Requerida
 

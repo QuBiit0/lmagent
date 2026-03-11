@@ -2,18 +2,19 @@
 > **Update Frequency:** Start of project & Major Pivots.
 
 ## 🎯 Mission
-Construir y mantener el estándar definitivo para orquestación e interacción unificada de agentes de IA en cualquier entorno de desarrollo y repositorio local (LMAgent Framework).
+[Describe aquí la misión principal del proyecto. ¿Qué problema resuelve y por qué existe?]
 
 ## 📦 Core Value Proposition
-- Framework "Zero-Friction" que permite a cualquier subagente o IDE (Cursor, Windsurf, Claude, Gemini, CLI) adoptar el mismo catálogo de reglas y skills instantáneamente.
-- Eliminar la fragmentación de prompts y reglas diseminadas unificando el "Source of Truth" en `.agents/`.
-- Potenciar automatizaciones, MCPs y workflows declarativos modulares (BMAD/Spec-Driven).
-- **Long-Term Memory Escalable**: El sistema obliga a los agentes a auto-comprimir su contexto (`sliding windows`) en `.agents/memory/` para evadir los límites de tokens, sentando la base estructurada para un futuro *Graph RAG* nativo.
+- [Propuesta de valor 1: Beneficio clave para el usuario o negocio]
+- [Propuesta de valor 2: Característica diferenciadora del proyecto]
+- [Propuesta de valor 3: Impacto esperado a largo plazo]
 
 ## 👥 Key Stakeholders / Users
-- **Primary:** Ingenieros de Software y Tech Leads que utilizan múltiples IAs (ej: Cursor + Claude + Terminal) sobre un mismo repositorio.
-- **Secondary:** Constructores de nuevos agentes (AI Devs) que necesitan un core interoperable y listo para producción sin reinventar prompt engineering arquitectural.
+- **Primary:** [Quién es el usuario o consumidor principal de este proyecto]
+- **Secondary:** [Usuarios secundarios, administradores o perfiles técnicos de soporte]
 
 ## 🌟 Definition of Success
-1. El framework logra ser 100% agnóstico del IDE. Se actualiza una vez en `.agents/` y automáticamente repercute en todas las IAs interconectadas mediante CLI bridges/entry points.
-2. Soporta +35 agentes out-of-the-box sin conflictos y permite fácil adición de *skills* comunitarias vía GH (ej: `lmagent skills add`).
+1. [Métrica o hito de éxito 1, ej. "El prototipo funcional se entrega en fecha"]
+2. [Métrica o hito de éxito 2, ej. "El sistema soporta 10k usuarios simultáneos"]
+3. [Métrica o hito de éxito 3, ej. "Adopción por parte de los usuarios principales"]
+

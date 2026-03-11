@@ -10,9 +10,9 @@ Este workflow guía una revisión de seguridad de código o cambios.
 
 ## Pre-requisitos
 
-1. Leer [AGENTS.md](../AGENTS.md)
-2. Leer [rules/stack.md](../rules/stack.md)
-3. Leer [personas/security-analyst.md](../personas/security-analyst.md)
+1. Leer [AGENTS.md](../../AGENTS.md)
+2. Leer [rules/stack.md](../rules/02-tech-stack.md)
+3. Leer [personas/security-analyst.md](../skills/security-analyst/SKILL.md)
 
 ## Información Requerida
 

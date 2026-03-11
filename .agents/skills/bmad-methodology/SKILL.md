@@ -104,7 +104,7 @@ Abre en IDE ──────────────────► Detecta PR
                                 /pm → /arch → /dev → /qa
 ```
 
-**Template de arranque**: [PROJECT_KICKOFF.md](../templates/PROJECT_KICKOFF.md)
+**Template de arranque**: [PROJECT_KICKOFF.md](../../templates/PROJECT_KICKOFF.md)
 
 ## 💡 Ideation Framework
 
@@ -120,7 +120,7 @@ BMAD incluye frameworks de ideación estructurada:
 | 🔀 Combinatorial | Concept Mash-up | Combinar conceptos |
 | 🎯 Constraint-Based | Idear bajo restricciones | Limitaciones conocidas |
 
-**Workflow completo**: [ideation.md](../workflows/ideation.md)
+**Workflow completo**: [ideation.md](../../workflows/ideation.md)
 
 ## 📄 PRD Generation (BMAD-style)
 
@@ -131,7 +131,7 @@ BMAD genera PRDs completos con un proceso de 4 fases:
 3. **Specification** → User Stories, Acceptance Criteria, Mockups
 4. **Validation** → Review con stakeholders, ajustes, aprobación
 
-**Workflow completo**: [generate-prd.md](../workflows/generate-prd.md)
+**Workflow completo**: [generate-prd.md](../../workflows/generate-prd.md)
 
 ## 🔄 Multi-Persona Orchestration
 
@@ -171,9 +171,9 @@ BMAD coordina personas según la fase del proyecto:
 ## 📚 Referencias
 
 - [config/levels.yaml](../config/levels.yaml) — Sistema de niveles completo
-- [templates/PROJECT_KICKOFF.md](../templates/PROJECT_KICKOFF.md) — Template de arranque
-- [workflows/ideation.md](../workflows/ideation.md) — Workflow de ideación
-- [workflows/generate-prd.md](../workflows/generate-prd.md) — Workflow de PRD
+- [templates/PROJECT_KICKOFF.md](../../templates/PROJECT_KICKOFF.md) — Template de arranque
+- [workflows/ideation.md](../../workflows/ideation.md) — Workflow de ideación
+- [workflows/generate-prd.md](../../workflows/generate-prd.md) — Workflow de PRD
 - [skills/orchestrator/SKILL.md](../orchestrator/SKILL.md) — Orquestador
 
 

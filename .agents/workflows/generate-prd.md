@@ -11,8 +11,8 @@ Este workflow genera un Product Requirements Document completo usando IA.
 
 ## Pre-requisitos
 
-1. Leer [AGENTS.md](../AGENTS.md)
-2. Leer [personas/product-manager.md](../personas/product-manager.md)
+1. Leer [AGENTS.md](../../AGENTS.md)
+2. Leer [personas/product-manager.md](../skills/product-manager/SKILL.md)
 3. Tener una idea o concepto inicial del producto/feature
 
 ## Información Requerida

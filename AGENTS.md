@@ -48,6 +48,9 @@ Ubicación: `.agents/rules/`
 | `08-agents-ai.md` | Cómo construir y configurar agentes de IA. |
 | `09-automations.md` | Reglas para workflows automáticos (n8n, scripts). |
 | `10-git-flow.md` | Workflow de Git y Conventional Commits. |
+| `11-prompt-engineering.md` | Técnicas y guías para redacción y optimización de prompts. |
+| `12-cloud-native.md` | Principios, patrones y arquitecturas Cloud Native. |
+| `13-performance-baseline.md` | Requerimientos de performance, escalabilidad y profiling. |
 
 ### 📚 3.2 Docs (Manuales de Referencia)
 Ubicación: `.agents/docs/`
@@ -131,6 +134,10 @@ Ubicación: `.agents/scripts/` y `scripts/` (raíz del paquete)
 | `create_skill.js` | Generador interactivo v4.0 — produce skills con frontmatter Anthropic Skills v2.0. Modos: `--type persona\|anthropic\|subagent`. |
 | `validate_skills.js` | Validador v4.0 — verifica estructura y frontmatter. Flag `--migrate` migra skills v3.x → v4.0 automáticamente. |
 | `token-analyzer.js` | Analizador de consumo de tokens del framework instalado. |
+| `install.sh` / `install.ps1` | Instaladores globales/locales cero fricción para Unix y Windows. |
+| `sync_registry.js` | Inyecta y sincroniza automáticamente las tablas de registro en AGENTS.md y 00-master.md. |
+| `upgrade_skills.js` | Script para actualizar el formato o versionado de los skills. |
+| `global_version_bump.js` | Utilitario que empuja el bump de versión a todos los archivos estáticos de LMAgent. |
 
 ### 📋 3.7 Templates (Plantillas de Proyecto)
 Ubicación: `.agents/templates/`

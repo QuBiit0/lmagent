@@ -14,9 +14,9 @@ Este workflow guía la creación o mejora de un agente de IA.
 
 ## Pre-requisitos
 
-1. Leer [AGENTS.md](../AGENTS.md)
-2. Leer [rules/agents-ia.md](../rules/agents-ia.md)
-3. Leer [personas/ai-agent-engineer.md](../personas/ai-agent-engineer.md)
+1. Leer [AGENTS.md](../../AGENTS.md)
+2. Leer [rules/agents-ia.md](../rules/08-agents-ai.md)
+3. Leer [personas/ai-agent-engineer.md](../skills/ai-agent-engineer/SKILL.md)
 
 ## Información Requerida
 
