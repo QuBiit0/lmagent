@@ -4,7 +4,14 @@
 .DESCRIPTION
     Instala de forma global el paquete lmagent directamente desde GitHub y prepara el entorno actual.
     Compatible con ejecución remota vía Invoke-WebRequest (iwr).
+.PARAMETER Yes
+    Modo no interactivo: instala todo sin preguntar.
 #>
+param(
+    [Alias("y")]
+    [switch]$Yes
+)
+
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
 $ErrorActionPreference = "Stop"
@@ -102,14 +109,21 @@ Write-Host "V LMAgent instalado con exito." -ForegroundColor Green
 Write-Host "`n[3/3] Inicializando entorno en el directorio actual..." -ForegroundColor Cyan
 
 $pwd = Get-Location
-$response = Read-Host "Deseas inicializar LMAgent en el directorio actual ($pwd)? [Y/n]"
 
-if ($response -match "^n$|^no$") {
-    Write-Host "Saltando inicializacion. Puedes hacerlo luego ingresando: lmagent init" -ForegroundColor Cyan
-} else {
-    Write-Host "Ejecutando lmagent init..." -ForegroundColor Blue
-    lmagent init
+if ($Yes) {
+    Write-Host "Ejecutando lmagent init --yes..." -ForegroundColor Blue
+    lmagent init --yes
     Write-Host "V Proyecto inicializado exitosamente." -ForegroundColor Green
+} else {
+    $response = Read-Host "Deseas inicializar LMAgent en el directorio actual ($pwd)? [Y/n]"
+
+    if ($response -match "^n$|^no$") {
+        Write-Host "Saltando inicializacion. Puedes hacerlo luego ingresando: lmagent init" -ForegroundColor Cyan
+    } else {
+        Write-Host "Ejecutando lmagent init..." -ForegroundColor Blue
+        lmagent init
+        Write-Host "V Proyecto inicializado exitosamente." -ForegroundColor Green
+    }
 }
 
 # ==========================================

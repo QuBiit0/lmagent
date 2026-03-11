@@ -1,8 +1,17 @@
 #!/usr/bin/env bash
 
 # LMAgent Localized Installer para MacOS / Linux / Git Bash
+# Usage: bash install.sh [--yes]
 
 set -e
+
+# Parse --yes flag
+YES_FLAG=""
+for arg in "$@"; do
+  if [[ "$arg" == "--yes" || "$arg" == "-y" ]]; then
+    YES_FLAG="--yes"
+  fi
+done
 
 # ==========================================
 # Colores y Estilos
@@ -97,15 +106,22 @@ echo -e "${GREEN}✓ LMAgent instalado con éxito.${NC}"
 echo -e "\n${CYAN}[3/3] Inicializando entorno en el directorio actual...${NC}"
 
 ORIGINAL_PWD="$(pwd)"
-echo -n "Deseas inicializar LMAgent en el directorio actual ($ORIGINAL_PWD)? [Y/n] "
-read response
 
-if [[ "$response" =~ ^([nN][oO]|[nN])$ ]]; then
-    echo -e "${CYAN}Saltando inicializacion. Puedes hacerlo luego ingresando: lmagent init${NC}"
-else
-    echo -e "${BLUE}Ejecutando lmagent init...${NC}"
-    lmagent init
+if [[ -n "$YES_FLAG" ]]; then
+    echo -e "${BLUE}Ejecutando lmagent init --yes...${NC}"
+    lmagent init --yes
     echo -e "${GREEN}✓ Proyecto inicializado exitosamente.${NC}"
+else
+    echo -n "Deseas inicializar LMAgent en el directorio actual ($ORIGINAL_PWD)? [Y/n] "
+    read response
+
+    if [[ "$response" =~ ^([nN][oO]|[nN])$ ]]; then
+        echo -e "${CYAN}Saltando inicializacion. Puedes hacerlo luego ingresando: lmagent init${NC}"
+    else
+        echo -e "${BLUE}Ejecutando lmagent init...${NC}"
+        lmagent init
+        echo -e "${GREEN}✓ Proyecto inicializado exitosamente.${NC}"
+    fi
 fi
 
 # ==========================================
