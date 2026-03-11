@@ -128,7 +128,7 @@ Ubicación: `.agents/memory/`
 | `05-product-state.md` | Estado actual del producto. Features completadas y pendientes. |
 
 ### 🛠️ 3.6 Scripts (Herramientas de Utilidad)
-Ubicación: `.agents/scripts/` y `scripts/` (raíz del paquete)
+Ubicación: `scripts/` (instalados globalmente con el framework)
 | Script | Propósito |
 |:---|:---|
 | `create_skill.js` | Generador interactivo v4.0 — produce skills con frontmatter Anthropic Skills v2.0. Modos: `--type persona\|anthropic\|subagent`. |
