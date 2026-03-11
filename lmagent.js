@@ -983,6 +983,9 @@ globs: **/*
     // ── PASO 6: Sincronizar Catálogo ──
     await syncSkillCatalog(projectRoot);
 
+    // ── PASO 7: Crear / actualizar .gitignore ──
+    await deployGitignore(options, projectRoot);
+
     // ── Resumen Final ──
     console.log(gradient.pastel.multiline('\n✨ Instalación Finalizada ✨'));
     console.log(chalk.gray('================================================================'));
@@ -997,6 +1000,39 @@ globs: **/*
     console.log('');
     console.log(chalk.dim('    💡 `lmagent doctor` para verificar | `lmagent tokens` para ver consumo'));
     console.log(chalk.gray('================================================================'));
+}
+
+// Helper: Deploy .gitignore desde template
+async function deployGitignore(options, projectRoot) {
+    const templatePath = path.join(__dirname, '.agents', 'templates', '.gitignore');
+    if (!fs.existsSync(templatePath)) return;
+
+    const destPath = path.join(projectRoot, '.gitignore');
+    const templateContent = fs.readFileSync(templatePath, 'utf8')
+        .replace(/\{\{VERSION\}\}/g, PKG_VERSION);
+
+    if (!fs.existsSync(destPath)) {
+        fs.writeFileSync(destPath, templateContent, 'utf8');
+        console.log(`  ${chalk.green('✔')} .gitignore (Creado)`);
+        return;
+    }
+
+    // Si existe, solo añadir entradas que falten (no sobrescribir)
+    const existing = fs.readFileSync(destPath, 'utf8');
+    const newLines = templateContent.split(/\r?\n/).filter(line => {
+        const trimmed = line.trim();
+        // Skip comments, empty lines, section headers
+        if (!trimmed || trimmed.startsWith('#')) return false;
+        return !existing.includes(trimmed);
+    });
+
+    if (newLines.length > 0) {
+        const addition = `\n# ─── LMAgent additions ──────────────────────────────────────\n${newLines.join('\n')}\n`;
+        fs.appendFileSync(destPath, addition, 'utf8');
+        console.log(`  ${chalk.yellow('✎')} .gitignore (+${newLines.length} entradas añadidas)`);
+    } else {
+        console.log(`  ${chalk.blue('ℹ')} .gitignore ya está actualizado`);
+    }
 }
 
 // Helper: Genera config mínimo si no hay template
@@ -1267,14 +1303,18 @@ async function runDoctor() {
     const gitignoreExists = fs.existsSync(path.join(projectRoot, '.gitignore'));
     if (gitignoreExists) {
         const gitignore = fs.readFileSync(path.join(projectRoot, '.gitignore'), 'utf-8');
-        if (gitignore.includes('.env')) {
-            console.log(`  ${chalk.green('✔')} .env está en .gitignore`);
+        const checks = ['.env', '*.key', '*.pem', 'node_modules'];
+        const missing = checks.filter(e => !gitignore.includes(e));
+        if (missing.length === 0) {
+            console.log(`  ${chalk.green('✔')} .gitignore presente y cubre secretos clave`);
             ok++;
         } else {
-            console.log(`  ${chalk.yellow('⚠')} .env no está en .gitignore`);
+            console.log(`  ${chalk.yellow('⚠')} .gitignore incompleto — faltan: ${missing.join(', ')}`);
+            console.log(`     ${chalk.dim('→ Ejecuta lmagent init para actualizar')}`);
         }
     } else {
-        console.log(`  ${chalk.yellow('⚠')} .gitignore no encontrado`);
+        console.log(`  ${chalk.yellow('⚠')} .gitignore no encontrado → ejecuta ${chalk.bold('lmagent init')}`);
+        issues++;
     }
 
     // Resumen

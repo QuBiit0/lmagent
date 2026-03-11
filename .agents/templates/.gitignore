@@ -1,0 +1,212 @@
+# ============================================================
+# .gitignore — Generado por LMAgent Framework v{{VERSION}}
+# ============================================================
+
+# ─── Secrets & Credentials ───────────────────────────────────
+.env
+.env.local
+.env.*.local
+.env.development
+.env.staging
+.env.production
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+secrets/
+credentials/
+.credentials/
+**/secrets.json
+**/credentials.json
+**/service-account*.json
+**/firebase-adminsdk*.json
+.netrc
+.htpasswd
+
+# ─── API Keys & Tokens ───────────────────────────────────────
+.anthropic
+.openai
+.google-credentials
+token.json
+tokens.json
+auth.json
+*api_key*
+*apikey*
+*access_token*
+*secret_key*
+
+# ─── Dependencies ────────────────────────────────────────────
+node_modules/
+.pnp
+.pnp.js
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+vendor/
+.venv/
+venv/
+env/
+ENV/
+.virtualenv/
+__pypackages__/
+
+# ─── Build & Distribution ────────────────────────────────────
+dist/
+build/
+out/
+.next/
+.nuxt/
+.output/
+.vercel/
+.netlify/
+*.tgz
+*.tar.gz
+*.zip
+*.egg-info/
+*.egg
+*.whl
+*.class
+*.jar
+target/
+
+# ─── Python ──────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.pyd
+.Python
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+nosetests.xml
+.tox/
+.nox/
+.hypothesis/
+.ipynb_checkpoints/
+
+# ─── Node.js ─────────────────────────────────────────────────
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.npm/
+.eslintcache
+.parcel-cache/
+.turbo/
+
+# ─── Databases ───────────────────────────────────────────────
+*.db
+*.sqlite
+*.sqlite3
+*.db-shm
+*.db-wal
+*.sql.bak
+dump.rdb
+*.rdb
+
+# ─── Logs ────────────────────────────────────────────────────
+logs/
+*.log
+*.log.*
+npm-debug.log
+yarn-debug.log
+lerna-debug.log
+crash.log
+error.log
+
+# ─── OS & System ─────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# ─── IDE & Editors ───────────────────────────────────────────
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/settings.json
+.vscode/launch.json
+.vscode/tasks.json
+.vscode/.ropeproject
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw[a-p]
+*~
+
+# ─── Docker ──────────────────────────────────────────────────
+.docker/
+docker-compose.override.yml
+
+# ─── Temporary & Cache ───────────────────────────────────────
+tmp/
+temp/
+.tmp/
+.temp/
+.cache/
+*.tmp
+*.temp
+*.bak
+*.backup
+*.orig
+*.rej
+*.patch
+
+# ─── LMAgent Runtime ─────────────────────────────────────────
+trajectories/
+*.trajectory.json
+*_output.txt
+task.md
+
+# ─── Generated / Artifacts ───────────────────────────────────
+.generated/
+*.min.js
+*.min.css
+
+# ─── Cloud & Infrastructure ──────────────────────────────────
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars
+*.tfvars.json
+.pulumi/
+kubeconfig
+kubeconfig.yaml
+*.kubeconfig
+
+# ─── Mobile ──────────────────────────────────────────────────
+.gradle/
+*.apk
+*.aab
+*.ipa
+*.dSYM/
+Pods/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# ─── Lock files (committed by default — uncomment to ignore) ─
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+# poetry.lock
+# Pipfile.lock
+# Gemfile.lock
+# composer.lock
