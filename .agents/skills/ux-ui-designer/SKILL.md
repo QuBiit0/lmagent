@@ -1,7 +1,4 @@
 ---
-# ============================================================
-# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
-# ============================================================
 name: "ux-ui-designer"
 description: "Diseño de experiencias de usuario, sistemas de diseño, wireframes y accesibilidad. Úsalo con /ux para definir flujos de usuario, componentes de diseño o auditar accesibilidad."
 user-invocable: true
@@ -9,7 +6,6 @@ argument-hint: "[task description]"
 compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
 license: MIT
 
-# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
   author: "QuBiit"
   version: "4.0.0"
@@ -417,8 +413,6 @@ Incluye:
 
 | Test Prompt | Comportamiento Esperado | Criterio de Éxito |
 |-------------|------------------------|-------------------|
-| "[Prompt de prueba 1]" | [Qué debe hacer el skill] | Contiene: [keyword] |
-| "[Prompt de prueba 2]" | [Comportamiento esperado] | Produce: [artefacto] |
 
 ## 📋 Definition of Done (Design Work)
 

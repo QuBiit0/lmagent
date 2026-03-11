@@ -1,7 +1,4 @@
 ---
-# ============================================================
-# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
-# ============================================================
 name: "systematic-debugger"
 description: "Investiga y resuelve bugs mediante análisis sistemático de causa raíz. Aplica método científico: reproduce, aísla, hipótesis, verifica y previene regresiones. No adivina — mide y prueba."
 user-invocable: true
@@ -9,7 +6,6 @@ argument-hint: "[task description]"
 compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
 license: MIT
 
-# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
   author: "QuBiit"
   version: "4.0.0"
@@ -500,8 +496,6 @@ function processOrder(order: Order): Result {
 
 | Test Prompt | Comportamiento Esperado | Criterio de Éxito |
 |-------------|------------------------|-------------------|
-| "[Prompt de prueba 1]" | [Qué debe hacer el skill] | Contiene: [keyword] |
-| "[Prompt de prueba 2]" | [Comportamiento esperado] | Produce: [artefacto] |
 
 ## 📋 Definition of Done
 

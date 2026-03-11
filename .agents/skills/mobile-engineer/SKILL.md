@@ -1,7 +1,4 @@
 ---
-# ============================================================
-# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
-# ============================================================
 name: "mobile-engineer"
 description: "Desarrollo de aplicaciones móviles con React Native y Expo. Úsalo con /mobile para implementar pantallas, navegación o integraciones nativas en apps iOS/Android."
 user-invocable: true
@@ -9,7 +6,6 @@ argument-hint: "[task description]"
 compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
 license: MIT
 
-# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
   author: "QuBiit"
   version: "4.0.0"
@@ -480,8 +476,6 @@ describe('Login flow', () => {
 
 | Test Prompt | Comportamiento Esperado | Criterio de Éxito |
 |-------------|------------------------|-------------------|
-| "[Prompt de prueba 1]" | [Qué debe hacer el skill] | Contiene: [keyword] |
-| "[Prompt de prueba 2]" | [Comportamiento esperado] | Produce: [artefacto] |
 
 ## 📋 Definition of Done (Estricta para Móvil)
 

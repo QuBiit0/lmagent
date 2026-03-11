@@ -1,7 +1,4 @@
 ---
-# ============================================================
-# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
-# ============================================================
 name: "browser-agent"
 description: "Automatización de navegadores web, scraping, testing E2E y verificación visual de UIs. Úsalo con /browser para interactuar con páginas web, extraer datos o verificar flujos de usuario."
 user-invocable: true
@@ -9,7 +6,6 @@ argument-hint: "[task description]"
 compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
 license: MIT
 
-# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
   author: "QuBiit"
   version: "4.0.0"
@@ -488,8 +484,6 @@ async function exportToCsv(items: ScrapedItem[], path: string): Promise<void> {
 
 | Test Prompt | Comportamiento Esperado | Criterio de Éxito |
 |-------------|------------------------|-------------------|
-| "[Prompt de prueba 1]" | [Qué debe hacer el skill] | Contiene: [keyword] |
-| "[Prompt de prueba 2]" | [Comportamiento esperado] | Produce: [artefacto] |
 
 ## 📋 Definition of Done
 

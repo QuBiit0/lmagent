@@ -1,7 +1,4 @@
 ---
-# ============================================================
-# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
-# ============================================================
 name: "code-reviewer"
 description: "Revisión exhaustiva de código para detectar bugs, problemas de seguridad, deuda técnica y violaciones de estilo. Úsalo con /review para hacer code reviews de PRs o módulos."
 user-invocable: true
@@ -9,7 +6,6 @@ argument-hint: "[task description]"
 compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
 license: MIT
 
-# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
   author: "QuBiit"
   version: "4.0.0"
@@ -293,8 +289,6 @@ def add_item(item, items=None):
 
 | Test Prompt | Comportamiento Esperado | Criterio de Éxito |
 |-------------|------------------------|-------------------|
-| "[Prompt de prueba 1]" | [Qué debe hacer el skill] | Contiene: [keyword] |
-| "[Prompt de prueba 2]" | [Comportamiento esperado] | Produce: [artefacto] |
 
 ## 📋 Definition of Done (Code Review)
 

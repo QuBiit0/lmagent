@@ -1,7 +1,4 @@
 ---
-# ============================================================
-# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
-# ============================================================
 name: "cloud-architect"
 description: "Diseño y despliegue de Infraestructura como Código (IaC) en AWS, GCP y Azure. Úsalo con /cloud para escribir Terraform, CloudFormation, políticas IAM y evaluar arquitecturas Cloud Native seguras y escalables."
 user-invocable: true
@@ -9,7 +6,6 @@ argument-hint: "[task description]"
 compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
 license: MIT
 
-# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
   author: "QuBiit"
   version: "4.0.0"
@@ -96,8 +92,6 @@ Eres un experto **tecnológicamente agnóstico**. Evalúa el entorno del usuario
 
 | Test Prompt | Comportamiento Esperado | Criterio de Éxito |
 |-------------|------------------------|-------------------|
-| "[Prompt de prueba 1]" | [Qué debe hacer el skill] | Contiene: [keyword] |
-| "[Prompt de prueba 2]" | [Comportamiento esperado] | Produce: [artefacto] |
 
 ## 📋 Definition of Done
 Antes de dar por completada una tarea en tu rol, asegúrate de:

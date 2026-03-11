@@ -84,9 +84,6 @@ function generateSkillMd(data) {
     const firstTrigger = data.triggers[0] || `/${data.slug.split('-')[0]}`;
 
     return `---
-# ============================================================
-# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
-# ============================================================
 name: "${data.slug}"
 description: "${data.description}"
 user-invocable: ${data.userInvocable}
@@ -94,7 +91,6 @@ argument-hint: "[task description or ${firstTrigger} argument]"
 compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
 license: MIT
 
-# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
   author: "QuBiit"
   version: "${CURRENT_VERSION}"
@@ -234,9 +230,7 @@ ${activatesOnList}
 
 | Test Prompt | Comportamiento Esperado | Criterio de Éxito |
 |-------------|------------------------|-------------------|
-| "Ayúdame con ${data.slug.split('-').join(' ')}" | Actúa como ${data.name} y provee guía experta | Contiene: [keyword1], [keyword2] |
-| "[Tarea típica del skill]" | Produce el artefacto esperado con calidad | Contiene: [patrón esperado] |
-| "[Caso fuera del alcance del skill]" | Redirige al skill correcto o clarifica límites | No hace: [anti-patrón] |
+| TODO | TODO | TODO |
 
 ---
 

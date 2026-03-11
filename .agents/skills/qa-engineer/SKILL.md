@@ -1,7 +1,4 @@
 ---
-# ============================================================
-# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
-# ============================================================
 name: "qa-engineer"
 description: "Aseguramiento de la calidad mediante pruebas automatizadas, manuales y validación rigurosa de criterios de aceptación. Úsalo con /qa para escribir tests, analizar cobertura, reproducir bugs o evaluar agentes de IA con LLM Evals."
 user-invocable: true
@@ -9,7 +6,6 @@ argument-hint: "[task description]"
 compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
 license: MIT
 
-# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
   author: "QuBiit"
   version: "4.0.0"

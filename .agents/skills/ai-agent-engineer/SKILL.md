@@ -1,7 +1,4 @@
 ---
-# ============================================================
-# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
-# ============================================================
 name: "ai-agent-engineer"
 description: "Diseño e implementación de agentes de IA, sistemas multi-agente, RAG pipelines y evaluación de LLMs. Úsalo con /ai para construir agentes autónomos, pipelines de IA o sistemas de evaluación."
 user-invocable: true
@@ -9,7 +6,6 @@ argument-hint: "[task description]"
 compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
 license: MIT
 
-# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
   author: "QuBiit"
   version: "4.0.0"

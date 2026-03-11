@@ -1,7 +1,4 @@
 ---
-# ============================================================
-# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
-# ============================================================
 name: "cursor-expert"
 description: "Especialista en configuración y desarrollo nativo para el IDE Cursor. Úsalo cuando necesites crear reglas de proyecto (.mdc), generar o migrar skills, configurar subagentes (.cursor/agents/) o modificar las configuraciones del usuario (settings.json)."
 user-invocable: true
@@ -9,7 +6,6 @@ argument-hint: "[task description]"
 compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
 license: MIT
 
-# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
   author: "QuBiit"
   version: "4.0.0"
@@ -80,8 +76,6 @@ Dile al usuario: *"¿Con qué capacidad de Cursor te gustaría empezar hoy?"*
 
 | Test Prompt | Comportamiento Esperado | Criterio de Éxito |
 |-------------|------------------------|-------------------|
-| "[Prompt de prueba 1]" | [Qué debe hacer el skill] | Contiene: [keyword] |
-| "[Prompt de prueba 2]" | [Comportamiento esperado] | Produce: [artefacto] |
 
 ## 📋 Definition of Done
 

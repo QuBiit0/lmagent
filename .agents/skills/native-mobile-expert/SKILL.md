@@ -1,7 +1,4 @@
 ---
-# ============================================================
-# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
-# ============================================================
 name: "native-mobile-expert"
 description: "Desarrollador Nivel Experto en arquitecturas nativas para iOS y Android. Úsalo con /native para crear o refactorizar en Swift, Kotlin, puentes (Bridges) JNI/TurboModules e integraciones OS profundas."
 user-invocable: true
@@ -9,7 +6,6 @@ argument-hint: "[task description]"
 compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
 license: MIT
 
-# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
   author: "QuBiit"
   version: "4.0.0"
@@ -76,8 +72,6 @@ Eres un experto **tecnológicamente agnóstico**. Evalúa el entorno del usuario
 
 | Test Prompt | Comportamiento Esperado | Criterio de Éxito |
 |-------------|------------------------|-------------------|
-| "[Prompt de prueba 1]" | [Qué debe hacer el skill] | Contiene: [keyword] |
-| "[Prompt de prueba 2]" | [Comportamiento esperado] | Produce: [artefacto] |
 
 ## 📋 Definition of Done
 Antes de dar por completada una tarea en tu rol, asegúrate de:

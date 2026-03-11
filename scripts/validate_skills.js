@@ -245,6 +245,14 @@ function validateSkill(skillDir) {
         }
     }
 
+    // 9b. Advertir si hay campos no soportados en LMAgent persona skills
+    const UNSUPPORTED_ROOT_FIELDS = ['allowed-tools', 'model', 'agent', 'hooks'];
+    for (const field of UNSUPPORTED_ROOT_FIELDS) {
+        if (field in fm && fm[field] !== null && fm[field] !== undefined) {
+            warnings.push(`Campo no soportado en LMAgent persona skill: "${field}" (mover a metadata: si es necesario)`);
+        }
+    }
+
     // 10. Verificar extensiones LMAgent (bajo metadata:)
     const lm = fm['metadata'];
     if (!lm || typeof lm !== 'object') {
@@ -292,20 +300,25 @@ function validateSkill(skillDir) {
         }
     }
 
-    // 11. Verificar secciones de contenido
-    const requiredSections = ['System Prompt', 'Definition of Done', 'Evals'];
-    for (const section of requiredSections) {
-        if (!content.includes(section)) {
+    // 11. Verificar secciones de contenido (acepta variantes con emoji)
+    const SECTION_VARIANTS = {
+        'System Prompt': ['System Prompt', 'Persona', '🎭 Persona', '🧠 System'],
+        'Definition of Done': ['Definition of Done'],
+        'Evals': ['Evals', '🧪 Evals'],
+    };
+    for (const [section, variants] of Object.entries(SECTION_VARIANTS)) {
+        const found = variants.some(v => content.includes(v));
+        if (!found) {
             warnings.push(`Sección recomendada faltante: "## ${section}"`);
         }
     }
 
-    // 12. Verificar que Evals tenga al menos una fila de tabla
+    // 12. Verificar que Evals tenga al menos dos filas de tabla reales (no placeholders)
     if (content.includes('Evals')) {
-        const evalsMatch = content.match(/## 🧪 Evals[\s\S]*?\|([^\n]+)\|/);
-        const tableRows = (content.match(/\|\s*"[^"]+"\s*\|/g) || []).length;
-        if (tableRows < 1) {
-            warnings.push('Sección "Evals" existe pero no tiene filas de prueba definidas (recomendado: ≥2)');
+        const realRows = (content.match(/\|\s*"[^"]+"\s*\|/g) || [])
+            .filter(row => !row.includes('[Prompt de prueba') && !row.includes('[keyword]') && !row.includes('Prompt de prueba'));
+        if (realRows.length < 2) {
+            warnings.push('Sección "Evals" necesita ≥2 filas de prueba reales (no placeholders)');
         }
     }
 

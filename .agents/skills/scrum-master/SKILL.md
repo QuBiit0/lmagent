@@ -1,7 +1,4 @@
 ---
-# ============================================================
-# ANTHROPIC SKILLS v2.0 — Campos oficiales soportados
-# ============================================================
 name: "scrum-master"
 description: "Facilitación de ceremonias ágiles, gestión de sprints y remoción de impedimentos. Úsalo con /scrum para planificar sprints, hacer retrospectivas o gestionar el backlog."
 user-invocable: true
@@ -9,7 +6,6 @@ argument-hint: "[task description]"
 compatibility: "Universal - Claude Code, Cursor, Windsurf, Gemini CLI y 33+ IDEs"
 license: MIT
 
-# metadata: campo libre — aquí va el metadata LMAgent
 metadata:
   author: "QuBiit"
   version: "4.0.0"
@@ -173,8 +169,6 @@ Para que entre al sprint, debe cumplir INVEST:
 
 | Test Prompt | Comportamiento Esperado | Criterio de Éxito |
 |-------------|------------------------|-------------------|
-| "[Prompt de prueba 1]" | [Qué debe hacer el skill] | Contiene: [keyword] |
-| "[Prompt de prueba 2]" | [Comportamiento esperado] | Produce: [artefacto] |
 
 ## Definition of Done (DoD) Robusta
 - [ ] Code Complete & Peer Reviewed (2 approvals)
